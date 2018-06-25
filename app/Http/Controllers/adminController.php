@@ -99,7 +99,7 @@ class adminController extends Controller
 
     function registerPost(Request $request)
     {
-    	$this->validate($request, [
+        $this->validate($request, [
             'fname' => 'required|min:4',
             'lname' => 'required|min:4',
             'nik' => 'required|min:16|unique:saksi',
@@ -114,33 +114,55 @@ class adminController extends Controller
             'dapil' => 'required|min:1',
             'password' => 'required',
             'confirmation' => 'required|same:password',
+        ],[
+            'fname.required'=>'Nama depan tidak boleh kosong!',
+            'fname.min'=>'Maaf Nama depan minimal 4 karakter',
+            'lname.required'=>'Nama belakang tidak boleh kosong!',
+            'lname.min'=>' Nama belakang minimal 4 karakter',
+            'nik.required' => 'NIK tidak boleh kosong!',
+            'nik.min' => 'NIK minimal 16 karakter',
+            'nik.unique' => 'NIK yang dimasukkan sudah ada di sistem kami masukkan yang lain',
+            'telp.required' => 'Telephone harus diiisi',
+            'telp.min' => 'Telephone minimal 11 karakter',
+            'gender.required' => 'Jenis Kelamin tidak boleh kosong!',
+            'alamat.required' => 'Alamat tidak boleh kosong!',
+            'alamat.min' => 'Alamat minimal 10 karakter',
+            'kec.required' => 'Kecapatan tidak boleh kosong!',
+            'kel.required' => 'Kelurahan tidak boleh kosong',
+            'tps.required' => 'TPS tidak boleh kosong',
+            'prov.required' => 'Provinsi tidak boleh kosong',
+            'kab.required' => 'Kabupaten tidak boleh kosong',
+            'dapil.required' => 'Dapil tidak boleh kosong',
+            'password.required' => 'Password tidak boleh kosong',
+            'confirmation.required' => 'Konfirmasi Password tidak boleh kosong',
+            'confirmation.same' => 'Maaf Password yang kamu masukkan tidak sama'
         ]);
 
         $data = ['fname' => $request->fname,
-    			'lname' => $request->lname,
-    			'nik' => $request->nik,
-    			'telp' => $request->telp,
-    			'gender' => $request->gender,
-    			'alamat' => $request->alamat,
-    			'kec' => $request->kec,
-    			'kel' => $request->kel,
-    			'tps' => $request->tps,
-    			'prov' => $request->prov,
-    			'kab' => $request->kab,
-    			'dapil' => $request->dapil,
-    			'password' => bcrypt($request->password)];
+                'lname' => $request->lname,
+                'nik' => $request->nik,
+                'telp' => $request->telp,
+                'gender' => $request->gender,
+                'alamat' => $request->alamat,
+                'kec' => $request->kec,
+                'kel' => $request->kel,
+                'tps' => $request->tps,
+                'prov' => $request->prov,
+                'kab' => $request->kab,
+                'dapil' => $request->dapil,
+                'password' => bcrypt($request->password)];
 
-    	$req = new adminModel();
-    	$req = $req->registerPost($data);
-    	$req = json_decode(json_encode($req), true);
-    	if($req[0]['msg'] == "success")
-    	{
-    		return redirect('admin/login')->with('alert-success','Registrasi saksi sukses!');
-    	}
-    	else
-    	{
-    		return redirect('admin/register')->with('alert','Registrasi saksi gagal!');
-    	}
+        $req = new adminModel();
+        $req = $req->registerPost($data);
+        $req = json_decode(json_encode($req), true);
+        if($req[0]['msg'] == "success")
+        {
+            return redirect('admin/login')->with('alert-success','Registrasi saksi sukses!');
+        }
+        else
+        {
+            return redirect('admin/register')->with('alert','Registrasi saksi gagal!');
+        }
     }
 
     function updateProfile(Request $request)
