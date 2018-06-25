@@ -187,4 +187,9 @@ class adminController extends Controller
     		return redirect('admin')->with('alert','Update data saksi gagal!');
     	}
     }
+
+    function saksi()
+    {
+    	return view('admin.home.userlist');
+    }
 }

@@ -36,6 +36,7 @@ Route::get('/data/partai', 'dataController@getPartai');
 */
 
 Route::get('/admin', 'adminController@index');
+Route::get('/admin/saksi', 'adminController@saksi');
 Route::post('/admin/updateProfile', 'adminController@updateProfile');
 Route::get('/admin/login', 'adminController@login');
 Route::get('/admin/register', 'adminController@register');
