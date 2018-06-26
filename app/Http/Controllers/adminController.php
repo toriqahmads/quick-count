@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\View;
 use App\adminModel;
 use App\dataModel;
 class adminController extends Controller
@@ -247,8 +248,76 @@ class adminController extends Controller
     	}
     }
 
-    function saksi()
+    function getAllSaksi()
     {
-    	return view('admin.home.userlist');
+    	if(!Session::get('login'))
+	    {
+	    	return redirect('admin/login')->with('Anda harus login terlebih dahulu');
+	    }
+	    else
+	    {
+	    	$req = new adminModel();
+    		$req = $req->getAllSaksi();
+
+    		return View::share('saksi', compact('req'));
+	    }
+    }
+
+    function editSaksi($nik, $id_saksi)
+    {
+	    if(!Session::get('login'))
+	    {
+	    	return redirect('admin/login')->with('Anda harus login terlebih dahulu');
+	    }
+	    else
+	    {
+	    	$data = new adminModel();
+	    	$data = $data->getProfile($nik, $id_saksi);
+	    	$kecamatan = new dataModel();
+	    	$kecs = $kecamatan->getKec(1);
+	    	$kels = $kecamatan->getKel($data->id_kel);
+	    	$tps = $kecamatan->getTps($data->id_tps);
+	    	return View::share('editSaksi', compact('data', 'kecs', 'kels', 'tps'));
+	    }
+    }
+
+    function viewSaksi($nik, $id_saksi)
+    {
+	    if(!Session::get('login'))
+	    {
+	    	return redirect('admin/login')->with('Anda harus login terlebih dahulu');
+	    }
+	    else
+	    {
+	    	$data = new adminModel();
+	    	$data = $data->getProfile($nik, $id_saksi);
+	    	$kecamatan = new dataModel();
+	    	return View::share('viewSaksi', compact('data'));
+	    }
+    }
+
+    function deleteSaksi($nik, $id_saksi)
+    {
+    	if(!Session::get('login'))
+	    {
+	    	return redirect('admin/login')->with('Anda harus login terlebih dahulu');
+	    }
+	    else
+	    {
+	    	$data = new adminModel();
+	    	$req = $data->deleteSaksi($nik, $id_saksi);
+        	$req = json_decode(json_encode($req), true);
+        	if($req[0]['msg'] == "success")
+	    	{
+	    		return redirect('admin')->with('alert-success','Delete data saksi sukses!');
+	    	}
+	    	elseif($req[0]['msg'] == "data not found")
+	    	{
+	    		return redirect('admin')->with('alert','Data saksi dengan NIK dan ID tersebut tidak ditemukan!');
+	    	}
+	    	else
+	    	{
+	    		return redirect('admin')->with('alert','Delete data saksi gagal!');
+	    	}
     }
 }
