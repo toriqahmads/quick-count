@@ -20,6 +20,7 @@
                     $.each(html, function(key, val)
                     {
                         res = res + "<option value='" + val.id_kel +"'>" + val.kel + "</option>";
+                        $("#dapil").val(val.id_dapil);
                     });
                     $('#kel').html(res);
                   },
@@ -52,7 +53,6 @@
                         res = res + "<option value='" + val.id_tps +"'>" + val.tps + "</option>";
                         $("#prov").val(val.id_prov);
                         $("#kab").val(val.id_kab);
-                        $("#dapil").val(val.id_dapil);
                     });
                     $("#tps").html(res);
                   },
@@ -104,19 +104,19 @@
             <div class="content">
                 <div class="form-row">
                     <div class="form-group col-sm-6">
-                        <input type="text" name="fname" class="form-control" placeholder="Nama Depan">
+                        <input type="text" name="fname" class="form-control" placeholder="Nama Depan" value="{{ old('fname') }}">
                     </div>
                     <div class="form-group col-sm-6">
-                        <input type="text" name="lname" placeholder="Nama Belakang" class="form-control" />
+                        <input type="text" name="lname" placeholder="Nama Belakang" class="form-control" value="{{ old('lname') }}"/>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-sm-6">
-                        <input type="text" name="nik" class="form-control" placeholder="Nomor NIK">
+                        <input type="text" name="nik" class="form-control" placeholder="Nomor NIK" value="{{ old('nik') }}">
                     </div>
                     <div class="form-group col-sm-6">
-                        <input type="text" name="telp" placeholder="Nomor HP" class="form-control" />
+                        <input type="text" name="telp" placeholder="Nomor HP" class="form-control" value="{{ old('telp') }}"/>
                     </div>
                 </div>
 
@@ -129,7 +129,7 @@
                 </div>
                 
                 <div class="form-group col-sm-14">
-                    <input type="text" name="alamat" class="form-control" id="inputAddress" placeholder="Alamat">
+                    <input type="text" name="alamat" class="form-control" id="inputAddress" placeholder="Alamat" value="{{ old('alamat') }}">
                 </div>
 
                 <div class="form-group">
