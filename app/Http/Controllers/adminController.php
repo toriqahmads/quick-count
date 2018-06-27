@@ -259,7 +259,7 @@ class adminController extends Controller
 	    	$req = new adminModel();
     		$req = $req->getAllSaksi();
 
-    		return View::share('saksi', compact('req'));
+    		return view('admin.saksi.userlist', compact('req'));
 	    }
     }
 
@@ -319,5 +319,6 @@ class adminController extends Controller
 	    	{
 	    		return redirect('admin')->with('alert','Delete data saksi gagal!');
 	    	}
-    }
+    	}
+	}
 }

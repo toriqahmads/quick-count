@@ -16,7 +16,10 @@
   <!-- CSS Files -->
   <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" />
   <link href="{{ asset('css/now-ui-dashboard.css?v=1.1.0') }}" rel="stylesheet" />
+  <link href="{{ asset('css/pagination.css') }}" rel="stylesheet" />
   <script src="{{ asset('js/core/jquery.3.2.1.min.js')}}" type="text/javascript"></script>
+  <script src="{{ asset('js/sortTable.js')}}" type="text/javascript"></script>
+  <script src="{{ asset('js/searchInTables.js')}}" type="text/javascript"></script>
 </head>
 
 <body class="">
@@ -27,7 +30,7 @@
     -->
       <div class="logo">
         <a href="http://www.creative-tim.com" class="simple-text logo-mini">
-          QC Count
+          QCount
         </a>
         <a href="http://www.creative-tim.com" class="simple-text logo-normal">
           Demak
@@ -36,15 +39,27 @@
       <div class="sidebar-wrapper">
         <ul class="nav">
           <li class="active ">
-            <a href="./dashboard.html">
+            <a href="{{ url('/admin') }}">
               <i class="now-ui-icons design_app"></i>
               <p>Dashboard</p>
             </a>
           </li>
           <li>
-            <a href="./user.html">
+            <a href="{{ url('/admin/listsaksi') }}">
               <i class="now-ui-icons users_single-02"></i>
-              <p>Profile</p>
+              <p>Data Saksi</p>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="now-ui-icons files_single-copy-04"></i>
+              <p>Data Suara</p>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="now-ui-icons design_bullet-list-67"></i>
+              <p>Data Caleg</p>
             </a>
           </li>
         </ul>
@@ -62,7 +77,7 @@
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="#pablo">Dashboard</a>
+            <a class="navbar-brand" href="#pablo">Quick Count Demak 2019</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>

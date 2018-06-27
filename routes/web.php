@@ -20,29 +20,33 @@ Route::get('/', function () {
 | Web Routes for getting data
 |----------------------------------------------------------------------
 */
-Route::get('/data/prov', 'dataController@getProv');
-Route::get('/data/kab/{id_prov}', 'dataController@getKab');
-Route::get('/data/kec/{id_kab}', 'dataController@getKec');
-Route::get('/data/kel/{id_kec}', 'dataController@getKel');
-Route::get('/data/tps/{id_kel}', 'dataController@getTps');
-Route::get('/data/dapil', 'dataController@getDapil');
-Route::get('/data/partai', 'dataController@getPartai');
-
+Route::group(['prefix' => 'data'], function()
+{
+	Route::get('/prov', 'dataController@getProv')->name('prov');
+	Route::get('/kab/{id_prov}', 'dataController@getKab')->name('kab');
+	Route::get('/kec/{id_kab}', 'dataController@getKec')->name('kec');
+	Route::get('/kel/{id_kec}', 'dataController@getKel')->name('kel');
+	Route::get('/tps/{id_kel}', 'dataController@getTps')->name('tps');
+	Route::get('/dapil', 'dataController@getDapil')->name('dapil');
+	Route::get('/partai', 'dataController@getPartai')->name('partai');
+});
 
 /*
 |----------------------------------------------------------------------
 | Web Routes for admin
 |----------------------------------------------------------------------
 */
-
-Route::get('/admin', 'adminController@index');
-Route::get('/admin/listsaksi', 'adminController@getAllSaksi');
-Route::get('/admin/edit/saksi/{nik}/{id}', 'adminController@editSaksi');
-Route::get('/admin/view/saksi/{nik}/{id}', 'adminController@viewSaksi');
-Route::delete('/admin/delete/saksi/{nik}/{id}', 'adminController@deleteSaksi')->name('delete.saksi');
-Route::post('/admin/updateProfile', 'adminController@updateProfile');
-Route::get('/admin/login', 'adminController@login');
-Route::get('/admin/register', 'adminController@register');
-Route::post('/admin/registerPost', 'adminController@registerPost');
-Route::get('/admin/logout', 'adminController@logout');
-Route::post('/admin/loginPost', 'adminController@loginPost');
+Route::group(['prefix' => 'admin'], function()
+{
+	Route::get('/', 'adminController@index')->name('index.admin');
+	Route::get('/listsaksi', 'adminController@getAllSaksi')->name('list.saksi');
+	Route::get('/edit/saksi/{nik}/{id}', 'adminController@editSaksi')->name('edit.saksi');
+	Route::get('/view/saksi/{nik}/{id}', 'adminController@viewSaksi')->name('view.saksi');
+	Route::delete('/delete/saksi/{nik}/{id}', 'adminController@deleteSaksi')->name('delete.saksi');
+	Route::post('/updateProfile', 'adminController@updateProfile')->name('update.profile');
+	Route::get('/login', 'adminController@login')->name('login.admin');
+	Route::get('/register', 'adminController@register')->name('register.admin');
+	Route::post('/registerPost', 'adminController@registerPost')->name('register.post.admin');
+	Route::get('/logout', 'adminController@logout')->name('logout.admin');
+	Route::post('/loginPost', 'adminController@loginPost')->name('login.post.admin');
+});

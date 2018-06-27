@@ -87,10 +87,11 @@ class adminModel extends Model
                 ->join('users', 'saksi.id', '=', 'id_saksi')
                 ->join('kel', 'kel.id', '=', 'saksi.id_kel')
                 ->join('kec', 'kec.id', '=', 'saksi.id_kec')
+                ->join('tps', 'tps.id', '=', 'saksi.id_tps')
                 ->where('saksi.status', '=', 'l')
                 ->where('users.status', '=', 'l')
-                ->select('saksi.*', 'kel.id as id_kel', 'kel.kel', 'kec.id as id_kec', 'kec.kec')
-                ->get();
+                ->select('saksi.*', 'kel.id as id_kel', 'kel.kel', 'kec.id as id_kec', 'kec.kec', 'tps.id as id_tps', 'tps.tps')
+                ->paginate('10');
         return $data;
     }
 
