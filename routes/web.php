@@ -39,7 +39,7 @@ Route::get('/admin', 'adminController@index');
 Route::get('/admin/listsaksi', 'adminController@getAllSaksi');
 Route::get('/admin/edit/saksi/{nik}/{id}', 'adminController@editSaksi');
 Route::get('/admin/view/saksi/{nik}/{id}', 'adminController@viewSaksi');
-Route::delete('/admin/delete/saksi/{nik}/{id}', 'adminController@deleteSaksi');
+Route::delete('/admin/delete/saksi/{nik}/{id}', 'adminController@deleteSaksi')->name('delete.saksi');
 Route::post('/admin/updateProfile', 'adminController@updateProfile');
 Route::get('/admin/login', 'adminController@login');
 Route::get('/admin/register', 'adminController@register');
