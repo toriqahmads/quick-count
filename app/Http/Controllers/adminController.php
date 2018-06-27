@@ -25,6 +25,7 @@ class adminController extends Controller
 	    	$kels = $kecamatan->getKel($data->id_kel);
 	    	$tps = $kecamatan->getTps($data->id_tps);
 	    	return view('admin.home.index', compact('data', 'kecs', 'kels', 'tps'));
+
 	    }
     }
 
@@ -258,8 +259,9 @@ class adminController extends Controller
 	    {
 	    	$req = new adminModel();
     		$req = $req->getAllSaksi();
-
-    		return View::share('saksi', compact('req'));
+            return view('admin.saksi.index', compact('req'));
+            
+    		// return View::share('saksi', compact('req'));
 	    }
     }
 
@@ -277,7 +279,9 @@ class adminController extends Controller
 	    	$kecs = $kecamatan->getKec(1);
 	    	$kels = $kecamatan->getKel($data->id_kel);
 	    	$tps = $kecamatan->getTps($data->id_tps);
-	    	return View::share('editSaksi', compact('data', 'kecs', 'kels', 'tps'));
+	    	// return View('', compact('data', 'kecs', 'kels', 'tps'));
+            return view('admin.saksi.edit', compact('data','kecs','kels','tps'));
+
 	    }
     }
 
@@ -319,5 +323,7 @@ class adminController extends Controller
 	    	{
 	    		return redirect('admin')->with('alert','Delete data saksi gagal!');
 	    	}
+        }
     }
+
 }

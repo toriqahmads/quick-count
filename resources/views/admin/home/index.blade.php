@@ -96,7 +96,7 @@
           }
       });
         };
-    </script>
+</script>
 
 @if(\Session::has('alert'))
     <script type="text/javascript">
@@ -141,19 +141,19 @@
           <form class="form" method="post" action="{{ url('/admin/updateProfile') }}">
             {{ csrf_field() }}
             <div class="row">
-              <div class="col-md-4 pl-1">
+              <div class="col-md-4">
                 <div class="form-group">
                   <label>NIK (Username)</label>
                   <input type="text" name="nik" class="form-control" placeholder="NIK" value="{{ $data->nik }}">
                 </div>
               </div>
-              <div class="col-md-4 pl-1">
+              <div class="col-md-4">
                 <div class="form-group">
                   <label>Nama Depan</label>
                   <input type="text" name="fname" class="form-control" placeholder="Nama Depan" value="{{ $data->nama_depan }}">
                 </div>
               </div>
-              <div class="col-md-4 pl-1">
+              <div class="col-md-4">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Nama Belakang</label>
                   <input type="text" name="lname" class="form-control" placeholder="Nama Belakang" value="{{ $data->nama_belakang }}">
@@ -161,13 +161,13 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-7">
+              <div class="col-md-8">
                 <div class="form-group">
                   <label>Alamat</label>
                   <input name="alamat" type="text" class="form-control" placeholder="Alamat" value="{{ $data->alamat }}">
                 </div>
               </div>
-              <div class="col-md-4 pr-1">
+              <div class="col-md-4">
                 <div class="form-group">
                   <label for="exampleFormControlSelect1">Provinsi</label>
                   <select name="prov" class="form-control" id="prov">
@@ -177,7 +177,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-4 pr-1">
+              <div class="col-md-4">
                 <div class="form-group">
                   <label for="exampleFormControlSelect1">Kabupaten</label>
                   <select name="kab" class="form-control" id="kab">
@@ -206,7 +206,7 @@
                   </select>
                 </div>
               </div>
-              <div class="col-md-4 pl-1">
+              <div class="col-md-4">
                 <div class="form-group">
                   <label for="exampleFormControlSelect1">Kelurahan</label>
                   <select name="kel" class="form-control" id="kel">
@@ -229,9 +229,9 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-4 pl-1">
+              <div class="col-md-4">
                 <div class="form-group">
-                  <label for="exampleFormControlSelect1">TPS</label>
+                  <label>TPS</label>
                   <select name="tps" class="form-control" id="tps">
                     <option value="0">TPS</option>
                     @foreach($tps as $tpss)
@@ -250,13 +250,13 @@
                   </select>
                 </div>
               </div>
-              <div class="col-md-4 pl-1">
+              <div class="col-md-4">
                 <div class="form-group">
                   <label>Dapil</label>
                   <input id="dapil" name="dapil" type="text" class="form-control" placeholder="Dapil" value="{{ $data->id_dapil }}">
                 </div>
               </div>
-              <div class="col-md-4 pl-1">
+              <div class="col-md-4">
                 <div class="form-group">
                   <label>No. HP</label>
                   <input type="text" name="telp" class="form-control" placeholder="No. HP" value="{{ $data->telp }}">

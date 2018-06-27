@@ -91,13 +91,14 @@ class adminModel extends Model
                 ->where('users.status', '=', 'l')
                 ->select('saksi.*', 'kel.id as id_kel', 'kel.kel', 'kec.id as id_kec', 'kec.kec')
                 ->get();
+        
         return $data;
+
     }
 
     function deleteSaksi($nik, $id_saksi)
     {
         $req = DB::select('CALL delete_data_saksi(?,?)', array($id_saksi, $nik));
-
         return $req;
     }
 }
