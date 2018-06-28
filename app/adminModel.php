@@ -80,4 +80,24 @@ class adminModel extends Model
 
         return $req;
     }
+
+    function getAllSaksi()
+    {
+        $data = DB::table('saksi')
+                ->join('users', 'saksi.id', '=', 'id_saksi')
+                ->join('kel', 'kel.id', '=', 'saksi.id_kel')
+                ->join('kec', 'kec.id', '=', 'saksi.id_kec')
+                ->where('saksi.status', '=', 'l')
+                ->where('users.status', '=', 'l')
+                ->select('saksi.*', 'kel.id as id_kel', 'kel.kel', 'kec.id as id_kec', 'kec.kec')
+                ->get();
+        return $data;
+    }
+
+    function deleteSaksi($nik, $id_saksi)
+    {
+        $req = DB::select('CALL delete_data_saksi(?,?)', array($id_saksi, $nik));
+
+        return $req;
+    }
 }

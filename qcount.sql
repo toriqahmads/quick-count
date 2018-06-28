@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 24, 2018 at 01:05 PM
+-- Generation Time: Jun 25, 2018 at 07:43 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 7.1.1
 
@@ -33,7 +33,7 @@ DECLARE jml INT(1);
 
 DECLARE CONTINUE HANDLER FOR SQLEXCEPTION, SQLWARNING, NOT FOUND
 BEGIN
-	GET DIAGNOSTICS CONDITION 1
+  GET DIAGNOSTICS CONDITION 1
     code = RETURNED_SQLSTATE, msg = MESSAGE_TEXT;
     SET rb = 1;
 END;
@@ -46,9 +46,9 @@ IF jml>0 THEN
 UPDATE caleg SET status = 'd' WHERE id = ids;
 
 IF code != '00000' OR rb = 1 THEN
-	ROLLBACK;
+  ROLLBACK;
 ELSE
-	COMMIT;
+  COMMIT;
     SET msg = 'success';
 END IF;
 ELSE
@@ -67,7 +67,7 @@ DECLARE jml INT(1);
 
 DECLARE CONTINUE HANDLER FOR SQLEXCEPTION, SQLWARNING, NOT FOUND
 BEGIN
-	GET DIAGNOSTICS CONDITION 1
+  GET DIAGNOSTICS CONDITION 1
     code = RETURNED_SQLSTATE, msg = MESSAGE_TEXT;
     SET rb = 1;
 END;
@@ -77,19 +77,19 @@ START TRANSACTION;
 SET jml := (SELECT COUNT(*) FROM saksi WHERE id = ids AND nik = nomor_nik);
 
 IF jml>0 THEN
-	UPDATE saksi SET status = 'd', nik = (SELECT CONCAT(nik, '+deleted')) WHERE id = ids;
+  UPDATE saksi SET status = 'd', nik = (SELECT CONCAT(nik, '+deleted')) WHERE id = ids;
 
-	UPDATE users SET status = 'd', username = (SELECT CONCAT(username, '+deleted')) WHERE id_saksi = ids;
+  UPDATE users SET status = 'd', username = (SELECT CONCAT(username, '+deleted')) WHERE id_saksi = ids;
 
 IF code != '00000' OR rb = 1 THEN
-	ROLLBACK;
+  ROLLBACK;
 ELSE
-	COMMIT;
+  COMMIT;
     SET msg = 'success';
 END IF;
 
 ELSE
-	SET msg = 'data not found';
+  SET msg = 'data not found';
 END IF;
 SELECT msg;
 
@@ -104,7 +104,7 @@ DECLARE jml INT(1);
 
 DECLARE CONTINUE HANDLER FOR SQLEXCEPTION, SQLWARNING, NOT FOUND
 BEGIN
-	GET DIAGNOSTICS CONDITION 1
+  GET DIAGNOSTICS CONDITION 1
     code = RETURNED_SQLSTATE, msg = MESSAGE_TEXT;
     SET rb = 1;
 END;
@@ -117,13 +117,13 @@ IF jml>0 THEN
 UPDATE proof SET updated = NOW(), status = 'd' WHERE id = ids;
 
 IF code != '00000' OR rb = 1 THEN
-	ROLLBACK;
+  ROLLBACK;
 ELSE
-	COMMIT;
+  COMMIT;
     SET msg = 'success';
 END IF;
 ELSE
-	SET msg = 'data not found';
+  SET msg = 'data not found';
 END IF;
 
 SELECT msg;
@@ -138,7 +138,7 @@ DECLARE jml INT(1);
 
 DECLARE CONTINUE HANDLER FOR SQLEXCEPTION, SQLWARNING, NOT FOUND
 BEGIN
-	GET DIAGNOSTICS CONDITION 1
+  GET DIAGNOSTICS CONDITION 1
     code = RETURNED_SQLSTATE, msg = MESSAGE_TEXT;
     SET rb = 1;
 END;
@@ -151,13 +151,13 @@ IF jml>0 THEN
 UPDATE r_suara SET updated = NOW(), status = 'd' WHERE id = ids;
 
 IF code != '00000' OR rb = 1 THEN
-	ROLLBACK;
+  ROLLBACK;
 ELSE
-	COMMIT;
+  COMMIT;
     SET msg = 'success';
 END IF;
 ELSE
-	SET msg = 'data not found';
+  SET msg = 'data not found';
 END IF;
 SELECT msg;
 END$$
@@ -171,7 +171,7 @@ DECLARE jml INT(1);
 
 DECLARE CONTINUE HANDLER FOR SQLEXCEPTION, SQLWARNING, NOT FOUND
 BEGIN
-	GET DIAGNOSTICS CONDITION 1
+  GET DIAGNOSTICS CONDITION 1
     code = RETURNED_SQLSTATE, msg = MESSAGE_TEXT;
     SET rb = 1;
 END;
@@ -184,13 +184,13 @@ IF jml>0 THEN
 UPDATE suara SET updated = NOW(), status = 'd' WHERE id = ids;
 
 IF code != '00000' OR rb = 1 THEN
-	ROLLBACK;
+  ROLLBACK;
 ELSE
-	COMMIT;
+  COMMIT;
     SET msg = 'success';
 END IF;
 ELSE
-	SET msg = 'data not found';
+  SET msg = 'data not found';
 END IF;
 
 SELECT msg;
@@ -204,7 +204,7 @@ DECLARE rb BOOL DEFAULT 0;
 
 DECLARE CONTINUE HANDLER FOR SQLEXCEPTION, SQLWARNING, NOT FOUND
 BEGIN
-	GET DIAGNOSTICS CONDITION 1
+  GET DIAGNOSTICS CONDITION 1
     code = RETURNED_SQLSTATE, msg = MESSAGE_TEXT;
     SET rb = 1;
 END;
@@ -214,9 +214,9 @@ START TRANSACTION;
 INSERT INTO caleg (nama_depan, nama_belakang, id_partai, id_dapil, id_prov, id_kab, id_kel) VALUES (fname, lname, partai, dapil, prov, kab, kel);
 
 IF code != '00000' OR rb = 1 THEN
-	ROLLBACK;
+  ROLLBACK;
 ELSE
-	COMMIT;
+  COMMIT;
     SET msg = 'success';
 END IF;
 SELECT msg;
@@ -262,7 +262,7 @@ DECLARE jml INT(1);
 
 DECLARE CONTINUE HANDLER FOR SQLEXCEPTION, SQLWARNING, NOT FOUND
 BEGIN
-	GET DIAGNOSTICS CONDITION 1
+  GET DIAGNOSTICS CONDITION 1
     code = RETURNED_SQLSTATE, msg = MESSAGE_TEXT;
     SET rb = 1;
 END;
@@ -274,13 +274,13 @@ IF jml>0 THEN
 INSERT INTO proof (foto, location, id_dapil, id_tps, id_saksi, tanggal, updated) VALUES (photo, lokasi, dapil, tps, saksi, NOW(), NOW());
 
 IF code != '00000' OR rb = 1 THEN
-	ROLLBACK;
+  ROLLBACK;
 ELSE
-	COMMIT;
+  COMMIT;
     SET msg = 'success';
 END IF;
 ELSE
-	SET msg = 'data for saksi not found';
+  SET msg = 'data for saksi not found';
 END IF;
 SELECT msg;
 END$$
@@ -293,7 +293,7 @@ DECLARE rb BOOL DEFAULT 0;
 
 DECLARE CONTINUE HANDLER FOR SQLEXCEPTION, SQLWARNING, NOT FOUND
 BEGIN
-	GET DIAGNOSTICS CONDITION 1
+  GET DIAGNOSTICS CONDITION 1
     code = RETURNED_SQLSTATE, msg = MESSAGE_TEXT;
     SET rb = 1;
 END;
@@ -303,9 +303,9 @@ START TRANSACTION;
 INSERT INTO r_suara (jenis, jumlah, tingkat, id_tps, tanggal, updated) VALUES (tipe, n, tingkatan, tps, NOW(), NOW());
 
 IF code != '00000' OR rb = 1 THEN
-	ROLLBACK;
+  ROLLBACK;
 ELSE
-	COMMIT;
+  COMMIT;
     SET msg = 'success';
 END IF;
 SELECT msg;
@@ -321,7 +321,7 @@ DECLARE jml2 INT(1);
 
 DECLARE CONTINUE HANDLER FOR SQLEXCEPTION, SQLWARNING, NOT FOUND
 BEGIN
-	GET DIAGNOSTICS CONDITION 1
+  GET DIAGNOSTICS CONDITION 1
     code = RETURNED_SQLSTATE, msg = MESSAGE_TEXT;
     SET rb = 1;
 END;
@@ -334,13 +334,13 @@ IF jml>0 AND jml2>0 THEN
 INSERT INTO suara (suara, id_caleg, id_saksi, tanggal, updated, id_tps) VALUES (j_suara, caleg, saksi, NOW(), NOW(), tps);
 
 IF code != '00000' OR rb = 1 THEN
-	ROLLBACK;
+  ROLLBACK;
 ELSE
-	COMMIT;
+  COMMIT;
     SET msg = 'success';
 END IF;
 ELSE
-	SET msg = 'data for caleg or saksi not found';
+  SET msg = 'data for caleg or saksi not found';
 END IF;
 SELECT msg;
 END$$
@@ -353,7 +353,7 @@ DECLARE rb BOOL DEFAULT 0;
 
 DECLARE CONTINUE HANDLER FOR SQLEXCEPTION, SQLWARNING, NOT FOUND
 BEGIN
-	GET DIAGNOSTICS CONDITION 1
+  GET DIAGNOSTICS CONDITION 1
     code = RETURNED_SQLSTATE, msg = MESSAGE_TEXT;
     SET rb = 1;
 END;
@@ -363,9 +363,9 @@ START TRANSACTION;
 INSERT INTO tps (tps, id_dapil, id_kel, id_kec, id_kab, id_prov) VALUES (n_tps, dapil, kel, kec, kab, prov);
 
 IF code != '00000' OR rb = 1 THEN
-	ROLLBACK;
+  ROLLBACK;
 ELSE
-	COMMIT;
+  COMMIT;
     SET msg = 'success';
 END IF;
 SELECT msg;
@@ -380,7 +380,7 @@ DECLARE jml INT(1);
 
 DECLARE CONTINUE HANDLER FOR SQLEXCEPTION, SQLWARNING, NOT FOUND
 BEGIN
-	GET DIAGNOSTICS CONDITION 1
+  GET DIAGNOSTICS CONDITION 1
     code = RETURNED_SQLSTATE, msg = MESSAGE_TEXT;
     SET rb = 1;
 END;
@@ -393,18 +393,18 @@ IF jml>0 THEN
 UPDATE caleg SET nama_depan = fname, nama_belakang = lname, id_partai = partai, id_dapil = dapil, id_prov = prov, id_kab = kab, id_kel = kel WHERE id = ids;
 
 IF code != '00000' OR rb = 1 THEN
-	ROLLBACK;
+  ROLLBACK;
 ELSE
-	COMMIT;
+  COMMIT;
     SET msg = 'success';
 END IF;
 ELSE
-	SET msg = 'data not found';
+  SET msg = 'data not found';
 END IF;
 SELECT msg;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `update_data_saksi` (IN `ids` INT(2), IN `fname` VARCHAR(15), IN `lname` VARCHAR(15), IN `sex` CHAR(1), IN `alamat` VARCHAR(30), IN `kel` INT(4), IN `kec` INT(2), IN `kab` INT(2), IN `prov` INT(2), IN `dapil` INT(2), IN `nomor_nik` VARCHAR(16), IN `photo` VARCHAR(30), IN `telpon` VARCHAR(13), IN `tps` INT(2))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_data_saksi` (IN `ids` INT(2), IN `fname` VARCHAR(15), IN `lname` VARCHAR(15), IN `sex` CHAR(1), IN `alamat` VARCHAR(30), IN `kel` INT(4), IN `kec` INT(2), IN `kab` INT(2), IN `prov` INT(2), IN `dapil` INT(2), IN `nomor_nik` VARCHAR(16), IN `telpon` VARCHAR(13), IN `tps` INT(2))  BEGIN
 DECLARE code CHAR(5) DEFAULT '00000';
 DECLARE msg TEXT;
 DECLARE rb BOOL DEFAULT 0;
@@ -412,7 +412,7 @@ DECLARE jml INT(1);
 
 DECLARE CONTINUE HANDLER FOR SQLEXCEPTION, SQLWARNING, NOT FOUND
 BEGIN
-	GET DIAGNOSTICS CONDITION 1
+  GET DIAGNOSTICS CONDITION 1
     code = RETURNED_SQLSTATE, msg = MESSAGE_TEXT;
     SET rb = 1;
 END;
@@ -421,16 +421,16 @@ START TRANSACTION;
 SET jml := (SELECT COUNT(*) FROM saksi WHERE id = ids AND nik = nomor_nik);
 
 IF jml>0 THEN
-UPDATE saksi SET nama_depan = fname, nama_belakang = lname, gender = sex, alamat = alamat, id_kel = kel, id_kec = kec, id_kab = kab, id_prov = prov, id_dapil = dapil, nik = nomor_nik, foto = photo, telp = telpon, id_tps = tps WHERE id = ids;
+UPDATE saksi SET nama_depan = fname, nama_belakang = lname, gender = sex, alamat = alamat, id_kel = kel, id_kec = kec, id_kab = kab, id_prov = prov, id_dapil = dapil, nik = nomor_nik, telp = telpon, id_tps = tps WHERE id = ids;
 
 IF code != '00000' OR rb = 1 THEN
-	ROLLBACK;
+  ROLLBACK;
 ELSE
-	COMMIT;
+  COMMIT;
     SET msg = 'success';
 END IF;
 ELSE
-	SET msg = 'data not found';
+  SET msg = 'data not found';
 END IF;
 SELECT msg;
 
@@ -445,7 +445,7 @@ DECLARE jml INT(1);
 
 DECLARE CONTINUE HANDLER FOR SQLEXCEPTION, SQLWARNING, NOT FOUND
 BEGIN
-	GET DIAGNOSTICS CONDITION 1
+  GET DIAGNOSTICS CONDITION 1
     code = RETURNED_SQLSTATE, msg = MESSAGE_TEXT;
     SET rb = 1;
 END;
@@ -458,13 +458,13 @@ IF jml>0 THEN
 UPDATE proof SET foto = photo, location = lokasi, id_dapil = dapil, id_tps = tps, id_saksi = saksi, updated = NOW() WHERE id = ids;
 
 IF code != '00000' OR rb = 1 THEN
-	ROLLBACK;
+  ROLLBACK;
 ELSE
-	COMMIT;
+  COMMIT;
     SET msg = 'success';
 END IF;
 ELSE 
-	SET msg = 'data not found';
+  SET msg = 'data not found';
 END IF;
 
 SELECT msg;
@@ -480,7 +480,7 @@ DECLARE jml INT(1);
 
 DECLARE CONTINUE HANDLER FOR SQLEXCEPTION, SQLWARNING, NOT FOUND
 BEGIN
-	GET DIAGNOSTICS CONDITION 1
+  GET DIAGNOSTICS CONDITION 1
     code = RETURNED_SQLSTATE, msg = MESSAGE_TEXT;
     SET rb = 1;
 END;
@@ -493,13 +493,13 @@ IF jml>0 THEN
 UPDATE r_suara SET jenis = tipe, jumlah = n, tingkat = tingkatan, id_tps = tps WHERE id = ids;
 
 IF code != '00000' OR rb = 1 THEN
-	ROLLBACK;
+  ROLLBACK;
 ELSE
-	COMMIT;
+  COMMIT;
     SET msg = 'success';
 END IF;
 ELSE
-	SET msg = 'data not found';
+  SET msg = 'data not found';
 END IF;
 
 SELECT msg;
@@ -515,7 +515,7 @@ DECLARE jml INT(1);
 
 DECLARE CONTINUE HANDLER FOR SQLEXCEPTION, SQLWARNING, NOT FOUND
 BEGIN
-	GET DIAGNOSTICS CONDITION 1
+  GET DIAGNOSTICS CONDITION 1
     code = RETURNED_SQLSTATE, msg = MESSAGE_TEXT;
     SET rb = 1;
 END;
@@ -528,13 +528,13 @@ IF jml>0 THEN
 UPDATE suara SET suara = j_suara, id_caleg = caleg, id_saksi = saksi, id_tps = tps, updated = NOW() WHERE id = ids;
 
 IF code != '00000' OR rb = 1 THEN
-	ROLLBACK;
+  ROLLBACK;
 ELSE
-	COMMIT;
+  COMMIT;
     SET msg = 'success';
 END IF;
 ELSE
-	SET msg = 'data not found';
+  SET msg = 'data not found';
 END IF;
 
 SELECT msg;
@@ -550,7 +550,7 @@ DECLARE jml INT(1);
 
 DECLARE CONTINUE HANDLER FOR SQLEXCEPTION, SQLWARNING, NOT FOUND
 BEGIN
-	GET DIAGNOSTICS CONDITION 1
+  GET DIAGNOSTICS CONDITION 1
     code = RETURNED_SQLSTATE, msg = MESSAGE_TEXT;
     SET rb = 1;
 END;
@@ -562,13 +562,13 @@ IF jml>0 THEN
 UPDATE tps SET tps = n_tps, id_dapil = dapil, id_kel = kel, id_kec = kec, id_kab = kab, id_prov = prov WHERE id = ids;
 
 IF code != '00000' OR rb = 1 THEN
-	ROLLBACK;
+  ROLLBACK;
 ELSE
-	COMMIT;
+  COMMIT;
     SET msg = 'success';
 END IF;
 ELSE
-	SET msg = 'data not found';
+  SET msg = 'data not found';
 END IF;
 SELECT msg;
 
@@ -1059,7 +1059,7 @@ CREATE TABLE `saksi` (
 
 INSERT INTO `saksi` (`id`, `nama_depan`, `nama_belakang`, `gender`, `alamat`, `id_kel`, `id_kec`, `id_kab`, `id_prov`, `id_dapil`, `nik`, `foto`, `telp`, `id_tps`, `status`) VALUES
 (1, 'Muhammad', 'Haimin', 'l', 'Jl. Kyai Singki no.45', 1, 1, 1, 1, 1, '337230934799234+deleted', 'Images2.jpg', '089667823877', 1, 'd'),
-(2, 'Rozikin', 'Ahmad', 'l', 'Jl. Pahlawan no.11', 1, 1, 1, 1, 1, '3340034987239080', 'rozik.jpg', '089668623899', 1, 'l'),
+(2, 'Rozikin', 'Ahmad', 'l', 'Jl. Pahlawan no.11', 1, 1, 1, 1, 1, '3340034987239080', 'default_avatar.jpg', '089668623899', 1, 'l'),
 (3, 'Fadli', 'Ihsan', 'l', 'Jl. Tentara Pelajar no.11', 1, 1, 1, 1, 1, '3302210111900006', 'default_avatar.jpg', '08966862389', 1, 'l'),
 (4, 'Ziat', 'Ahmad', 'l', 'Jl. Wadak Sempal no.11', 1, 1, 1, 1, 1, '3302210111900007', 'default_avatar.jpg', '089667865658', 1, 'l'),
 (5, 'Ahmad', 'Husain', 'l', 'Jl. Kyai Singkil no.4', 1, 1, 1, 1, 1, '3302210111900004', 'default_avatar.jpg', '08966862385', 1, 'l'),
