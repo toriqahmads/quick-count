@@ -296,7 +296,7 @@ SELECT msg;
 END$$
 
 DROP PROCEDURE IF EXISTS `input_r_suara`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `input_r_suara` (IN `tipe` ENUM('a','b','c','d','cadangan'), IN `n` INT(5), IN `tingkatan` INT(2), IN `tps` INT(3))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `input_r_suara` (IN `tipe` ENUM('a','b','c','d'), IN `n` INT(5), IN `tingkatan` INT(2), IN `tps` INT(3))  BEGIN
 
 DECLARE code CHAR(5) DEFAULT '00000';
 DECLARE msg TEXT;
@@ -488,7 +488,7 @@ SELECT msg;
 END$$
 
 DROP PROCEDURE IF EXISTS `update_r_suara`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `update_r_suara` (IN `ids` INT(2), IN `tipe` ENUM('a','b','c','d','cadangan'), IN `n` INT(5), IN `tingkatan` INT(2), IN `tps` INT(3))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_r_suara` (IN `ids` INT(2), IN `tipe` ENUM('a','b','c','d'), IN `n` INT(5), IN `tingkatan` INT(2), IN `tps` INT(3))  BEGIN
 
 DECLARE code CHAR(5) DEFAULT '00000';
 DECLARE msg TEXT;
