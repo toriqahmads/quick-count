@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jul 01, 2018 at 08:53 AM
+-- Generation Time: Jul 01, 2018 at 09:35 AM
 -- Server version: 5.7.21
 -- PHP Version: 7.0.29
 
@@ -26,8 +26,8 @@ DELIMITER $$
 --
 -- Procedures
 --
-DROP PROCEDURE IF EXISTS `delete_data_caleg`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `delete_data_caleg` (IN `ids` INT(2))  BEGIN
+DROP PROCEDURE IF EXISTS `delete_data_pil`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `delete_data_pil` (IN `ids` INT(2))  BEGIN
 
 DECLARE code CHAR(5) DEFAULT '00000';
 DECLARE msg TEXT;
@@ -43,10 +43,10 @@ END;
 
 START TRANSACTION;
 
-SET jml := (SELECT COUNT(*) FROM caleg WHERE id = ids AND status = 'l');
+SET jml := (SELECT COUNT(*) FROM pil WHERE id = ids AND status = 'l');
 
 IF jml>0 THEN
-UPDATE caleg SET status = 'd' WHERE id = ids;
+UPDATE pil SET status = 'd' WHERE id = ids;
 
 IF code != '00000' OR rb = 1 THEN
   ROLLBACK;
@@ -203,8 +203,8 @@ END IF;
 SELECT msg;
 END$$
 
-DROP PROCEDURE IF EXISTS `input_data_caleg`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `input_data_caleg` (IN `fname` VARCHAR(15), IN `lname` VARCHAR(15), IN `partai` INT(2), IN `dapil` INT(2), IN `prov` INT(2), IN `kab` INT(2), IN `kel` INT(2))  BEGIN
+DROP PROCEDURE IF EXISTS `input_data_pil`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `input_data_pil` (IN `fname` VARCHAR(15), IN `lname` VARCHAR(15), IN `partai` INT(2), IN `dapil` INT(2), IN `prov` INT(2), IN `kab` INT(2), IN `kel` INT(2), IN `tingkat` ENUM('a','b','c','d','e'))  BEGIN
 
 DECLARE code CHAR(5) DEFAULT '00000';
 DECLARE msg TEXT;
@@ -219,7 +219,7 @@ END;
 
 START TRANSACTION;
 
-INSERT INTO caleg (nama_depan, nama_belakang, id_partai, id_dapil, id_prov, id_kab, id_kel) VALUES (fname, lname, partai, dapil, prov, kab, kel);
+INSERT INTO pil(nama_depan, nama_belakang, tingkat, id_partai, id_dapil, id_prov, id_kab, id_kel) VALUES (fname, lname, tingkat, partai, dapil, prov, kab, kel);
 
 IF code != '00000' OR rb = 1 THEN
   ROLLBACK;
@@ -296,7 +296,7 @@ SELECT msg;
 END$$
 
 DROP PROCEDURE IF EXISTS `input_r_suara`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `input_r_suara` (IN `tipe` ENUM('a','b','c','d'), IN `n` INT(5), IN `tingkatan` INT(2), IN `tps` INT(3))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `input_r_suara` (IN `tipe` ENUM('a','b','c','d','cadangan'), IN `n` INT(5), IN `tingkatan` INT(2), IN `tps` INT(3))  BEGIN
 
 DECLARE code CHAR(5) DEFAULT '00000';
 DECLARE msg TEXT;
@@ -384,8 +384,8 @@ END IF;
 SELECT msg;
 END$$
 
-DROP PROCEDURE IF EXISTS `update_data_caleg`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `update_data_caleg` (IN `ids` INT(2), IN `fname` VARCHAR(15), IN `lname` VARCHAR(15), IN `partai` INT(2), IN `dapil` INT(2), IN `prov` INT(2), IN `kab` INT(2), IN `kel` INT(2))  BEGIN
+DROP PROCEDURE IF EXISTS `update_data_pil`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_data_pil` (IN `ids` INT(2), IN `fname` VARCHAR(15), IN `lname` VARCHAR(15), IN `partai` INT(2), IN `dapil` INT(2), IN `prov` INT(2), IN `kab` INT(2), IN `kel` INT(2), IN `tingkat` ENUM('a','b','c','d','e'))  BEGIN
 
 DECLARE code CHAR(5) DEFAULT '00000';
 DECLARE msg TEXT;
@@ -401,10 +401,10 @@ END;
 
 START TRANSACTION;
 
-SET jml := (SELECT COUNT(*) FROM caleg WHERE id = ids);
+SET jml := (SELECT COUNT(*) FROM pil WHERE id = ids);
 
 IF jml>0 THEN
-UPDATE caleg SET nama_depan = fname, nama_belakang = lname, id_partai = partai, id_dapil = dapil, id_prov = prov, id_kab = kab, id_kel = kel WHERE id = ids;
+UPDATE pil SET nama_depan = fname, nama_belakang = lname, id_partai = partai, id_dapil = dapil, id_prov = prov, id_kab = kab, id_kel = kel, tingkat = tingkat WHERE id = ids;
 
 IF code != '00000' OR rb = 1 THEN
   ROLLBACK;
@@ -488,7 +488,7 @@ SELECT msg;
 END$$
 
 DROP PROCEDURE IF EXISTS `update_r_suara`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `update_r_suara` (IN `ids` INT(2), IN `tipe` ENUM('a','b','c','d'), IN `n` INT(5), IN `tingkatan` INT(2), IN `tps` INT(3))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_r_suara` (IN `ids` INT(2), IN `tipe` ENUM('a','b','c','d','cadangan'), IN `n` INT(5), IN `tingkatan` INT(2), IN `tps` INT(3))  BEGIN
 
 DECLARE code CHAR(5) DEFAULT '00000';
 DECLARE msg TEXT;
@@ -609,38 +609,6 @@ CREATE TABLE IF NOT EXISTS `admin` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `caleg`
---
-
-DROP TABLE IF EXISTS `caleg`;
-CREATE TABLE IF NOT EXISTS `caleg` (
-  `id` int(2) NOT NULL AUTO_INCREMENT,
-  `nama_depan` varchar(15) DEFAULT NULL,
-  `nama_belakang` varchar(15) DEFAULT NULL,
-  `id_partai` int(2) DEFAULT NULL,
-  `id_dapil` int(2) DEFAULT NULL,
-  `id_prov` int(2) DEFAULT NULL,
-  `id_kab` int(2) DEFAULT NULL,
-  `id_kel` int(2) DEFAULT NULL,
-  `status` char(1) NOT NULL DEFAULT 'l' COMMENT '''l'' untuk data masih digunakan, ''d'' untuk data sudah dihapus',
-  PRIMARY KEY (`id`),
-  KEY `caleg_ibfk_1` (`id_partai`),
-  KEY `caleg_ibfk_2` (`id_dapil`),
-  KEY `caleg_ibfk_3` (`id_prov`),
-  KEY `caleg_ibfk_4` (`id_kab`),
-  KEY `caleg_ibfk_5` (`id_kel`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `caleg`
---
-
-INSERT INTO `caleg` (`id`, `nama_depan`, `nama_belakang`, `id_partai`, `id_dapil`, `id_prov`, `id_kab`, `id_kel`, `status`) VALUES
-(2, 'Ahlis', 'MF', 1, 1, 1, 1, 1, 'd');
 
 -- --------------------------------------------------------
 
@@ -1025,6 +993,39 @@ INSERT INTO `partai` (`id`, `partai`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `pil`
+--
+
+DROP TABLE IF EXISTS `pil`;
+CREATE TABLE IF NOT EXISTS `pil` (
+  `id` int(2) NOT NULL AUTO_INCREMENT,
+  `nama_depan` varchar(15) DEFAULT NULL,
+  `nama_belakang` varchar(15) DEFAULT NULL,
+  `tingkat` enum('a','b','c','d','e') NOT NULL COMMENT 'a = presiden. b = dpd. c = dppri. d = dpr prov. e = dpr kab',
+  `id_partai` int(2) DEFAULT NULL,
+  `id_dapil` int(2) DEFAULT NULL,
+  `id_prov` int(2) DEFAULT NULL,
+  `id_kab` int(2) DEFAULT NULL,
+  `id_kel` int(2) DEFAULT NULL,
+  `status` char(1) NOT NULL DEFAULT 'l' COMMENT '''l'' untuk data masih digunakan, ''d'' untuk data sudah dihapus',
+  PRIMARY KEY (`id`),
+  KEY `caleg_ibfk_1` (`id_partai`),
+  KEY `caleg_ibfk_2` (`id_dapil`),
+  KEY `caleg_ibfk_3` (`id_prov`),
+  KEY `caleg_ibfk_4` (`id_kab`),
+  KEY `caleg_ibfk_5` (`id_kel`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `pil`
+--
+
+INSERT INTO `pil` (`id`, `nama_depan`, `nama_belakang`, `tingkat`, `id_partai`, `id_dapil`, `id_prov`, `id_kab`, `id_kel`, `status`) VALUES
+(2, 'Ahlis', 'MF', 'a', 1, 1, 1, 1, 1, 'd');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `proof`
 --
 
@@ -1077,7 +1078,7 @@ CREATE TABLE IF NOT EXISTS `r_suara` (
   `id` int(3) NOT NULL AUTO_INCREMENT,
   `jenis` enum('a','b','c','d') DEFAULT NULL COMMENT 'a = surat rusak. b = surat tidak terpakai. c = surat sah. d = surat tidak sah. e = (c+d)->suara sah dan tidak sah. ',
   `jumlah` int(5) DEFAULT NULL,
-  `tingkat` int(2) DEFAULT NULL,
+  `tingkat` enum('a','b','c','d','e') DEFAULT NULL COMMENT 'a = presiden. b = dpd. c = dppri. d = dpr prov. e = dpr kab',
   `id_tps` int(3) DEFAULT NULL,
   `tanggal` datetime NOT NULL,
   `updated` datetime NOT NULL,
@@ -1244,16 +1245,6 @@ INSERT INTO `users` (`id`, `username`, `pass`, `id_saksi`, `status`) VALUES
 --
 
 --
--- Constraints for table `caleg`
---
-ALTER TABLE `caleg`
-  ADD CONSTRAINT `caleg_ibfk_1` FOREIGN KEY (`id_partai`) REFERENCES `partai` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `caleg_ibfk_2` FOREIGN KEY (`id_dapil`) REFERENCES `dapil` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `caleg_ibfk_3` FOREIGN KEY (`id_prov`) REFERENCES `prov` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `caleg_ibfk_4` FOREIGN KEY (`id_kab`) REFERENCES `kab` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `caleg_ibfk_5` FOREIGN KEY (`id_kel`) REFERENCES `kel` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
-
---
 -- Constraints for table `kab`
 --
 ALTER TABLE `kab`
@@ -1274,6 +1265,16 @@ ALTER TABLE `kel`
   ADD CONSTRAINT `kel_ibfk_1` FOREIGN KEY (`id_kec`) REFERENCES `kec` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `kel_ibfk_2` FOREIGN KEY (`id_kab`) REFERENCES `kab` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `kel_ibfk_3` FOREIGN KEY (`id_prov`) REFERENCES `prov` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
+-- Constraints for table `pil`
+--
+ALTER TABLE `pil`
+  ADD CONSTRAINT `pil_ibfk_1` FOREIGN KEY (`id_partai`) REFERENCES `partai` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `pil_ibfk_2` FOREIGN KEY (`id_dapil`) REFERENCES `dapil` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `pil_ibfk_3` FOREIGN KEY (`id_prov`) REFERENCES `prov` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `pil_ibfk_4` FOREIGN KEY (`id_kab`) REFERENCES `kab` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `pil_ibfk_5` FOREIGN KEY (`id_kel`) REFERENCES `kel` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Constraints for table `proof`
@@ -1304,7 +1305,7 @@ ALTER TABLE `saksi`
 -- Constraints for table `suara`
 --
 ALTER TABLE `suara`
-  ADD CONSTRAINT `suara_ibfk_1` FOREIGN KEY (`id_caleg`) REFERENCES `caleg` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  ADD CONSTRAINT `suara_ibfk_1` FOREIGN KEY (`id_caleg`) REFERENCES `pil` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
   ADD CONSTRAINT `suara_ibfk_3` FOREIGN KEY (`id_saksi`) REFERENCES `saksi` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
   ADD CONSTRAINT `suara_parta` FOREIGN KEY (`id_partai`) REFERENCES `partai` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `suara_tps` FOREIGN KEY (`id_tps`) REFERENCES `tps` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
