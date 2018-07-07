@@ -1,28 +1,43 @@
-$('#hapus').onclick(function(e)
-{
-    e.prefentDefault();
+$(".hapus").click(function(e){
+    e.preventDefault();
+    id = $(this).parents("form").attr("id");
+    idtr = $(this).parents("tr").attr("id");
     $.confirm({
         title: 'Konfirmasi',
         content: 'Anda yakin akan menghapus data saksi tersebut?',
+        type: 'red',
+        typeAnimated: true,
+        boxWidth: '30%',
+        animation: 'rotateYR',
+        closeAnimation: 'rotate',
+        closeIcon: true,
+        theme: 'supervan',
         buttons: {
-            confirm: function(){
+            Yakin: {
+                btnClass: 'btn-red',
+                action : function(){
                 $.ajax({
-                       url: $('#hapussaksi').attr('action'),
+                       url: $('#'+id).attr('action'),
                        type: 'POST',
-                       data: $('#hapussaksi').serialize(),
+                       data: $('#'+id).serialize(),
                        success: function(response) 
                        {
-                         $.alert('Data saksi berhasil dihapus!');
+                         jQuery.alert('Data saksi berhasil dihapus!');
+                         $('#'+idtr).remove();
                        },
                        error: function(xhr, Status, err)
                        {
-                        $.alert('Data saksi gagal dihapus!');
+                         jQuery.alert('Data saksi gagal dihapus!');
                        }
                     });
+                }
             },
-            cancel: function () {
-                $.alert('Canceled!');
+            Tidak: {
+                btnClass: 'btn-blue',
+                action: function(){
+                    jQuery.alert('Dibatalkan!');
+                }
             }
         }
-    });
+});
 });

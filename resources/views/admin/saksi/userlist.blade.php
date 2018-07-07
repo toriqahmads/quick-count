@@ -47,7 +47,7 @@
               <tbody>
                 <?php $no = 1; ?>
                 @foreach($req as $data)
-                  <tr>
+                  <tr id="{{$data->id}}">
                       <td class="text-center">{{$no++}}</td>
                       <td>{{ $data->nama_depan }} {{ $data->nama_belakang }}</td>
                       <td>{{ $data->nik }}</td>
@@ -66,10 +66,10 @@
                               <i class="now-ui-icons design-2_ruler-pencil"></i>
                           </button>
                         </form>
-                          <form id="hapussaksi" method="POST" action="{{ route('delete.saksi', [$data->nik, $data->id]) }}">
+                          <form id="hapussaksi{{$data->id}}" method="POST" action="{{ route('delete.saksi', [$data->nik, $data->id]) }}">
                               {{ csrf_field() }}
                               {{ method_field('DELETE') }}
-                              <button type="submit" rel="tooltip" id="hapus" title="Hapus" class="btn btn-danger btn-sm btn-icon">
+                              <button type="submit" rel="tooltip" title="Hapus" class="hapus btn btn-danger btn-sm btn-icon">
                                 <i class="now-ui-icons ui-1_simple-remove"></i>
                               </button>
                           </form>

@@ -302,15 +302,15 @@ class adminController extends Controller
         	$req = json_decode(json_encode($req), true);
         	if($req[0]['msg'] == "success")
 	    	{
-	    		return redirect()->back()->with('alert-success','Delete data saksi sukses!');
+	    		return "Hapus data saksi sukses!";
 	    	}
 	    	elseif($req[0]['msg'] == "data not found")
 	    	{
-	    		return redirect()->back()->with('alert','Data saksi dengan NIK dan ID tersebut tidak ditemukan!');
+	    		return "Data saksi dengan NIK dan ID tersebut tidak ditemukan!";
 	    	}
 	    	else
 	    	{
-	    		return redirect()->back()->with('alert','Delete data saksi gagal!');
+	    		return "Hapus data saksi gagal!";
 	    	}
     	}
 	}
