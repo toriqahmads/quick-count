@@ -233,11 +233,11 @@ class adminController extends Controller
     	$req = json_decode(json_encode($req), true);
     	if($req[0]['msg'] == "success")
     	{
-    		return redirect('admin')->with('alert-success','Update data saksi sukses!');
+    		return redirect()->back()->with('alert-success','Update data saksi sukses!');
     	}
     	else
     	{
-    		return redirect('admin')->with('alert','Update data saksi gagal!');
+    		return redirect()->back()->with('alert','Update data saksi gagal!');
     	}
     }
 
@@ -302,15 +302,15 @@ class adminController extends Controller
         	$req = json_decode(json_encode($req), true);
         	if($req[0]['msg'] == "success")
 	    	{
-	    		return redirect('admin')->with('alert-success','Delete data saksi sukses!');
+	    		return redirect()->back()->with('alert-success','Delete data saksi sukses!');
 	    	}
 	    	elseif($req[0]['msg'] == "data not found")
 	    	{
-	    		return redirect('admin')->with('alert','Data saksi dengan NIK dan ID tersebut tidak ditemukan!');
+	    		return redirect()->back()->with('alert','Data saksi dengan NIK dan ID tersebut tidak ditemukan!');
 	    	}
 	    	else
 	    	{
-	    		return redirect('admin')->with('alert','Delete data saksi gagal!');
+	    		return redirect()->back()->with('alert','Delete data saksi gagal!');
 	    	}
     	}
 	}

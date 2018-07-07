@@ -16,10 +16,13 @@
   <!-- CSS Files -->
   <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" />
   <link href="{{ asset('css/now-ui-dashboard.css?v=1.1.0') }}" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
   <link href="{{ asset('css/pagination.css') }}" rel="stylesheet" />
   <script src="{{ asset('js/core/jquery.3.2.1.min.js')}}" type="text/javascript"></script>
   <script src="{{ asset('js/sortTable.js')}}" type="text/javascript"></script>
   <script src="{{ asset('js/searchInTables.js')}}" type="text/javascript"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
+  <script src="{{ asset('js/delete-saksi.js')}}" type="text/javascript"></script>
 </head>
 
 <body class="">

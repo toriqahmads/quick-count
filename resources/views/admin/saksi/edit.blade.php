@@ -170,7 +170,7 @@
               <div class="col-md-4 px-1">
                 <div class="form-group">
                   <label for="exampleFormControlSelect1">Jenis Kelamin</label>
-                  <select name="tps" class="form-control" id="tps">
+                  <select name="gender" class="form-control" id="tps">
                     <option value="0">Pilih jenis kelamin</option>
                     @if($data->gender == "l")
                       {
@@ -282,7 +282,6 @@
                 </div>
               </div>
             </div>
-            <input type="hidden" name="gender" value="{{ $data->gender }}">
             <input type="hidden" name="id" value="{{ $data->id }}">
             <div class="input-group form-group-no-border input-lg">
                 <input type="submit" class="btn-primary btn btn-round btn-block" value="Simpan Perubahan" />
