@@ -8,12 +8,9 @@ class adminModel extends Model
 {
     function cekLogin($username)
     {
-    	$data = DB::table('users')
-    			->join('saksi', 'id_saksi', '=', 'saksi.id')
-    			->select('users.*', 'saksi.status')
-    			->where('users.username', $username)
-    			->where('users.status', 'l')
-    			->where('saksi.status', 'l')
+    	$data = DB::table('admin')
+    			->select('admin.*')
+    			->where('admin.username', $username)
     			->first();
     				
     	return $data;

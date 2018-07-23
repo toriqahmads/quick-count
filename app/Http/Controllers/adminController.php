@@ -18,13 +18,14 @@ class adminController extends Controller
 	    }
 	    else
 	    {
-	    	$data = new adminModel();
-	    	$data = $data->getProfile(Session::get('username'), Session::get('id_saksi'));
+	    	/*$data = new adminModel();
+	    	/$data = $data->getProfile(Session::get('username'));
 	    	$kecamatan = new dataModel();
 	    	$kecs = $kecamatan->getKec(1);
 	    	$kels = $kecamatan->getKel($data->id_kel);
-	    	$tps = $kecamatan->getTps($data->id_tps);
-	    	return view('admin.home.index', compact('data', 'kecs', 'kels', 'tps'));
+	    	$tps = $kecamatan->getTps($data->id_tps);*/
+            $data = Session::get('username');
+	    	return view('admin.home.index', compact('data'));
 	    }
     }
 
@@ -33,7 +34,7 @@ class adminController extends Controller
     	if(Session::get('login'))
 	    {
 	    	$data = new adminModel();
-	    	$data = $data->getProfile(Session::get('username'), Session::get('id_saksi'));
+	    	$data = $data->getProfile(Session::get('username'));
 	    	return view('admin.home.index', compact('data'));
 	    }
 	    else
@@ -57,13 +58,12 @@ class adminController extends Controller
     		$data = new adminModel();
 	    	$data = $data->cekLogin($username);
 	    	
-	    	if(count($data) > 0)
+	    	if(@count($data) > 0)
 	    	{
 	    		if(Hash::check($password, $data->pass))
 	    		{
 	    			Session::put('username', $data->username);
 	    			Session::put('id', $data->id);
-	    			Session::put('id_saksi', $data->id_saksi);
 	    			Session::put('login', true);
 
 	    			return redirect('admin');

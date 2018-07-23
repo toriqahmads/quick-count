@@ -10,25 +10,9 @@
         <div class="card-body">
           <div class="author">
             <a href="#">
-              <img class="avatar border-gray" src="{{ asset('img/') }}/{{$data->foto}}" alt="...">
-              <h5 class="title">{{ $data->nama_depan }} {{ $data->nama_belakang }}</h5>
+              <img class="avatar border-gray" src="{{ asset('img/') }}/" alt="...">
+              <h5 class="title">{{ $data }} </h5>
             </a>
-            <p class="description">
-              NIK : {{ $data->nik }}
-            </p>
-            <p class="description">
-              HP : {{ $data->telp }}
-          </p>
-          </div>
-          <p class="description">
-            {{ $data->alamat }}, {{ $data->kel }}, {{ $data->kec }}, {{ $data->kab }}, {{ $data->prov }}
-          </p>
-          <p class="description">
-              Dapil : {{ $data->id_dapil }}
-          </p>
-          <p class="description">
-              TPS : {{ $data->tps }}
-          </p>
         </div>
       </div>
     </div>
