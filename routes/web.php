@@ -43,7 +43,16 @@ Route::group(['prefix' => 'admin'], function()
 	Route::get('/edit/saksi/{nik}/{id}', 'adminController@editSaksi')->name('edit.saksi');
 	Route::get('/view/saksi/{nik}/{id}', 'adminController@viewSaksi')->name('view.saksi');
 	Route::delete('/delete/saksi/{nik}/{id}', 'adminController@deleteSaksi')->name('delete.saksi');
-	Route::post('/saksi/updateProfile', 'adminController@updateProfile')->name('update.saksi.profile');
+	Route::post('/saksi/updateProfile', 'adminController@updateSaksiProfile')->name('update.saksi.profile');
+
+	Route::get('/caleg/register', 'adminController@registerCaleg')->name('register.caleg');
+	Route::get('/listcaleg', 'adminController@getAllCaleg')->name('list.caleg');
+	Route::get('/edit/caleg/{id}', 'adminController@editCaleg')->name('edit.caleg');
+	Route::get('/view/caleg/{id}', 'adminController@viewCaleg')->name('view.caleg');
+	Route::delete('/delete/caleg/{id}', 'adminController@deleteCaleg')->name('delete.caleg');
+	Route::post('/caleg/updateCalegProfile', 'adminController@updateCalegProfile')->name('update.caleg.profile');
+	Route::post('/caleg/registerPost', 'adminController@registerPostCaleg')->name('register.post.caleg');
+
 	Route::post('/updateProfile', 'adminController@updateProfile')->name('update.profile');
 	Route::get('/login', 'adminController@login')->name('login.admin');
 	Route::get('/register', 'adminController@register')->name('register.admin');

@@ -59,7 +59,7 @@
             </a>
           </li>
           <li>
-            <a href="#">
+            <a href="{{ url('/admin/listcaleg') }}">
               <i class="now-ui-icons design_bullet-list-67"></i>
               <p>Data Caleg</p>
             </a>
@@ -169,7 +169,7 @@
     </div>
   </div>
   <!--   Core JS Files   -->
-  <script src="{{ asset('js/delete-saksi.js')}}"></script>
+
   <script src="{{ asset('js/core/bootstrap.min.js') }}"></script>
   <script src="{{ asset('js/plugins/perfect-scrollbar.jquery.min.js') }}"></script>
   <!--  Google Maps Plugin    -->

@@ -26,7 +26,7 @@
                   Nama
                 </th>
                 <th onclick="sortTable(2)" style="cursor: pointer;">
-                  NIK
+                  Partai
                 </th>
                 <th onclick="sortTable(3)" style="cursor: pointer;">
                   Kecamatan
@@ -35,10 +35,7 @@
                   Kelurahan
                 </th>
                 <th onclick="sortTable(5)" style="cursor: pointer;">
-                  TPS
-                </th>
-                <th onclick="sortTable(6)" style="cursor: pointer;">
-                  HP
+                  Tingkatan
                 </th>
                 <th>
                   Aksi
@@ -50,23 +47,33 @@
                   <tr id="{{$data->id}}">
                       <td class="text-center">{{$no++}}</td>
                       <td>{{ $data->nama_depan }} {{ $data->nama_belakang }}</td>
-                      <td>{{ $data->nik }}</td>
+                      <td>{{ $data->partai}}</td>
                       <td>{{ $data->kec}}</td>
                       <td>{{ $data->kel }}</td>
-                      <td>{{ $data->tps }}</td>
-                      <td>{{ $data->telp }}</td>
+                      <td>@if($data->tingkat == 'a')
+                            Presiden
+                          @elseif($data->tingkat == 'b')
+                            DPD
+                          @elseif($data->tingkat == 'c')
+                            DPR RI
+                          @elseif($data->tingkat == 'd')
+                            DPR Provinsi
+                          @else
+                            DPR Kabupaten
+                          @endif
+                      </td>
                       <td class="td-actions text-right">
-                        <form method="GET" action="{{ route('view.saksi', [$data->nik, $data->id]) }}">
+                        <form method="GET" action="{{ route('view.caleg', [$data->id]) }}">
                           <button type="submit" rel="tooltip" title="Lihat" class="btn btn-info btn-sm btn-icon">
                               <i class="now-ui-icons users_single-02"></i>
                           </button>
                         </form>
-                        <form method="GET" action="{{ route('edit.saksi', [$data->nik, $data->id]) }}">
+                        <form method="GET" action="{{ route('edit.caleg', [$data->id]) }}">
                           <button type="submit" rel="tooltip" title="Edit" class="btn btn-success btn-sm btn-icon">
                               <i class="now-ui-icons design-2_ruler-pencil"></i>
                           </button>
                         </form>
-                          <form id="hapussaksi{{$data->id}}" method="POST" action="{{ route('delete.saksi', [$data->nik, $data->id]) }}">
+                          <form id="hapuscaleg{{$data->id}}" method="POST" action="{{ route('delete.caleg', [$data->id]) }}">
                               {{ csrf_field() }}
                               {{ method_field('DELETE') }}
                               <button type="submit" rel="tooltip" title="Hapus" class="hapus btn btn-danger btn-sm btn-icon">
@@ -85,5 +92,5 @@
     </div>
   </div>
 </div>
-<script src="{{ asset('js/delete-saksi.js')}}"></script>
+  <script src="{{ asset('js/delete-caleg.js')}}"></script>
 @endsection

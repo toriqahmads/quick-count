@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
 use App\adminModel;
 use App\dataModel;
+use App\saksiModel;
+use App\calegModel;
 class adminController extends Controller
 {
     function index()
@@ -15,6 +17,10 @@ class adminController extends Controller
 	    if(!Session::get('login'))
 	    {
 	    	return redirect('admin/login')->with('Anda harus login terlebih dahulu');
+	    }
+	    elseif(Session::get('role') != 'admin')
+	    {
+	    	return redirect('index')->with('Anda harus login terlebih dahulu');
 	    }
 	    else
 	    {
@@ -34,7 +40,7 @@ class adminController extends Controller
     	if(Session::get('login'))
 	    {
 	    	$data = new adminModel();
-	    	$data = $data->getProfile(Session::get('username'));
+	    	//$data = $data->getProfile(Session::get('username'));
 	    	return view('admin.home.index', compact('data'));
 	    }
 	    else
@@ -65,6 +71,7 @@ class adminController extends Controller
 	    			Session::put('username', $data->username);
 	    			Session::put('id', $data->id);
 	    			Session::put('login', true);
+	    			Session::put('role', 'admin');
 
 	    			return redirect('admin');
 	   			}
@@ -98,7 +105,7 @@ class adminController extends Controller
 	    }
     }
 
-    function registerPost(Request $request)
+    function registerSaksiPost(Request $request)
     {
         $this->validate($request, [
             'fname' => 'required|min:4|max:15',
@@ -173,7 +180,7 @@ class adminController extends Controller
         }
     }
 
-    function updateProfile(Request $request)
+    function updateSaksiProfile(Request $request)
     {
     	$this->validate($request, [
             'fname' => 'required|min:4|max:15',
@@ -228,7 +235,7 @@ class adminController extends Controller
     			'kab' => $request->kab,
     			'dapil' => $request->dapil];
 
-    	$req = new adminModel();
+    	$req = new saksiModel();
     	$req = $req->updateProfile($data);
     	$req = json_decode(json_encode($req), true);
     	if($req[0]['msg'] == "success")
@@ -247,9 +254,13 @@ class adminController extends Controller
 	    {
 	    	return redirect('admin/login')->with('Anda harus login terlebih dahulu');
 	    }
+	    elseif(Session::get('role') != 'admin')
+	    {
+	    	return redirect('index')->with('Anda harus login terlebih dahulu');
+	    }
 	    else
 	    {
-	    	$req = new adminModel();
+	    	$req = new saksiModel();
     		$req = $req->getAllSaksi();
 
     		return view('admin.saksi.userlist', compact('req'));
@@ -262,9 +273,13 @@ class adminController extends Controller
 	    {
 	    	return redirect('admin/login')->with('Anda harus login terlebih dahulu');
 	    }
+	    elseif(Session::get('role') != 'admin')
+	    {
+	    	return redirect('index')->with('Anda harus login terlebih dahulu');
+	    }
 	    else
 	    {
-	    	$data = new adminModel();
+	    	$data = new saksiModel();
 	    	$data = $data->getProfile($nik, $id_saksi);
 	    	$kecamatan = new dataModel();
 	    	$kecs = $kecamatan->getKec(1);
@@ -280,9 +295,13 @@ class adminController extends Controller
 	    {
 	    	return redirect('admin/login')->with('Anda harus login terlebih dahulu');
 	    }
+	    elseif(Session::get('role') != 'admin')
+	    {
+	    	return redirect('index')->with('Anda harus login terlebih dahulu');
+	    }
 	    else
 	    {
-	    	$data = new adminModel();
+	    	$data = new saksiModel();
 	    	$data = $data->getProfile($nik, $id_saksi);
 	    	$kecamatan = new dataModel();
 	    	return view('admin.saksi.view', compact('data'));
@@ -295,9 +314,13 @@ class adminController extends Controller
 	    {
 	    	return redirect('admin/login')->with('Anda harus login terlebih dahulu');
 	    }
+	    elseif(Session::get('role') != 'admin')
+	    {
+	    	return redirect('index')->with('Anda harus login terlebih dahulu');
+	    }
 	    else
 	    {
-	    	$data = new adminModel();
+	    	$data = new saksiModel();
 	    	$req = $data->deleteSaksi($nik, $id_saksi);
         	$req = json_decode(json_encode($req), true);
         	if($req[0]['msg'] == "success")
@@ -307,6 +330,151 @@ class adminController extends Controller
 	    	elseif($req[0]['msg'] == "data not found")
 	    	{
 	    		return "Data saksi dengan NIK dan ID tersebut tidak ditemukan!";
+	    	}
+	    	else
+	    	{
+	    		return "Hapus data saksi gagal!";
+	    	}
+    	}
+	}
+
+	function registerCaleg()
+    {
+    	if(!Session::get('login'))
+	    {
+	    	return view('admin.home.index');
+	    }
+	    elseif(Session::get('role') != 'admin')
+	    {
+	    	return redirect('index')->with('Anda harus login terlebih dahulu');
+	    }
+	    else
+	    {
+	    	$data = new dataModel();
+	    	$kec = $data->getKec(1);
+	    	$partai = $data->getPartai();
+	    	return view('admin.caleg.register', compact('kec', 'partai'));
+	    }
+    }
+
+    function registerPostCaleg(Request $request)
+    {
+        $this->validate($request, [
+            'fname' => 'required|min:4|max:15',
+            'lname' => 'required|min:4|max:15',
+            'gender' => 'required|min:1|max:1',
+            'partai' => 'required|min:1|max:1',
+            'tingkat' => 'required|min:1|max:1',
+            'kec' => 'required|min:1|max:1',
+            'kel' => 'required|min:1|max:1',
+            'prov' => 'required|min:1|max:1',
+            'kab' => 'required|min:1|max:1',
+            'dapil' => 'required|min:1|max:1',
+        ],[
+            'fname.required'=>'Nama depan tidak boleh kosong!',
+            'fname.min'=>'Maaf Nama depan minimal 4 karakter!',
+            'fname.max'=>'Maaf Nama depan maximal 15 karakter!',
+            'lname.required'=>'Nama belakang tidak boleh kosong!',
+            'lname.max'=>'Nama maximal 15 karakter!',
+            'lname.min'=>' Nama belakang minimal 4 karakter!',
+            'gender.required' => 'Jenis Kelamin tidak boleh kosong!',
+            'partai.required' => 'Partai harus diisi!',
+            'partai.max' => 'Partai maximal 1 karakter!',
+            'partai.max' => 'Partai minimal 1 karakter!',
+            'tingkat.required' => 'Tingkat harus diisi!',
+            'tingkat.max' => 'Tingkat maximal 1 karakter!',
+            'tingkat.max' => 'Tingkat minimal 1 karakter!',
+            'kec.required' => 'Kecapatan tidak boleh kosong!',
+            'kel.required' => 'Kelurahan tidak boleh kosong!',
+            'prov.required' => 'Provinsi tidak boleh kosong',
+            'kab.required' => 'Kabupaten tidak boleh kosong',
+            'dapil.required' => 'Dapil tidak boleh kosong',
+        ]);
+
+        $data = ['fname' => $request->fname,
+                'lname' => $request->lname,
+                'gender' => $request->gender,
+                'partai' => $request->partai,
+                'kec' => $request->kec,
+                'kel' => $request->kel,
+                'prov' => $request->prov,
+                'kab' => $request->kab,
+                'dapil' => $request->dapil,
+            	'tingkat' => $request->tingkat];
+
+        $req = new calegModel();
+        $req = $req->registerPost($data);
+        $req = json_decode(json_encode($req), true);
+        if($req[0]['msg'] == "success")
+        {
+            return redirect('admin/login')->with('alert-success','Registrasi saksi sukses!');
+        }
+        else
+        {
+            return redirect('admin/register')->with('alert','Registrasi saksi gagal!');
+        }
+    }
+
+    function getAllCaleg()
+    {
+    	if(!Session::get('login'))
+	    {
+	    	return redirect('admin/login')->with('Anda harus login terlebih dahulu');
+	    }
+	    elseif(Session::get('role') != 'admin')
+	    {
+	    	return redirect('index')->with('Anda harus login terlebih dahulu');
+	    }
+	    else
+	    {
+	    	$req = new calegModel();
+    		$req = $req->getAllCaleg();
+
+    		return view('admin.caleg.userlist', compact('req'));
+	    }
+    }
+
+    function viewCaleg($id_caleg)
+    {
+	    if(!Session::get('login'))
+	    {
+	    	return redirect('admin/login')->with('Anda harus login terlebih dahulu');
+	    }
+	    elseif(Session::get('role') != 'admin')
+	    {
+	    	return redirect('index')->with('Anda harus login terlebih dahulu');
+	    }
+	    else
+	    {
+	    	$data = new calegModel();
+	    	$data = $data->getProfile($id_caleg);
+	    	$kecamatan = new dataModel();
+	    	return view('admin.caleg.view', compact('data'));
+	    }
+    }
+
+    function deleteCaleg($id_caleg)
+    {
+    	if(!Session::get('login'))
+	    {
+	    	return redirect('admin/login')->with('Anda harus login terlebih dahulu');
+	    }
+	    elseif(Session::get('role') != 'admin')
+	    {
+	    	return redirect('index')->with('Anda harus login terlebih dahulu');
+	    }
+	    else
+	    {
+	    	$data = new calegModel();
+	    	$req = $data->deleteCaleg($id_caleg);
+        	$req = json_decode(json_encode($req), true);
+        	if($req[0]['msg'] == "success")
+	    	{
+	    		return "Hapus data saksi sukses!";
+	    	}
+	    	elseif($req[0]['msg'] == "data not found")
+	    	{
+	    		return "Data caleg ID tersebut tidak ditemukan!";
 	    	}
 	    	else
 	    	{

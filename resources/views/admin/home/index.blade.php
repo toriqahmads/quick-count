@@ -11,7 +11,7 @@
           <div class="author">
             <a href="#">
               <img class="avatar border-gray" src="{{ asset('img/') }}/" alt="...">
-              <h5 class="title">{{ $data }} </h5>
+              <h5 class="title"></h5>
             </a>
         </div>
       </div>

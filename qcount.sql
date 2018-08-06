@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.9
+-- version 4.8.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3306
--- Generation Time: Jul 01, 2018 at 09:35 AM
--- Server version: 5.7.21
--- PHP Version: 7.0.29
+-- Host: 127.0.0.1
+-- Generation Time: Aug 06, 2018 at 10:24 AM
+-- Server version: 10.1.33-MariaDB
+-- PHP Version: 7.1.18
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -26,7 +26,6 @@ DELIMITER $$
 --
 -- Procedures
 --
-DROP PROCEDURE IF EXISTS `delete_data_pil`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `delete_data_pil` (IN `ids` INT(2))  BEGIN
 
 DECLARE code CHAR(5) DEFAULT '00000';
@@ -61,7 +60,6 @@ SELECT msg;
 
 END$$
 
-DROP PROCEDURE IF EXISTS `delete_data_saksi`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `delete_data_saksi` (IN `ids` INT(2), IN `nomor_nik` VARCHAR(16))  BEGIN
 
 DECLARE code CHAR(5) DEFAULT '00000';
@@ -99,7 +97,6 @@ SELECT msg;
 
 END$$
 
-DROP PROCEDURE IF EXISTS `delete_proof`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `delete_proof` (IN `ids` INT(2))  BEGIN
 
 DECLARE code CHAR(5) DEFAULT '00000';
@@ -134,7 +131,6 @@ END IF;
 SELECT msg;
 END$$
 
-DROP PROCEDURE IF EXISTS `delete_r_suara`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `delete_r_suara` (IN `ids` INT(2))  BEGIN
 
 DECLARE code CHAR(5) DEFAULT '00000';
@@ -168,7 +164,6 @@ END IF;
 SELECT msg;
 END$$
 
-DROP PROCEDURE IF EXISTS `delete_suara`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `delete_suara` (IN `ids` INT(2))  BEGIN
 
 DECLARE code CHAR(5) DEFAULT '00000';
@@ -203,8 +198,7 @@ END IF;
 SELECT msg;
 END$$
 
-DROP PROCEDURE IF EXISTS `input_data_pil`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `input_data_pil` (IN `fname` VARCHAR(15), IN `lname` VARCHAR(15), IN `partai` INT(2), IN `dapil` INT(2), IN `prov` INT(2), IN `kab` INT(2), IN `kel` INT(2), IN `tingkat` ENUM('a','b','c','d','e'))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `input_data_pil` (IN `fname` VARCHAR(15), IN `lname` VARCHAR(15), IN `partai` INT(2), IN `dapil` INT(2), IN `prov` INT(2), IN `kab` INT(2), IN `kel` INT(2), IN `tingkat` ENUM('a','b','c','d','e'), IN `gender` CHAR(1))  BEGIN
 
 DECLARE code CHAR(5) DEFAULT '00000';
 DECLARE msg TEXT;
@@ -219,7 +213,7 @@ END;
 
 START TRANSACTION;
 
-INSERT INTO pil(nama_depan, nama_belakang, tingkat, id_partai, id_dapil, id_prov, id_kab, id_kel) VALUES (fname, lname, tingkat, partai, dapil, prov, kab, kel);
+INSERT INTO pil(nama_depan, nama_belakang, gender, tingkat, id_partai, id_dapil, id_prov, id_kab, id_kel) VALUES (fname, lname, gender, tingkat, partai, dapil, prov, kab, kel);
 
 IF code != '00000' OR rb = 1 THEN
   ROLLBACK;
@@ -230,7 +224,6 @@ END IF;
 SELECT msg;
 END$$
 
-DROP PROCEDURE IF EXISTS `input_data_saksi`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `input_data_saksi` (IN `fname` VARCHAR(15), IN `lname` VARCHAR(15), IN `sex` CHAR(1), IN `alamat` VARCHAR(30), IN `kel` INT(4), IN `kec` INT(2), IN `kab` INT(2), IN `prov` INT(2), IN `dapil` INT(2), IN `nomor_nik` VARCHAR(16), IN `telpon` VARCHAR(13), IN `tps` INT(2), IN `passwd` VARCHAR(255))  BEGIN
 
 DECLARE code CHAR(5) DEFAULT '00000';
@@ -262,7 +255,6 @@ SELECT msg;
 
 END$$
 
-DROP PROCEDURE IF EXISTS `input_proof`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `input_proof` (IN `photo` TEXT, IN `lokasi` VARCHAR(100), IN `dapil` INT(2), IN `tps` INT(2), IN `saksi` INT(3))  BEGIN
 
 DECLARE code CHAR(5) DEFAULT '00000';
@@ -295,7 +287,6 @@ END IF;
 SELECT msg;
 END$$
 
-DROP PROCEDURE IF EXISTS `input_r_suara`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `input_r_suara` (IN `tipe` ENUM('a','b','c','d','cadangan'), IN `n` INT(5), IN `tingkatan` INT(2), IN `tps` INT(3))  BEGIN
 
 DECLARE code CHAR(5) DEFAULT '00000';
@@ -322,7 +313,6 @@ END IF;
 SELECT msg;
 END$$
 
-DROP PROCEDURE IF EXISTS `input_suara`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `input_suara` (IN `j_suara` INT(7), IN `caleg` INT(2), IN `saksi` INT(3), IN `tps` INT(3))  BEGIN
 
 DECLARE code CHAR(5) DEFAULT '00000';
@@ -357,7 +347,6 @@ END IF;
 SELECT msg;
 END$$
 
-DROP PROCEDURE IF EXISTS `input_tps`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `input_tps` (IN `n_tps` VARCHAR(5), IN `dapil` INT(2), IN `kel` INT(2), IN `kec` INT(2), IN `kab` INT(2), IN `prov` INT(2))  BEGIN
 
 DECLARE code CHAR(5) DEFAULT '00000';
@@ -384,8 +373,7 @@ END IF;
 SELECT msg;
 END$$
 
-DROP PROCEDURE IF EXISTS `update_data_pil`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `update_data_pil` (IN `ids` INT(2), IN `fname` VARCHAR(15), IN `lname` VARCHAR(15), IN `partai` INT(2), IN `dapil` INT(2), IN `prov` INT(2), IN `kab` INT(2), IN `kel` INT(2), IN `tingkat` ENUM('a','b','c','d','e'))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_data_pil` (IN `ids` INT(2), IN `fname` VARCHAR(15), IN `lname` VARCHAR(15), IN `partai` INT(2), IN `dapil` INT(2), IN `prov` INT(2), IN `kab` INT(2), IN `kel` INT(2), IN `tingkat` ENUM('a','b','c','d','e'), IN `gender` CHAR(1), IN `foto` VARCHAR(50))  BEGIN
 
 DECLARE code CHAR(5) DEFAULT '00000';
 DECLARE msg TEXT;
@@ -404,7 +392,7 @@ START TRANSACTION;
 SET jml := (SELECT COUNT(*) FROM pil WHERE id = ids);
 
 IF jml>0 THEN
-UPDATE pil SET nama_depan = fname, nama_belakang = lname, id_partai = partai, id_dapil = dapil, id_prov = prov, id_kab = kab, id_kel = kel, tingkat = tingkat WHERE id = ids;
+UPDATE pil SET nama_depan = fname, nama_belakang = lname, id_partai = partai, id_dapil = dapil, id_prov = prov, id_kab = kab, id_kel = kel, tingkat = tingkat, gender = gender, foto = foto WHERE id = ids;
 
 IF code != '00000' OR rb = 1 THEN
   ROLLBACK;
@@ -418,7 +406,6 @@ END IF;
 SELECT msg;
 END$$
 
-DROP PROCEDURE IF EXISTS `update_data_saksi`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `update_data_saksi` (IN `ids` INT(2), IN `fname` VARCHAR(15), IN `lname` VARCHAR(15), IN `sex` CHAR(1), IN `alamat` VARCHAR(30), IN `kel` INT(4), IN `kec` INT(2), IN `kab` INT(2), IN `prov` INT(2), IN `dapil` INT(2), IN `nomor_nik` VARCHAR(16), IN `telpon` VARCHAR(13), IN `tps` INT(2))  BEGIN
 DECLARE code CHAR(5) DEFAULT '00000';
 DECLARE msg TEXT;
@@ -451,7 +438,6 @@ SELECT msg;
 
 END$$
 
-DROP PROCEDURE IF EXISTS `update_proof`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `update_proof` (IN `ids` INT(2), IN `photo` TEXT, IN `lokasi` VARCHAR(100), IN `dapil` INT(2), IN `tps` INT(2), IN `saksi` INT(3))  BEGIN
 
 DECLARE code CHAR(5) DEFAULT '00000';
@@ -487,7 +473,6 @@ SELECT msg;
 
 END$$
 
-DROP PROCEDURE IF EXISTS `update_r_suara`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `update_r_suara` (IN `ids` INT(2), IN `tipe` ENUM('a','b','c','d','cadangan'), IN `n` INT(5), IN `tingkatan` INT(2), IN `tps` INT(3))  BEGIN
 
 DECLARE code CHAR(5) DEFAULT '00000';
@@ -523,7 +508,6 @@ SELECT msg;
 
 END$$
 
-DROP PROCEDURE IF EXISTS `update_suara`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `update_suara` (IN `ids` INT(2), IN `j_suara` INT(7), IN `caleg` INT(2), IN `saksi` INT(3), IN `tps` INT(2))  BEGIN
 
 DECLARE code CHAR(5) DEFAULT '00000';
@@ -559,7 +543,6 @@ SELECT msg;
 
 END$$
 
-DROP PROCEDURE IF EXISTS `update_tps`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `update_tps` (IN `ids` INT(2), IN `n_tps` VARCHAR(5), IN `dapil` INT(2), IN `kel` INT(2), IN `kec` INT(2), IN `kab` INT(2), IN `prov` INT(2))  BEGIN
 
 DECLARE code CHAR(5) DEFAULT '00000';
@@ -601,14 +584,18 @@ DELIMITER ;
 -- Table structure for table `admin`
 --
 
-DROP TABLE IF EXISTS `admin`;
-CREATE TABLE IF NOT EXISTS `admin` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `admin` (
+  `id` int(11) NOT NULL,
   `username` varchar(25) NOT NULL,
-  `pass` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `username` (`username`)
+  `pass` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`id`, `username`, `pass`) VALUES
+(1, 'admin', '$2y$10$NWIsiNRuhhh3s0WQw.z.7uPm9Lfm.HApQCTgyhziN//In8k.Pcr/W');
 
 -- --------------------------------------------------------
 
@@ -616,13 +603,11 @@ CREATE TABLE IF NOT EXISTS `admin` (
 -- Table structure for table `dapil`
 --
 
-DROP TABLE IF EXISTS `dapil`;
-CREATE TABLE IF NOT EXISTS `dapil` (
-  `id` int(2) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `dapil` (
+  `id` int(2) NOT NULL,
   `kursi` int(2) DEFAULT NULL,
-  `DPT` int(6) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+  `DPT` int(6) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `dapil`
@@ -641,14 +626,11 @@ INSERT INTO `dapil` (`id`, `kursi`, `DPT`) VALUES
 -- Table structure for table `kab`
 --
 
-DROP TABLE IF EXISTS `kab`;
-CREATE TABLE IF NOT EXISTS `kab` (
-  `id` int(2) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `kab` (
+  `id` int(2) NOT NULL,
   `kab` varchar(25) DEFAULT NULL,
-  `id_prov` int(2) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `kab_ibfk_1` (`id_prov`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+  `id_prov` int(2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `kab`
@@ -663,18 +645,13 @@ INSERT INTO `kab` (`id`, `kab`, `id_prov`) VALUES
 -- Table structure for table `kec`
 --
 
-DROP TABLE IF EXISTS `kec`;
-CREATE TABLE IF NOT EXISTS `kec` (
-  `id` int(2) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `kec` (
+  `id` int(2) NOT NULL,
   `kec` varchar(15) DEFAULT NULL,
   `id_kab` int(2) DEFAULT NULL,
   `id_prov` int(2) DEFAULT NULL,
-  `id_dapil` int(2) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `kec_ibfk_1` (`id_kab`),
-  KEY `kec_ibfk_2` (`id_prov`),
-  KEY `kec_ibfk_3` (`id_dapil`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+  `id_dapil` int(2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `kec`
@@ -702,19 +679,14 @@ INSERT INTO `kec` (`id`, `kec`, `id_kab`, `id_prov`, `id_dapil`) VALUES
 -- Table structure for table `kel`
 --
 
-DROP TABLE IF EXISTS `kel`;
-CREATE TABLE IF NOT EXISTS `kel` (
-  `id` int(3) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `kel` (
+  `id` int(3) NOT NULL,
   `kel` varchar(20) DEFAULT NULL,
   `pos` int(6) DEFAULT NULL,
   `id_kec` int(2) DEFAULT NULL,
   `id_kab` int(2) DEFAULT NULL,
-  `id_prov` int(2) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `kel_ibfk_1` (`id_kec`),
-  KEY `kel_ibfk_2` (`id_kab`),
-  KEY `kel_ibfk_3` (`id_prov`)
-) ENGINE=InnoDB AUTO_INCREMENT=249 DEFAULT CHARSET=latin1;
+  `id_prov` int(2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `kel`
@@ -976,12 +948,10 @@ INSERT INTO `kel` (`id`, `kel`, `pos`, `id_kec`, `id_kab`, `id_prov`) VALUES
 -- Table structure for table `partai`
 --
 
-DROP TABLE IF EXISTS `partai`;
-CREATE TABLE IF NOT EXISTS `partai` (
-  `id` int(2) NOT NULL AUTO_INCREMENT,
-  `partai` varchar(15) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+CREATE TABLE `partai` (
+  `id` int(2) NOT NULL,
+  `partai` varchar(15) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `partai`
@@ -996,32 +966,28 @@ INSERT INTO `partai` (`id`, `partai`) VALUES
 -- Table structure for table `pil`
 --
 
-DROP TABLE IF EXISTS `pil`;
-CREATE TABLE IF NOT EXISTS `pil` (
-  `id` int(2) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `pil` (
+  `id` int(2) NOT NULL,
   `nama_depan` varchar(15) DEFAULT NULL,
   `nama_belakang` varchar(15) DEFAULT NULL,
+  `gender` char(1) NOT NULL,
+  `foto` varchar(50) NOT NULL,
   `tingkat` enum('a','b','c','d','e') NOT NULL COMMENT 'a = presiden. b = dpd. c = dppri. d = dpr prov. e = dpr kab',
   `id_partai` int(2) DEFAULT NULL,
   `id_dapil` int(2) DEFAULT NULL,
   `id_prov` int(2) DEFAULT NULL,
   `id_kab` int(2) DEFAULT NULL,
   `id_kel` int(2) DEFAULT NULL,
-  `status` char(1) NOT NULL DEFAULT 'l' COMMENT '''l'' untuk data masih digunakan, ''d'' untuk data sudah dihapus',
-  PRIMARY KEY (`id`),
-  KEY `caleg_ibfk_1` (`id_partai`),
-  KEY `caleg_ibfk_2` (`id_dapil`),
-  KEY `caleg_ibfk_3` (`id_prov`),
-  KEY `caleg_ibfk_4` (`id_kab`),
-  KEY `caleg_ibfk_5` (`id_kel`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+  `status` char(1) NOT NULL DEFAULT 'l' COMMENT '''l'' untuk data masih digunakan, ''d'' untuk data sudah dihapus'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `pil`
 --
 
-INSERT INTO `pil` (`id`, `nama_depan`, `nama_belakang`, `tingkat`, `id_partai`, `id_dapil`, `id_prov`, `id_kab`, `id_kel`, `status`) VALUES
-(2, 'Ahlis', 'MF', 'a', 1, 1, 1, 1, 1, 'd');
+INSERT INTO `pil` (`id`, `nama_depan`, `nama_belakang`, `gender`, `foto`, `tingkat`, `id_partai`, `id_dapil`, `id_prov`, `id_kab`, `id_kel`, `status`) VALUES
+(2, 'Ahlis', 'MF', 'l', 'default_avatar.jpg', 'a', 1, 1, 1, 1, 1, 'd'),
+(3, 'Misbahul', 'Munir S.E, M.Pd', 'l', 'default_avatar.jpg', 'c', 1, 1, 1, 1, 1, 'd');
 
 -- --------------------------------------------------------
 
@@ -1029,9 +995,8 @@ INSERT INTO `pil` (`id`, `nama_depan`, `nama_belakang`, `tingkat`, `id_partai`, 
 -- Table structure for table `proof`
 --
 
-DROP TABLE IF EXISTS `proof`;
-CREATE TABLE IF NOT EXISTS `proof` (
-  `id` int(2) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `proof` (
+  `id` int(2) NOT NULL,
   `foto` text,
   `location` varchar(100) DEFAULT NULL,
   `id_dapil` int(2) DEFAULT NULL,
@@ -1039,11 +1004,7 @@ CREATE TABLE IF NOT EXISTS `proof` (
   `id_saksi` int(3) DEFAULT NULL,
   `tanggal` datetime NOT NULL,
   `updated` datetime NOT NULL,
-  `status` char(1) NOT NULL DEFAULT 'l' COMMENT '''l'' untuk data masih digunakan, ''d'' untuk data sudah dihapus',
-  PRIMARY KEY (`id`),
-  KEY `proof_ibfk_1` (`id_dapil`),
-  KEY `proof_ibfk_3` (`id_saksi`),
-  KEY `proof_ibfk_2` (`id_tps`)
+  `status` char(1) NOT NULL DEFAULT 'l' COMMENT '''l'' untuk data masih digunakan, ''d'' untuk data sudah dihapus'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -1052,13 +1013,10 @@ CREATE TABLE IF NOT EXISTS `proof` (
 -- Table structure for table `prov`
 --
 
-DROP TABLE IF EXISTS `prov`;
-CREATE TABLE IF NOT EXISTS `prov` (
-  `id` int(2) NOT NULL AUTO_INCREMENT,
-  `prov` varchar(15) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+CREATE TABLE `prov` (
+  `id` int(2) NOT NULL,
+  `prov` varchar(15) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `prov`
@@ -1073,18 +1031,15 @@ INSERT INTO `prov` (`id`, `prov`) VALUES
 -- Table structure for table `r_suara`
 --
 
-DROP TABLE IF EXISTS `r_suara`;
-CREATE TABLE IF NOT EXISTS `r_suara` (
-  `id` int(3) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `r_suara` (
+  `id` int(3) NOT NULL,
   `jenis` enum('a','b','c','d') DEFAULT NULL COMMENT 'a = surat rusak. b = surat tidak terpakai. c = surat sah. d = surat tidak sah. e = (c+d)->suara sah dan tidak sah. ',
   `jumlah` int(5) DEFAULT NULL,
   `tingkat` enum('a','b','c','d','e') DEFAULT NULL COMMENT 'a = presiden. b = dpd. c = dppri. d = dpr prov. e = dpr kab',
   `id_tps` int(3) DEFAULT NULL,
   `tanggal` datetime NOT NULL,
   `updated` datetime NOT NULL,
-  `status` char(1) NOT NULL DEFAULT 'l' COMMENT '''l'' untuk data masih digunakan, ''d'' untuk data sudah dihapus',
-  PRIMARY KEY (`id`),
-  KEY `r_suara_ibfk_1` (`id_tps`)
+  `status` char(1) NOT NULL DEFAULT 'l' COMMENT '''l'' untuk data masih digunakan, ''d'' untuk data sudah dihapus'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -1093,9 +1048,8 @@ CREATE TABLE IF NOT EXISTS `r_suara` (
 -- Table structure for table `saksi`
 --
 
-DROP TABLE IF EXISTS `saksi`;
-CREATE TABLE IF NOT EXISTS `saksi` (
-  `id` int(3) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `saksi` (
+  `id` int(3) NOT NULL,
   `nama_depan` varchar(15) DEFAULT NULL,
   `nama_belakang` varchar(15) DEFAULT NULL,
   `gender` char(1) DEFAULT NULL,
@@ -1109,16 +1063,8 @@ CREATE TABLE IF NOT EXISTS `saksi` (
   `foto` varchar(30) DEFAULT 'default_avatar.jpg',
   `telp` varchar(13) DEFAULT NULL,
   `id_tps` int(3) DEFAULT NULL,
-  `status` char(1) NOT NULL DEFAULT 'l' COMMENT '''l'' untuk data masih digunakan, ''d'' untuk data sudah dihapus',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `nik` (`nik`),
-  KEY `saksi_rel_dapil` (`id_dapil`),
-  KEY `saksi_rel_prov` (`id_prov`),
-  KEY `saksi_rel_kab` (`id_kab`),
-  KEY `saksi_rel_kec` (`id_kec`),
-  KEY `saksi_rel_kel` (`id_kel`),
-  KEY `saksi_tps` (`id_tps`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+  `status` char(1) NOT NULL DEFAULT 'l' COMMENT '''l'' untuk data masih digunakan, ''d'' untuk data sudah dihapus'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `saksi`
@@ -1126,7 +1072,7 @@ CREATE TABLE IF NOT EXISTS `saksi` (
 
 INSERT INTO `saksi` (`id`, `nama_depan`, `nama_belakang`, `gender`, `alamat`, `id_kel`, `id_kec`, `id_kab`, `id_prov`, `id_dapil`, `nik`, `foto`, `telp`, `id_tps`, `status`) VALUES
 (1, 'Muhammad', 'Haimin', 'l', 'Jl. Kyai Singki no.45', 1, 1, 1, 1, 1, '337230934799234+deleted', 'Images2.jpg', '089667823877', 1, 'd'),
-(2, 'Rozikin', 'Ahmad', 'l', 'Jl. Pahlawan no.11', 1, 1, 1, 1, 1, '3340034987239080', 'default_avatar.jpg', '089668623899', 1, 'l'),
+(2, 'Rozikin', 'Ahmad', 'l', 'Jl. Pahlawan no.11', 1, 1, 1, 1, 1, '3340034987239080+deleted', 'default_avatar.jpg', '089668623899', 1, 'd'),
 (3, 'Fadli', 'Ihsan', 'l', 'Jl. Tentara Pelajar no.11', 1, 1, 1, 1, 1, '3302210111900006', 'default_avatar.jpg', '08966862389', 1, 'l'),
 (4, 'Ziat', 'Ahmad', 'l', 'Jl. Wadak Sempal no.11', 1, 1, 1, 1, 1, '3302210111900007', 'default_avatar.jpg', '089667865658', 1, 'l'),
 (5, 'Ahmad', 'Husain', 'l', 'Jl. Kyai Singkil no.4', 1, 1, 1, 1, 1, '3302210111900004', 'default_avatar.jpg', '08966862385', 1, 'l'),
@@ -1139,7 +1085,6 @@ INSERT INTO `saksi` (`id`, `nama_depan`, `nama_belakang`, `gender`, `alamat`, `i
 --
 -- Triggers `saksi`
 --
-DROP TRIGGER IF EXISTS `insert_user`;
 DELIMITER $$
 CREATE TRIGGER `insert_user` AFTER INSERT ON `saksi` FOR EACH ROW UPDATE users SET id_saksi = NEW.id WHERE username = NEW.nik
 $$
@@ -1151,9 +1096,8 @@ DELIMITER ;
 -- Table structure for table `suara`
 --
 
-DROP TABLE IF EXISTS `suara`;
-CREATE TABLE IF NOT EXISTS `suara` (
-  `id` int(2) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `suara` (
+  `id` int(2) NOT NULL,
   `suara` int(7) DEFAULT NULL,
   `id_caleg` int(2) DEFAULT NULL,
   `id_saksi` int(3) DEFAULT NULL,
@@ -1161,13 +1105,8 @@ CREATE TABLE IF NOT EXISTS `suara` (
   `updated` datetime NOT NULL,
   `id_tps` int(3) DEFAULT NULL,
   `status` char(1) NOT NULL DEFAULT 'l' COMMENT '''l'' untuk data masih digunakan, ''d'' untuk data sudah dihapus',
-  `id_partai` int(2) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `suara_tps` (`id_tps`),
-  KEY `suara_ibfk_1` (`id_caleg`),
-  KEY `suara_ibfk_3` (`id_saksi`),
-  KEY `suara_parta` (`id_partai`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+  `id_partai` int(2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `suara`
@@ -1182,22 +1121,15 @@ INSERT INTO `suara` (`id`, `suara`, `id_caleg`, `id_saksi`, `tanggal`, `updated`
 -- Table structure for table `tps`
 --
 
-DROP TABLE IF EXISTS `tps`;
-CREATE TABLE IF NOT EXISTS `tps` (
-  `id` int(3) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tps` (
+  `id` int(3) NOT NULL,
   `tps` varchar(5) DEFAULT NULL,
   `id_dapil` int(2) DEFAULT NULL,
   `id_kel` int(3) DEFAULT NULL,
   `id_kec` int(2) DEFAULT NULL,
   `id_kab` int(2) DEFAULT NULL,
-  `id_prov` int(2) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `tps_ibfk_1` (`id_dapil`),
-  KEY `tps_ibfk_2` (`id_kel`),
-  KEY `tps_ibfk_3` (`id_kec`),
-  KEY `tps_ibfk_4` (`id_kab`),
-  KEY `tps_ibfk_5` (`id_prov`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+  `id_prov` int(2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tps`
@@ -1212,17 +1144,13 @@ INSERT INTO `tps` (`id`, `tps`, `id_dapil`, `id_kel`, `id_kec`, `id_kab`, `id_pr
 -- Table structure for table `users`
 --
 
-DROP TABLE IF EXISTS `users`;
-CREATE TABLE IF NOT EXISTS `users` (
-  `id` int(2) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `users` (
+  `id` int(2) NOT NULL,
   `username` varchar(25) DEFAULT NULL,
   `pass` varchar(255) DEFAULT NULL,
   `id_saksi` int(2) DEFAULT NULL,
-  `status` char(1) NOT NULL DEFAULT 'l' COMMENT '''l'' untuk data masih digunakan, ''d'' untuk data sudah dihapus',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id_saksi` (`id_saksi`),
-  UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+  `status` char(1) NOT NULL DEFAULT 'l' COMMENT '''l'' untuk data masih digunakan, ''d'' untuk data sudah dihapus'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
@@ -1230,7 +1158,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 INSERT INTO `users` (`id`, `username`, `pass`, `id_saksi`, `status`) VALUES
 (1, '337230934799234+deleted', 'Kbps1234', 1, 'd'),
-(2, '3340034987239080', '$2a$04$7DNeUGBxI0JUVoW61.JQOe1RbcEqMaqxE.WuBmf/SDmTJvXyt8KCK', 2, 'l'),
+(2, '3340034987239080+deleted', '$2a$04$7DNeUGBxI0JUVoW61.JQOe1RbcEqMaqxE.WuBmf/SDmTJvXyt8KCK', 2, 'd'),
 (3, '3302210111900006', '$2y$10$IzgNMJr.Q7N7cgKSnYQb8.8.X5cUA1NraXsXZ9FjUqbeEJgZXrCjS', 3, 'l'),
 (4, '3302210111900007', '$2y$10$7xeIwQhWx22WVMHpxkv80ud505hjxkCN2UgufNYzBTi76PAY0URJC', 4, 'l'),
 (5, '3302210111900004', '$2y$10$37viONb42WPIZgwDrOPYme6V3B15Veg9Wsqt5iHluLbdmNm.YNME6', 5, 'l'),
@@ -1239,6 +1167,218 @@ INSERT INTO `users` (`id`, `username`, `pass`, `id_saksi`, `status`) VALUES
 (8, '3302210111900000', '$2y$10$njZP2GrrP1QhkUJM4hTbDONTNE3AaUdGMgpEfhW4gYARp4SCdt28G', 8, 'l'),
 (9, '3302210111900012', '$2y$10$eWOvA8gYqxL7Diph7uzbJuh6U.q2pxCCHEKgmJirsdh.JanBA1OQm', 9, 'l'),
 (10, '3302210111900014', '$2y$10$sKlQANl6GDZunU2IiJDQheObbO4TxcbbqJvpv6EVFMeWEyqk8hqQu', 10, 'l');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`);
+
+--
+-- Indexes for table `dapil`
+--
+ALTER TABLE `dapil`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `kab`
+--
+ALTER TABLE `kab`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `kab_ibfk_1` (`id_prov`);
+
+--
+-- Indexes for table `kec`
+--
+ALTER TABLE `kec`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `kec_ibfk_1` (`id_kab`),
+  ADD KEY `kec_ibfk_2` (`id_prov`),
+  ADD KEY `kec_ibfk_3` (`id_dapil`);
+
+--
+-- Indexes for table `kel`
+--
+ALTER TABLE `kel`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `kel_ibfk_1` (`id_kec`),
+  ADD KEY `kel_ibfk_2` (`id_kab`),
+  ADD KEY `kel_ibfk_3` (`id_prov`);
+
+--
+-- Indexes for table `partai`
+--
+ALTER TABLE `partai`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `pil`
+--
+ALTER TABLE `pil`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `caleg_ibfk_1` (`id_partai`),
+  ADD KEY `caleg_ibfk_2` (`id_dapil`),
+  ADD KEY `caleg_ibfk_3` (`id_prov`),
+  ADD KEY `caleg_ibfk_4` (`id_kab`),
+  ADD KEY `caleg_ibfk_5` (`id_kel`);
+
+--
+-- Indexes for table `proof`
+--
+ALTER TABLE `proof`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `proof_ibfk_1` (`id_dapil`),
+  ADD KEY `proof_ibfk_3` (`id_saksi`),
+  ADD KEY `proof_ibfk_2` (`id_tps`);
+
+--
+-- Indexes for table `prov`
+--
+ALTER TABLE `prov`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id` (`id`);
+
+--
+-- Indexes for table `r_suara`
+--
+ALTER TABLE `r_suara`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `r_suara_ibfk_1` (`id_tps`);
+
+--
+-- Indexes for table `saksi`
+--
+ALTER TABLE `saksi`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `nik` (`nik`),
+  ADD KEY `saksi_rel_dapil` (`id_dapil`),
+  ADD KEY `saksi_rel_prov` (`id_prov`),
+  ADD KEY `saksi_rel_kab` (`id_kab`),
+  ADD KEY `saksi_rel_kec` (`id_kec`),
+  ADD KEY `saksi_rel_kel` (`id_kel`),
+  ADD KEY `saksi_tps` (`id_tps`);
+
+--
+-- Indexes for table `suara`
+--
+ALTER TABLE `suara`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `suara_tps` (`id_tps`),
+  ADD KEY `suara_ibfk_1` (`id_caleg`),
+  ADD KEY `suara_ibfk_3` (`id_saksi`),
+  ADD KEY `suara_parta` (`id_partai`);
+
+--
+-- Indexes for table `tps`
+--
+ALTER TABLE `tps`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `tps_ibfk_1` (`id_dapil`),
+  ADD KEY `tps_ibfk_2` (`id_kel`),
+  ADD KEY `tps_ibfk_3` (`id_kec`),
+  ADD KEY `tps_ibfk_4` (`id_kab`),
+  ADD KEY `tps_ibfk_5` (`id_prov`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `id_saksi` (`id_saksi`),
+  ADD UNIQUE KEY `username` (`username`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `admin`
+--
+ALTER TABLE `admin`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `dapil`
+--
+ALTER TABLE `dapil`
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `kab`
+--
+ALTER TABLE `kab`
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `kec`
+--
+ALTER TABLE `kec`
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `kel`
+--
+ALTER TABLE `kel`
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=249;
+
+--
+-- AUTO_INCREMENT for table `partai`
+--
+ALTER TABLE `partai`
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `pil`
+--
+ALTER TABLE `pil`
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `proof`
+--
+ALTER TABLE `proof`
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `prov`
+--
+ALTER TABLE `prov`
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `r_suara`
+--
+ALTER TABLE `r_suara`
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `saksi`
+--
+ALTER TABLE `saksi`
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `suara`
+--
+ALTER TABLE `suara`
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `tps`
+--
+ALTER TABLE `tps`
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables
