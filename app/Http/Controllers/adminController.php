@@ -114,12 +114,12 @@ class adminController extends Controller
             'telp' => 'required|min:11|max:13',
             'gender' => 'required|min:1|max:1',
             'alamat' => 'required|min:10|max:30',
-            'kec' => 'required|min:1|max:1',
-            'kel' => 'required|min:1|max:1',
-            'tps' => 'required|min:1|max:1',
-            'prov' => 'required|min:1|max:1',
-            'kab' => 'required|min:1|max:1',
-            'dapil' => 'required|min:1|max:1',
+            'kec' => 'required|min:1|max:3',
+            'kel' => 'required|min:1|max:3',
+            'tps' => 'required|min:1|max:3',
+            'prov' => 'required|min:1|max:2',
+            'kab' => 'required|min:1|max:3',
+            'dapil' => 'required|min:1|max:2',
             'password' => 'required|min:6',
             'confirmation' => 'required|same:password|min:6',
         ],[
@@ -172,30 +172,34 @@ class adminController extends Controller
         $req = json_decode(json_encode($req), true);
         if($req[0]['msg'] == "success")
         {
-            return redirect('admin/login')->with('alert-success','Registrasi saksi sukses!');
+            return redirect()->back()->with('alert-success','Registrasi data saksi sukses!');
         }
         else
         {
-            return redirect('admin/register')->with('alert','Registrasi saksi gagal!');
+            return redirect()->back()->with('alert-success','Registrasi data saksi sukses!');
         }
     }
 
     function updateSaksiProfile(Request $request)
     {
     	$this->validate($request, [
+    		'id' => 'required|min:1|max:2',
             'fname' => 'required|min:4|max:15',
             'lname' => 'required|min:4|max:15',
             'nik' => 'required|min:16|unique:saksi,nik,'.$request->id.'|max:16',
             'telp' => 'required|min:11|max:13',
             'gender' => 'required|min:1|max:1',
             'alamat' => 'required|min:10|max:30',
-            'kec' => 'required|min:1|max:1',
-            'kel' => 'required|min:1|max:1',
-            'tps' => 'required|min:1|max:1',
-            'prov' => 'required|min:1|max:1',
-            'kab' => 'required|min:1|max:1',
-            'dapil' => 'required|min:1|max:1',
+            'kec' => 'required|min:1|max:3',
+            'kel' => 'required|min:1|max:3',
+            'tps' => 'required|min:1|max:3',
+            'prov' => 'required|min:1|max:2',
+            'kab' => 'required|min:1|max:3',
+            'dapil' => 'required|min:1|max:2',
         ],[
+        	'id.required' => 'ID saksi harus diisi!',
+            'id.max' => 'ID saksi maximal 2 karakter!',
+            'id.min' => 'ID saksi minimal 1 karakter!',
             'fname.required'=>'Nama depan tidak boleh kosong!',
             'fname.min'=>'Maaf Nama depan minimal 4 karakter!',
             'fname.max'=>'Maaf Nama depan maximal 15 karakter!',
@@ -233,7 +237,8 @@ class adminController extends Controller
     			'tps' => $request->tps,
     			'prov' => $request->prov,
     			'kab' => $request->kab,
-    			'dapil' => $request->dapil];
+    			'dapil' => $request->dapil,
+    			];
 
     	$req = new saksiModel();
     	$req = $req->updateProfile($data);
@@ -363,13 +368,13 @@ class adminController extends Controller
             'fname' => 'required|min:4|max:15',
             'lname' => 'required|min:4|max:15',
             'gender' => 'required|min:1|max:1',
-            'partai' => 'required|min:1|max:1',
+            'partai' => 'required|min:1|max:2',
             'tingkat' => 'required|min:1|max:1',
-            'kec' => 'required|min:1|max:1',
-            'kel' => 'required|min:1|max:1',
-            'prov' => 'required|min:1|max:1',
-            'kab' => 'required|min:1|max:1',
-            'dapil' => 'required|min:1|max:1',
+            'kec' => 'required|min:1|max:3',
+            'kel' => 'required|min:1|max:3',
+            'prov' => 'required|min:1|max:2',
+            'kab' => 'required|min:1|max:3',
+            'dapil' => 'required|min:1|max:2',
         ],[
             'fname.required'=>'Nama depan tidak boleh kosong!',
             'fname.min'=>'Maaf Nama depan minimal 4 karakter!',
@@ -407,11 +412,11 @@ class adminController extends Controller
         $req = json_decode(json_encode($req), true);
         if($req[0]['msg'] == "success")
         {
-            return redirect('admin/login')->with('alert-success','Registrasi saksi sukses!');
+            return redirect()->back()->with('alert-success','Registrasi data caleg sukses!');
         }
         else
         {
-            return redirect('admin/register')->with('alert','Registrasi saksi gagal!');
+            return redirect()->back()->with('alert','Registrasi data caleg gagal!');
         }
     }
 
@@ -482,4 +487,90 @@ class adminController extends Controller
 	    	}
     	}
 	}
+
+	function editCaleg($id_caleg)
+    {
+	    if(!Session::get('login'))
+	    {
+	    	return redirect('admin/login')->with('Anda harus login terlebih dahulu');
+	    }
+	    elseif(Session::get('role') != 'admin')
+	    {
+	    	return redirect('index')->with('Anda harus login terlebih dahulu');
+	    }
+	    else
+	    {
+	    	$data = new calegModel();
+	    	$data = $data->getProfile($id_caleg);
+	    	$kecamatan = new dataModel();
+	    	$kecs = $kecamatan->getKec(1);
+	    	$kels = $kecamatan->getKel($data->id_kec);
+	    	$partais = $kecamatan->getPartai();
+	    	return view('admin.caleg.edit', compact('data', 'kecs', 'kels', 'partais'));
+	    }
+    }
+
+    function updateCalegProfile(Request $request)
+    {
+        $this->validate($request, [
+        	'id' => 'required|min:1|max:2',
+            'fname' => 'required|min:4|max:15',
+            'lname' => 'required|min:4|max:15',
+            'gender' => 'required|min:1|max:1',
+            'partai' => 'required|min:1|max:1',
+            'tingkat' => 'required|min:1|max:1',
+            'kec' => 'required|min:1|max:3',
+            'kel' => 'required|min:1|max:3',
+            'prov' => 'required|min:1|max:2',
+            'kab' => 'required|min:1|max:2',
+            'dapil' => 'required|min:1|max:2',
+        ],[
+        	'id.required' => 'ID caleg harus diisi!',
+            'id.max' => 'ID caleg maximal 2 karakter!',
+            'id.min' => 'ID caleg minimal 1 karakter!',
+            'fname.required'=>'Nama depan tidak boleh kosong!',
+            'fname.min'=>'Maaf Nama depan minimal 4 karakter!',
+            'fname.max'=>'Maaf Nama depan maximal 15 karakter!',
+            'lname.required'=>'Nama belakang tidak boleh kosong!',
+            'lname.max'=>'Nama maximal 15 karakter!',
+            'lname.min'=>' Nama belakang minimal 4 karakter!',
+            'gender.required' => 'Jenis Kelamin tidak boleh kosong!',
+            'partai.required' => 'Partai harus diisi!',
+            'partai.max' => 'Partai maximal 1 karakter!',
+            'partai.min' => 'Partai minimal 1 karakter!',
+            'tingkat.required' => 'Tingkat harus diisi!',
+            'tingkat.max' => 'Tingkat maximal 1 karakter!',
+            'tingkat.min' => 'Tingkat minimal 1 karakter!',
+            'kec.required' => 'Kecapatan tidak boleh kosong!',
+            'kel.required' => 'Kelurahan tidak boleh kosong!',
+            'prov.required' => 'Provinsi tidak boleh kosong',
+            'kab.required' => 'Kabupaten tidak boleh kosong',
+            'dapil.required' => 'Dapil tidak boleh kosong',
+        ]);
+
+        $data = ['id' => $request->id,
+        		'fname' => $request->fname,
+                'lname' => $request->lname,
+                'gender' => $request->gender,
+                'partai' => $request->partai,
+                'kec' => $request->kec,
+                'kel' => $request->kel,
+                'prov' => $request->prov,
+                'kab' => $request->kab,
+                'dapil' => $request->dapil,
+            	'tingkat' => $request->tingkat,
+            	'foto' => $request->foto];
+
+        $req = new calegModel();
+        $req = $req->updateProfile($data);
+        $req = json_decode(json_encode($req), true);
+        if($req[0]['msg'] == "success")
+        {
+            return redirect()->back()->with('alert-success','Update data caleg sukses!');
+    	}
+    	else
+    	{
+    		return redirect()->back()->with('alert','Update data caleg gagal!');
+    	}
+    }
 }

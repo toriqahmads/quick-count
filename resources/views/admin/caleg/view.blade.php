@@ -20,6 +20,19 @@
           <p class="description">
               Dapil : {{ $data->id_dapil }}
           </p>
+          <p class="description">
+            @if($data->tingkat == 'a')
+              Presiden
+            @elseif($data->tingkat == 'b')
+              DPD
+            @elseif($data->tingkat == 'c')
+              DPR RI
+            @elseif($data->tingkat == 'd')
+              DPR Provinsi
+            @else
+              DPR Kabupaten
+            @endif
+          </p>
         </div>
       </div>
     </div>

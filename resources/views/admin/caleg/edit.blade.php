@@ -62,7 +62,7 @@
           <h5 class="title">Edit Data Saksi</h5>
         </div>
         <div class="card-body">
-          <form class="form" method="post" action="{{ url('/admin/saksi/updateProfile') }}">
+          <form class="form" method="post" action="{{ url('/admin/caleg/updateCalegProfile') }}">
             {{ csrf_field() }}
             <div class="row">
               <div class="col-md-6 pl-1">
@@ -78,23 +78,11 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-12">
-                <div class="form-group">
-                  <label>Alamat</label>
-                  <input name="alamat" type="text" class="form-control" placeholder="Alamat" value="{{ $data->alamat }}">
-                </div>
-              </div>
             <div class="row">
-            	<div class="col-md-4 pl-1">
-                <div class="form-group">
-                  <label>NIK (Username)</label>
-                  <input type="text" name="nik" class="form-control" placeholder="NIK" value="{{ $data->nik }}">
-                </div>
-              </div>
-              <div class="col-md-4 px-1">
+              <div class="col-md-4 pl-1">
                 <div class="form-group">
                   <label for="exampleFormControlSelect1">Jenis Kelamin</label>
-                  <select name="gender" class="form-control" id="tps">
+                  <select name="gender" class="form-control" id="gender">
                     <option value="0">Pilih jenis kelamin</option>
                     @if($data->gender == "l")
                       {
@@ -110,12 +98,18 @@
                   </select>
                 </div>
               </div>
-              <div class="col-md-4 pr-1">
+              <div class="col-md-4 px-1">
                 <div class="form-group">
                   <label for="exampleFormControlSelect1">Provinsi</label>
                   <select name="prov" class="form-control" id="prov">
                     <option value="{{ $data->id_prov }}">{{ $data->prov }}</option>
                   </select>
+                </div>
+              </div>
+              <div class="col-md-4 pr-1">
+                <div class="form-group">
+                  <label>Dapil</label>
+                  <input id="dapil" name="dapil" type="text" class="form-control" placeholder="Dapil" value="{{ $data->id_dapil }}">
                 </div>
               </div>
             </div>
@@ -156,7 +150,7 @@
                     <option value="0">Kelurahan</option>
                     @foreach($kels as $kel)
                     {
-                      @if($kel->kel != $data->kel)
+                      @if($kel->id_kel != $data->id_kel)
                       {
                         <option value="{{ $kel->id_kel }}">{{ $kel->kel }}</option>
                       }
@@ -172,20 +166,20 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-4 pl-1">
+              <div class="col-md-6 pl-1">
                 <div class="form-group">
-                  <label for="exampleFormControlSelect1">TPS</label>
-                  <select name="tps" class="form-control" id="tps">
-                    <option value="0">TPS</option>
-                    @foreach($tps as $tpss)
+                  <label for="exampleFormControlSelect1">Partai</label>
+                  <select name="partai" class="form-control" id="partai">
+                    <option value="0">Partai</option>
+                    @foreach($partais as $partai)
                     {
-                      @if($tpss->tps != $data->tps)
+                      @if($partai->id != $data->id_partai)
                       {
-                        <option value="{{ $tpss->id_tps }}">{{ $tpss->tps }}</option>
+                        <option value="{{ $partai->id }}">{{ $partai->partai }}</option>
                       }
                       @else
                       {
-                        <option value="{{ $tpss->id_tps }}" selected>{{ $tpss->tps }}</option>
+                        <option value="{{ $partai->id }}" selected>{{ $partai->partai }}</option>
                       }
                       @endif
                     }
@@ -193,20 +187,48 @@
                   </select>
                 </div>
               </div>
-              <div class="col-md-4 px-1">
+              <div class="col-md-6 pl-1">
                 <div class="form-group">
-                  <label>Dapil</label>
-                  <input id="dapil" name="dapil" type="text" class="form-control" placeholder="Dapil" value="{{ $data->id_dapil }}">
-                </div>
-              </div>
-              <div class="col-md-4 pr-1">
-                <div class="form-group">
-                  <label>No. HP</label>
-                  <input type="text" name="telp" class="form-control" placeholder="No. HP" value="{{ $data->telp }}">
+                  <label for="exampleFormControlSelect1">Tingkatan</label>
+                  <select name="tingkat" class="form-control" id="tingkat">
+                    <option value="0">Tingkatan</option>
+                        @if($data->tingkat == 'a')
+                        <option value="a" selected>Presiden</option>
+                        <option value="b">DPD</option>
+                        <option value="c">DPR RI</option>
+                        <option value="d">DPR Provinsi</option>
+                        <option value="e">DPR Kabupaten</option>
+                          @elseif($data->tingkat == 'b')
+                        <option value="a">Presiden</option>
+                        <option value="b" selected>DPD</option>
+                        <option value="c">DPR RI</option>
+                        <option value="d">DPR Provinsi</option>
+                        <option value="e">DPR Kabupaten</option>
+                          @elseif($data->tingkat == 'c')
+                        <option value="a">Presiden</option>
+                        <option value="b">DPD</option>
+                        <option value="c" selected>DPR RI</option>
+                        <option value="d">DPR Provinsi</option>
+                        <option value="e">DPR Kabupaten</option>
+                          @elseif($data->tingkat == 'd')
+                        <option value="a">Presiden</option>
+                        <option value="b">DPD</option>
+                        <option value="c">DPR RI</option>
+                        <option value="d" selected>DPR Provinsi</option>
+                        <option value="e">DPR Kabupaten</option>
+                          @else
+                        <option value="a">Presiden</option>
+                        <option value="b">DPD</option>
+                        <option value="c">DPR RI</option>
+                        <option value="d">DPR Provinsi</option>
+                        <option value="e" selected>DPR Kabupaten</option>
+                          @endif
+                    </select>
                 </div>
               </div>
             </div>
             <input type="hidden" name="id" value="{{ $data->id }}">
+            <input type="hidden" name="foto" value="{{ $data->foto }}">
             <div class="input-group form-group-no-border input-lg">
                 <input type="submit" class="btn-primary btn btn-round btn-block" value="Simpan Perubahan" />
             </div>
@@ -225,21 +247,12 @@
               <img class="avatar border-gray" src="{{ asset('img/') }}/{{$data->foto}}" alt="...">
               <h5 class="title">{{ $data->nama_depan }} {{ $data->nama_belakang }}</h5>
             </a>
-            <p class="description">
-              NIK : {{ $data->nik }}
-            </p>
-            <p class="description">
-              HP : {{ $data->telp }}
-          </p>
           </div>
           <p class="description">
-            {{ $data->alamat }}, {{ $data->kel }}, {{ $data->kec }}, {{ $data->kab }}, {{ $data->prov }}
+            {{ $data->kel }}, {{ $data->kec }}, {{ $data->kab }}, {{ $data->prov }}
           </p>
           <p class="description">
               Dapil : {{ $data->id_dapil }}
-          </p>
-          <p class="description">
-              TPS : {{ $data->tps }}
           </p>
         </div>
       </div>

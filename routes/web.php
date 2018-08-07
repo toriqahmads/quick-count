@@ -43,7 +43,7 @@ Route::group(['prefix' => 'admin'], function()
 	Route::get('/edit/saksi/{nik}/{id}', 'adminController@editSaksi')->name('edit.saksi');
 	Route::get('/view/saksi/{nik}/{id}', 'adminController@viewSaksi')->name('view.saksi');
 	Route::delete('/delete/saksi/{nik}/{id}', 'adminController@deleteSaksi')->name('delete.saksi');
-	Route::post('/saksi/updateProfile', 'adminController@updateSaksiProfile')->name('update.saksi.profile');
+	Route::post('/saksi/updateSaksiProfile', 'adminController@updateSaksiProfile')->name('update.saksi.profile');
 
 	Route::get('/caleg/register', 'adminController@registerCaleg')->name('register.caleg');
 	Route::get('/listcaleg', 'adminController@getAllCaleg')->name('list.caleg');

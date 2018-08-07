@@ -53,10 +53,9 @@ class calegModel extends Model
     	$kab = $data['kab'];
     	$dapil = $data['dapil'];
     	$tingkat = $data['tingkat'];
+        $foto = $data['foto'];
 
-    	$req = DB::select('CALL input_data_pil(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', array($id, $fname, $lname, $partai, $dapil, $prov, $kab, $kel, $tingkat, $gender));
-
-    	return $req;
+    	$req = DB::select('CALL update_data_pil(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', array($id, $fname, $lname, $partai, $dapil, $prov, $kab, $kel, $tingkat, $gender, $foto));
 
         return $req;
     }

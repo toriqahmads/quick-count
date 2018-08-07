@@ -126,7 +126,7 @@
                         <option value="c">DPR RI</option>
                         <option value="d">DPR Provinsi</option>
                         <option value="e">DPR Kabupaten</option>
-                      </select>
+                    </select>
                   </div>
               </div>
             </div>

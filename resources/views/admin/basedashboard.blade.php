@@ -64,6 +64,12 @@
               <p>Data Caleg</p>
             </a>
           </li>
+          <li>
+            <a href="{{ url('/admin/caleg/register') }}">
+              <i class="now-ui-icons design_bullet-list-67"></i>
+              <p>Input Data Caleg</p>
+            </a>
+          </li>
         </ul>
       </div>
     </div>
