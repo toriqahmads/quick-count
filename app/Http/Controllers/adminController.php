@@ -91,17 +91,21 @@ class adminController extends Controller
     	}
     }
 
-    function register()
+    function registerSaksi()
     {
-    	if(Session::get('login'))
+    	if(!Session::get('login'))
 	    {
 	    	return view('admin.home.index');
+	    }
+	    elseif(Session::get('role') != 'admin')
+	    {
+	    	return redirect('index')->with('Anda harus login terlebih dahulu');
 	    }
 	    else
 	    {
 	    	$data = new dataModel();
 	    	$data = $data->getKec(1);
-	    	return view('admin.register.register', compact('data'));
+	    	return view('admin.saksi.register', compact('data'));
 	    }
     }
 
@@ -167,7 +171,7 @@ class adminController extends Controller
                 'dapil' => $request->dapil,
                 'password' => bcrypt($request->password)];
 
-        $req = new adminModel();
+        $req = new saksiModel();
         $req = $req->registerPost($data);
         $req = json_decode(json_encode($req), true);
         if($req[0]['msg'] == "success")
@@ -176,7 +180,7 @@ class adminController extends Controller
         }
         else
         {
-            return redirect()->back()->with('alert-success','Registrasi data saksi sukses!');
+            return redirect()->back()->with('alert','Registrasi data saksi gagal!');
         }
     }
 

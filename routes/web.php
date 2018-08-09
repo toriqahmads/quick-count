@@ -38,14 +38,18 @@ Route::group(['prefix' => 'data'], function()
 */
 Route::group(['prefix' => 'admin'], function()
 {
-	Route::get('/', 'adminController@index')->name('index.admin');
+	Route::get('/', function() {
+    	return View::make('admin.home.index');
+	});
 	Route::get('/listsaksi', 'adminController@getAllSaksi')->name('list.saksi');
 	Route::get('/edit/saksi/{nik}/{id}', 'adminController@editSaksi')->name('edit.saksi');
 	Route::get('/view/saksi/{nik}/{id}', 'adminController@viewSaksi')->name('view.saksi');
 	Route::delete('/delete/saksi/{nik}/{id}', 'adminController@deleteSaksi')->name('delete.saksi');
+	Route::get('/register/saksi', 'adminController@registerSaksi')->name('register.saksi');
+	Route::post('/saksi/registerPost', 'adminController@registerSaksiPost')->name('register.saksi');
 	Route::post('/saksi/updateSaksiProfile', 'adminController@updateSaksiProfile')->name('update.saksi.profile');
 
-	Route::get('/caleg/register', 'adminController@registerCaleg')->name('register.caleg');
+	Route::get('/register/caleg', 'adminController@registerCaleg')->name('register.caleg');
 	Route::get('/listcaleg', 'adminController@getAllCaleg')->name('list.caleg');
 	Route::get('/edit/caleg/{id}', 'adminController@editCaleg')->name('edit.caleg');
 	Route::get('/view/caleg/{id}', 'adminController@viewCaleg')->name('view.caleg');

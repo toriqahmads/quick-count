@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8" />
   <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('img/apple-icon.png') }}">
@@ -22,6 +21,7 @@
   <script src="{{ asset('js/sortTable.js')}}" type="text/javascript"></script>
   <script src="{{ asset('js/searchInTables.js')}}" type="text/javascript"></script>
   <script src="{{ asset('js/jquery-confirm.min.js') }}" type="text/javascript"></script>
+  
 </head>
 
 <body class="">
@@ -39,33 +39,39 @@
         </a>
       </div>
       <div class="sidebar-wrapper">
-        <ul class="nav">
-          <li class="active ">
-            <a href="{{ url('/admin') }}">
+        <ul class="nav" id="sidemenus">
+          <li id="dashboard">
+            <a href="{{ url('/admin') }}" class="sidemenu">
               <i class="now-ui-icons design_app"></i>
               <p>Dashboard</p>
             </a>
           </li>
-          <li>
-            <a href="{{ url('/admin/listsaksi') }}">
+          <li id='listsaksi'>
+            <a href="{{ url('/admin/listsaksi') }}" class="sidemenu">
               <i class="now-ui-icons users_single-02"></i>
               <p>Data Saksi</p>
             </a>
           </li>
-          <li>
-            <a href="#">
+          <li id='inputsaksi'>
+            <a href="{{ url('/admin/register/saksi') }}" class="sidemenu">
+              <i class="now-ui-icons users_single-02"></i>
+              <p>Input Data Saksi</p>
+            </a>
+          </li>
+          <li id='datasuara'>
+            <a href="#" class="sidemenu">
               <i class="now-ui-icons files_single-copy-04"></i>
               <p>Data Suara</p>
             </a>
           </li>
-          <li>
-            <a href="{{ url('/admin/listcaleg') }}">
+          <li id='listcaleg'>
+            <a href="{{ url('/admin/listcaleg') }}" class="sidemenu">
               <i class="now-ui-icons design_bullet-list-67"></i>
               <p>Data Caleg</p>
             </a>
           </li>
-          <li>
-            <a href="{{ url('/admin/caleg/register') }}">
+          <li id='inputcaleg'>
+            <a href="{{ url('/admin/register/caleg') }}" class="sidemenu">
               <i class="now-ui-icons design_bullet-list-67"></i>
               <p>Input Data Caleg</p>
             </a>
@@ -140,7 +146,7 @@
       <!-- End Navbar -->
       <div class="panel-header panel-header-sm">
       </div>
-      @yield('content')
+        @yield('content')
       <footer class="footer">
         <div class="container-fluid">
           <nav>
@@ -175,7 +181,50 @@
     </div>
   </div>
   <!--   Core JS Files   -->
-
+  <!--
+  <script type="text/javascript">
+    $(document).ready(function()
+    {
+        $("a.sidemenu").click(function(e)
+        {
+            e.preventDefault();
+            urls = $(this).attr("href");
+            li = $(this).parent();
+            $("#contents").load(response);
+            $("[class='active']").removeClass("active");
+            li.attr("class", "active");
+            return false;
+        });
+      });
+  </script>-->
+  <script type="text/javascript">
+      var pathname = window.location.pathname;
+      //alert(pathname);
+      if(pathname == '/admin')
+      {
+        $("#dashboard").addClass('active');
+      }
+      else if(pathname == '/admin/listsaksi')
+      {
+        $("#listsaksi").addClass('active');
+      }
+      else if(pathname == '/admin/listcaleg')
+      {
+        $("#listcaleg").addClass('active');
+      }
+      else if(pathname == '/admin/register/saksi')
+      {
+        $("#inputsaksi").addClass('active');
+      }
+      else if(pathname == '/admin/register/caleg')
+      {
+        $("#inputcaleg").addClass('active');
+      }
+      else
+      {
+        $("#datasuara").addClass('active');
+      }
+  </script>
   <script src="{{ asset('js/core/bootstrap.min.js') }}"></script>
   <script src="{{ asset('js/plugins/perfect-scrollbar.jquery.min.js') }}"></script>
   <!--  Google Maps Plugin    -->

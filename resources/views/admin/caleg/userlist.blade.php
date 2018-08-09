@@ -5,7 +5,7 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
-          <h4 class="card-title">Table Daftar Saksi</h4>
+          <h4 class="card-title">Table Daftar Caleg</h4>
           <div class="input-group">
             <input type="text" placeholder="Cari..." class="form-control form-control-success" id="myInput"/>
             <div class="input-group-append">

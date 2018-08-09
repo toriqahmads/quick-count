@@ -83,7 +83,7 @@
     <div class="col-md-8">
       <div class="card">
         <div class="card-header">
-          <h5 class="title">Edit Data Saksi</h5>
+          <h5 class="title">Registrasi Data Caleg</h5>
         </div>
         <div class="card-body">
           <form class="form" method="post" action="{{ url('/admin/caleg/registerPost') }}">

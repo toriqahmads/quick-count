@@ -1,6 +1,5 @@
 @extends('admin.basedashboard')
 @section('content')
-
 <script type="text/javascript">
     $(document).ready(function()
     {
