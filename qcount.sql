@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 06, 2018 at 10:24 AM
+-- Generation Time: Aug 11, 2018 at 11:21 AM
 -- Server version: 10.1.33-MariaDB
 -- PHP Version: 7.1.18
 
@@ -198,7 +198,7 @@ END IF;
 SELECT msg;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `input_data_pil` (IN `fname` VARCHAR(15), IN `lname` VARCHAR(15), IN `partai` INT(2), IN `dapil` INT(2), IN `prov` INT(2), IN `kab` INT(2), IN `kel` INT(2), IN `tingkat` ENUM('a','b','c','d','e'), IN `gender` CHAR(1))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `input_data_pil` (IN `fname` VARCHAR(15), IN `lname` VARCHAR(15), IN `partai` INT(2), IN `dapil` INT(2), IN `prov` INT(2), IN `kab` INT(2), IN `kel` INT(2), IN `tingkat` ENUM('a','b','c','d','e'), IN `gender` CHAR(1), IN `foto` VARCHAR(255))  BEGIN
 
 DECLARE code CHAR(5) DEFAULT '00000';
 DECLARE msg TEXT;
@@ -213,7 +213,7 @@ END;
 
 START TRANSACTION;
 
-INSERT INTO pil(nama_depan, nama_belakang, gender, tingkat, id_partai, id_dapil, id_prov, id_kab, id_kel) VALUES (fname, lname, gender, tingkat, partai, dapil, prov, kab, kel);
+INSERT INTO pil(nama_depan, nama_belakang, gender, tingkat, id_partai, id_dapil, id_prov, id_kab, id_kel, foto) VALUES (fname, lname, gender, tingkat, partai, dapil, prov, kab, kel, foto);
 
 IF code != '00000' OR rb = 1 THEN
   ROLLBACK;
@@ -224,7 +224,7 @@ END IF;
 SELECT msg;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `input_data_saksi` (IN `fname` VARCHAR(15), IN `lname` VARCHAR(15), IN `sex` CHAR(1), IN `alamat` VARCHAR(30), IN `kel` INT(4), IN `kec` INT(2), IN `kab` INT(2), IN `prov` INT(2), IN `dapil` INT(2), IN `nomor_nik` VARCHAR(16), IN `telpon` VARCHAR(13), IN `tps` INT(2), IN `passwd` VARCHAR(255))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `input_data_saksi` (IN `fname` VARCHAR(15), IN `lname` VARCHAR(15), IN `sex` CHAR(1), IN `alamat` VARCHAR(30), IN `kel` INT(4), IN `kec` INT(2), IN `kab` INT(2), IN `prov` INT(2), IN `dapil` INT(2), IN `nomor_nik` VARCHAR(16), IN `telpon` VARCHAR(13), IN `tps` INT(2), IN `passwd` VARCHAR(255), IN `foto` VARCHAR(255))  BEGIN
 
 DECLARE code CHAR(5) DEFAULT '00000';
 DECLARE msg TEXT;
@@ -241,8 +241,8 @@ START TRANSACTION;
 
 INSERT INTO users (username, pass) VALUES (nomor_nik, passwd);
 
-INSERT INTO saksi (nama_depan, nama_belakang, gender, alamat, id_kel, id_kec, id_kab, id_prov, id_dapil, nik, telp, id_tps)
-VALUES (fname, lname, sex, alamat, kel, kec, kab, prov, dapil, nomor_nik, telpon, tps);
+INSERT INTO saksi (nama_depan, nama_belakang, gender, alamat, id_kel, id_kec, id_kab, id_prov, id_dapil, nik, telp, id_tps, foto)
+VALUES (fname, lname, sex, alamat, kel, kec, kab, prov, dapil, nomor_nik, telpon, tps, foto);
 
 IF code != '00000' OR rb = 1 THEN
   ROLLBACK;
@@ -971,7 +971,7 @@ CREATE TABLE `pil` (
   `nama_depan` varchar(15) DEFAULT NULL,
   `nama_belakang` varchar(15) DEFAULT NULL,
   `gender` char(1) NOT NULL,
-  `foto` varchar(50) NOT NULL,
+  `foto` varchar(50) NOT NULL DEFAULT 'default_avatar.jpg',
   `tingkat` enum('a','b','c','d','e') NOT NULL COMMENT 'a = presiden. b = dpd. c = dppri. d = dpr prov. e = dpr kab',
   `id_partai` int(2) DEFAULT NULL,
   `id_dapil` int(2) DEFAULT NULL,
@@ -987,7 +987,11 @@ CREATE TABLE `pil` (
 
 INSERT INTO `pil` (`id`, `nama_depan`, `nama_belakang`, `gender`, `foto`, `tingkat`, `id_partai`, `id_dapil`, `id_prov`, `id_kab`, `id_kel`, `status`) VALUES
 (2, 'Ahlis', 'MF', 'l', 'default_avatar.jpg', 'a', 1, 1, 1, 1, 1, 'd'),
-(3, 'Misbahul', 'Munir S.E, M.Pd', 'l', 'default_avatar.jpg', 'c', 1, 1, 1, 1, 1, 'd');
+(3, 'Misbahul', 'Munir S.E, M.Pd', 'l', 'default_avatar.jpg', 'c', 1, 1, 1, 1, 1, 'd'),
+(5, 'Misbahul', 'Munir S.E, M.Pd', 'l', 'default_avatar.jpg', 'b', 1, 1, 1, 1, 18, 'd'),
+(6, 'Toriq', 'Ahmad', 'l', 'default_avatar.jpg', 'e', 1, 3, 1, 1, 121, 'd'),
+(7, 'Gufron', 'Ibrahim', 'l', 'default_avatar.jpg', 'd', 1, 2, 1, 1, 76, 'l'),
+(8, 'Misbahul', 'Ibrahim', 'l', '1533978368.png', 'c', 1, 1, 1, 1, 16, 'l');
 
 -- --------------------------------------------------------
 
@@ -1073,14 +1077,18 @@ CREATE TABLE `saksi` (
 INSERT INTO `saksi` (`id`, `nama_depan`, `nama_belakang`, `gender`, `alamat`, `id_kel`, `id_kec`, `id_kab`, `id_prov`, `id_dapil`, `nik`, `foto`, `telp`, `id_tps`, `status`) VALUES
 (1, 'Muhammad', 'Haimin', 'l', 'Jl. Kyai Singki no.45', 1, 1, 1, 1, 1, '337230934799234+deleted', 'Images2.jpg', '089667823877', 1, 'd'),
 (2, 'Rozikin', 'Ahmad', 'l', 'Jl. Pahlawan no.11', 1, 1, 1, 1, 1, '3340034987239080+deleted', 'default_avatar.jpg', '089668623899', 1, 'd'),
-(3, 'Fadli', 'Ihsan', 'l', 'Jl. Tentara Pelajar no.11', 1, 1, 1, 1, 1, '3302210111900006', 'default_avatar.jpg', '08966862389', 1, 'l'),
+(3, 'Fadli', 'Ihsan', 'l', 'Jl. Tentara Pelajar no.11', 1, 1, 1, 1, 1, '3302210111900006', 'default_avatar.jpg', '089668623333', 1, 'l'),
 (4, 'Ziat', 'Ahmad', 'l', 'Jl. Wadak Sempal no.11', 1, 1, 1, 1, 1, '3302210111900007', 'default_avatar.jpg', '089667865658', 1, 'l'),
 (5, 'Ahmad', 'Husain', 'l', 'Jl. Kyai Singkil no.4', 1, 1, 1, 1, 1, '3302210111900004', 'default_avatar.jpg', '08966862385', 1, 'l'),
 (6, 'Ahmad', 'Roziqin', 'l', 'Jl. Kyai Singkil no.45', 1, 1, 1, 1, 1, '3302210111900001', 'default_avatar.jpg', '089667682352', 1, 'l'),
 (7, 'Ahmad', 'Zaenudin', 'l', 'Jl. Tentara plejar no.4', 1, 1, 1, 1, 1, '3302210111900009', 'default_avatar.jpg', '089668687263', 1, 'l'),
 (8, 'Toriq', 'Ahmad', 'l', 'Jl. Wiku 2 no.4', 1, 1, 1, 1, 1, '3302210111900000', 'default_avatar.jpg', '0896678268376', 1, 'l'),
 (9, 'Zuli', 'Husadah', 'l', 'Jl. Kyai Singkil no.45', 1, 1, 1, 1, 1, '3302210111900012', 'default_avatar.jpg', '089556753242', 1, 'l'),
-(10, 'Ahmad', 'Zubair', 'l', 'Jl. Kyai jebat no.11', 1, 1, 1, 1, 1, '3302210111900014', 'default_avatar.jpg', '08966768564', 1, 'l');
+(10, 'Ahmad', 'Zubair', 'l', 'Jl. Kyai jebat no.11', 1, 1, 1, 1, 1, '3302210111900014', 'default_avatar.jpg', '08966768564', 1, 'l'),
+(11, 'Toriq', 'Ahmad', 'l', 'Jl. Kyai Singkil no.45', 1, 1, 1, 1, 1, '3325436456567567', 'default_avatar.jpg', '089668623333', 1, 'l'),
+(12, 'Misbahul', 'Munir S.E, M.Pd', 'l', 'Jl. Kyai Singkil no.45', 1, 1, 1, 1, 1, '3324455667783943', 'default_avatar.jpg', '0896686233323', 1, 'l'),
+(13, 'Gufron', 'Ibrahim', 'l', 'Jl. Kyai Singkil no.45', 1, 1, 1, 1, 1, '3324455667783940', 'default_avatar.jpg', '089668623373', 1, 'l'),
+(14, 'Gufron', 'Ahmad', 'l', 'Jl. Kyai Singkil no.45', 1, 1, 1, 1, 1, '3324455667788551', '1533979114.png', '0896686233326', 1, 'l');
 
 --
 -- Triggers `saksi`
@@ -1166,7 +1174,11 @@ INSERT INTO `users` (`id`, `username`, `pass`, `id_saksi`, `status`) VALUES
 (7, '3302210111900009', '$2y$10$bcY2dbV3dAlj.PskRfi2peVDDFD97Kqam9CmReFzgsmTAqHZfYfA6', 7, 'l'),
 (8, '3302210111900000', '$2y$10$njZP2GrrP1QhkUJM4hTbDONTNE3AaUdGMgpEfhW4gYARp4SCdt28G', 8, 'l'),
 (9, '3302210111900012', '$2y$10$eWOvA8gYqxL7Diph7uzbJuh6U.q2pxCCHEKgmJirsdh.JanBA1OQm', 9, 'l'),
-(10, '3302210111900014', '$2y$10$sKlQANl6GDZunU2IiJDQheObbO4TxcbbqJvpv6EVFMeWEyqk8hqQu', 10, 'l');
+(10, '3302210111900014', '$2y$10$sKlQANl6GDZunU2IiJDQheObbO4TxcbbqJvpv6EVFMeWEyqk8hqQu', 10, 'l'),
+(11, '3325436456567567', '$2y$10$wMgvCkUmIWbV52k8/SQ4xulo.ACOHQAbm46D7VxcuscmbSs69ZuDy', 11, 'l'),
+(12, '3324455667783943', '$2y$10$lc.aT5itzlEBvgcaThC50OoYGCZsL3bNBdAhJzJcigTPoFL0V.ira', 12, 'l'),
+(13, '3324455667783940', '$2y$10$4CrlegMERUibfY3jWKsm2e7DIYNN2ZMpPv3bju9/O81B.FOv9Vl4a', 13, 'l'),
+(14, '3324455667788551', '$2y$10$A/a/lfBuvijhonBO69C5/.UPpWfhJziucg/oygsjNwpKtlmB6yY6C', 14, 'l');
 
 --
 -- Indexes for dumped tables
@@ -1336,7 +1348,7 @@ ALTER TABLE `partai`
 -- AUTO_INCREMENT for table `pil`
 --
 ALTER TABLE `pil`
-  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `proof`
@@ -1360,7 +1372,7 @@ ALTER TABLE `r_suara`
 -- AUTO_INCREMENT for table `saksi`
 --
 ALTER TABLE `saksi`
-  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `suara`
@@ -1378,7 +1390,7 @@ ALTER TABLE `tps`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Constraints for dumped tables

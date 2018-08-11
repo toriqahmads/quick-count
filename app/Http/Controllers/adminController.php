@@ -126,6 +126,7 @@ class adminController extends Controller
             'dapil' => 'required|min:1|max:2',
             'password' => 'required|min:6',
             'confirmation' => 'required|same:password|min:6',
+            'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ],[
             'fname.required'=>'Nama depan tidak boleh kosong!',
             'fname.min'=>'Maaf Nama depan minimal 4 karakter!',
@@ -157,6 +158,10 @@ class adminController extends Controller
             'confirmation.same' => 'Maaf, password yang Anda masukkan tidak sama!'
         ]);
 
+        $image = $request->file('foto');
+        $foto = time().'.'.$image->getClientOriginalExtension();
+        $image->move(public_path('img/saksi'), $foto);
+
         $data = ['fname' => $request->fname,
                 'lname' => $request->lname,
                 'nik' => $request->nik,
@@ -169,7 +174,8 @@ class adminController extends Controller
                 'prov' => $request->prov,
                 'kab' => $request->kab,
                 'dapil' => $request->dapil,
-                'password' => bcrypt($request->password)];
+                'password' => bcrypt($request->password),
+            	'foto' => $foto];
 
         $req = new saksiModel();
         $req = $req->registerPost($data);
@@ -379,6 +385,7 @@ class adminController extends Controller
             'prov' => 'required|min:1|max:2',
             'kab' => 'required|min:1|max:3',
             'dapil' => 'required|min:1|max:2',
+            'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ],[
             'fname.required'=>'Nama depan tidak boleh kosong!',
             'fname.min'=>'Maaf Nama depan minimal 4 karakter!',
@@ -399,6 +406,9 @@ class adminController extends Controller
             'kab.required' => 'Kabupaten tidak boleh kosong',
             'dapil.required' => 'Dapil tidak boleh kosong',
         ]);
+        $image = $request->file('foto');
+        $foto = time().'.'.$image->getClientOriginalExtension();
+        $image->move(public_path('img/caleg'), $foto);
 
         $data = ['fname' => $request->fname,
                 'lname' => $request->lname,
@@ -409,7 +419,9 @@ class adminController extends Controller
                 'prov' => $request->prov,
                 'kab' => $request->kab,
                 'dapil' => $request->dapil,
-            	'tingkat' => $request->tingkat];
+            	'tingkat' => $request->tingkat,
+            	'foto' => $foto
+            	];
 
         $req = new calegModel();
         $req = $req->registerPost($data);

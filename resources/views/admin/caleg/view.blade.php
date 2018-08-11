@@ -10,7 +10,7 @@
         <div class="card-body">
           <div class="author">
             <a href="#">
-              <img class="avatar border-gray" src="{{ asset('img/') }}/default_avatar.jpg" alt="...">
+              <img class="avatar rounded-circle img-raised" src="{{ asset('img/caleg') }}/{{ $data->foto }}" alt="...">
               <h5 class="title">{{ $data->nama_depan }} {{ $data->nama_belakang }}</h5>
             </a>
           </div>

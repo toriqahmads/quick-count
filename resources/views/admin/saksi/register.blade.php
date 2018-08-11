@@ -1,5 +1,6 @@
 @extends('admin.basedashboard')
 @section('content')
+<script src="{{ asset('js/upload.js') }}"></script>
 <script type="text/javascript">
             function showNotification(from, align, msg, color){
     color = color
@@ -136,7 +137,7 @@
           <h5 class="title">Input Data Saksi</h5>
         </div>
         <div class="card-body">
-          <form class="form" method="post" action="{{ url('/admin/saksi/registerPost') }}">
+          <form class="form" method="post" action="{{ url('/admin/saksi/registerPost') }}" enctype="multipart/form-data">
             {{ csrf_field() }}
             <div class="row">
               <div class="col-md-6 pl-1">
@@ -222,6 +223,27 @@
                   <input type="password" name="confirmation" placeholder="Confirm Password" class="form-control" />
                 </div>
               </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 pl-1">
+                <div class="form-group">
+                    <label>Foto</label>
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <span class="btn btn-default btn-file">
+                                Browse… <input type="file" name="foto" id="imgInp">
+                            </span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 pr-1">
+              <label>Preview</label>
+              <div class="form-group">
+                
+                <img id='img-upload'/>
+              </div>
+            </div>
           </div>
                 <input type="hidden" id="prov" name="prov" value="">
                 <input type="hidden" id="kab" name="kab" value="">

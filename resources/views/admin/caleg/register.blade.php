@@ -1,5 +1,6 @@
 @extends('admin.basedashboard')
 @section('content')
+<script src="{{ asset('js/upload.js') }}"></script>
 <script src="{{ asset('js/getreg.js')}}" type="text/javascript"></script>
 <script type="text/javascript">
             function showNotification(from, align, msg, color){
@@ -86,7 +87,7 @@
           <h5 class="title">Registrasi Data Caleg</h5>
         </div>
         <div class="card-body">
-          <form class="form" method="post" action="{{ url('/admin/caleg/registerPost') }}">
+          <form class="form" method="post" action="{{ url('/admin/caleg/registerPost') }}" enctype="multipart/form-data">
             {{ csrf_field() }}
             <div class="row">
               <div class="col-md-6 pl-1">
@@ -159,6 +160,27 @@
                   <select name="kel" id="kel" class="form-control">
                     <option value="0" selected>Kelurahan</option>
                   </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 pl-1">
+                <div class="form-group">
+                    <label>Foto</label>
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <span class="btn btn-default btn-file">
+                                Browse… <input type="file" name="foto" id="imgInp">
+                            </span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 pr-1">
+              <label>Preview</label>
+              <div class="form-group">
+                
+                <img id='img-upload'/>
+              </div>
             </div>
           </div>
             </div>

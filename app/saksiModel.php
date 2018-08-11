@@ -21,8 +21,9 @@ class saksiModel extends Model
     	$kab = $data['kab'];
     	$dapil = $data['dapil'];
     	$pass = $data['password'];
+    	$foto = $data['foto'];
 
-    	$req = DB::select('CALL input_data_saksi(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', array($fname, $lname, $gender, $alamat, $kel, $kec, $kab, $prov, $dapil, $nik, $telp, $tps, $pass));
+    	$req = DB::select('CALL input_data_saksi(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', array($fname, $lname, $gender, $alamat, $kel, $kec, $kab, $prov, $dapil, $nik, $telp, $tps, $pass, $foto));
 
     	return $req;
     }
