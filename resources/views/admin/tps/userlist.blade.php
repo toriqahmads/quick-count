@@ -5,7 +5,7 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
-          <h4 class="card-title">Table Daftar Caleg</h4>
+          <h4 class="card-title">Table Daftar TPS</h4>
           <div class="input-group">
             <input type="text" placeholder="Cari..." class="form-control form-control-success" id="myInput"/>
             <div class="input-group-append">
@@ -23,10 +23,10 @@
                   No.
                 </th>
                 <th onclick="sortTable(1)" style="cursor: pointer;">
-                  Nama
+                  Nama TPS
                 </th>
                 <th onclick="sortTable(2)" style="cursor: pointer;">
-                  Partai
+                  Kabupaten
                 </th>
                 <th onclick="sortTable(3)" style="cursor: pointer;">
                   Kecamatan
@@ -35,7 +35,7 @@
                   Kelurahan
                 </th>
                 <th onclick="sortTable(5)" style="cursor: pointer;">
-                  Tingkatan
+                  Dapil
                 </th>
                 <th>
                   Aksi
@@ -46,34 +46,24 @@
                 @foreach($req as $data)
                   <tr id="{{$data->id}}">
                       <td>{{$no++}}</td>
-                      <td>{{ $data->nama_depan }} {{ $data->nama_belakang }}</td>
-                      <td>{{ $data->partai}}</td>
-                      <td>{{ $data->kec}}</td>
+                      <td>{{ $data->tps }}</td>
+                      <td>{{ $data->kab }}</td>
+                      <td>{{ $data->kec }}</td>
                       <td>{{ $data->kel }}</td>
-                      <td>@if($data->tingkat == 'a')
-                            Presiden
-                          @elseif($data->tingkat == 'b')
-                            DPD
-                          @elseif($data->tingkat == 'c')
-                            DPR RI
-                          @elseif($data->tingkat == 'd')
-                            DPR Provinsi
-                          @else
-                            DPR Kabupaten
-                          @endif
+                      <td>{{ $data->dapil }}
                       </td>
                       <td>
-                        <form method="GET" action="{{ route('view.caleg', [$data->id]) }}" class="btn btn-info btn-sm btn-icon">
+                        <form method="GET" action="{{ route('view.tps', [$data->id]) }}" class="btn btn-info btn-sm btn-icon">
                           <button type="submit" rel="tooltip" title="Lihat" class="btn btn-info btn-sm btn-icon">
                               <i class="now-ui-icons users_single-02"></i>
                           </button>
                         </form>
-                        <form method="GET" action="{{ route('edit.caleg', [$data->id]) }}" class="btn btn-success btn-sm btn-icon">
+                        <form method="GET" action="{{ route('edit.tps', [$data->id]) }}" class="btn btn-success btn-sm btn-icon">
                           <button type="submit" rel="tooltip" title="Edit" class="btn btn-success btn-sm btn-icon">
                               <i class="now-ui-icons design-2_ruler-pencil"></i>
                           </button>
                         </form>
-                          <form id="hapuscaleg{{$data->id}}" method="POST" action="{{ route('delete.caleg', [$data->id]) }}" class="btn btn-danger btn-sm btn-icon">
+                          <form id="hapustps{{$data->id}}" method="POST" action="{{ route('delete.tps', [$data->id]) }}" class="hapus btn btn-danger btn-sm btn-icon">
                               {{ csrf_field() }}
                               {{ method_field('DELETE') }}
                               <button type="submit" rel="tooltip" title="Hapus" class="hapus btn btn-danger btn-sm btn-icon">
@@ -92,5 +82,5 @@
     </div>
   </div>
 </div>
-  <script src="{{ asset('js/delete-caleg.js')}}"></script>
+  <script src="{{ asset('js/delete-tps.js')}}"></script>
 @endsection

@@ -76,6 +76,18 @@
               <p>Input Data Caleg</p>
             </a>
           </li>
+          <li id='inputtps'>
+            <a href="{{ url('/admin/register/tps') }}" class="sidemenu">
+              <i class="now-ui-icons design_bullet-list-67"></i>
+              <p>Input Data TPS</p>
+            </a>
+          </li>
+          <li id='listtps'>
+            <a href="{{ url('/admin/listtps') }}" class="sidemenu">
+              <i class="now-ui-icons design_bullet-list-67"></i>
+              <p>Data TPS</p>
+            </a>
+          </li>
         </ul>
       </div>
     </div>
@@ -219,6 +231,14 @@
       else if(pathname == '/admin/register/caleg')
       {
         $("#inputcaleg").addClass('active');
+      }
+      else if(pathname == '/admin/register/tps')
+      {
+        $("#inputtps").addClass('active');
+      }
+      else if(pathname == '/admin/listtps')
+      {
+        $("#listtps").addClass('active');
       }
       else
       {

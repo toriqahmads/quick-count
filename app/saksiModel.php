@@ -63,8 +63,9 @@ class saksiModel extends Model
         $prov = $data['prov'];
         $kab = $data['kab'];
         $dapil = $data['dapil'];
+        $foto = $data['foto'];
 
-        $req = DB::select('CALL update_data_saksi(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', array($id, $fname, $lname, $gender, $alamat, $kel, $kec, $kab, $prov, $dapil, $nik, $telp, $tps));
+        $req = DB::select('CALL update_data_saksi(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', array($id, $fname, $lname, $gender, $alamat, $kel, $kec, $kab, $prov, $dapil, $nik, $telp, $tps, $foto));
 
         return $req;
     }

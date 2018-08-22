@@ -51,7 +51,7 @@
                     var res = "<option value'0'>TPS</option>";
                     $.each(html, function(key, val)
                     {
-                        res = res + "<option value='" + val.id +"'>" + val.tps + "</option>";
+                        res = res + "<option value='" + val.id_tps +"'>" + val.tps + "</option>";
                     });
                     $("#tps").html(res);
                   },
@@ -137,7 +137,7 @@
           <h5 class="title">Edit Data Saksi</h5>
         </div>
         <div class="card-body">
-          <form class="form" method="post" action="{{ url('/admin/saksi/updateSaksiProfile') }}">
+          <form class="form" method="post" action="{{ url('/admin/saksi/updateSaksiProfile') }}" enctype="multipart/form-data">
             {{ csrf_field() }}
             <div class="row">
               <div class="col-md-6 pl-1">
@@ -169,7 +169,7 @@
               <div class="col-md-4 px-1">
                 <div class="form-group">
                   <label for="exampleFormControlSelect1">Jenis Kelamin</label>
-                  <select name="gender" class="form-control" id="tps">
+                  <select name="gender" class="form-control" id="jenkel">
                     <option value="0">Pilih jenis kelamin</option>
                     @if($data->gender == "l")
                       {
@@ -185,6 +185,7 @@
                   </select>
                 </div>
               </div>
+              
               <div class="col-md-4 pr-1">
                 <div class="form-group">
                   <label for="exampleFormControlSelect1">Provinsi</label>
@@ -282,6 +283,27 @@
               </div>
             </div>
             <input type="hidden" name="id" value="{{ $data->id }}">
+            <input type="hidden" name="foto" value="{{ $data->foto }}">
+            <div class="row">
+            <div class="col-md-6 pl-1">
+                <div class="form-group">
+                    <label>Foto</label>
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <span class="btn btn-default btn-file">
+                                Browse… <input type="file" name="fotos" id="imgInp">
+                            </span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 pr-1">
+              <label>Preview</label>
+              <div class="form-group">
+                <img id='img-upload' src="{{ asset('img/saksi') }}/{{ $data->foto }}"/>
+              </div>
+            </div>
+          </div>
             <div class="input-group form-group-no-border input-lg">
                 <input type="submit" class="btn-primary btn btn-round btn-block" value="Simpan Perubahan" />
             </div>
@@ -297,7 +319,7 @@
         <div class="card-body">
           <div class="author">
             <a href="#">
-              <img class="avatar border-gray" src="{{ asset('img/') }}/{{$data->foto}}" alt="...">
+              <img class="avatar border-gray" src="{{ asset('img/saksi') }}/{{$data->foto}}" alt="...">
               <h5 class="title">{{ $data->nama_depan }} {{ $data->nama_belakang }}</h5>
             </a>
             <p class="description">
@@ -321,4 +343,29 @@
     </div>
   </div>
 </div>
+<script type="text/javascript">
+$(document).ready( function() {
+      $(document).on('change', '.btn-file :file', function() {
+    var input = $(this),
+      label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+    input.trigger('fileselect', [label]);
+    });
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            
+            reader.onload = function (e) {
+                $('#img-upload').attr('src', e.target.result);
+            }
+            
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#imgInp").change(function(){
+        readURL(this);
+    });   
+  });
+</script>
 @endsection

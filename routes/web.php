@@ -38,9 +38,7 @@ Route::group(['prefix' => 'data'], function()
 */
 Route::group(['prefix' => 'admin'], function()
 {
-	Route::get('/', function() {
-    	return View::make('admin.home.index');
-	});
+	Route::get('/', 'adminController@index');
 	Route::get('/listsaksi', 'adminController@getAllSaksi')->name('list.saksi');
 	Route::get('/edit/saksi/{nik}/{id}', 'adminController@editSaksi')->name('edit.saksi');
 	Route::get('/view/saksi/{nik}/{id}', 'adminController@viewSaksi')->name('view.saksi');
@@ -56,6 +54,22 @@ Route::group(['prefix' => 'admin'], function()
 	Route::delete('/delete/caleg/{id}', 'adminController@deleteCaleg')->name('delete.caleg');
 	Route::post('/caleg/updateCalegProfile', 'adminController@updateCalegProfile')->name('update.caleg.profile');
 	Route::post('/caleg/registerPost', 'adminController@registerPostCaleg')->name('register.post.caleg');
+
+	Route::get('/register/tps', 'adminController@registerTps')->name('register.tps');
+	Route::get('/listtps', 'adminController@getAllTps')->name('list.tps');
+	Route::get('/edit/tps/{id}', 'adminController@editTps')->name('edit.tps');
+	Route::get('/view/tps/{id}', 'adminController@viewTps')->name('view.tps');
+	Route::delete('/delete/tps/{id}', 'adminController@deleteTps')->name('delete.tps');
+	Route::post('/tps/updateTPS', 'adminController@updateTps')->name('update.tps');
+	Route::post('/tps/registerPost', 'adminController@registerPostTps')->name('register.post.tps');
+
+	Route::get('/register/partai', 'adminController@registerPartai')->name('register.partai');
+	Route::get('/listpartai', 'adminController@getAllPartai')->name('list.partai');
+	Route::get('/edit/partai/{id}', 'adminController@editPartai')->name('edit.partai');
+	Route::get('/view/partai/{id}', 'adminController@viewPartai')->name('view.partai');
+	Route::delete('/delete/partai/{id}', 'adminController@deletePartai')->name('delete.partai');
+	Route::post('/partai/updatePartai', 'adminController@updatePartai')->name('update.partai');
+	Route::post('/partai/registerPost', 'adminController@registerPostPartai')->name('register.post.partai');
 
 	Route::post('/updateProfile', 'adminController@updateProfile')->name('update.profile');
 	Route::get('/login', 'adminController@login')->name('login.admin');

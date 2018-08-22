@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 11, 2018 at 11:21 AM
+-- Generation Time: Aug 22, 2018 at 09:22 AM
 -- Server version: 10.1.33-MariaDB
 -- PHP Version: 7.1.18
 
@@ -373,7 +373,7 @@ END IF;
 SELECT msg;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `update_data_pil` (IN `ids` INT(2), IN `fname` VARCHAR(15), IN `lname` VARCHAR(15), IN `partai` INT(2), IN `dapil` INT(2), IN `prov` INT(2), IN `kab` INT(2), IN `kel` INT(2), IN `tingkat` ENUM('a','b','c','d','e'), IN `gender` CHAR(1), IN `foto` VARCHAR(50))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_data_pil` (IN `ids` INT(2), IN `fname` VARCHAR(15), IN `lname` VARCHAR(15), IN `partai` INT(2), IN `dapil` INT(2), IN `prov` INT(2), IN `kab` INT(2), IN `kel` INT(2), IN `tingkat` ENUM('a','b','c','d','e'), IN `gender` CHAR(1), IN `foto` VARCHAR(255))  BEGIN
 
 DECLARE code CHAR(5) DEFAULT '00000';
 DECLARE msg TEXT;
@@ -406,7 +406,7 @@ END IF;
 SELECT msg;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `update_data_saksi` (IN `ids` INT(2), IN `fname` VARCHAR(15), IN `lname` VARCHAR(15), IN `sex` CHAR(1), IN `alamat` VARCHAR(30), IN `kel` INT(4), IN `kec` INT(2), IN `kab` INT(2), IN `prov` INT(2), IN `dapil` INT(2), IN `nomor_nik` VARCHAR(16), IN `telpon` VARCHAR(13), IN `tps` INT(2))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_data_saksi` (IN `ids` INT(2), IN `fname` VARCHAR(15), IN `lname` VARCHAR(15), IN `sex` CHAR(1), IN `alamat` VARCHAR(30), IN `kel` INT(4), IN `kec` INT(2), IN `kab` INT(2), IN `prov` INT(2), IN `dapil` INT(2), IN `nomor_nik` VARCHAR(16), IN `telpon` VARCHAR(13), IN `tps` INT(2), IN `foto` VARCHAR(255))  BEGIN
 DECLARE code CHAR(5) DEFAULT '00000';
 DECLARE msg TEXT;
 DECLARE rb BOOL DEFAULT 0;
@@ -423,7 +423,7 @@ START TRANSACTION;
 SET jml := (SELECT COUNT(*) FROM saksi WHERE id = ids AND nik = nomor_nik);
 
 IF jml>0 THEN
-UPDATE saksi SET nama_depan = fname, nama_belakang = lname, gender = sex, alamat = alamat, id_kel = kel, id_kec = kec, id_kab = kab, id_prov = prov, id_dapil = dapil, nik = nomor_nik, telp = telpon, id_tps = tps WHERE id = ids;
+UPDATE saksi SET nama_depan = fname, nama_belakang = lname, gender = sex, alamat = alamat, id_kel = kel, id_kec = kec, id_kab = kab, id_prov = prov, id_dapil = dapil, nik = nomor_nik, telp = telpon, id_tps = tps, foto = foto WHERE id = ids;
 
 IF code != '00000' OR rb = 1 THEN
   ROLLBACK;
@@ -950,15 +950,17 @@ INSERT INTO `kel` (`id`, `kel`, `pos`, `id_kec`, `id_kab`, `id_prov`) VALUES
 
 CREATE TABLE `partai` (
   `id` int(2) NOT NULL,
-  `partai` varchar(15) DEFAULT NULL
+  `partai` varchar(15) DEFAULT NULL,
+  `foto` varchar(255) NOT NULL DEFAULT 'demak.png'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `partai`
 --
 
-INSERT INTO `partai` (`id`, `partai`) VALUES
-(1, 'Demokrat');
+INSERT INTO `partai` (`id`, `partai`, `foto`) VALUES
+(1, 'Demokrat', 'demak.png'),
+(2, 'Golongan Karya', '1534913498.jpg');
 
 -- --------------------------------------------------------
 
@@ -971,7 +973,7 @@ CREATE TABLE `pil` (
   `nama_depan` varchar(15) DEFAULT NULL,
   `nama_belakang` varchar(15) DEFAULT NULL,
   `gender` char(1) NOT NULL,
-  `foto` varchar(50) NOT NULL DEFAULT 'default_avatar.jpg',
+  `foto` varchar(255) NOT NULL DEFAULT 'default_avatar.jpg',
   `tingkat` enum('a','b','c','d','e') NOT NULL COMMENT 'a = presiden. b = dpd. c = dppri. d = dpr prov. e = dpr kab',
   `id_partai` int(2) DEFAULT NULL,
   `id_dapil` int(2) DEFAULT NULL,
@@ -990,7 +992,7 @@ INSERT INTO `pil` (`id`, `nama_depan`, `nama_belakang`, `gender`, `foto`, `tingk
 (3, 'Misbahul', 'Munir S.E, M.Pd', 'l', 'default_avatar.jpg', 'c', 1, 1, 1, 1, 1, 'd'),
 (5, 'Misbahul', 'Munir S.E, M.Pd', 'l', 'default_avatar.jpg', 'b', 1, 1, 1, 1, 18, 'd'),
 (6, 'Toriq', 'Ahmad', 'l', 'default_avatar.jpg', 'e', 1, 3, 1, 1, 121, 'd'),
-(7, 'Gufron', 'Ibrahim', 'l', 'default_avatar.jpg', 'd', 1, 2, 1, 1, 76, 'l'),
+(7, 'Gufrons', 'Ibrahim', 'l', '1534920898.jpg', 'b', 1, 2, 1, 1, 76, 'l'),
 (8, 'Misbahul', 'Ibrahim', 'l', '1533978368.png', 'c', 1, 1, 1, 1, 16, 'l');
 
 -- --------------------------------------------------------
@@ -1075,20 +1077,20 @@ CREATE TABLE `saksi` (
 --
 
 INSERT INTO `saksi` (`id`, `nama_depan`, `nama_belakang`, `gender`, `alamat`, `id_kel`, `id_kec`, `id_kab`, `id_prov`, `id_dapil`, `nik`, `foto`, `telp`, `id_tps`, `status`) VALUES
-(1, 'Muhammad', 'Haimin', 'l', 'Jl. Kyai Singki no.45', 1, 1, 1, 1, 1, '337230934799234+deleted', 'Images2.jpg', '089667823877', 1, 'd'),
-(2, 'Rozikin', 'Ahmad', 'l', 'Jl. Pahlawan no.11', 1, 1, 1, 1, 1, '3340034987239080+deleted', 'default_avatar.jpg', '089668623899', 1, 'd'),
-(3, 'Fadli', 'Ihsan', 'l', 'Jl. Tentara Pelajar no.11', 1, 1, 1, 1, 1, '3302210111900006', 'default_avatar.jpg', '089668623333', 1, 'l'),
-(4, 'Ziat', 'Ahmad', 'l', 'Jl. Wadak Sempal no.11', 1, 1, 1, 1, 1, '3302210111900007', 'default_avatar.jpg', '089667865658', 1, 'l'),
-(5, 'Ahmad', 'Husain', 'l', 'Jl. Kyai Singkil no.4', 1, 1, 1, 1, 1, '3302210111900004', 'default_avatar.jpg', '08966862385', 1, 'l'),
-(6, 'Ahmad', 'Roziqin', 'l', 'Jl. Kyai Singkil no.45', 1, 1, 1, 1, 1, '3302210111900001', 'default_avatar.jpg', '089667682352', 1, 'l'),
-(7, 'Ahmad', 'Zaenudin', 'l', 'Jl. Tentara plejar no.4', 1, 1, 1, 1, 1, '3302210111900009', 'default_avatar.jpg', '089668687263', 1, 'l'),
-(8, 'Toriq', 'Ahmad', 'l', 'Jl. Wiku 2 no.4', 1, 1, 1, 1, 1, '3302210111900000', 'default_avatar.jpg', '0896678268376', 1, 'l'),
-(9, 'Zuli', 'Husadah', 'l', 'Jl. Kyai Singkil no.45', 1, 1, 1, 1, 1, '3302210111900012', 'default_avatar.jpg', '089556753242', 1, 'l'),
-(10, 'Ahmad', 'Zubair', 'l', 'Jl. Kyai jebat no.11', 1, 1, 1, 1, 1, '3302210111900014', 'default_avatar.jpg', '08966768564', 1, 'l'),
-(11, 'Toriq', 'Ahmad', 'l', 'Jl. Kyai Singkil no.45', 1, 1, 1, 1, 1, '3325436456567567', 'default_avatar.jpg', '089668623333', 1, 'l'),
-(12, 'Misbahul', 'Munir S.E, M.Pd', 'l', 'Jl. Kyai Singkil no.45', 1, 1, 1, 1, 1, '3324455667783943', 'default_avatar.jpg', '0896686233323', 1, 'l'),
-(13, 'Gufron', 'Ibrahim', 'l', 'Jl. Kyai Singkil no.45', 1, 1, 1, 1, 1, '3324455667783940', 'default_avatar.jpg', '089668623373', 1, 'l'),
-(14, 'Gufron', 'Ahmad', 'l', 'Jl. Kyai Singkil no.45', 1, 1, 1, 1, 1, '3324455667788551', '1533979114.png', '0896686233326', 1, 'l');
+(1, 'Muhammad', 'Haimin', 'l', 'Jl. Kyai Singki no.45', 1, 1, 1, 1, 1, '337230934799234+deleted', 'Images2.jpg', '089667823877', 2, 'd'),
+(2, 'Rozikin', 'Ahmad', 'l', 'Jl. Pahlawan no.11', 1, 1, 1, 1, 1, '3340034987239080+deleted', 'default_avatar.jpg', '089668623899', 2, 'd'),
+(3, 'Fadli', 'Ihsan', 'l', 'Jl. Tentara Pelajar no.11', 1, 1, 1, 1, 1, '3302210111900006', 'default_avatar.jpg', '089668623333', 2, 'l'),
+(4, 'Ziat', 'Ahmad', 'l', 'Jl. Wadak Sempal no.11', 1, 1, 1, 1, 1, '3302210111900007', 'default_avatar.jpg', '089667865658', 2, 'l'),
+(5, 'Ahmad', 'Husain', 'l', 'Jl. Kyai Singkil no.4', 1, 1, 1, 1, 1, '3302210111900004', 'default_avatar.jpg', '08966862385', 2, 'l'),
+(6, 'Ahmad', 'Roziqin', 'l', 'Jl. Kyai Singkil no.45', 1, 1, 1, 1, 1, '3302210111900001', 'default_avatar.jpg', '089667682352', 2, 'l'),
+(7, 'Ahmad', 'Zaenudin', 'l', 'Jl. Tentara plejar no.4', 1, 1, 1, 1, 1, '3302210111900009', 'default_avatar.jpg', '089668687263', 2, 'l'),
+(8, 'Toriq', 'Ahmad', 'l', 'Jl. Wiku 2 no.4', 1, 1, 1, 1, 1, '3302210111900000', 'default_avatar.jpg', '0896678268376', 2, 'l'),
+(9, 'Zuli', 'Husadah', 'l', 'Jl. Kyai Singkil no.45', 1, 1, 1, 1, 1, '3302210111900012', 'default_avatar.jpg', '089556753242', 2, 'l'),
+(10, 'Ahmad', 'Zubair', 'l', 'Jl. Kyai jebat no.11', 1, 1, 1, 1, 1, '3302210111900014', 'default_avatar.jpg', '08966768564', 2, 'l'),
+(11, 'Toriq', 'Ahmad', 'l', 'Jl. Kyai Singkil no.45', 1, 1, 1, 1, 1, '3325436456567567', 'default_avatar.jpg', '089668623333', 2, 'l'),
+(12, 'Misbahuls', 'Munir S.E, M.Pd', 'l', 'Jl. Kyai Singkil no.45', 70, 5, 1, 1, 2, '3324455667783943', '1534922517.jpg', '0896686233323', 2, 'l'),
+(13, 'Gufron', 'Ibrahim', 'l', 'Jl. Kyai Singkil no.45', 1, 1, 1, 1, 1, '3324455667783940', 'default_avatar.jpg', '089668623373', 2, 'l'),
+(14, 'Gufron', 'Ahmad', 'l', 'Jl. Kyai Singkil no.45', 1, 1, 1, 1, 1, '3324455667788551', '1533979114.png', '0896686233326', 2, 'l');
 
 --
 -- Triggers `saksi`
@@ -1121,7 +1123,7 @@ CREATE TABLE `suara` (
 --
 
 INSERT INTO `suara` (`id`, `suara`, `id_caleg`, `id_saksi`, `tanggal`, `updated`, `id_tps`, `status`, `id_partai`) VALUES
-(1, 1400, 2, 1, '2018-06-21 12:48:26', '2018-06-21 12:54:52', 1, 'd', NULL);
+(1, 1400, 2, 1, '2018-06-21 12:48:26', '2018-06-21 12:54:52', NULL, 'd', NULL);
 
 -- --------------------------------------------------------
 
@@ -1144,7 +1146,7 @@ CREATE TABLE `tps` (
 --
 
 INSERT INTO `tps` (`id`, `tps`, `id_dapil`, `id_kel`, `id_kec`, `id_kab`, `id_prov`) VALUES
-(1, 'tps 2', 1, 1, 1, 1, 1);
+(2, 'TPS 3', 2, 70, 5, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1342,7 +1344,7 @@ ALTER TABLE `kel`
 -- AUTO_INCREMENT for table `partai`
 --
 ALTER TABLE `partai`
-  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `pil`
@@ -1384,7 +1386,7 @@ ALTER TABLE `suara`
 -- AUTO_INCREMENT for table `tps`
 --
 ALTER TABLE `tps`
-  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `users`

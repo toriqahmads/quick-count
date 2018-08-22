@@ -48,25 +48,25 @@
                 <?php $no = 1; ?>
                 @foreach($req as $data)
                   <tr id="{{$data->id}}">
-                      <td class="text-center">{{$no++}}</td>
+                      <td>{{$no++}}</td>
                       <td>{{ $data->nama_depan }} {{ $data->nama_belakang }}</td>
                       <td>{{ $data->nik }}</td>
                       <td>{{ $data->kec}}</td>
                       <td>{{ $data->kel }}</td>
                       <td>{{ $data->tps }}</td>
                       <td>{{ $data->telp }}</td>
-                      <td class="td-actions text-right">
-                        <form method="GET" action="{{ route('view.saksi', [$data->nik, $data->id]) }}">
+                      <td>
+                        <form method="GET" action="{{ route('view.saksi', [$data->nik, $data->id]) }}" class="btn btn-info btn-sm btn-icon">
                           <button type="submit" rel="tooltip" title="Lihat" class="btn btn-info btn-sm btn-icon">
                               <i class="now-ui-icons users_single-02"></i>
                           </button>
                         </form>
-                        <form method="GET" action="{{ route('edit.saksi', [$data->nik, $data->id]) }}">
+                        <form method="GET" action="{{ route('edit.saksi', [$data->nik, $data->id]) }}" class="btn btn-success btn-sm btn-icon">
                           <button type="submit" rel="tooltip" title="Edit" class="btn btn-success btn-sm btn-icon">
                               <i class="now-ui-icons design-2_ruler-pencil"></i>
                           </button>
                         </form>
-                          <form id="hapussaksi{{$data->id}}" method="POST" action="{{ route('delete.saksi', [$data->nik, $data->id]) }}">
+                          <form id="hapussaksi{{$data->id}}" method="POST" action="{{ route('delete.saksi', [$data->nik, $data->id]) }}" class="btn btn-danger btn-sm btn-icon">
                               {{ csrf_field() }}
                               {{ method_field('DELETE') }}
                               <button type="submit" rel="tooltip" title="Hapus" class="hapus btn btn-danger btn-sm btn-icon">
