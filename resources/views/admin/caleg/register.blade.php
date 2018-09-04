@@ -104,7 +104,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-6 pl-1">
+              <div class="col-md-4 pl-1">
                   <div class="form-group">
                     <label>Partai</label>
                     <select name="partai" id="partai" class="form-control">
@@ -117,7 +117,7 @@
                       </select>
                   </div>
               </div>
-              <div class="col-md-6 pr-1">
+              <div class="col-md-4 px-1">
                   <div class="form-group">
                     <label>Tingkatan Caleg</label>
                     <select name="tingkat" id="tingkat" class="form-control">
@@ -130,9 +130,8 @@
                     </select>
                   </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-md-4 pl-1">
+            
+              <div class="col-md-4 pr-1">
                   <div class="form-group">
                     <label for="exampleFormControlSelect1">Jenis Kelamin</label>
                     <select name="gender" id="gender" class="form-control">
@@ -142,25 +141,7 @@
                     </select>
                   </div>
               </div>
-              <div class="col-md-4 px-1">
-                  <div class="form-group">
-                    <label>Kecamatan</label>
-                    <select name="kec" id="kec" class="form-control">
-                      <option value="0" selected>Kecamatan</option>
-                      @foreach($kec as $kecs)
-                      {
-                          <option value="{{ $kecs->id_kec }}">{{ $kecs->kec }}</option>
-                      }
-                      @endforeach
-                    </select>
-                  </div>
-              </div> 
-            <div class="col-md-4 pr-1">
-                  <label>Kelurahan</label>
-                  <select name="kel" id="kel" class="form-control">
-                    <option value="0" selected>Kelurahan</option>
-                  </select>
-            </div>
+              
           </div>
           <div class="row">
             <div class="col-md-6 pl-1">

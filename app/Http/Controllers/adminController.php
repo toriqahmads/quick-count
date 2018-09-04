@@ -453,10 +453,6 @@ class adminController extends Controller
             'gender' => 'required|min:1|max:1',
             'partai' => 'required|min:1|max:2',
             'tingkat' => 'required|min:1|max:1',
-            'kec' => 'required|min:1|max:3',
-            'kel' => 'required|min:1|max:3',
-            'prov' => 'required|min:1|max:2',
-            'kab' => 'required|min:1|max:3',
             'dapil' => 'required|min:1|max:2',
             'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ],[
@@ -473,10 +469,6 @@ class adminController extends Controller
             'tingkat.required' => 'Tingkat harus diisi!',
             'tingkat.max' => 'Tingkat maximal 1 karakter!',
             'tingkat.max' => 'Tingkat minimal 1 karakter!',
-            'kec.required' => 'Kecapatan tidak boleh kosong!',
-            'kel.required' => 'Kelurahan tidak boleh kosong!',
-            'prov.required' => 'Provinsi tidak boleh kosong',
-            'kab.required' => 'Kabupaten tidak boleh kosong',
             'dapil.required' => 'Dapil tidak boleh kosong',
         ]);
         $image = $request->file('foto');
@@ -487,10 +479,6 @@ class adminController extends Controller
                 'lname' => $request->lname,
                 'gender' => $request->gender,
                 'partai' => $request->partai,
-                'kec' => $request->kec,
-                'kel' => $request->kel,
-                'prov' => $request->prov,
-                'kab' => $request->kab,
                 'dapil' => $request->dapil,
             	'tingkat' => $request->tingkat,
             	'foto' => $foto
@@ -614,10 +602,6 @@ class adminController extends Controller
             'gender' => 'required|min:1|max:1',
             'partai' => 'required|min:1|max:2',
             'tingkat' => 'required|min:1|max:1',
-            'kec' => 'required|min:1|max:3',
-            'kel' => 'required|min:1|max:3',
-            'prov' => 'required|min:1|max:2',
-            'kab' => 'required|min:1|max:3',
             'dapil' => 'required|min:1|max:2',
             'fotos' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
 	        ],[
@@ -634,10 +618,6 @@ class adminController extends Controller
 	            'tingkat.required' => 'Tingkat harus diisi!',
 	            'tingkat.max' => 'Tingkat maximal 1 karakter!',
 	            'tingkat.max' => 'Tingkat minimal 1 karakter!',
-	            'kec.required' => 'Kecapatan tidak boleh kosong!',
-	            'kel.required' => 'Kelurahan tidak boleh kosong!',
-	            'prov.required' => 'Provinsi tidak boleh kosong',
-	            'kab.required' => 'Kabupaten tidak boleh kosong',
 	            'dapil.required' => 'Dapil tidak boleh kosong',
 	        ]);
 	        $image = $request->file('fotos');
@@ -649,10 +629,6 @@ class adminController extends Controller
 	                'lname' => $request->lname,
 	                'gender' => $request->gender,
 	                'partai' => $request->partai,
-	                'kec' => $request->kec,
-	                'kel' => $request->kel,
-	                'prov' => $request->prov,
-	                'kab' => $request->kab,
 	                'dapil' => $request->dapil,
 	            	'tingkat' => $request->tingkat,
 	            	'foto' => $foto
@@ -667,10 +643,6 @@ class adminController extends Controller
             'gender' => 'required|min:1|max:1',
             'partai' => 'required|min:1|max:1',
             'tingkat' => 'required|min:1|max:1',
-            'kec' => 'required|min:1|max:3',
-            'kel' => 'required|min:1|max:3',
-            'prov' => 'required|min:1|max:2',
-            'kab' => 'required|min:1|max:2',
             'dapil' => 'required|min:1|max:2',
             'foto' => 'required'
 	        ],[
@@ -690,10 +662,6 @@ class adminController extends Controller
 	            'tingkat.required' => 'Tingkat harus diisi!',
 	            'tingkat.max' => 'Tingkat maximal 1 karakter!',
 	            'tingkat.min' => 'Tingkat minimal 1 karakter!',
-	            'kec.required' => 'Kecapatan tidak boleh kosong!',
-	            'kel.required' => 'Kelurahan tidak boleh kosong!',
-	            'prov.required' => 'Provinsi tidak boleh kosong',
-	            'kab.required' => 'Kabupaten tidak boleh kosong',
 	            'dapil.required' => 'Dapil tidak boleh kosong',
 	        ]);
 
@@ -702,10 +670,6 @@ class adminController extends Controller
 	                'lname' => $request->lname,
 	                'gender' => $request->gender,
 	                'partai' => $request->partai,
-	                'kec' => $request->kec,
-	                'kel' => $request->kel,
-	                'prov' => $request->prov,
-	                'kab' => $request->kab,
 	                'dapil' => $request->dapil,
 	            	'tingkat' => $request->tingkat,
 	            	'foto' => $request->foto];

@@ -97,14 +97,7 @@
                   </select>
                 </div>
               </div>
-              <div class="col-md-4 px-1">
-                <div class="form-group">
-                  <label for="exampleFormControlSelect1">Provinsi</label>
-                  <select name="prov" class="form-control" id="prov">
-                    <option value="{{ $data->id_prov }}">{{ $data->prov }}</option>
-                  </select>
-                </div>
-              </div>
+
               <div class="col-md-4 pr-1">
                 <div class="form-group">
                   <label>Dapil</label>
@@ -113,56 +106,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-4 pl-1">
-                <div class="form-group">
-                  <label for="exampleFormControlSelect1">Kabupaten</label>
-                  <select name="kab" class="form-control" id="kab">
-                    <option value="{{ $data->id_kab }}">{{ $data->kab }}</option>
-                  </select>
-                </div>
-              </div>
-              <div class="col-md-4 px-1">
-                <div class="form-group">
-                  <label for="exampleFormControlSelect1">Kecamatan</label>
-                  <select name="kec" class="form-control" id="kec">
-                    <option value="0">Kecamatan</option>
-                    @foreach($kecs as $kec)
-                    {
-                      @if($kec->kec != $data->kec)
-                      {
-                        <option value="{{ $kec->id_kec }}">{{ $kec->kec }}</option>
-                      }
-                      @else
-                      {
-                        <option value="{{ $kec->id_kec }}" selected>{{ $kec->kec }}</option>
-                      }
-                      @endif
-                    }
-                    @endforeach
-                  </select>
-                </div>
-              </div>
-              <div class="col-md-4 pr-1">
-                <div class="form-group">
-                  <label for="exampleFormControlSelect1">Kelurahan</label>
-                  <select name="kel" class="form-control" id="kel">
-                    <option value="0">Kelurahan</option>
-                    @foreach($kels as $kel)
-                    {
-                      @if($kel->id_kel != $data->id_kel)
-                      {
-                        <option value="{{ $kel->id_kel }}">{{ $kel->kel }}</option>
-                      }
-                      @else
-                      {
-                        <option value="{{ $kel->id_kel }}" selected>{{ $kel->kel }}</option>
-                      }
-                      @endif
-                    }
-                    @endforeach
-                  </select>
-                </div>
-              </div>
+              
             </div>
             <div class="row">
               <div class="col-md-6 pl-1">

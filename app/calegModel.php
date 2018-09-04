@@ -12,15 +12,11 @@ class calegModel extends Model
     	$lname = $data['lname'];
     	$partai = $data['partai'];
     	$gender = $data['gender'];
-    	$kec = $data['kec'];
-    	$kel = $data['kel'];
-    	$prov = $data['prov'];
-    	$kab = $data['kab'];
     	$dapil = $data['dapil'];
     	$tingkat = $data['tingkat'];
         $foto = $data['foto'];
 
-    	$req = DB::select('CALL input_data_pil(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', array($fname, $lname, $partai, $dapil, $prov, $kab, $kel, $tingkat, $gender, $foto));
+    	$req = DB::select('CALL input_data_pil(?, ?, ?, ?, ?, ?, ?)', array($fname, $lname, $partai, $dapil, $tingkat, $gender, $foto));
 
     	return $req;
     }
@@ -48,15 +44,11 @@ class calegModel extends Model
     	$lname = $data['lname'];
     	$partai = $data['partai'];
     	$gender = $data['gender'];
-    	$kec = $data['kec'];
-    	$kel = $data['kel'];
-    	$prov = $data['prov'];
-    	$kab = $data['kab'];
     	$dapil = $data['dapil'];
     	$tingkat = $data['tingkat'];
         $foto = $data['foto'];
 
-    	$req = DB::select('CALL update_data_pil(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', array($id, $fname, $lname, $partai, $dapil, $prov, $kab, $kel, $tingkat, $gender, $foto));
+    	$req = DB::select('CALL update_data_pil(?, ?, ?, ?, ?, ?, ?, ?)', array($id, $fname, $lname, $partai, $dapil, $tingkat, $gender, $foto));
 
         return $req;
     }

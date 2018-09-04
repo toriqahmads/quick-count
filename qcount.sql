@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 22, 2018 at 09:22 AM
+-- Generation Time: Sep 04, 2018 at 07:27 AM
 -- Server version: 10.1.33-MariaDB
 -- PHP Version: 7.1.18
 
@@ -198,7 +198,7 @@ END IF;
 SELECT msg;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `input_data_pil` (IN `fname` VARCHAR(15), IN `lname` VARCHAR(15), IN `partai` INT(2), IN `dapil` INT(2), IN `prov` INT(2), IN `kab` INT(2), IN `kel` INT(2), IN `tingkat` ENUM('a','b','c','d','e'), IN `gender` CHAR(1), IN `foto` VARCHAR(255))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `input_data_pil` (IN `fname` VARCHAR(15), IN `lname` VARCHAR(15), IN `partai` INT(2), IN `dapil` INT(2), IN `tingkat` ENUM('a','b','c','d','e'), IN `gender` CHAR(1), IN `foto` VARCHAR(255))  BEGIN
 
 DECLARE code CHAR(5) DEFAULT '00000';
 DECLARE msg TEXT;
@@ -213,7 +213,7 @@ END;
 
 START TRANSACTION;
 
-INSERT INTO pil(nama_depan, nama_belakang, gender, tingkat, id_partai, id_dapil, id_prov, id_kab, id_kel, foto) VALUES (fname, lname, gender, tingkat, partai, dapil, prov, kab, kel, foto);
+INSERT INTO pil(nama_depan, nama_belakang, gender, tingkat, id_partai, id_dapil, foto) VALUES (fname, lname, gender, tingkat, partai, dapil, foto);
 
 IF code != '00000' OR rb = 1 THEN
   ROLLBACK;
@@ -373,7 +373,7 @@ END IF;
 SELECT msg;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `update_data_pil` (IN `ids` INT(2), IN `fname` VARCHAR(15), IN `lname` VARCHAR(15), IN `partai` INT(2), IN `dapil` INT(2), IN `prov` INT(2), IN `kab` INT(2), IN `kel` INT(2), IN `tingkat` ENUM('a','b','c','d','e'), IN `gender` CHAR(1), IN `foto` VARCHAR(255))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_data_pil` (IN `ids` INT(2), IN `fname` VARCHAR(15), IN `lname` VARCHAR(15), IN `partai` INT(2), IN `dapil` INT(2), IN `tingkat` ENUM('a','b','c','d','e'), IN `gender` CHAR(1), IN `foto` VARCHAR(255))  BEGIN
 
 DECLARE code CHAR(5) DEFAULT '00000';
 DECLARE msg TEXT;
@@ -392,7 +392,7 @@ START TRANSACTION;
 SET jml := (SELECT COUNT(*) FROM pil WHERE id = ids);
 
 IF jml>0 THEN
-UPDATE pil SET nama_depan = fname, nama_belakang = lname, id_partai = partai, id_dapil = dapil, id_prov = prov, id_kab = kab, id_kel = kel, tingkat = tingkat, gender = gender, foto = foto WHERE id = ids;
+UPDATE pil SET nama_depan = fname, nama_belakang = lname, id_partai = partai, id_dapil = dapil, tingkat = tingkat, gender = gender, foto = foto WHERE id = ids;
 
 IF code != '00000' OR rb = 1 THEN
   ROLLBACK;
@@ -983,18 +983,6 @@ CREATE TABLE `pil` (
   `status` char(1) NOT NULL DEFAULT 'l' COMMENT '''l'' untuk data masih digunakan, ''d'' untuk data sudah dihapus'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `pil`
---
-
-INSERT INTO `pil` (`id`, `nama_depan`, `nama_belakang`, `gender`, `foto`, `tingkat`, `id_partai`, `id_dapil`, `id_prov`, `id_kab`, `id_kel`, `status`) VALUES
-(2, 'Ahlis', 'MF', 'l', 'default_avatar.jpg', 'a', 1, 1, 1, 1, 1, 'd'),
-(3, 'Misbahul', 'Munir S.E, M.Pd', 'l', 'default_avatar.jpg', 'c', 1, 1, 1, 1, 1, 'd'),
-(5, 'Misbahul', 'Munir S.E, M.Pd', 'l', 'default_avatar.jpg', 'b', 1, 1, 1, 1, 18, 'd'),
-(6, 'Toriq', 'Ahmad', 'l', 'default_avatar.jpg', 'e', 1, 3, 1, 1, 121, 'd'),
-(7, 'Gufrons', 'Ibrahim', 'l', '1534920898.jpg', 'b', 1, 2, 1, 1, 76, 'l'),
-(8, 'Misbahul', 'Ibrahim', 'l', '1533978368.png', 'c', 1, 1, 1, 1, 16, 'l');
-
 -- --------------------------------------------------------
 
 --
@@ -1236,10 +1224,7 @@ ALTER TABLE `partai`
 ALTER TABLE `pil`
   ADD PRIMARY KEY (`id`),
   ADD KEY `caleg_ibfk_1` (`id_partai`),
-  ADD KEY `caleg_ibfk_2` (`id_dapil`),
-  ADD KEY `caleg_ibfk_3` (`id_prov`),
-  ADD KEY `caleg_ibfk_4` (`id_kab`),
-  ADD KEY `caleg_ibfk_5` (`id_kel`);
+  ADD KEY `caleg_ibfk_2` (`id_dapil`);
 
 --
 -- Indexes for table `proof`
@@ -1344,13 +1329,13 @@ ALTER TABLE `kel`
 -- AUTO_INCREMENT for table `partai`
 --
 ALTER TABLE `partai`
-  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `pil`
 --
 ALTER TABLE `pil`
-  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `proof`
@@ -1425,10 +1410,7 @@ ALTER TABLE `kel`
 --
 ALTER TABLE `pil`
   ADD CONSTRAINT `pil_ibfk_1` FOREIGN KEY (`id_partai`) REFERENCES `partai` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `pil_ibfk_2` FOREIGN KEY (`id_dapil`) REFERENCES `dapil` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `pil_ibfk_3` FOREIGN KEY (`id_prov`) REFERENCES `prov` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `pil_ibfk_4` FOREIGN KEY (`id_kab`) REFERENCES `kab` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `pil_ibfk_5` FOREIGN KEY (`id_kel`) REFERENCES `kel` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+  ADD CONSTRAINT `pil_ibfk_2` FOREIGN KEY (`id_dapil`) REFERENCES `dapil` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Constraints for table `proof`
