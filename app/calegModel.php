@@ -25,13 +25,10 @@ class calegModel extends Model
     {
         $data = DB::table('pil')
                 ->join('partai', 'partai.id', '=', 'pil.id_partai')
-                ->join('kel', 'kel.id', '=', 'pil.id_kel')
-                ->join('kec', 'kec.id', '=', 'kel.id_kec')
-                ->join('kab', 'kab.id', '=', 'kec.id_kab')
-                ->join('prov', 'prov.id', '=', 'kab.id_prov')
+                ->join('dapil', 'dapil.id', '=', 'pil.id_dapil')
                 ->where('pil.id', '=', $id_caleg)
                 ->where('pil.status', '=', 'l')
-                ->select('pil.*', 'kel.id as id_kel', 'kel.kel', 'kec.id as id_kec', 'kec.kec', 'kab.id as id_kab', 'kab.kab', 'prov.id as id_prov', 'prov.prov', 'partai.id as id_partai', 'partai.partai')
+                ->select('pil.*', 'partai.id as id_partai', 'partai.partai')
                 ->first();
 
         return $data;
@@ -57,10 +54,8 @@ class calegModel extends Model
     {
         $data = DB::table('pil')
                 ->join('partai', 'partai.id', '=', 'pil.id_partai')
-                ->join('kel', 'kel.id', '=', 'pil.id_kel')
-                ->join('kec', 'kec.id', '=', 'kel.id_kec')
                 ->where('pil.status', '=', 'l')
-                ->select('pil.*', 'kel.id as id_kel', 'kel.kel', 'kec.id as id_kec', 'kec.kec', 'partai.id as id_partai', 'partai.partai')
+                ->select('pil.*', 'partai.id as id_partai', 'partai.partai')
                 ->paginate('10');
         return $data;
     }

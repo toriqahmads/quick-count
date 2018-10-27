@@ -78,7 +78,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-4 pl-1">
+              <div class="col-md-6 pl-1">
                 <div class="form-group">
                   <label for="exampleFormControlSelect1">Jenis Kelamin</label>
                   <select name="gender" class="form-control" id="gender">
@@ -98,15 +98,23 @@
                 </div>
               </div>
 
-              <div class="col-md-4 pr-1">
-                <div class="form-group">
-                  <label>Dapil</label>
-                  <input id="dapil" name="dapil" type="text" class="form-control" placeholder="Dapil" value="{{ $data->id_dapil }}">
-                </div>
+              <div class="col-md-6 pr-1">
+                  <div class="form-group">
+                    <label for="exampleFormControlSelect1">Pilih Dapil</label>
+                    <select name="dapil" id="dapil" class="form-control">
+                      <option value="0">Pilih Dapil</option>
+                          <option value="1"<?php echo $data->id_dapil == 1 ? 'selected' : ''; ?>>Dapil 1</option>
+                          <option value="2"<?php echo $data->id_dapil == 2 ? 'selected' : ''; ?>>Dapil 2</option>
+                          <option value="3"<?php echo $data->id_dapil == 3 ? 'selected' : ''; ?>>Dapil 3</option>
+                          <option value="4"<?php echo $data->id_dapil == 4 ? 'selected' : ''; ?>>Dapil 4</option>
+                          <option value="5"<?php echo $data->id_dapil == 5 ? 'selected' : ''; ?>>Dapil 5</option>
+                    </select>
+                  </div>
+                  *Untuk presiden dapil boleh dikosongkan
               </div>
             </div>
             <div class="row">
-              
+
             </div>
             <div class="row">
               <div class="col-md-6 pl-1">
@@ -169,6 +177,7 @@
                     </select>
                 </div>
               </div>
+              
             </div>
             <input type="hidden" name="id" value="{{ $data->id }}">
             <input type="hidden" name="foto" value="{{ $data->foto }}">
@@ -211,9 +220,6 @@
               <h5 class="title">{{ $data->nama_depan }} {{ $data->nama_belakang }}</h5>
             </a>
           </div>
-          <p class="description">
-            {{ $data->kel }}, {{ $data->kec }}, {{ $data->kab }}, {{ $data->prov }}
-          </p>
           <p class="description">
               Dapil : {{ $data->id_dapil }}
           </p>

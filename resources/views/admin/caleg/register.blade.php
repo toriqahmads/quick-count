@@ -104,7 +104,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-4 pl-1">
+              <div class="col-md-3 pl-1">
                   <div class="form-group">
                     <label>Partai</label>
                     <select name="partai" id="partai" class="form-control">
@@ -117,7 +117,7 @@
                       </select>
                   </div>
               </div>
-              <div class="col-md-4 px-1">
+              <div class="col-md-3 px-1">
                   <div class="form-group">
                     <label>Tingkatan Caleg</label>
                     <select name="tingkat" id="tingkat" class="form-control">
@@ -131,7 +131,7 @@
                   </div>
               </div>
             
-              <div class="col-md-4 pr-1">
+              <div class="col-md-3 pr-1">
                   <div class="form-group">
                     <label for="exampleFormControlSelect1">Jenis Kelamin</label>
                     <select name="gender" id="gender" class="form-control">
@@ -140,6 +140,20 @@
                           <option value="p">Perempuan</option>
                     </select>
                   </div>
+              </div>
+              <div class="col-md-3 pr-1">
+                  <div class="form-group">
+                    <label for="exampleFormControlSelect1">Pilih Dapil</label>
+                    <select name="dapil" id="dapil" class="form-control">
+                      <option value="0">Pilih Dapil</option>
+                          <option value="1">Dapil 1</option>
+                          <option value="2">Dapil 2</option>
+                          <option value="3">Dapil 3</option>
+                          <option value="4">Dapil 4</option>
+                          <option value="5">Dapil 5</option>
+                    </select>
+                  </div>
+                  *Untuk presiden dapil boleh dikosongkan
               </div>
               
           </div>
@@ -165,9 +179,6 @@
             </div>
           </div>
             </div>
-                <input type="hidden" id="prov" name="prov" value="">
-                <input type="hidden" id="kab" name="kab" value="">
-                <input type="hidden" id="dapil" name="dapil" value="">
             <div class="input-group form-group-no-border input-lg">
                 <input type="submit" class="btn-primary btn btn-round btn-block" value="Submit" />
             </div>

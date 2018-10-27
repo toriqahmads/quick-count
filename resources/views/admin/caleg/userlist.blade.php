@@ -29,13 +29,10 @@
                   Partai
                 </th>
                 <th onclick="sortTable(3)" style="cursor: pointer;">
-                  Kecamatan
+                  Tingkatan
                 </th>
                 <th onclick="sortTable(4)" style="cursor: pointer;">
-                  Kelurahan
-                </th>
-                <th onclick="sortTable(5)" style="cursor: pointer;">
-                  Tingkatan
+                  Dapil
                 </th>
                 <th>
                   Aksi
@@ -48,8 +45,6 @@
                       <td>{{$no++}}</td>
                       <td>{{ $data->nama_depan }} {{ $data->nama_belakang }}</td>
                       <td>{{ $data->partai}}</td>
-                      <td>{{ $data->kec}}</td>
-                      <td>{{ $data->kel }}</td>
                       <td>@if($data->tingkat == 'a')
                             Presiden
                           @elseif($data->tingkat == 'b')
@@ -62,6 +57,7 @@
                             DPR Kabupaten
                           @endif
                       </td>
+                      <td>{{ $data->id_dapil}}</td>
                       <td>
                         <form method="GET" action="{{ route('view.caleg', [$data->id]) }}" class="btn btn-info btn-sm btn-icon">
                           <button type="submit" rel="tooltip" title="Lihat" class="btn btn-info btn-sm btn-icon">

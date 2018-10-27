@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 04, 2018 at 07:27 AM
+-- Generation Time: Oct 27, 2018 at 12:28 PM
 -- Server version: 10.1.33-MariaDB
 -- PHP Version: 7.1.18
 
@@ -977,11 +977,15 @@ CREATE TABLE `pil` (
   `tingkat` enum('a','b','c','d','e') NOT NULL COMMENT 'a = presiden. b = dpd. c = dppri. d = dpr prov. e = dpr kab',
   `id_partai` int(2) DEFAULT NULL,
   `id_dapil` int(2) DEFAULT NULL,
-  `id_prov` int(2) DEFAULT NULL,
-  `id_kab` int(2) DEFAULT NULL,
-  `id_kel` int(2) DEFAULT NULL,
   `status` char(1) NOT NULL DEFAULT 'l' COMMENT '''l'' untuk data masih digunakan, ''d'' untuk data sudah dihapus'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `pil`
+--
+
+INSERT INTO `pil` (`id`, `nama_depan`, `nama_belakang`, `gender`, `foto`, `tingkat`, `id_partai`, `id_dapil`, `status`) VALUES
+(1, 'Misbahul', 'Munir S.E, M.Pd', 'l', '1540635564.png', 'e', 1, 1, 'l');
 
 -- --------------------------------------------------------
 
@@ -1134,7 +1138,8 @@ CREATE TABLE `tps` (
 --
 
 INSERT INTO `tps` (`id`, `tps`, `id_dapil`, `id_kel`, `id_kec`, `id_kab`, `id_prov`) VALUES
-(2, 'TPS 3', 2, 70, 5, 1, 1);
+(2, 'TPS 3', 2, 70, 5, 1, 1),
+(3, 'TPS 1', 1, 1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1335,7 +1340,7 @@ ALTER TABLE `partai`
 -- AUTO_INCREMENT for table `pil`
 --
 ALTER TABLE `pil`
-  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `proof`
@@ -1371,7 +1376,7 @@ ALTER TABLE `suara`
 -- AUTO_INCREMENT for table `tps`
 --
 ALTER TABLE `tps`
-  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`

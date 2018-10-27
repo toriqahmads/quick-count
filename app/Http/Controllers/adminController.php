@@ -453,7 +453,7 @@ class adminController extends Controller
             'gender' => 'required|min:1|max:1',
             'partai' => 'required|min:1|max:2',
             'tingkat' => 'required|min:1|max:1',
-            'dapil' => 'required|min:1|max:2',
+            'dapil' => 'required|min:1',
             'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ],[
             'fname.required'=>'Nama depan tidak boleh kosong!',
@@ -580,10 +580,8 @@ class adminController extends Controller
 	    	$data = new calegModel();
 	    	$data = $data->getProfile($id_caleg);
 	    	$kecamatan = new dataModel();
-	    	$kecs = $kecamatan->getKec(1);
-	    	$kels = $kecamatan->getKel($data->id_kec);
 	    	$partais = $kecamatan->getPartai();
-	    	return view('admin.caleg.edit', compact('data', 'kecs', 'kels', 'partais'));
+	    	return view('admin.caleg.edit', compact('data', 'partais'));
 	    }
     }
 
