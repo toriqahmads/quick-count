@@ -77,4 +77,12 @@ Route::group(['prefix' => 'admin'], function()
 	Route::post('/registerPost', 'adminController@registerPost')->name('register.post.admin');
 	Route::get('/logout', 'adminController@logout')->name('logout.admin');
 	Route::post('/loginPost', 'adminController@loginPost')->name('login.post.admin');
+
+	Route::get('/register/suara', 'adminController@registerSuara')->name('register.suara');
+	Route::get('/listsuara', 'adminController@getAllSuara')->name('list.suara');
+	Route::get('/edit/suara/{id}', 'adminController@editSuara')->name('edit.suara');
+	Route::get('/view/suara/{id}', 'adminController@viewSuara')->name('view.suara');
+	Route::delete('/delete/suara/{id}', 'adminController@deleteSuara')->name('delete.suara');
+	Route::post('/suara/updateSuara', 'adminController@updateSuara')->name('update.suara');
+	Route::post('/suara/registerPost', 'adminController@registerPostSuara')->name('register.post.suara');
 });
