@@ -2,6 +2,7 @@
 @section('content')
 <script src="{{ asset('js/upload.js') }}"></script>
 <script src="{{ asset('js/getreg.js')}}" type="text/javascript"></script>
+<script src="{{ asset('js/suara.js')}}" type="text/javascript"></script>
 <script type="text/javascript">
             function showNotification(from, align, msg, color){
     color = color
@@ -68,16 +69,60 @@
     </script>
 @endif
 
-<?php $partai = array('1'=>'Demokrat', '2'=>'Hanura', '3'=>'PAN', '4'=>'PKS', '5'=>'PDI Perjuangan', '6'=>'Gerindra');
-	  $caleg = array('1'=>, '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18');
-?>
 <div class="content">
   <div class="row">
-  	@foreach($partai as $part)
-    <div class="col-md-4">
+  	<div class="col-md-12">
+      <div class="card">
+      	<div class="card-body">
+	    <div class="row">
+	  	<div class="col-md-3 px-1">
+	       <div class="form-group">
+	            <label>Kecamatan</label>
+	            <select name="kec" id="kec" class="form-control">
+	              <option value="0" selected>Kecamatan</option>
+	              @foreach($kec as $kecs)
+	              <option value="{{ $kecs->id_kec }}">{{ $kecs->kec }}</option>
+	              @endforeach
+	            </select>
+	          </div>
+	      </div> 
+	      <div class="col-md-3 px-1">
+	      	<div class="form-group">
+	          <label>Kelurahan</label>
+	          <select name="kel" id="kel" class="form-control">
+	            <option value="0" selected>Kelurahan</option>
+	          </select>
+	      </div>
+	      </div>
+	  	  <div class="col-md-3 px-1">
+	  	  	<div class="form-group">
+	          <label>TPS</label>
+	            <select name="tps" id="tps" class="form-control">
+	              <option value="0" selected>TPS</option>
+	            </select>
+	        </div>
+	   	  </div>
+	   	  <div class="col-md-3 px-1">
+	   	  	<div class="form-group">
+	          <label>Dapil</label>
+	            <select name="dapil" id="dapil" class="form-control">
+	              <option value="0" selected>Dapil</option>
+	              @foreach($dapil as $dap)
+	                  <option value="{{ $dap->id }}">{{ $dap->id }}</option>
+	              @endforeach
+	            </select>
+	        </div>
+	   	  </div>
+	   	</div>
+	   	</div>
+   	</div>
+   </div>
+
+   @foreach($partai as $part)
+   <div class="col-md-3">
       <div class="card">
         <div class="card-header">
-          <h5 class="title">{{$part}}</h5>
+          <h5 class="title">{{$part->partai}}</h5>
         </div>
         <div class="card-body">
           <form class="form" method="post" action="{{ url('/admin/suara/registerPost') }}" enctype="multipart/form-data">
@@ -85,18 +130,14 @@
             <div class="row">
               <div class="col-md-12 pl-1">
                 <div class="form-group">
-                  <label>{{$part}}</label>
-                  <input type="text" name="suara[{{$part}}][{{$part}}]" class="form-control" placeholder="Suara Partai" value="{{ old('partai') }}">
+                  <label>{{$part->partai}}</label>
+                  <input type="text" name="suara[{{$part->id}}][{{$part->id}}]" class="form-control" placeholder="Suara Partai" value="{{ old('suara.$part->id.$part->id') }}">
                 </div>
               </div>
-              @foreach($caleg as $cal)
-              <div class="col-md-12 pl-1">
-                <div class="form-group">
-                  <label>{{$cal}}</label>
-                  <input type="text" name="suara[{{$part}}][{{$cal}}]" class="form-control" placeholder="{{$cal}}" value="{{ old('partai') }}">
-                </div>
+
+              <div class="col-md-12 pl-1" id="{{$part->id}}">
               </div>
-          	  @endforeach
+              
           </div>
             <div class="input-group form-group-no-border input-lg">
                 <input type="submit" class="btn-primary btn btn-round btn-block" value="Submit" />
@@ -105,7 +146,7 @@
         </div>
       </div>
     </div>
-	@endforeach
+    @endforeach
   </div>
 </div>
 @endsection

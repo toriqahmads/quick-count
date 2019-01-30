@@ -12,6 +12,7 @@ use App\saksiModel;
 use App\calegModel;
 use App\tpsModel;
 use App\partaiModel;
+use App\suaraModel;
 class adminController extends Controller
 {
     function index()
@@ -1046,7 +1047,12 @@ class adminController extends Controller
 	    }
 	    else
 	    {
-	    	return view('admin.suara.register');
+	    	$data = new dataModel();
+	    	$dapil = $data->getDapil();
+	    	$partai = $data->getPartai();
+	    	$kec = $data->getKec(1);
+
+	    	return view('admin.suara.register', compact('dapil', 'partai', 'kec'));
 	    }
     }
 
