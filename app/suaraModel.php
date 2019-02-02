@@ -8,15 +8,14 @@ class suaraModel extends Model
 {
     function registerPost($data = array())
     {
-    	$fname = $data['fname'];
-    	$lname = $data['lname'];
-    	$partai = $data['partai'];
-    	$gender = $data['gender'];
-    	$dapil = $data['dapil'];
-    	$tingkat = $data['tingkat'];
-        $foto = $data['foto'];
+    	$suara = $data['suara'];
+    	$id_caleg = $data['caleg'];
+    	$id_saksi = $data['saksi'];
+    	$id_tps = $data['tps'];
+    	$jenis = $data['jenis'];
+    	$id_partai = $data['partai'];
 
-    	$req = DB::select('CALL input_data_pil(?, ?, ?, ?, ?, ?, ?)', array($fname, $lname, $partai, $dapil, $tingkat, $gender, $foto));
+    	$req = DB::select('CALL input_suara(?, ?, ?, ?, ?, ?)', array($suara, $id_caleg, $id_saksi, $id_tps, $jenis, $id_partai));
 
     	return $req;
     }

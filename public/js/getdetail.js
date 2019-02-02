@@ -17,7 +17,6 @@
                     $.each(html, function(key, val)
                     {
                         res = res + "<option value='" + val.id_kel +"'>" + val.kel + "</option>";
-                        $('#dapil').val(val.id_dapil);
 			$("#prov").val(val.id_prov);
                         $("#kab").val(val.id_kab);
                     });

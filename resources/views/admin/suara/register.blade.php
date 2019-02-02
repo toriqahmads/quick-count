@@ -1,7 +1,7 @@
 @extends('admin.basedashboard')
 @section('content')
 <script src="{{ asset('js/upload.js') }}"></script>
-<script src="{{ asset('js/getreg.js')}}" type="text/javascript"></script>
+<script src="{{ asset('js/getdetail.js')}}" type="text/javascript"></script>
 <script src="{{ asset('js/suara.js')}}" type="text/javascript"></script>
 <script type="text/javascript">
             function showNotification(from, align, msg, color){
@@ -113,6 +113,7 @@
 	            </select>
 	        </div>
 	   	  </div>
+        <input type="hidden" id="saksi" name="saksi" value="{{Session::get('id')}}">
 	   	</div>
 	   	</div>
    	</div>

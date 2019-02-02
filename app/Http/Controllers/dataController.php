@@ -54,10 +54,10 @@ class dataController extends Controller
     	return $data;
     }
 
-    function getCaleg($id_dapil, $id_partai)
+    function getCaleg($id_dapil, $id_partai, $tingkat)
     {
         $data = new dataModel();
-        $data = $data->getAllCaleg($id_dapil, $id_partai);
+        $data = $data->getAllCaleg($id_dapil, $id_partai, $tingkat);
 
         return $data;
     }

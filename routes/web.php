@@ -29,7 +29,7 @@ Route::group(['prefix' => 'data'], function()
 	Route::get('/tps/{id_kel}', 'dataController@getTps')->name('tps');
 	Route::get('/dapil', 'dataController@getDapil')->name('dapil');
 	Route::get('/partai', 'dataController@getPartai')->name('partai');
-	Route::get('/caleg/{id_dapil}/{id_partai}', 'dataController@getCaleg')->name('caleg');
+	Route::get('/caleg/{id_dapil}/{id_partai}/{tingkat}', 'dataController@getCaleg')->name('caleg');
 });
 
 /*

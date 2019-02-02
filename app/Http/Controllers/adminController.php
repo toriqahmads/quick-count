@@ -1067,13 +1067,53 @@ class adminController extends Controller
             'suara.' => 'Suara caleg harus diisi!',
         ]);
 
-        if($validate)
+        $input = $request->all();
+        $proses = new suaraModel();
+
+        $data = array();
+        $data['tps'] = $input['tps'];
+        $data['saksi'] = $input['saksi'];
+        $req = array();
+
+        foreach ($input['suarapartai'] as $id_partai => $value) 
         {
-            return "sukses";
+        	$data['suara'] = $value;
+        	$data['caleg'] = null;
+        	$data['partai'] = $id_partai;
+        	$data['jenis'] = 'p';
+
+        	$proses->registerPost($data);
+        	$req['suara_partai'] = "success";
+        	unset($data);
+        }
+
+        foreach ($input['suara'] as $id_partai => $suara) 
+        {
+        	foreach ($suara as $id_caleg => $value) 
+        	{
+        		$data = array();
+		        $data['tps'] = $input['tps'];
+		        $data['saksi'] = $input['saksi'];
+        		$data['suara'] = $value;
+	        	$data['caleg'] = $id_caleg;
+	        	$data['partai'] = $id_partai;
+	        	$data['jenis'] = 'c';
+
+	        	$proses->registerPost($data);
+
+	        	unset($data);
+        	}
+
+        	$req['suara_caleg'] = "success";
+        }
+
+        if($req['suara_partai'] == "success" && $req['suara_caleg'] == "success")
+        {
+            return $req;//'Sukses kirim suara!';
         }
         else
         {
-            return redirect()->back()->with('alert','Registrasi data partai gagal!');
+            return 'Gagal kirim suara!';
         }
     }
 

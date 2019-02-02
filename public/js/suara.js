@@ -18,7 +18,7 @@
                     $.each(html, function(key, val)
                     {
                         $.ajax({
-                            url: window.location.origin+"/data/caleg/"+dap_id+"/"+val.id,
+                            url: window.location.origin+"/data/caleg/"+dap_id+"/"+val.id+"/e",
                             type: "GET",
                             
                             success: function(data){
