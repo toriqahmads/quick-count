@@ -1058,26 +1058,18 @@ class adminController extends Controller
 
 	function registerPostSuara(Request $request)
     {
-        $this->validate($request, [
-            'partai' => 'required|min:5|max:25',
-            'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
-        ],[ 'partai.required' => 'Partai harus diisi!',
-            'partai.max' => 'Partai maximal 25 karakter!',
-            'partai.min' => 'Partai minimal 5 karakter!',
+        $validate = $this->validate($request, [
+            'suarapartai' => 'required|array',
+            'suarapartai.*' => 'integer',
+            'suara' => 'required|array',
+            'suara.*.*' => 'integer'
+        ],[ 'suarapartai.required' => 'Suara partai harus diisi!',
+            'suara.' => 'Suara caleg harus diisi!',
         ]);
-        $image = $request->file('foto');
-        $foto = time().'.'.$image->getClientOriginalExtension();
-        $image->move(public_path('img/partai'), $foto);
 
-        $data = ['partai' => $request->partai,
-            	'foto' => $foto
-            	];
-
-        $req = new partaiModel();
-        $req = $req->registerPost($data);
-        if($req)
+        if($validate)
         {
-            return redirect()->back()->with('alert-success','Registrasi data partai sukses!');
+            return "sukses";
         }
         else
         {

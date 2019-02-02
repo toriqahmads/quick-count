@@ -125,22 +125,20 @@
           <h5 class="title">{{$part->partai}}</h5>
         </div>
         <div class="card-body">
-          <form class="form" method="post" action="{{ url('/admin/suara/registerPost') }}" enctype="multipart/form-data">
+          <form id="suara{{$part->id}}" class="form" method="post" action="{{ url('/admin/suara/registerPostSuara') }}" enctype="multipart/form-data">
             {{ csrf_field() }}
             <div class="row">
               <div class="col-md-12 pl-1">
                 <div class="form-group">
                   <label>{{$part->partai}}</label>
-                  <input type="text" name="suara[{{$part->id}}][{{$part->id}}]" class="form-control" placeholder="Suara Partai" value="{{ old('suara.$part->id.$part->id') }}">
+                  <input type="text" name="suarapartai[{{$part->id}}]" class="form-control" placeholder="Suara Partai" value="{{ old('suara.$part->id.$part->id') }}">
                 </div>
               </div>
-
               <div class="col-md-12 pl-1" id="{{$part->id}}">
               </div>
-              
-          </div>
+          	</div>
             <div class="input-group form-group-no-border input-lg">
-                <input type="submit" class="btn-primary btn btn-round btn-block" value="Submit" />
+                <input type="submit" class="kirim btn-primary btn btn-round btn-block" value="Kirim" />
             </div>
           </form>
         </div>
@@ -149,4 +147,5 @@
     @endforeach
   </div>
 </div>
+<script src="{{ asset('js/kirim-suara.js')}}" type="text/javascript"></script>
 @endsection

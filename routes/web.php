@@ -85,5 +85,5 @@ Route::group(['prefix' => 'admin'], function()
 	Route::get('/view/suara/{id}', 'adminController@viewSuara')->name('view.suara');
 	Route::delete('/delete/suara/{id}', 'adminController@deleteSuara')->name('delete.suara');
 	Route::post('/suara/updateSuara', 'adminController@updateSuara')->name('update.suara');
-	Route::post('/suara/registerPost', 'adminController@registerPostSuara')->name('register.post.suara');
+	Route::post('/suara/registerPostSuara', 'adminController@registerPostSuara')->name('register.post.suara');
 });
