@@ -10,24 +10,28 @@
         <div class="card-body">
           <div class="author">
             <a href="#">
-              <img class="avatar rounded-circle img-raised" src="{{ asset('img/saksi') }}/{{$data->foto}}" alt="...">
+              <img class="avatar rounded-circle img-raised" src="{{ asset('img/caleg') }}/{{ $data->foto }}" alt="...">
               <h5 class="title">{{ $data->nama_depan }} {{ $data->nama_belakang }}</h5>
             </a>
-            <p class="description">
-              NIK : {{ $data->nik }}
-            </p>
-            <p class="description">
-              HP : {{ $data->telp }}
-          </p>
           </div>
           <p class="description">
-            {{ $data->alamat }}, {{ $data->kel }}, {{ $data->kec }}, {{ $data->kab }}, {{ $data->prov }}
+            
           </p>
           <p class="description">
               Dapil : {{ $data->id_dapil }}
           </p>
           <p class="description">
-              TPS : {{ $data->tps }}
+            @if($data->tingkat == 'a')
+              Presiden
+            @elseif($data->tingkat == 'b')
+              DPD
+            @elseif($data->tingkat == 'c')
+              DPR RI
+            @elseif($data->tingkat == 'd')
+              DPR Provinsi
+            @else
+              DPR Kabupaten
+            @endif
           </p>
         </div>
       </div>

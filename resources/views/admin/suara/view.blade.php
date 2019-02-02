@@ -10,9 +10,13 @@
         <div class="card-body">
           <div class="author">
             <a href="#">
-              <img class="avatar border-gray" src="{{ asset('img/') }}/" alt="...">
-              <h5 class="title"></h5>
+              <img class="avatar rounded-circle img-raised" src="{{ asset('img/partai') }}/{{$data->foto}}" alt="{{$data->foto}}">
+              <h5 class="title">{{ $data->partai }}</h5>
             </a>
+          </div>
+          <p class="description">
+            {{ $data->partai }}
+          </p>
         </div>
       </div>
     </div>

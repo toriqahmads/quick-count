@@ -73,4 +73,17 @@ class dataModel extends Model
                 ->get();
         return $data;
     }
+
+    function getAllCaleg($dapil, $partai)
+    {
+        $data = DB::table('pil')
+                ->join('partai', 'partai.id', '=', 'pil.id_partai')
+                ->join('dapil', 'dapil.id', '=', 'pil.id_dapil')
+                ->where('pil.status', '=', 'l')
+                ->where('dapil.id', '=', $dapil)
+                ->where('partai.id', '=', $partai)
+                ->select('pil.*', 'partai.id as id_partai', 'partai.partai')
+                ->get();
+        return $data;
+    }
 }
