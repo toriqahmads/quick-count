@@ -80,10 +80,11 @@ Route::group(['prefix' => 'admin'], function()
 	Route::post('/loginPost', 'adminController@loginPost')->name('login.post.admin');
 
 	Route::get('/register/suara', 'adminController@registerSuara')->name('register.suara');
-	Route::get('/listsuara', 'adminController@getAllSuara')->name('list.suara');
+	Route::get('/suarapartai/{id_dapil}/{id_partai}/{id_tps}', 'adminController@getAllSuaraPartai')->name('suarapartai');
+	Route::get('/suaracaleg/{id_dapil}/{id_partai}/{id_tps}', 'adminController@getAllSuaraCaleg')->name('suarapartai');
 	Route::get('/edit/suara/{id}', 'adminController@editSuara')->name('edit.suara');
-	Route::get('/view/suara/{id}', 'adminController@viewSuara')->name('view.suara');
-	Route::delete('/delete/suara/{id}', 'adminController@deleteSuara')->name('delete.suara');
+	Route::get('/view/suara', 'adminController@viewSuara')->name('view.suara');
+	Route::delete('/delete/suara', 'adminController@deleteSuara')->name('delete.suara');
 	Route::post('/suara/updateSuara', 'adminController@updateSuara')->name('update.suara');
 	Route::post('/suara/registerPostSuara', 'adminController@registerPostSuara')->name('register.post.suara');
 });

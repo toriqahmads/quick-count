@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.1
+-- version 4.6.6deb5
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Oct 27, 2018 at 12:28 PM
--- Server version: 10.1.33-MariaDB
--- PHP Version: 7.1.18
+-- Host: localhost:3306
+-- Generation Time: Feb 03, 2019 at 10:21 PM
+-- Server version: 5.7.22-0ubuntu18.04.1
+-- PHP Version: 7.2.7-0ubuntu0.18.04.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -954,7 +952,8 @@ CREATE TABLE `partai` (
 
 INSERT INTO `partai` (`id`, `partai`, `foto`) VALUES
 (1, 'Demokrat', 'demak.png'),
-(2, 'Golongan Karya', '1534913498.jpg');
+(2, 'Golongan Karya', '1534913498.jpg'),
+(3, 'Nasdem', '1549206827.png');
 
 -- --------------------------------------------------------
 
@@ -979,7 +978,8 @@ CREATE TABLE `pil` (
 --
 
 INSERT INTO `pil` (`id`, `nama_depan`, `nama_belakang`, `gender`, `foto`, `tingkat`, `id_partai`, `id_dapil`, `status`) VALUES
-(1, 'Misbahul', 'Munir S.E, M.Pd', 'l', '1540635564.png', 'e', 1, 1, 'l');
+(1, 'Misbahul', 'Munir S.E, M.Pd', 'l', '1540635564.png', 'e', 1, 1, 'l'),
+(2, 'Irham', 'Najib', 'l', '1549203514.png', 'e', 2, 1, 'l');
 
 -- --------------------------------------------------------
 
@@ -1109,8 +1109,11 @@ CREATE TABLE `suara` (
 -- Dumping data for table `suara`
 --
 
-INSERT INTO `suara` (`id`, `suara`, `id_caleg`, `id_saksi`, `tanggal`, `updated`, `id_tps`, `status`, `id_partai`) VALUES
-(1, 1400, 2, 1, '2018-06-21 12:48:26', '2018-06-21 12:54:52', NULL, 'd', NULL);
+INSERT INTO `suara` (`id`, `suara`, `id_caleg`, `id_saksi`, `tanggal`, `updated`, `id_tps`, `status`, `id_partai`, `jenis_suara`) VALUES
+(2, 235, NULL, 1, '2019-02-03 21:19:57', '2019-02-03 22:12:15', 3, 'd', 1, 'p'),
+(3, 764, 1, 1, '2019-02-03 21:19:57', '2019-02-03 22:12:15', 3, 'd', 1, 'c'),
+(4, 123, NULL, 1, '2019-02-03 21:20:09', '2019-02-03 22:12:19', 3, 'd', 2, 'p'),
+(5, 1234, 2, 1, '2019-02-03 21:20:09', '2019-02-03 22:12:19', 3, 'd', 2, 'c');
 
 -- --------------------------------------------------------
 
@@ -1300,85 +1303,71 @@ ALTER TABLE `users`
 --
 ALTER TABLE `admin`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
 --
 -- AUTO_INCREMENT for table `dapil`
 --
 ALTER TABLE `dapil`
   MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
 --
 -- AUTO_INCREMENT for table `kab`
 --
 ALTER TABLE `kab`
   MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
 --
 -- AUTO_INCREMENT for table `kec`
 --
 ALTER TABLE `kec`
   MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
-
 --
 -- AUTO_INCREMENT for table `kel`
 --
 ALTER TABLE `kel`
   MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=249;
-
 --
 -- AUTO_INCREMENT for table `partai`
 --
 ALTER TABLE `partai`
-  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `pil`
 --
 ALTER TABLE `pil`
-  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `proof`
 --
 ALTER TABLE `proof`
   MODIFY `id` int(2) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `prov`
 --
 ALTER TABLE `prov`
   MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
 --
 -- AUTO_INCREMENT for table `r_suara`
 --
 ALTER TABLE `r_suara`
   MODIFY `id` int(3) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `saksi`
 --
 ALTER TABLE `saksi`
   MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
-
 --
 -- AUTO_INCREMENT for table `suara`
 --
 ALTER TABLE `suara`
-  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `tps`
 --
 ALTER TABLE `tps`
   MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
-
 --
 -- Constraints for dumped tables
 --
@@ -1438,15 +1427,6 @@ ALTER TABLE `saksi`
   ADD CONSTRAINT `saksi_tps` FOREIGN KEY (`id_tps`) REFERENCES `tps` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
--- Constraints for table `suara`
---
-ALTER TABLE `suara`
-  ADD CONSTRAINT `suara_ibfk_1` FOREIGN KEY (`id_caleg`) REFERENCES `pil` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
-  ADD CONSTRAINT `suara_ibfk_3` FOREIGN KEY (`id_saksi`) REFERENCES `saksi` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
-  ADD CONSTRAINT `suara_parta` FOREIGN KEY (`id_partai`) REFERENCES `partai` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `suara_tps` FOREIGN KEY (`id_tps`) REFERENCES `tps` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
-
---
 -- Constraints for table `tps`
 --
 ALTER TABLE `tps`
@@ -1455,13 +1435,6 @@ ALTER TABLE `tps`
   ADD CONSTRAINT `tps_ibfk_3` FOREIGN KEY (`id_kec`) REFERENCES `kec` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `tps_ibfk_4` FOREIGN KEY (`id_kab`) REFERENCES `kab` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `tps_ibfk_5` FOREIGN KEY (`id_prov`) REFERENCES `prov` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
-
---
--- Constraints for table `users`
---
-ALTER TABLE `users`
-  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`id_saksi`) REFERENCES `saksi` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

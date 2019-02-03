@@ -1,4 +1,4 @@
-$(".kirim").click(function(e){
+$(document).on('click', 'input[name="kirim"]', function(e){
     e.preventDefault();
     id = $(this).parents("form").attr("id");
     kel_id = $("#kel").val();
@@ -27,8 +27,12 @@ $(".kirim").click(function(e){
          data: $('#'+id).serialize() + "&tps="+tps+"&dapil="+dapil+"&saksi="+saksi,
          success: function(response) 
          {
-           showNotification('top', 'right','Berhasil dikirim!', 'info');
-           $('#'+id).hide();
+            showNotification('top', 'right','Berhasil diupdate!', 'info');
+            $("#"+id+" :input").prop("disabled", true);
+            $("#"+id+" :input[type='submit']").prop("disabled", false);
+            $("#"+id+" input.edit").prop("value", "Edit");
+            $("#"+id+" input.edit").prop("name", "edit");
+            $("#"+id+" input.hapus").show();
          },
          error: function(xhr, Status, err)
          {

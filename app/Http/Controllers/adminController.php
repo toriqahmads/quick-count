@@ -1117,7 +1117,7 @@ class adminController extends Controller
         }
     }
 
-    function getAllSuara()
+    function getAllSuaraPartai($id_dapil, $id_partai, $id_tps)
     {
     	if(!Session::get('login'))
 	    {
@@ -1129,10 +1129,29 @@ class adminController extends Controller
 	    }
 	    else
 	    {
-	    	$req = new partaiModel();
-    		$req = $req->getAllPartai();
+	    	$req = new suaraModel();
+    		$req = $req->getAllSuaraPartai($id_dapil, $id_partai, $id_tps);
 
-    		return view('admin.suara.userlist', compact('req'));
+    		return $req;
+	    }
+    }
+
+    function getAllSuaraCaleg($id_dapil, $id_partai, $id_tps)
+    {
+    	if(!Session::get('login'))
+	    {
+	    	return redirect('admin/login')->with('Anda harus login terlebih dahulu');
+	    }
+	    elseif(Session::get('role') != 'admin')
+	    {
+	    	return redirect('admin/login')->with('Forbidden');
+	    }
+	    else
+	    {
+	    	$req = new suaraModel();
+    		$req = $req->getAllSuaraCaleg($id_dapil, $id_partai, $id_tps);
+
+    		return $req;
 	    }
     }
 
@@ -1156,53 +1175,74 @@ class adminController extends Controller
 
     function updateSuara(Request $request)
     {
-    	$data = [];
-    	if($request->hasFile('fotos'))
-    	{
-    		$this->validate($request, [
-            'partai' => 'required|min:5|max:25',
-            'fotos' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
-	        ],[ 'partai.required' => 'Partai harus diisi!',
-	            'partai.max' => 'Partai maximal 25 karakter!',
-	            'partai.min' => 'Partai minimal 5 karakter!',
-	        ]);
-	        $image = $request->file('fotos');
-       	 	$foto = time().'.'.$image->getClientOriginalExtension();
-        	$image->move(public_path('img/partai'), $foto);
-	        $data = ['id' => $request->id,
-	        		'partai' => $request->partai,
-	            	'foto' => $foto
-	            	];
-    	}
-    	else
-    	{
-    		$this->validate($request, [
-            'partai' => 'required|min:5|max:25',
-            'foto' => 'required'
-	        ],[ 'partai.required' => 'Partai harus diisi!',
-	            'partai.max' => 'Partai maximal 25 karakter!',
-	            'partai.min' => 'Partai minimal 5 karakter!',
-	        ]);
-	        $data = ['id' => $request->id,
-	        		'partai' => $request->partai,
-	            	'foto' => $request->foto
-	            	];
-    	}
-        
+    	$validate = $this->validate($request, [
+            'suarapartai' => 'required|array',
+            'suarapartai.*.*' => 'integer',
+            'suara' => 'required|array',
+            'suara.*.*.*' => 'integer'
+        ],[ 'suarapartai.required' => 'Suara partai harus diisi!',
+            'suara.' => 'Suara caleg harus diisi!',
+        ]);
 
-        $req = new partaiModel();
-        $req = $req->updateProfile($data);
-        if($req)
+        $input = $request->all();
+        $proses = new suaraModel();
+
+        $data = array();
+        $data['tps'] = $input['tps'];
+        $data['saksi'] = $input['saksi'];
+        $req = array();
+
+        foreach ($input['suarapartai'] as $id_partai => $value) 
         {
-            return redirect()->back()->with('alert-success','Update data Partai sukses!');
+        	foreach ($value as $id => $values) 
+        	{
+        		$data['id'] = $id;
+        		$data['suara'] = $values;
+	        	$data['caleg'] = null;
+	        	$data['partai'] = $id_partai;
+	        	$data['jenis'] = 'p';
+
+	        	$proses->updateSuara($data);
+	        	$req['suara_partai'] = "success";
+	        	unset($data);
+        	}
+        }
+
+        foreach ($input['suara'] as $id_partai => $suara) 
+        {
+        	foreach ($suara as $id_caleg => $value) 
+        	{
+        		foreach ($value as $id => $values) 
+        		{
+        			$data = array();
+        			$data['id'] = $id;
+			        $data['tps'] = $input['tps'];
+			        $data['saksi'] = $input['saksi'];
+	        		$data['suara'] = $values;
+		        	$data['caleg'] = $id_caleg;
+		        	$data['partai'] = $id_partai;
+		        	$data['jenis'] = 'c';
+
+		        	$proses->updateSuara($data);
+
+		        	unset($data);
+        		}
+        	}
+
+        	$req['suara_caleg'] = "success";
+        }
+
+        if($req['suara_partai'] == "success" && $req['suara_caleg'] == "success")
+        {
+            return $req;//'Sukses kirim suara!';
         }
         else
         {
-            return redirect()->back()->with('alert', 'Update data Partai gagal!');
+            return 'Gagal kirim suara!';
         }
     }
 
-    function viewSuara($id_partai)
+    function viewSuara()
     {
 	    if(!Session::get('login'))
 	    {
@@ -1214,13 +1254,16 @@ class adminController extends Controller
 	    }
 	    else
 	    {
-	    	$data = new partaiModel();
-	    	$data = $data->getProfile($id_partai);
-	    	return view('admin.suara.view', compact('data'));
+	    	$data = new dataModel();
+	    	$dapil = $data->getDapil();
+	    	$partai = $data->getPartai();
+	    	$kec = $data->getKec(1);
+
+	    	return view('admin.suara.view', compact('dapil', 'partai', 'kec'));
 	    }
     }
 
-    function deleteSuara($id_partai)
+    function deleteSuara(Request $request)
     {
     	if(!Session::get('login'))
 	    {
@@ -1232,10 +1275,59 @@ class adminController extends Controller
 	    }
 	    else
 	    {
-	    	$data = new partaiModel();
-	    	$req = $data->deletePartai($id_partai);
-	    	#$req->delete();
-        	return $req;
+	    	$validate = $this->validate($request, [
+            'suarapartai' => 'required|array',
+            'suarapartai.*.*' => 'integer',
+            'suara' => 'required|array',
+            'suara.*.*.*' => 'integer'
+	        ],[ 'suarapartai.required' => 'Suara partai harus diisi!',
+	            'suara.' => 'Suara caleg harus diisi!',
+	        ]);
+
+	        $input = $request->all();
+	        $proses = new suaraModel();
+
+	        $data = array();
+	        $req = array();
+
+	        foreach ($input['suarapartai'] as $id_partai => $value) 
+	        {
+	        	foreach ($value as $id => $values) 
+	        	{
+	        		$data['id'] = $id;
+
+		        	$proses->deleteSuara($data);
+		        	$req['suara_partai'] = "success";
+		        	unset($data);
+	        	}
+	        }
+
+	        foreach ($input['suara'] as $id_partai => $suara) 
+	        {
+	        	foreach ($suara as $id_caleg => $value) 
+	        	{
+	        		foreach ($value as $id => $values) 
+	        		{
+	        			$data = array();
+	        			$data['id'] = $id;
+
+			        	$proses->deleteSuara($data);
+
+			        	unset($data);
+	        		}
+	        	}
+
+	        	$req['suara_caleg'] = "success";
+	        }
+
+	        if($req['suara_partai'] == "success" && $req['suara_caleg'] == "success")
+	        {
+	            return $req;//'Sukses kirim suara!';
+	        }
+	        else
+	        {
+	            return 'Gagal kirim suara!';
+	        }
     	}
 	}
 }

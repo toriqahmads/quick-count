@@ -21,20 +21,6 @@
       });
         };
 </script>
-<script type="text/javascript">
-  $("#partai").change(function()
-        {
-            var gender = $("#partai").val();
-            if(gender === '0' || gender === null || gender === undefined)
-            {
-                showNotification('top', 'right','Harap isi nama Partai!', 'danger');
-            }
-            else
-            {
-                return false;
-            }
-        });
-</script>
 
 @if(\Session::has('alert'))
     <script type="text/javascript">
@@ -107,9 +93,9 @@
 	          <label>Dapil</label>
 	            <select name="dapil" id="dapil" class="form-control">
 	              <option value="0" selected>Dapil</option>
-	              @foreach($dapil as $dap)
-	                  <option value="{{ $dap->id }}">{{ $dap->id }}</option>
-	              @endforeach
+                @foreach($dapil as $dap)
+                <option value="{{ $dap->id }}">{{ $dap->id }}</option>
+                @endforeach
 	            </select>
 	        </div>
 	   	  </div>
@@ -128,14 +114,8 @@
         <div class="card-body">
           <form id="suara{{$part->id}}" class="form" method="post" action="{{ url('/admin/suara/registerPostSuara') }}" enctype="multipart/form-data">
             {{ csrf_field() }}
-            <div class="row">
+            <div class="row" id="{{$part->id}}">
               <div class="col-md-12 pl-1">
-                <div class="form-group">
-                  <label>{{$part->partai}}</label>
-                  <input type="text" name="suarapartai[{{$part->id}}]" class="form-control" placeholder="Suara Partai" value="{{ old('suara.$part->id.$part->id') }}">
-                </div>
-              </div>
-              <div class="col-md-12 pl-1" id="{{$part->id}}">
               </div>
           	</div>
             <div class="input-group form-group-no-border input-lg">

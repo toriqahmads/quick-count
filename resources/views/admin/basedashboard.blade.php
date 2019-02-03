@@ -59,9 +59,27 @@
             </a>
           </li>
           <li id='datasuara'>
-            <a href="#" class="sidemenu">
+            <a href="{{ url('/admin/view/suara') }}" class="sidemenu">
               <i class="now-ui-icons files_single-copy-04"></i>
               <p>Data Suara</p>
+            </a>
+          </li>
+          <li id='inputsuara'>
+            <a href="{{ url('/admin/register/suara') }}" class="sidemenu">
+              <i class="now-ui-icons files_single-copy-04"></i>
+              <p>Input Suara</p>
+            </a>
+          </li>
+          <li id='listpartai'>
+            <a href="{{ url('/admin/listpartai') }}" class="sidemenu">
+              <i class="now-ui-icons files_single-copy-04"></i>
+              <p>Data Partai</p>
+            </a>
+          </li>
+          <li id='inputpartai'>
+            <a href="{{ url('/admin/register/partai') }}" class="sidemenu">
+              <i class="now-ui-icons files_single-copy-04"></i>
+              <p>Input Partai</p>
             </a>
           </li>
           <li id='listcaleg'>
@@ -240,9 +258,25 @@
       {
         $("#listtps").addClass('active');
       }
-      else
+      else if(pathname == '/admin/view/suara')
       {
         $("#datasuara").addClass('active');
+      }
+      else if(pathname == '/admin/register/suara')
+      {
+        $("#inputsuara").addClass('active');
+      }
+      else if(pathname == '/admin/register/partai')
+      {
+        $("#inputpartai").addClass('active');
+      }
+      else if(pathname == '/admin/listpartai')
+      {
+        $("#listpartai").addClass('active');
+      }
+      else
+      {
+        $("#dashboard").addClass('active');
       }
   </script>
   <script src="{{ asset('js/core/bootstrap.min.js') }}"></script>

@@ -1,4 +1,4 @@
-$(".kirim").click(function(e){
+$(document).on('click', 'input[name="edit"]', function(e){
     e.preventDefault();
     id = $(this).parents("form").attr("id");
     kel_id = $("#kel").val();
@@ -21,19 +21,9 @@ $(".kirim").click(function(e){
     }
     else
     {
-        $.ajax({
-         url: $('#'+id).attr('action'),
-         type: 'POST',
-         data: $('#'+id).serialize() + "&tps="+tps+"&dapil="+dapil+"&saksi="+saksi,
-         success: function(response) 
-         {
-           showNotification('top', 'right','Berhasil dikirim!', 'info');
-           $('#'+id).hide();
-         },
-         error: function(xhr, Status, err)
-         {
-           showNotification('top', 'right', Status, 'danger');
-         }
-      });
+        $("#"+id+" :input").prop("disabled", false);
+        $("#"+id+" input.edit").prop("value", "Kirim");
+        $("#"+id+" input.edit").prop("name", "kirim");
+        $("#"+id+" input.hapus").hide();
     }
 });
