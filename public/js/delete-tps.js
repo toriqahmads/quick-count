@@ -1,4 +1,4 @@
-$(".hapus").click(function(e){
+$(".hapus").unbind().click(function(e){
     e.preventDefault();
     id = $(this).parents("form").attr("id");
     idtr = $(this).parents("tr").attr("id");

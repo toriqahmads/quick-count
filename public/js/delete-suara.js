@@ -17,7 +17,7 @@ $(document).on('click', 'input[name="hapus"]', function(e){
                 action : function(){
                 $("#"+id+" :input").prop("disabled", false);
                 $.ajax({
-                       url: window.location.origin+"/admin/delete/suara",
+                       url: window.location.origin+"/suara/delete",
                        type: 'POST',
                        data: $('#'+id).serialize()+"&_method=DELETE",
                        success: function(response) 

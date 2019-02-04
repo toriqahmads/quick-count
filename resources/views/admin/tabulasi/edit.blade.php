@@ -61,7 +61,7 @@
           <h5 class="title">Edit Data Partai</h5>
         </div>
         <div class="card-body">
-          <form class="form" method="post" action="{{ url('/suara/updateSuara') }}" enctype="multipart/form-data">
+          <form class="form" method="post" action="{{ url('/admin/partai/updatePartai') }}" enctype="multipart/form-data">
             {{ csrf_field() }}
             <div class="row">
               <div class="col-md-12">

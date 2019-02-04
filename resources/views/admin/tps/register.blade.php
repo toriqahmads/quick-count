@@ -99,7 +99,7 @@
           <h5 class="title">Registrasi Data TPS</h5>
         </div>
         <div class="card-body">
-          <form class="form" method="post" action="{{ url('/admin/tps/registerPost') }}" enctype="multipart/form-data">
+          <form class="form" method="post" action="{{ url('/tps/registerPost') }}" enctype="multipart/form-data">
             {{ csrf_field() }}
             <div class="row">
               <div class="col-md-4 pl-1">

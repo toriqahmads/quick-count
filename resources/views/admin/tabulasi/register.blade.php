@@ -112,7 +112,7 @@
           <h5 class="title">{{$part->partai}}</h5>
         </div>
         <div class="card-body">
-          <form id="suara{{$part->id}}" class="form" method="post" action="{{ url('/suara/registerPostSuara') }}" enctype="multipart/form-data">
+          <form id="suara{{$part->id}}" class="form" method="post" action="{{ url('/admin/suara/registerPostSuara') }}" enctype="multipart/form-data">
             {{ csrf_field() }}
             <div class="row" id="{{$part->id}}">
               <div class="col-md-12 pl-1">

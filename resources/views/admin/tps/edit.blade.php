@@ -61,7 +61,7 @@
           <h5 class="title">Edit Data TPS</h5>
         </div>
         <div class="card-body">
-          <form class="form" method="post" action="{{ url('/admin/tps/updateTPS') }}">
+          <form class="form" method="post" action="{{ url('/tps/updateTPS') }}">
             {{ csrf_field() }}
             <div class="row">
               <div class="col-md-6 pl-1">

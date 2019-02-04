@@ -137,7 +137,7 @@
           <h5 class="title">Input Data Saksi</h5>
         </div>
         <div class="card-body">
-          <form class="form" method="post" action="{{ url('/admin/saksi/registerPost') }}" enctype="multipart/form-data">
+          <form class="form" method="post" action="{{ url('/saksi/registerPost') }}" enctype="multipart/form-data">
             {{ csrf_field() }}
             <div class="row">
               <div class="col-md-6 pl-1">

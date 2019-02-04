@@ -1,10 +1,6 @@
 @extends('admin.basedashboard')
 @section('content')
-<script src="{{ asset('js/upload.js') }}"></script>
-<script src="{{ asset('js/getdetailforeditsuara.js')}}" type="text/javascript"></script>
-<script src="{{ asset('js/edit-suara.js')}}" type="text/javascript"></script>
-<script src="{{ asset('js/kirim-edit-suara.js')}}" type="text/javascript"></script>
-<script src="{{ asset('js/delete-suara.js')}}" type="text/javascript"></script>
+<script src="{{ asset('js/apexchart.js')}}"></script>
 <script type="text/javascript">
             function showNotification(from, align, msg, color){
     color = color
@@ -107,6 +103,10 @@
     </div>
    </div>
 
+   <div class="col-md-12" id="chart" hidden="true">
+      
+   </div>
+
    @foreach($partai as $part)
    <div class="col-md-3">
       <div class="card">
@@ -114,7 +114,7 @@
           <h5 class="title">{{$part->partai}}</h5>
         </div>
         <div class="card-body">
-          <form id="suara{{$part->id}}" class="form" method="post" action="{{ url('/suara/updateSuara') }}" enctype="multipart/form-data">
+          <form id="suara{{$part->id}}" class="form" method="post" action="{{ url('/admin/suara/updateSuara') }}" enctype="multipart/form-data">
             {{ csrf_field() }}
             <div class="row" id="{{$part->id}}">
             </div>
@@ -125,6 +125,7 @@
     @endforeach
   </div>
 </div>
+<script src="{{ asset('js/gettabulasitps.js')}}" type="text/javascript"></script>
 <!--<script src="{{ asset('js/kirim-suara.js')}}" type="text/javascript"></script>-->
 
 @endsection

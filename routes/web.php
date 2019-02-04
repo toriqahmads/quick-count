@@ -40,37 +40,6 @@ Route::group(['prefix' => 'data'], function()
 Route::group(['prefix' => 'admin'], function()
 {
 	Route::get('/', 'adminController@index');
-	Route::get('/listsaksi', 'adminController@getAllSaksi')->name('list.saksi');
-	Route::get('/edit/saksi/{nik}/{id}', 'adminController@editSaksi')->name('edit.saksi');
-	Route::get('/view/saksi/{nik}/{id}', 'adminController@viewSaksi')->name('view.saksi');
-	Route::delete('/delete/saksi/{nik}/{id}', 'adminController@deleteSaksi')->name('delete.saksi');
-	Route::get('/register/saksi', 'adminController@registerSaksi')->name('register.saksi');
-	Route::post('/saksi/registerPost', 'adminController@registerSaksiPost')->name('register.saksi');
-	Route::post('/saksi/updateSaksiProfile', 'adminController@updateSaksiProfile')->name('update.saksi.profile');
-
-	Route::get('/register/caleg', 'adminController@registerCaleg')->name('register.caleg');
-	Route::get('/listcaleg', 'adminController@getAllCaleg')->name('list.caleg');
-	Route::get('/edit/caleg/{id}', 'adminController@editCaleg')->name('edit.caleg');
-	Route::get('/view/caleg/{id}', 'adminController@viewCaleg')->name('view.caleg');
-	Route::delete('/delete/caleg/{id}', 'adminController@deleteCaleg')->name('delete.caleg');
-	Route::post('/caleg/updateCalegProfile', 'adminController@updateCalegProfile')->name('update.caleg.profile');
-	Route::post('/caleg/registerPost', 'adminController@registerPostCaleg')->name('register.post.caleg');
-
-	Route::get('/register/tps', 'adminController@registerTps')->name('register.tps');
-	Route::get('/listtps', 'adminController@getAllTps')->name('list.tps');
-	Route::get('/edit/tps/{id}', 'adminController@editTps')->name('edit.tps');
-	Route::get('/view/tps/{id}', 'adminController@viewTps')->name('view.tps');
-	Route::delete('/delete/tps/{id}', 'adminController@deleteTps')->name('delete.tps');
-	Route::post('/tps/updateTPS', 'adminController@updateTps')->name('update.tps');
-	Route::post('/tps/registerPost', 'adminController@registerPostTps')->name('register.post.tps');
-
-	Route::get('/register/partai', 'adminController@registerPartai')->name('register.partai');
-	Route::get('/listpartai', 'adminController@getAllPartai')->name('list.partai');
-	Route::get('/edit/partai/{id}', 'adminController@editPartai')->name('edit.partai');
-	Route::get('/view/partai/{id}', 'adminController@viewPartai')->name('view.partai');
-	Route::delete('/delete/partai/{id}', 'adminController@deletePartai')->name('delete.partai');
-	Route::post('/partai/updatePartai', 'adminController@updatePartai')->name('update.partai');
-	Route::post('/partai/registerPost', 'adminController@registerPostPartai')->name('register.post.partai');
 
 	Route::post('/updateProfile', 'adminController@updateProfile')->name('update.profile');
 	Route::get('/login', 'adminController@login')->name('login.admin');
@@ -78,13 +47,73 @@ Route::group(['prefix' => 'admin'], function()
 	Route::post('/registerPost', 'adminController@registerPost')->name('register.post.admin');
 	Route::get('/logout', 'adminController@logout')->name('logout.admin');
 	Route::post('/loginPost', 'adminController@loginPost')->name('login.post.admin');
+});
 
-	Route::get('/register/suara', 'adminController@registerSuara')->name('register.suara');
-	Route::get('/suarapartai/{id_dapil}/{id_partai}/{id_tps}', 'adminController@getAllSuaraPartai')->name('suarapartai');
-	Route::get('/suaracaleg/{id_dapil}/{id_partai}/{id_tps}', 'adminController@getAllSuaraCaleg')->name('suarapartai');
-	Route::get('/edit/suara/{id}', 'adminController@editSuara')->name('edit.suara');
-	Route::get('/view/suara', 'adminController@viewSuara')->name('view.suara');
-	Route::delete('/delete/suara', 'adminController@deleteSuara')->name('delete.suara');
-	Route::post('/suara/updateSuara', 'adminController@updateSuara')->name('update.suara');
-	Route::post('/suara/registerPostSuara', 'adminController@registerPostSuara')->name('register.post.suara');
+Route::group(['prefix' => 'saksi'], function()
+{
+	Route::get('/listsaksi', 'saksiController@getAllSaksi')->name('list.saksi');
+	Route::get('/edit/{nik}/{id}', 'saksiController@editSaksi')->name('edit.saksi');
+	Route::get('/view/{nik}/{id}', 'saksiController@viewSaksi')->name('view.saksi');
+	Route::delete('/delete/{nik}/{id}', 'saksiController@deleteSaksi')->name('delete.saksi');
+	Route::get('/register', 'saksiController@registerSaksi')->name('register.saksi');
+	Route::post('/registerPost', 'saksiController@registerSaksiPost')->name('register.saksi');
+	Route::post('/updateSaksiProfile', 'saksiController@updateSaksiProfile')->name('update.saksi.profile');
+});
+
+Route::group(['prefix' => 'caleg'], function()
+{
+	Route::get('/register', 'calegController@registerCaleg')->name('register.caleg');
+	Route::get('/listcaleg', 'calegController@getAllCaleg')->name('list.caleg');
+	Route::get('/edit/{id}', 'calegController@editCaleg')->name('edit.caleg');
+	Route::get('/view/{id}', 'calegController@viewCaleg')->name('view.caleg');
+	Route::delete('/delete/{id}', 'calegController@deleteCaleg')->name('delete.caleg');
+	Route::post('/updateCalegProfile', 'calegController@updateCalegProfile')->name('update.caleg.profile');
+	Route::post('/registerPost', 'calegController@registerPostCaleg')->name('register.post.caleg');
+});
+
+Route::group(['prefix' => 'partai'], function()
+{
+	Route::get('/register', 'partaiController@registerPartai')->name('register.partai');
+	Route::get('/listpartai', 'partaiController@getAllPartai')->name('list.partai');
+	Route::get('/edit/{id}', 'partaiController@editPartai')->name('edit.partai');
+	Route::get('/view/{id}', 'partaiController@viewPartai')->name('view.partai');
+	Route::delete('/delete/{id}', 'partaiController@deletePartai')->name('delete.partai');
+	Route::post('/updatePartai', 'partaiController@updatePartai')->name('update.partai');
+	Route::post('/registerPost', 'partaiController@registerPostPartai')->name('register.post.partai');
+});
+
+Route::group(['prefix' => 'tps'], function()
+{
+	Route::get('/register', 'tpsController@registerTps')->name('register.tps');
+	Route::get('/listtps', 'tpsController@getAllTps')->name('list.tps');
+	Route::get('/edit/{id}', 'tpsController@editTps')->name('edit.tps');
+	Route::get('/view/{id}', 'tpsController@viewTps')->name('view.tps');
+	Route::delete('/delete/{id}', 'tpsController@deleteTps')->name('delete.tps');
+	Route::post('/updateTPS', 'tpsController@updateTps')->name('update.tps');
+	Route::post('/registerPost', 'tpsController@registerPostTps')->name('register.post.tps');
+});
+
+Route::group(['prefix' => 'suara'], function()
+{
+	Route::get('/register', 'suaraController@registerSuara')->name('register.suara');
+	Route::get('/suarapartai/{id_dapil}/{id_partai}/{id_tps}', 'suaraController@getAllSuaraPartai')->name('suarapartai');
+	Route::get('/suarapartaibydapil/{id_dapil}/{id_partai}', 'suaraController@getAllSuaraPartaiByDapil')->name('suarapartaibydapil');
+
+	Route::get('/suarapartaibydapilforchart/{id_dapil}', 'suaraController@getAllSuaraPartaiForChartByDapil')->name('suarapartaibydapilforchart');
+
+	Route::get('/suarapartaibytpsforchart/{id_dapil}/{id_tps}', 'suaraController@getAllSuaraPartaiForChartByTps')->name('suarapartaibytpsforchart');
+
+	Route::get('/suaracalegbydapil/{id_dapil}/{id_partai}', 'suaraController@getAllSuaraCalegByDapil')->name('suaracalegbydapil');
+	Route::get('/suaracaleg/{id_dapil}/{id_partai}/{id_tps}', 'suaraController@getAllSuaraCaleg')->name('suarapartai');
+	Route::get('/edit/{id}', 'suaraController@editSuara')->name('edit.suara');
+	Route::get('/view', 'suaraController@viewSuara')->name('view.suara');
+	Route::delete('/delete', 'suaraController@deleteSuara')->name('delete.suara');
+	Route::post('/updateSuara', 'suaraController@updateSuara')->name('update.suara');
+	Route::post('/registerPostSuara', 'suaraController@registerPostSuara')->name('register.post.suara');
+});
+
+Route::group(['prefix' => 'tabulasi'], function()
+{
+	Route::get('/dapil', 'tabulasiController@tabulasiDapil')->name('tabulasi.dapil');
+	Route::get('/tps', 'tabulasiController@tabulasiTps')->name('tabulasi.tps');
 });

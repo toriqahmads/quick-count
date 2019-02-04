@@ -61,7 +61,7 @@
           <h5 class="title">Edit Data Caleg</h5>
         </div>
         <div class="card-body">
-          <form class="form" method="post" action="{{ url('/admin/caleg/updateCalegProfile') }}" enctype="multipart/form-data">
+          <form class="form" method="post" action="{{ url('/caleg/updateCalegProfile') }}" enctype="multipart/form-data">
             {{ csrf_field() }}
             <div class="row">
               <div class="col-md-6 pl-1">

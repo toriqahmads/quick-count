@@ -46,64 +46,76 @@
               <p>Dashboard</p>
             </a>
           </li>
-          <li id='listsaksi'>
-            <a href="{{ url('/admin/listsaksi') }}" class="sidemenu">
-              <i class="now-ui-icons users_single-02"></i>
-              <p>Data Saksi</p>
+          <li id='tabdapil'>
+            <a href="{{ url('/tabulasi/dapil') }}" class="sidemenu">
+              <i class="now-ui-icons design_bullet-list-67"></i>
+              <p>Tabulasi by Dapil</p>
             </a>
           </li>
-          <li id='inputsaksi'>
-            <a href="{{ url('/admin/register/saksi') }}" class="sidemenu">
-              <i class="now-ui-icons users_single-02"></i>
-              <p>Input Data Saksi</p>
-            </a>
-          </li>
-          <li id='datasuara'>
-            <a href="{{ url('/admin/view/suara') }}" class="sidemenu">
-              <i class="now-ui-icons files_single-copy-04"></i>
-              <p>Data Suara</p>
-            </a>
-          </li>
-          <li id='inputsuara'>
-            <a href="{{ url('/admin/register/suara') }}" class="sidemenu">
-              <i class="now-ui-icons files_single-copy-04"></i>
-              <p>Input Suara</p>
-            </a>
-          </li>
-          <li id='listpartai'>
-            <a href="{{ url('/admin/listpartai') }}" class="sidemenu">
-              <i class="now-ui-icons files_single-copy-04"></i>
-              <p>Data Partai</p>
-            </a>
-          </li>
-          <li id='inputpartai'>
-            <a href="{{ url('/admin/register/partai') }}" class="sidemenu">
-              <i class="now-ui-icons files_single-copy-04"></i>
-              <p>Input Partai</p>
+          <li id='tabtps'>
+            <a href="{{ url('/tabulasi/tps') }}" class="sidemenu">
+              <i class="now-ui-icons design_bullet-list-67"></i>
+              <p>Tabulasi by TPS</p>
             </a>
           </li>
           <li id='listcaleg'>
-            <a href="{{ url('/admin/listcaleg') }}" class="sidemenu">
+            <a href="{{ url('/caleg/listcaleg') }}" class="sidemenu">
               <i class="now-ui-icons design_bullet-list-67"></i>
               <p>Data Caleg</p>
             </a>
           </li>
+          <li id='listsaksi'>
+            <a href="{{ url('/saksi/listsaksi') }}" class="sidemenu">
+              <i class="now-ui-icons users_single-02"></i>
+              <p>Data Saksi</p>
+            </a>
+          </li>
+          <li id='listpartai'>
+            <a href="{{ url('/partai/listpartai') }}" class="sidemenu">
+              <i class="now-ui-icons files_single-copy-04"></i>
+              <p>Data Partai</p>
+            </a>
+          </li>
+          <li id='listtps'>
+            <a href="{{ url('/tps/listtps') }}" class="sidemenu">
+              <i class="now-ui-icons design_bullet-list-67"></i>
+              <p>Data TPS</p>
+            </a>
+          </li>
+          <li id='datasuara'>
+            <a href="{{ url('/suara/view') }}" class="sidemenu">
+              <i class="now-ui-icons files_single-copy-04"></i>
+              <p>Data Suara</p>
+            </a>
+          </li>
           <li id='inputcaleg'>
-            <a href="{{ url('/admin/register/caleg') }}" class="sidemenu">
+            <a href="{{ url('/caleg/register') }}" class="sidemenu">
               <i class="now-ui-icons design_bullet-list-67"></i>
               <p>Input Data Caleg</p>
             </a>
           </li>
+          <li id='inputsaksi'>
+            <a href="{{ url('/saksi/register') }}" class="sidemenu">
+              <i class="now-ui-icons users_single-02"></i>
+              <p>Input Data Saksi</p>
+            </a>
+          </li>
+          <li id='inputpartai'>
+            <a href="{{ url('/partai/register') }}" class="sidemenu">
+              <i class="now-ui-icons files_single-copy-04"></i>
+              <p>Input Partai</p>
+            </a>
+          </li>
           <li id='inputtps'>
-            <a href="{{ url('/admin/register/tps') }}" class="sidemenu">
+            <a href="{{ url('/tps/register') }}" class="sidemenu">
               <i class="now-ui-icons design_bullet-list-67"></i>
               <p>Input Data TPS</p>
             </a>
           </li>
-          <li id='listtps'>
-            <a href="{{ url('/admin/listtps') }}" class="sidemenu">
-              <i class="now-ui-icons design_bullet-list-67"></i>
-              <p>Data TPS</p>
+          <li id='inputsuara'>
+            <a href="{{ url('/suara/register') }}" class="sidemenu">
+              <i class="now-ui-icons files_single-copy-04"></i>
+              <p>Input Suara</p>
             </a>
           </li>
         </ul>
@@ -234,45 +246,53 @@
       {
         $("#dashboard").addClass('active');
       }
-      else if(pathname == '/admin/listsaksi')
+      else if(pathname == '/saksi/listsaksi')
       {
         $("#listsaksi").addClass('active');
       }
-      else if(pathname == '/admin/listcaleg')
+      else if(pathname == '/caleg/listcaleg')
       {
         $("#listcaleg").addClass('active');
       }
-      else if(pathname == '/admin/register/saksi')
+      else if(pathname == '/saksi/register')
       {
         $("#inputsaksi").addClass('active');
       }
-      else if(pathname == '/admin/register/caleg')
+      else if(pathname == '/caleg/register')
       {
         $("#inputcaleg").addClass('active');
       }
-      else if(pathname == '/admin/register/tps')
+      else if(pathname == '/tps/register')
       {
         $("#inputtps").addClass('active');
       }
-      else if(pathname == '/admin/listtps')
+      else if(pathname == '/tps/listtps')
       {
         $("#listtps").addClass('active');
       }
-      else if(pathname == '/admin/view/suara')
+      else if(pathname == '/suara/view')
       {
         $("#datasuara").addClass('active');
       }
-      else if(pathname == '/admin/register/suara')
+      else if(pathname == '/suara/register')
       {
         $("#inputsuara").addClass('active');
       }
-      else if(pathname == '/admin/register/partai')
+      else if(pathname == '/partai/register')
       {
         $("#inputpartai").addClass('active');
       }
-      else if(pathname == '/admin/listpartai')
+      else if(pathname == '/partai/listpartai')
       {
         $("#listpartai").addClass('active');
+      }
+      else if(pathname == '/tabulasi/dapil')
+      {
+        $("#tabdapil").addClass('active');
+      }
+      else if(pathname == '/tabulasi/tps')
+      {
+        $("#tabtps").addClass('active');
       }
       else
       {

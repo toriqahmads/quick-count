@@ -87,7 +87,7 @@
           <h5 class="title">Registrasi Data Caleg</h5>
         </div>
         <div class="card-body">
-          <form class="form" method="post" action="{{ url('/admin/caleg/registerPost') }}" enctype="multipart/form-data">
+          <form class="form" method="post" action="{{ url('/caleg/registerPost') }}" enctype="multipart/form-data">
             {{ csrf_field() }}
             <div class="row">
               <div class="col-md-6 pl-1">
