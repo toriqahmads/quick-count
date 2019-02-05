@@ -38,6 +38,25 @@ class suaraModel extends Model
         return $data;
     }
 
+    function getAllSuaraPartaiBySaksi($id_dapil, $id_partai, $id_tps, $id_saksi)
+    {
+        $data = DB::table('suara')
+                ->join('partai', 'partai.id', '=', 'suara.id_partai')
+                ->join('tps', 'tps.id', '=', 'suara.id_tps')
+                ->join('dapil', 'dapil.id', '=', 'tps.id_dapil')
+                ->join('saksi', 'saksi.id', '=', 'suara.id_saksi')
+                ->where('suara.id_tps', '=', $id_tps)
+                ->where('suara.id_partai', '=', $id_partai)
+                ->where('suara.status', '=', 'l')
+                ->where('suara.jenis_suara', '=', 'p')
+                ->where('dapil.id', '=', $id_dapil)
+                ->where('suara.id_saksi', '=', $id_saksi)
+                ->select('suara.id', 'suara.suara as jumlah_suara', 'suara.id_saksi', 'saksi.nama_depan as nama_depan_saksi', 'saksi.nama_belakang as nama_belakang_saksi', 'partai.id as id_partai', 'partai.partai', 'tps.id as id_tps', 'tps.tps', 'suara.jenis_suara')
+                ->get();
+
+        return $data;
+    }
+
     function getAllSuaraPartaiByDapil($id_dapil, $id_partai)
     {
         //SELECT id_partai, suara, sum(suara) as total_suara from suara as s join tps on tps.id = s.id_tps join dapil on dapil.id = tps.id_dapil where dapil.id = 1 AND s.jenis_suara = "p" GROUP BY s.id_partai
@@ -103,6 +122,25 @@ class suaraModel extends Model
                 ->where('suara.status', '=', 'l')
                 ->where('suara.jenis_suara', '=', 'c')
                 ->where('dapil.id', '=', $id_dapil)
+                ->select('suara.id', 'suara.suara as jumlah_suara', 'suara.id_saksi', 'saksi.nama_depan as nama_depan_saksi', 'saksi.nama_belakang as nama_belakang_saksi', 'partai.id as id_partai', 'partai.partai', 'pil.id as id_caleg', 'pil.nama_depan as nama_depan_caleg', 'pil.nama_belakang as nama_belakang_caleg', 'tps.id as id_tps', 'tps.tps', 'suara.jenis_suara')
+                ->get();
+
+        return $data;
+    }
+
+    function getAllSuaraCalegBySaksi($id_dapil, $id_partai, $id_tps, $id_saksi)
+    {
+        $data = DB::table('suara')
+                ->join('partai', 'partai.id', '=', 'suara.id_partai')
+                ->join('tps', 'tps.id', '=', 'suara.id_tps')
+                ->join('dapil', 'dapil.id', '=', 'tps.id_dapil')
+                ->join('pil', 'pil.id', '=', 'suara.id_caleg')
+                ->join('saksi', 'saksi.id', '=', 'suara.id_saksi')
+                ->where('suara.id_partai', '=', $id_partai)
+                ->where('suara.status', '=', 'l')
+                ->where('suara.jenis_suara', '=', 'c')
+                ->where('dapil.id', '=', $id_dapil)
+                ->where('suara.id_saksi', '=', $id_saksi)
                 ->select('suara.id', 'suara.suara as jumlah_suara', 'suara.id_saksi', 'saksi.nama_depan as nama_depan_saksi', 'saksi.nama_belakang as nama_belakang_saksi', 'partai.id as id_partai', 'partai.partai', 'pil.id as id_caleg', 'pil.nama_depan as nama_depan_caleg', 'pil.nama_belakang as nama_belakang_caleg', 'tps.id as id_tps', 'tps.tps', 'suara.jenis_suara')
                 ->get();
 

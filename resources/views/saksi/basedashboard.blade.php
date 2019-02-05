@@ -31,79 +31,19 @@
         Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
     -->
       <div class="logo">
-        <a href="{{ url('/admin') }}" class="simple-text logo-mini">
+        <a href="{{ url('/saksi') }}" class="simple-text logo-mini">
           Tab.
         </a>
-        <a href="{{ url('/admin') }}" class="simple-text logo-normal">
+        <a href="{{ url('/saksi') }}" class="simple-text logo-normal">
           Demak
         </a>
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav" id="sidemenus">
           <li id="dashboard">
-            <a href="{{ url('/admin') }}" class="sidemenu">
+            <a href="{{ url('/saksi') }}" class="sidemenu">
               <i class="now-ui-icons shopping_shop"></i>
               <p>Home</p>
-            </a>
-          </li>
-          <li id='tabdapil'>
-            <a href="{{ url('/tabulasi/dapil') }}" class="sidemenu">
-              <i class="now-ui-icons business_chart-bar-32"></i>
-              <p>Tabulasi by Dapil</p>
-            </a>
-          </li>
-          <li id='tabtps'>
-            <a href="{{ url('/tabulasi/tps') }}" class="sidemenu">
-              <i class="now-ui-icons business_chart-bar-32"></i>
-              <p>Tabulasi by TPS</p>
-            </a>
-          </li>
-          <li id='listcaleg'>
-            <a href="{{ url('/caleg/listcaleg') }}" class="sidemenu">
-              <i class="now-ui-icons design_bullet-list-67"></i>
-              <p>Data Caleg</p>
-            </a>
-          </li>
-          <li id='inputcaleg'>
-            <a href="{{ url('/caleg/register') }}" class="sidemenu">
-              <i class="now-ui-icons users_single-02"></i>
-              <p>Input Data Caleg</p>
-            </a>
-          </li>
-          <li id='listsaksi'>
-            <a href="{{ url('/saksi/listsaksi') }}" class="sidemenu">
-              <i class="now-ui-icons design_bullet-list-67"></i>
-              <p>Data Saksi</p>
-            </a>
-          </li>
-          <li id='inputsaksi'>
-            <a href="{{ url('/saksi/register') }}" class="sidemenu">
-              <i class="now-ui-icons business_badge"></i>
-              <p>Input Data Saksi</p>
-            </a>
-          </li>
-          <li id='listpartai'>
-            <a href="{{ url('/partai/listpartai') }}" class="sidemenu">
-              <i class="now-ui-icons business_bank"></i>
-              <p>Data Partai</p>
-            </a>
-          </li>
-          <li id='inputpartai'>
-            <a href="{{ url('/partai/register') }}" class="sidemenu">
-              <i class="now-ui-icons design-2_ruler-pencil"></i>
-              <p>Input Partai</p>
-            </a>
-          </li>
-          <li id='listtps'>
-            <a href="{{ url('/tps/listtps') }}" class="sidemenu">
-              <i class="now-ui-icons design_app"></i>
-              <p>Data TPS</p>
-            </a>
-          </li>
-          <li id='inputtps'>
-            <a href="{{ url('/tps/register') }}" class="sidemenu">
-              <i class="now-ui-icons design-2_ruler-pencil"></i>
-              <p>Input Data TPS</p>
             </a>
           </li>
           <li id='datasuara'>
@@ -142,16 +82,16 @@
           </button>
           <div class="collapse navbar-collapse justify-content-end" id="navigation">
             <ul class="navbar-nav">
-              <!--<li class="nav-item">
-                <a class="nav-link" href="{{ url('/admin/editProfile') }}">
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url('/saksi/editProfile') }}">
                   <i class="now-ui-icons users_circle-08" rel="tooltip" title="Edit Profile"></i>
                   <p>
                     <span class="d-lg-none d-md-block">Edit Profile</span>
                   </p>
                 </a>
-              </li>-->
+              </li>
               <li class="nav-item">
-                <a class="nav-link" href="{{ url('/admin/logout') }}">
+                <a class="nav-link" href="{{ url('/saksi/logout') }}">
                   <i class="now-ui-icons media-1_button-power" rel="tooltip" title="Logout"></i>
                   <p>
                     <span class="d-lg-none d-md-block">Logout</span>
@@ -219,33 +159,9 @@
   <script type="text/javascript">
       var pathname = window.location.pathname;
       //alert(pathname);
-      if(pathname == '/admin')
+      if(pathname == '/saksi')
       {
         $("#dashboard").addClass('active');
-      }
-      else if(pathname == '/saksi/listsaksi')
-      {
-        $("#listsaksi").addClass('active');
-      }
-      else if(pathname == '/caleg/listcaleg')
-      {
-        $("#listcaleg").addClass('active');
-      }
-      else if(pathname == '/saksi/register')
-      {
-        $("#inputsaksi").addClass('active');
-      }
-      else if(pathname == '/caleg/register')
-      {
-        $("#inputcaleg").addClass('active');
-      }
-      else if(pathname == '/tps/register')
-      {
-        $("#inputtps").addClass('active');
-      }
-      else if(pathname == '/tps/listtps')
-      {
-        $("#listtps").addClass('active');
       }
       else if(pathname == '/suara/view')
       {
@@ -254,22 +170,6 @@
       else if(pathname == '/suara/register')
       {
         $("#inputsuara").addClass('active');
-      }
-      else if(pathname == '/partai/register')
-      {
-        $("#inputpartai").addClass('active');
-      }
-      else if(pathname == '/partai/listpartai')
-      {
-        $("#listpartai").addClass('active');
-      }
-      else if(pathname == '/tabulasi/dapil')
-      {
-        $("#tabdapil").addClass('active');
-      }
-      else if(pathname == '/tabulasi/tps')
-      {
-        $("#tabtps").addClass('active');
       }
       else
       {

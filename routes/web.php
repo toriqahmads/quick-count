@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('saksi.login.login');
 });
 
 /*
@@ -51,6 +51,11 @@ Route::group(['prefix' => 'admin'], function()
 
 Route::group(['prefix' => 'saksi'], function()
 {
+	Route::get('/', 'saksiController@index')->name('index.saksi');
+	Route::get('/editProfile', 'saksiController@editProfile')->name('edit.profile.saksi');
+	Route::get('/login', 'saksiController@login')->name('login.saksi');
+	Route::post('/loginPost', 'saksiController@loginPost')->name('login.post.saksi');
+	Route::get('/logout', 'saksiController@logout')->name('logout.saksi');
 	Route::get('/listsaksi', 'saksiController@getAllSaksi')->name('list.saksi');
 	Route::get('/edit/{nik}/{id}', 'saksiController@editSaksi')->name('edit.saksi');
 	Route::get('/view/{nik}/{id}', 'saksiController@viewSaksi')->name('view.saksi');
@@ -97,6 +102,7 @@ Route::group(['prefix' => 'suara'], function()
 {
 	Route::get('/register', 'suaraController@registerSuara')->name('register.suara');
 	Route::get('/suarapartai/{id_dapil}/{id_partai}/{id_tps}', 'suaraController@getAllSuaraPartai')->name('suarapartai');
+	Route::get('/suarapartaibysaksi/{id_dapil}/{id_partai}/{id_tps}/{id_saksi}', 'suaraController@getAllSuaraPartaiBySaksi')->name('suarapartaisaksi');
 	Route::get('/suarapartaibydapil/{id_dapil}/{id_partai}', 'suaraController@getAllSuaraPartaiByDapil')->name('suarapartaibydapil');
 
 	Route::get('/suarapartaibydapilforchart/{id_dapil}', 'suaraController@getAllSuaraPartaiForChartByDapil')->name('suarapartaibydapilforchart');
@@ -105,6 +111,7 @@ Route::group(['prefix' => 'suara'], function()
 
 	Route::get('/suaracalegbydapil/{id_dapil}/{id_partai}', 'suaraController@getAllSuaraCalegByDapil')->name('suaracalegbydapil');
 	Route::get('/suaracaleg/{id_dapil}/{id_partai}/{id_tps}', 'suaraController@getAllSuaraCaleg')->name('suarapartai');
+	Route::get('/suaracalegbysaksi/{id_dapil}/{id_partai}/{id_tps}/{id_saksi}', 'suaraController@getAllSuaraCalegBySaksi')->name('suaracalegsaksi');
 	Route::get('/edit/{id}', 'suaraController@editSuara')->name('edit.suara');
 	Route::get('/view', 'suaraController@viewSuara')->name('view.suara');
 	Route::delete('/delete', 'suaraController@deleteSuara')->name('delete.suara');

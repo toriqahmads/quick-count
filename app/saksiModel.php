@@ -6,6 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 use DB;
 class saksiModel extends Model
 {
+    function cekLogin($username)
+    {
+        $data = DB::table('users')
+                ->select('users.username', 'users.pass', 'saksi.*')
+                ->join('saksi', 'saksi.id', '=', 'users.id_saksi')
+                ->where('users.username', $username)
+                ->where('users.status', 'l')
+                ->where('saksi.status', 'l')
+                ->first();
+                    
+        return $data;
+    }
+
     function registerPost($data = array())
     {
     	$fname = $data['fname'];

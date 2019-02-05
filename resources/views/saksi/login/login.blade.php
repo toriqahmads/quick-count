@@ -1,4 +1,4 @@
-@extends('admin.base')
+@extends('saksi.base')
 @section('content')
 
             @if(\Session::has('alert'))
@@ -18,9 +18,9 @@
             @endif
             <div class="col-md-4 content-center">
                 <div class="card card-login card-plain">
-                    <form class="form" method="post" action="{{ url('/admin/loginPost') }}">
+                    <form class="form" method="post" action="{{ url('/saksi/loginPost') }}">
                         <div class="header header-primary text-center">
-                            <h4>Login Admin</h4>
+                            <h4>Login Saksi</h4>
                         </div>
                         {{ csrf_field() }}
                         <div class="content">
@@ -36,12 +36,12 @@
 
                             <!--<div class="pull-left">
                             <h6>
-                                <a href="{{ url('/admin/register') }}" class="link">Buat Akun</a>
+                                <a href="{{ url('/saksi/register') }}" class="link">Buat Akun</a>
                             </h6>
                             </div>
                             <div class="pull-right">
                                 <h6>
-                                    <a href="{{ url('/admin/forgot') }}" class="link">Lupa password?</a>
+                                    <a href="{{ url('/saksi/forgot') }}" class="link">Lupa password?</a>
                                 </h6>
                             </div>-->
                     </form>

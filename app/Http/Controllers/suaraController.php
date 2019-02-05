@@ -20,11 +20,11 @@ class suaraController extends Controller
     {
     	if(!Session::get('login'))
 	    {
-	    	return redirect('admin/login')->with('alert', 'Maaf Anda harus login terlebih dahulu!');
+	    	return redirect('/')->with('alert', 'Maaf Anda harus login terlebih dahulu!');
 	    }
-	    elseif(Session::get('role') != 'admin')
+	    elseif(Session::get('role') != 'admin' && Session::get('role') != 'saksi')
 	    {
-	    	return redirect('admin/login')->with('alert', 'Forbidden!');
+	    	return redirect('/')->with('alert', 'Forbidden!');
 	    }
 	    else
 	    {
@@ -33,7 +33,14 @@ class suaraController extends Controller
 	    	$partai = $data->getPartai();
 	    	$kec = $data->getKec(1);
 
-	    	return view('admin.suara.register', compact('dapil', 'partai', 'kec'));
+	    	if(Session::get('role') == 'admin')
+	    	{
+	    		return view('admin.suara.register', compact('dapil', 'partai', 'kec'));
+	    	}
+	    	else
+	    	{
+	    		return view('saksi.suara.register', compact('dapil', 'partai', 'kec'));
+	    	}
 	    }
     }
 
@@ -102,11 +109,11 @@ class suaraController extends Controller
     {
     	if(!Session::get('login'))
 	    {
-	    	return redirect('admin/login')->with('Anda harus login terlebih dahulu');
+	    	return redirect('/')->with('alert', 'Maaf Anda harus login terlebih dahulu!');
 	    }
-	    elseif(Session::get('role') != 'admin')
+	    elseif(Session::get('role') != 'admin' && Session::get('role') != 'saksi')
 	    {
-	    	return redirect('admin/login')->with('Forbidden');
+	    	return redirect('/')->with('alert', 'Forbidden!');
 	    }
 	    else
 	    {
@@ -117,15 +124,34 @@ class suaraController extends Controller
 	    }
     }
 
+    function getAllSuaraPartaiBySaksi($id_dapil, $id_partai, $id_tps, $id_saksi)
+    {
+    	if(!Session::get('login'))
+	    {
+	    	return redirect('/')->with('alert', 'Maaf Anda harus login terlebih dahulu!');
+	    }
+	    elseif(Session::get('role') != 'admin' && Session::get('role') != 'saksi')
+	    {
+	    	return redirect('/')->with('alert', 'Forbidden!');
+	    }
+	    else
+	    {
+	    	$req = new suaraModel();
+    		$req = $req->getAllSuaraPartaiBySaksi($id_dapil, $id_partai, $id_tps, $id_saksi);
+
+    		return $req;
+	    }
+    }
+
     function getAllSuaraPartaiByDapil($id_dapil, $id_partai)
     {
     	if(!Session::get('login'))
 	    {
-	    	return redirect('admin/login')->with('Anda harus login terlebih dahulu');
+	    	return redirect('/')->with('alert', 'Maaf Anda harus login terlebih dahulu!');
 	    }
-	    elseif(Session::get('role') != 'admin')
+	    elseif(Session::get('role') != 'admin' && Session::get('role') != 'saksi')
 	    {
-	    	return redirect('admin/login')->with('Forbidden');
+	    	return redirect('/')->with('alert', 'Forbidden!');
 	    }
 	    else
 	    {
@@ -140,11 +166,11 @@ class suaraController extends Controller
     {
     	if(!Session::get('login'))
 	    {
-	    	return redirect('admin/login')->with('Anda harus login terlebih dahulu');
+	    	return redirect('/')->with('alert', 'Maaf Anda harus login terlebih dahulu!');
 	    }
-	    elseif(Session::get('role') != 'admin')
+	    elseif(Session::get('role') != 'admin' && Session::get('role') != 'saksi')
 	    {
-	    	return redirect('admin/login')->with('Forbidden');
+	    	return redirect('/')->with('alert', 'Forbidden!');
 	    }
 	    else
 	    {
@@ -155,15 +181,34 @@ class suaraController extends Controller
 	    }
     }
 
+    function getAllSuaraCalegBySaksi($id_dapil, $id_partai, $id_tps, $id_saksi)
+    {
+    	if(!Session::get('login'))
+	    {
+	    	return redirect('/')->with('alert', 'Maaf Anda harus login terlebih dahulu!');
+	    }
+	    elseif(Session::get('role') != 'admin' && Session::get('role') != 'saksi')
+	    {
+	    	return redirect('/')->with('alert', 'Forbidden!');
+	    }
+	    else
+	    {
+	    	$req = new suaraModel();
+    		$req = $req->getAllSuaraCalegBySaksi($id_dapil, $id_partai, $id_tps, $id_saksi);
+
+    		return $req;
+	    }
+    }
+
     function getAllSuaraCalegByDapil($id_dapil, $id_partai)
     {
     	if(!Session::get('login'))
 	    {
-	    	return redirect('admin/login')->with('Anda harus login terlebih dahulu');
+	    	return redirect('/')->with('alert', 'Maaf Anda harus login terlebih dahulu!');
 	    }
-	    elseif(Session::get('role') != 'admin')
+	    elseif(Session::get('role') != 'admin' && Session::get('role') != 'saksi')
 	    {
-	    	return redirect('admin/login')->with('Forbidden');
+	    	return redirect('/')->with('alert', 'Forbidden!');
 	    }
 	    else
 	    {
@@ -178,11 +223,11 @@ class suaraController extends Controller
     {
 	    if(!Session::get('login'))
 	    {
-	    	return redirect('admin/login')->with('Anda harus login terlebih dahulu');
+	    	return redirect('/')->with('alert', 'Maaf Anda harus login terlebih dahulu!');
 	    }
-	    elseif(Session::get('role') != 'admin')
+	    elseif(Session::get('role') != 'admin' && Session::get('role') != 'saksi')
 	    {
-	    	return redirect('admin/login')->with('alert', 'Forbidden!');
+	    	return redirect('/')->with('alert', 'Forbidden!');
 	    }
 	    else
 	    {
@@ -265,11 +310,11 @@ class suaraController extends Controller
     {
 	    if(!Session::get('login'))
 	    {
-	    	return redirect('admin/login')->with('Anda harus login terlebih dahulu');
+	    	return redirect('/')->with('alert', 'Maaf Anda harus login terlebih dahulu!');
 	    }
-	    elseif(Session::get('role') != 'admin')
+	    elseif(Session::get('role') != 'admin' && Session::get('role') != 'saksi')
 	    {
-	    	return redirect('admin/login')->with('alert', 'Forbidden!');
+	    	return redirect('/')->with('alert', 'Forbidden!');
 	    }
 	    else
 	    {
@@ -278,7 +323,14 @@ class suaraController extends Controller
 	    	$partai = $data->getPartai();
 	    	$kec = $data->getKec(1);
 
-	    	return view('admin.suara.view', compact('dapil', 'partai', 'kec'));
+	    	if(Session::get('role') == 'admin')
+	    	{
+	    		return view('admin.suara.view', compact('dapil', 'partai', 'kec'));
+	    	}
+	    	else
+	    	{
+	    		return view('saksi.suara.view', compact('dapil', 'partai', 'kec'));
+	    	}
 	    }
     }
 
@@ -286,11 +338,11 @@ class suaraController extends Controller
     {
     	if(!Session::get('login'))
 	    {
-	    	return redirect('admin/login')->with('Anda harus login terlebih dahulu');
+	    	return redirect('/')->with('alert', 'Maaf Anda harus login terlebih dahulu!');
 	    }
-	    elseif(Session::get('role') != 'admin')
+	    elseif(Session::get('role') != 'admin' && Session::get('role') != 'saksi')
 	    {
-	    	return redirect('admin/login')->with('alert', 'Forbidden!');
+	    	return redirect('/')->with('alert', 'Forbidden!');
 	    }
 	    else
 	    {
@@ -354,7 +406,7 @@ class suaraController extends Controller
     {
     	if(!Session::get('login'))
 	    {
-	    	return redirect('admin/login')->with('Anda harus login terlebih dahulu');
+	    	return redirect('/')->with('Anda harus login terlebih dahulu');
 	    }
 	    elseif(Session::get('role') != 'admin')
 	    {
@@ -373,7 +425,7 @@ class suaraController extends Controller
     {
     	if(!Session::get('login'))
 	    {
-	    	return redirect('admin/login')->with('Anda harus login terlebih dahulu');
+	    	return redirect('/')->with('Anda harus login terlebih dahulu');
 	    }
 	    elseif(Session::get('role') != 'admin')
 	    {

@@ -15,15 +15,94 @@ use App\suaraModel;
 
 class saksiController extends Controller
 {
+    function index()
+    {
+        if(!Session::get('login'))
+        {
+            return redirect('saksi/login')->with('Anda harus login terlebih dahulu');
+        }
+        elseif(Session::get('role') != 'saksi')
+        {
+            return redirect('saksi/login')->with('alert', 'Forbidden!');
+        }
+        else
+        {
+            $data = new saksiModel();
+            $data = $data->getProfile(Session::get('username'), Session::get('id'));
+            $kecamatan = new dataModel();
+            return view('saksi.saksi.view', compact('data'));
+        }
+    }
+
+    function login()
+    {
+        if(!empty(Session::get('login')) && Session::get('role') == 'saksi')
+        {
+            $data = new saksiModel();
+            //$data = $data->getProfile(Session::get('username'));
+            return view('saksi.home.index', compact('data'));
+        }
+        else
+        {
+            return view('saksi.login.login');
+        }
+    }
+
+    function logout()
+    {
+        Session::flush();
+        return redirect('saksi/login')->with('alert','Anda berhasil logout');
+    }
+
+    function loginPost(Request $request)
+    {
+        $username = $request->username;
+        $password = $request->password;
+        if(!empty($username) && !empty($password))
+        {
+            $data = new saksiModel();
+            $data = $data->cekLogin($username);
+            
+            if(@count($data) > 0)
+            {
+                if(Hash::check($password, $data->pass))
+                {
+                    Session::put('username', $data->username);
+                    Session::put('id', $data->id);
+                    Session::put('id_kec', $data->id_kec);
+                    Session::put('id_kel', $data->id_kel);
+                    Session::put('id_tps', $data->id_tps);
+                    Session::put('id_dapil', $data->id_dapil);
+                    Session::put('login', true);
+                    Session::put('role', 'saksi');
+
+                    return redirect('saksi');
+                }
+                else
+                {
+                    return redirect('saksi/login')->with('alert', 'Maaf password yang Anda masukkan salah!');
+                }
+            }
+            else
+            {
+                return redirect('saksi/login')->with('alert', 'Maaf username yang Anda masukkan tidak terdaftar!');
+            }
+        }
+        else
+        {
+            return redirect('saksi/login')->with('alert', 'Maaf username/password harus diisi!');
+        }
+    }
+
     function registerSaksi()
     {
     	if(!Session::get('login'))
 	    {
-	    	return redirect('admin/login')->with('alert', 'Maaf Anda harus login terlebih dahulu!');
+	    	return redirect('/')->with('alert', 'Maaf Anda harus login terlebih dahulu!');
 	    }
 	    elseif(Session::get('role') != 'admin')
 	    {
-	    	return redirect('admin/login')->with('alert', 'Forbidden');
+	    	return redirect('/')->with('alert', 'Forbidden');
 	    }
 	    else
 	    {
@@ -262,11 +341,11 @@ class saksiController extends Controller
     {
     	if(!Session::get('login'))
 	    {
-	    	return redirect('admin/login')->with('Anda harus login terlebih dahulu');
+	    	return redirect('/')->with('Anda harus login terlebih dahulu');
 	    }
 	    elseif(Session::get('role') != 'admin')
 	    {
-	    	return redirect('admin/login')->with('alert', 'Forbidden!');
+	    	return redirect('/')->with('alert', 'Forbidden!');
 	    }
 	    else
 	    {
@@ -281,11 +360,11 @@ class saksiController extends Controller
     {
 	    if(!Session::get('login'))
 	    {
-	    	return redirect('admin/login')->with('Anda harus login terlebih dahulu');
+	    	return redirect('/')->with('Anda harus login terlebih dahulu');
 	    }
 	    elseif(Session::get('role') != 'admin')
 	    {
-	    	return redirect('admin/login')->with('alert', 'Forbidden!');
+	    	return redirect('/')->with('alert', 'Forbidden!');
 	    }
 	    else
 	    {
@@ -303,11 +382,11 @@ class saksiController extends Controller
     {
 	    if(!Session::get('login'))
 	    {
-	    	return redirect('admin/login')->with('Anda harus login terlebih dahulu');
+	    	return redirect('/')->with('Anda harus login terlebih dahulu');
 	    }
-	    elseif(Session::get('role') != 'admin')
+	    elseif(Session::get('role') != 'admin'  || Session::get('role') != 'saksi')
 	    {
-	    	return redirect('admin/login')->with('alert', 'Forbidden!');
+	    	return redirect('/')->with('alert', 'Forbidden!');
 	    }
 	    else
 	    {
@@ -318,15 +397,37 @@ class saksiController extends Controller
 	    }
     }
 
+    function editProfile()
+    {
+        if(!Session::get('login'))
+        {
+            return redirect('/')->with('Anda harus login terlebih dahulu');
+        }
+        elseif(Session::get('role') != 'saksi')
+        {
+            return redirect('/')->with('alert', 'Forbidden!');
+        }
+        else
+        {
+            $data = new saksiModel();
+            $data = $data->getProfile(Session::get('username'), Session::get('id'));
+            $kecamatan = new dataModel();
+            $kecs = $kecamatan->getKec(1);
+            $kels = $kecamatan->getKel($data->id_kec);
+            $tps = $kecamatan->getTps($data->id_kel);
+            return view('saksi.saksi.edit', compact('data', 'kecs', 'kels', 'tps'));
+        }
+    }
+
     function deleteSaksi($nik, $id_saksi)
     {
     	if(!Session::get('login'))
 	    {
-	    	return redirect('admin/login')->with('Anda harus login terlebih dahulu');
+	    	return redirect('/')->with('Anda harus login terlebih dahulu');
 	    }
-	    elseif(Session::get('role') != 'admin')
+	    elseif(Session::get('role') != 'admin' && Session::get('role') != 'saksi')
 	    {
-	    	return redirect('admin/login')->with('alert', 'Forbidden!');
+	    	return redirect('/')->with('alert', 'Forbidden!');
 	    }
 	    else
 	    {
