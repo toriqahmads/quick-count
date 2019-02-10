@@ -1,7 +1,7 @@
 @extends('admin.basedashboard')
 @section('content')
 <script src="{{ asset('js/upload.js') }}"></script>
-<script src="{{ asset('js/getreg.js')}}" type="text/javascript"></script>
+<script src="{{ asset('js/getregcaleg.js')}}" type="text/javascript"></script>
 <script type="text/javascript">
             function showNotification(from, align, msg, color){
     color = color
@@ -19,32 +19,6 @@
           }
       });
         };
-</script>
-<script type="text/javascript">
-  $("#tingkat").change(function()
-        {
-            var gender = $("#tingkat").val();
-            if(gender === '0' || gender === null || gender === undefined)
-            {
-                showNotification('top', 'right','Harap pilih tingkatan caleg!', 'danger');
-            }
-            else
-            {
-                return false;
-            }
-        });
-  $("#partai").change(function()
-        {
-            var gender = $("#partai").val();
-            if(gender === '0' || gender === null || gender === undefined)
-            {
-                showNotification('top', 'right','Harap pilih partai!', 'danger');
-            }
-            else
-            {
-                return false;
-            }
-        });
 </script>
 
 @if(\Session::has('alert'))
@@ -104,7 +78,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-3 pl-1">
+              <div class="col-md-4 pl-1">
                   <div class="form-group">
                     <label>Partai</label>
                     <select name="partai" id="partai" class="form-control">
@@ -117,7 +91,7 @@
                       </select>
                   </div>
               </div>
-              <div class="col-md-3 px-1">
+              <div class="col-md-4 px-1">
                   <div class="form-group">
                     <label>Tingkatan Caleg</label>
                     <select name="tingkat" id="tingkat" class="form-control">
@@ -131,7 +105,7 @@
                   </div>
               </div>
             
-              <div class="col-md-3 pr-1">
+              <div class="col-md-4 pr-1">
                   <div class="form-group">
                     <label for="exampleFormControlSelect1">Jenis Kelamin</label>
                     <select name="gender" id="gender" class="form-control">
@@ -140,22 +114,38 @@
                           <option value="p">Perempuan</option>
                     </select>
                   </div>
+              </div>              
+          </div>
+          <div class="row">
+            <div class="col-md-3 px-1 prov" hidden="true">
+              <div class="form-group">
+                  <label for="exampleFormControlSelect1">Provinsi</label>
+                  <select name="prov" id="prov" class="form-control">
+                  </select>
               </div>
-              <div class="col-md-3 pr-1">
-                  <div class="form-group">
-                    <label for="exampleFormControlSelect1">Pilih Dapil</label>
-                    <select name="dapil" id="dapil" class="form-control">
-                      <option value="0">Pilih Dapil</option>
-                          <option value="1">Dapil 1</option>
-                          <option value="2">Dapil 2</option>
-                          <option value="3">Dapil 3</option>
-                          <option value="4">Dapil 4</option>
-                          <option value="5">Dapil 5</option>
-                    </select>
-                  </div>
-                  *Untuk presiden dapil boleh dikosongkan
+            </div>
+            <div class="col-md-3 px-1 kab" hidden="true">
+              <div class="form-group">
+                  <label for="exampleFormControlSelect1">Kabupaten</label>
+                  <select name="kab" id="kab" class="form-control">
+                  </select>
               </div>
-              
+            </div>
+            <div class="col-md-3 px-1 kec" hidden="true">
+              <div class="form-group">
+                  <label for="exampleFormControlSelect1">Kecamatan</label>
+                  <select name="kec" id="kec" class="form-control">
+                  </select>
+              </div>
+            </div>
+            <div class="col-md-3 px-1 dapil" hidden="true">
+              <div class="form-group">
+                  <label for="exampleFormControlSelect1">Dapil</label>
+                  <select name="dapil" id="dapil" class="form-control">
+                    <option value="0" selected>Pilih dapil</option>
+                  </select>
+              </div>
+            </div>
           </div>
           <div class="row">
             <div class="col-md-6 pl-1">

@@ -18,9 +18,10 @@
             
           </p>
           <p class="description">
-              Dapil : {{ $data->id_dapil }}
+              Dapil : @foreach($dapil as $dap) @if($data->id_dapil == $dap->id){{$dap->dapil}}@endif @endforeach
           </p>
           <p class="description">
+            Tingkat :
             @if($data->tingkat == 'a')
               Presiden
             @elseif($data->tingkat == 'b')
@@ -32,6 +33,9 @@
             @else
               DPR Kabupaten
             @endif
+          </p>
+          <p class="description">
+            Partai : {{$data->partai}}
           </p>
         </div>
       </div>

@@ -57,7 +57,7 @@
                             DPR Kabupaten
                           @endif
                       </td>
-                      <td>{{ $data->id_dapil}}</td>
+                      <td>@foreach($dapil as $dap) @if($data->id_dapil == $dap->id){{$dap->dapil}}@endif @endforeach</td>
                       <td>
                         <form method="GET" action="{{ route('view.caleg', [$data->id]) }}" class="btn btn-info btn-sm btn-icon">
                           <button type="submit" rel="tooltip" title="Lihat" class="btn btn-info btn-sm btn-icon">

@@ -1,6 +1,6 @@
 @extends('admin.basedashboard')
 @section('content')
-<script src="{{ asset('js/getreg.js')}}" type="text/javascript"></script>
+<script src="{{ asset('js/getregcaleg.js')}}" type="text/javascript"></script>
 
 <script type="text/javascript">
             function showNotification(from, align, msg, color){
@@ -64,13 +64,13 @@
           <form class="form" method="post" action="{{ url('/caleg/updateCalegProfile') }}" enctype="multipart/form-data">
             {{ csrf_field() }}
             <div class="row">
-              <div class="col-md-6 pl-1">
+              <div class="col-md-6 px-1">
                 <div class="form-group">
                   <label>Nama Depan</label>
                   <input type="text" name="fname" class="form-control" placeholder="Nama Depan" value="{{ $data->nama_depan }}">
                 </div>
               </div>
-              <div class="col-md-6 pr-1">
+              <div class="col-md-6 px-1">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Nama Belakang</label>
                   <input type="text" name="lname" class="form-control" placeholder="Nama Belakang" value="{{ $data->nama_belakang }}">
@@ -78,107 +78,91 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-6 pl-1">
+              <div class="col-md-6 px-1">
                 <div class="form-group">
                   <label for="exampleFormControlSelect1">Jenis Kelamin</label>
                   <select name="gender" class="form-control" id="gender">
                     <option value="0">Pilih jenis kelamin</option>
-                    @if($data->gender == "l")
-                      {
-                        <option value="{{ $data->gender }}" selected>Laki-laki</option>
-                        <option value="p">Perempuan</option>
-                      }
-                      @else
-                      {
-                       	<option value="{{ $data->gender }}" selected>Perempuan</option>
-                        <option value="l">Laki-laki</option>
-                      }
-                      @endif
+                      <option value="l" <?php echo $data->gender == 'l' ? 'selected' : ''; ?>>Laki-laki</option>
+                       <option value="p" <?php echo $data->gender == 'p' ? 'selected' : ''; ?>>Perempuan</option>
                   </select>
                 </div>
               </div>
-
-              <div class="col-md-6 pr-1">
-                  <div class="form-group">
-                    <label for="exampleFormControlSelect1">Pilih Dapil</label>
-                    <select name="dapil" id="dapil" class="form-control">
-                      <option value="0">Pilih Dapil</option>
-                          <option value="1"<?php echo $data->id_dapil == 1 ? 'selected' : ''; ?>>Dapil 1</option>
-                          <option value="2"<?php echo $data->id_dapil == 2 ? 'selected' : ''; ?>>Dapil 2</option>
-                          <option value="3"<?php echo $data->id_dapil == 3 ? 'selected' : ''; ?>>Dapil 3</option>
-                          <option value="4"<?php echo $data->id_dapil == 4 ? 'selected' : ''; ?>>Dapil 4</option>
-                          <option value="5"<?php echo $data->id_dapil == 5 ? 'selected' : ''; ?>>Dapil 5</option>
-                    </select>
-                  </div>
-                  *Untuk presiden dapil boleh dikosongkan
-              </div>
-            </div>
-            <div class="row">
-
-            </div>
-            <div class="row">
-              <div class="col-md-6 pl-1">
+              <div class="col-md-6 px-1">
                 <div class="form-group">
                   <label for="exampleFormControlSelect1">Partai</label>
                   <select name="partai" class="form-control" id="partai">
                     <option value="0">Partai</option>
                     @foreach($partais as $partai)
-                    {
-                      @if($partai->id != $data->id_partai)
-                      {
-                        <option value="{{ $partai->id }}">{{ $partai->partai }}</option>
-                      }
-                      @else
-                      {
-                        <option value="{{ $partai->id }}" selected>{{ $partai->partai }}</option>
-                      }
-                      @endif
-                    }
+                        <option value="{{ $partai->id }}" <?php echo $data->id_partai == $partai->id ? 'selected' : ''; ?>>{{ $partai->partai }}</option>
                     @endforeach
                   </select>
                 </div>
               </div>
-              <div class="col-md-6 pl-1">
+            </div>
+            <div class="row">
+              <div class="col-md-6 px-1">
                 <div class="form-group">
                   <label for="exampleFormControlSelect1">Tingkatan</label>
                   <select name="tingkat" class="form-control" id="tingkat">
                     <option value="0">Tingkatan</option>
-                        @if($data->tingkat == 'a')
-                        <option value="a" selected>Presiden</option>
-                        <option value="b">DPD</option>
-                        <option value="c">DPR RI</option>
-                        <option value="d">DPR Provinsi</option>
-                        <option value="e">DPR Kabupaten</option>
-                          @elseif($data->tingkat == 'b')
-                        <option value="a">Presiden</option>
-                        <option value="b" selected>DPD</option>
-                        <option value="c">DPR RI</option>
-                        <option value="d">DPR Provinsi</option>
-                        <option value="e">DPR Kabupaten</option>
-                          @elseif($data->tingkat == 'c')
-                        <option value="a">Presiden</option>
-                        <option value="b">DPD</option>
-                        <option value="c" selected>DPR RI</option>
-                        <option value="d">DPR Provinsi</option>
-                        <option value="e">DPR Kabupaten</option>
-                          @elseif($data->tingkat == 'd')
-                        <option value="a">Presiden</option>
-                        <option value="b">DPD</option>
-                        <option value="c">DPR RI</option>
-                        <option value="d" selected>DPR Provinsi</option>
-                        <option value="e">DPR Kabupaten</option>
-                          @else
-                        <option value="a">Presiden</option>
-                        <option value="b">DPD</option>
-                        <option value="c">DPR RI</option>
-                        <option value="d">DPR Provinsi</option>
-                        <option value="e" selected>DPR Kabupaten</option>
-                          @endif
+                        <option value="a" <?php echo $data->tingkat == 'a' ? 'selected' : ''; ?>>Presiden</option>
+                        <option value="b" <?php echo $data->tingkat == 'b' ? 'selected' : ''; ?>>DPD</option>
+                        <option value="c" <?php echo $data->tingkat == 'c' ? 'selected' : ''; ?>>DPR RI</option>
+                        <option value="d" <?php echo $data->tingkat == 'd' ? 'selected' : ''; ?>>DPR Provinsi</option>
+                        <option value="e" <?php echo $data->tingkat == 'e' ? 'selected' : ''; ?>>DPR Kabupaten</option>
                     </select>
                 </div>
               </div>
-              
             </div>
+            <div class="row">
+              @if(isset($data->id_prov))
+              <div class="col-md-3 px-1 prov">
+              <div class="form-group">
+                  <label for="exampleFormControlSelect1">Provinsi</label>
+                  <select name="prov" id="prov" class="form-control">
+                    <option value="0">Pilih provinsi</option>
+                    @foreach($provinsi as $province)
+                      <option value="{{$province->id}}" <?php echo $data->id_prov == $province->id ? 'selected' : ''; ?>>{{$province->prov}}</option>
+                    @endforeach
+                  </select>
+              </div>
+            </div>
+            @endif
+            @if(isset($data->id_kab))
+            <div class="col-md-3 px-1 kab">
+              <div class="form-group">
+                  <label for="exampleFormControlSelect1">Kabupaten</label>
+                  <select name="kab" id="kab" class="form-control">
+                    <option value="0">Pilih kabupaten</option>
+                    @foreach($kab as $kabupaten)
+                      <option value="{{$kabupaten->id}}" <?php echo $data->id_kab == $kabupaten->id ? 'selected' : ''; ?>>{{$kabupaten->kab}}</option>
+                    @endforeach
+                  </select>
+              </div>
+            </div>
+            @endif
+            <div class="col-md-3 px-1 kec" hidden="true">
+              <div class="form-group">
+                  <label for="exampleFormControlSelect1">Kecamatan</label>
+                  <select name="kec" id="kec" class="form-control">
+                  </select>
+              </div>
+            </div>
+            @if(isset($data->id_dapil))
+            <div class="col-md-3 px-1 dapil">
+                  <div class="form-group">
+                    <label for="exampleFormControlSelect1">Pilih Dapil</label>
+                    <select name="dapil" id="dapil" class="form-control">
+                      <option value="0">Pilih Dapil</option>
+                      @foreach($dapil as $dap)
+                          <option value="{{ $dap->id }}" <?php echo $data->id_dapil == $dap->id ? 'selected' : ''; ?>>{{ $dap->dapil }}</option>
+                      @endforeach
+                    </select>
+                  </div>
+              </div>
+            @endif
+          </div>
             <input type="hidden" name="id" value="{{ $data->id }}">
             <input type="hidden" name="foto" value="{{ $data->foto }}">
             <div class="row">
@@ -221,7 +205,24 @@
             </a>
           </div>
           <p class="description">
-              Dapil : {{ $data->id_dapil }}
+              Dapil : @foreach($dapil as $dap) @if($data->id_dapil == $dap->id){{$dap->dapil}}@endif @endforeach
+          </p>
+          <p class="description">
+            Tingkat :
+            @if($data->tingkat == 'a')
+              Presiden
+            @elseif($data->tingkat == 'b')
+              DPD
+            @elseif($data->tingkat == 'c')
+              DPR RI
+            @elseif($data->tingkat == 'd')
+              DPR Provinsi
+            @else
+              DPR Kabupaten
+            @endif
+          </p>
+          <p class="description">
+            Partai : {{$data->partai}}
           </p>
         </div>
       </div>

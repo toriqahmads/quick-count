@@ -22,6 +22,21 @@ class dataModel extends Model
     	return $data;
     }
 
+    function getAllKab()
+    {
+        $data = DB::table('kab')
+                ->get();
+        return $data;
+    }
+
+    function getKabById($id)
+    {
+        $data = DB::table('kab')
+                ->where('kab.id', $id)
+                ->get();
+        return $data;
+    }
+
     function getKec($id_kab)
     {
     	$data = DB::table('kec')
@@ -29,9 +44,18 @@ class dataModel extends Model
                 ->join('prov', 'prov.id', '=', 'kec.id_prov')
                 ->join('dapil', 'dapil.id', '=', 'kec.id_dapil')
                 ->select('kec.id as id_kec', 'kec.kec', 'kab.id as id_kab', 'kab.kab', 'prov.id as id_prov', 'prov.prov', 'dapil.id as id_dapil')
-    			->where('id_kab', $id_kab)
+    			->where('kec.id_kab', $id_kab)
     			->get();
     	return $data;
+    }
+
+    function getKecById($id)
+    {
+        $data = DB::table('kec')
+                ->where('kec.id', $id)
+                ->select('kec.*')
+                ->get();
+        return $data;
     }
 
     function getKel($id_kec)
@@ -60,9 +84,30 @@ class dataModel extends Model
         return $data;
     }
 
-    function getDapil()
+    function getAllDapil()
     {
         $data = DB::table('dapil')
+                ->get();
+        return $data;
+    }
+
+    function getDapilByProv($prov, $jenis)
+    {
+        $data = DB::table('dapil')
+                ->select('dapil.*')
+                ->where('dapil.id_prov', $prov)
+                ->where('dapil.jenis', $jenis)
+                ->get();
+        return $data;
+    }
+
+    function getDapilByKab($prov, $kab, $jenis)
+    {
+        $data = DB::table('dapil')
+                ->select('dapil.*')
+                ->where('dapil.id_prov', $prov)
+                ->where('dapil.id_kab', $kab)
+                ->where('dapil.jenis', $jenis)
                 ->get();
         return $data;
     }

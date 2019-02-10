@@ -6,6 +6,22 @@ use Illuminate\Http\Request;
 use App\dataModel;
 class dataController extends Controller
 {
+    function getProv()
+    {
+        $data = new dataModel();
+        $data = $data->getProv();
+
+        return $data;
+    }
+
+    function getAllKab()
+    {
+        $data = new dataModel();
+        $data = $data->getALlKab();
+
+        return $data;
+    }
+
 	function getKab($id_prov)
 	{
 		$data = new dataModel();
@@ -14,6 +30,14 @@ class dataController extends Controller
 	    return $data;
 	}
 
+    function getKabById($id)
+    {
+        $data = new dataModel();
+        $data = $data->getKabById($id);
+
+        return $data;
+    }
+
 	function getKec($id_kab)
 	{
 		$data = new dataModel();
@@ -21,6 +45,14 @@ class dataController extends Controller
 
 	    return $data;
 	}
+
+    function getKecById($id)
+    {
+        $data = new dataModel();
+        $data = $data->getKecById($id);
+
+        return $data;
+    }
 
     function getKel($id_kec)
     {
@@ -38,12 +70,28 @@ class dataController extends Controller
 	    return $data;
     }
 
-    function getDapil()
+    function getAllDapil()
     {
     	$data = new dataModel();
-    	$data = $data->getDapil();
+    	$data = $data->getAllDapil();
 
     	return $data;
+    }
+
+    function getDapilByProv($prov, $jenis)
+    {
+        $data = new dataModel();
+        $data = $data->getDapilByProv($prov, $jenis);
+
+        return $data;
+    }
+
+    function getDapilByKab($prov, $kab, $jenis)
+    {
+        $data = new dataModel();
+        $data = $data->getDapilByKab($prov, $kab, $jenis);
+
+        return $data;
     }
 
     function getPartai()

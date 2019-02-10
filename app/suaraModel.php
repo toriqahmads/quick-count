@@ -13,9 +13,10 @@ class suaraModel extends Model
     	$id_saksi = $data['saksi'];
     	$id_tps = $data['tps'];
     	$jenis = $data['jenis'];
+        $tingkat = $data['tingkat']
     	$id_partai = $data['partai'];
 
-    	$req = DB::select('CALL input_suara(?, ?, ?, ?, ?, ?)', array($suara, $id_caleg, $id_saksi, $id_tps, $jenis, $id_partai));
+    	$req = DB::select('CALL input_suara(?, ?, ?, ?, ?, ?, ?, ?)', array($suara, $id_caleg, $id_saksi, $id_tps, $jenis, $id_partai, $tingkat));
 
     	return $req;
     }
@@ -176,8 +177,9 @@ class suaraModel extends Model
         $id_tps = $data['tps'];
         $jenis = $data['jenis'];
         $id_partai = $data['partai'];
+        $tingkat = $data['tingkat'];
 
-        $req = DB::select('CALL update_suara(?, ?, ?, ?, ?, ?, ?)', array($id, $suara, $id_caleg, $id_saksi, $id_tps, $jenis, $id_partai));
+        $req = DB::select('CALL update_suara(?, ?, ?, ?, ?, ?, ?, ?)', array($id, $suara, $id_caleg, $id_saksi, $id_tps, $jenis, $id_partai, $tingkat));
 
         return $req;
     }

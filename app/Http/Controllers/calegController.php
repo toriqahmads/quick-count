@@ -28,9 +28,8 @@ class calegController extends Controller
 	    else
 	    {
 	    	$data = new dataModel();
-	    	$kec = $data->getKec(1);
 	    	$partai = $data->getPartai();
-	    	return view('admin.caleg.register', compact('kec', 'partai'));
+	    	return view('admin.caleg.register', compact('partai'));
 	    }
     }
 
@@ -42,8 +41,7 @@ class calegController extends Controller
             'gender' => 'required|min:1|max:1',
             'partai' => 'required|min:1|max:2',
             'tingkat' => 'required|min:1|max:1',
-            'dapil' => 'required|min:1',
-            'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'foto' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ],[
             'fname.required'=>'Nama depan tidak boleh kosong!',
             'fname.min'=>'Maaf Nama depan minimal 4 karakter!',
@@ -58,19 +56,53 @@ class calegController extends Controller
             'tingkat.required' => 'Tingkat harus diisi!',
             'tingkat.max' => 'Tingkat maximal 1 karakter!',
             'tingkat.max' => 'Tingkat minimal 1 karakter!',
-            'dapil.required' => 'Dapil tidak boleh kosong',
         ]);
-        $image = $request->file('foto');
-        $foto = time().'.'.$image->getClientOriginalExtension();
-        $image->move(public_path('img/caleg'), $foto);
+        
+        if($request->hasFile('foto'))
+        {
+        	$image = $request->file('foto');
+	        $foto = time().'.'.$image->getClientOriginalExtension();
+	        $image->move(public_path('img/caleg'), $foto);
+        }
+        else
+        {
+        	$foto = "default_avatar.jpg";
+        }
+        
+        if($request->tingkat == 'a')
+        {
+        	$prov = null;
+        	$kab = null;
+        	$dapil = null;
+        }
+        elseif($request->tingkat == 'b')
+        {
+        	$prov = $request->prov;
+        	$kab = null;
+        	$dapil = null;
+        }
+        elseif($request->tingkat == 'c' || $request->tingkat == 'd')
+        {
+        	$prov = $request->prov;
+        	$kab = null;
+        	$dapil = $request->dapil;
+        }
+        else
+        {
+        	$prov = $request->prov;
+        	$kab = $request->kab;
+        	$dapil = $request->dapil;
+        }
 
         $data = ['fname' => $request->fname,
                 'lname' => $request->lname,
                 'gender' => $request->gender,
                 'partai' => $request->partai,
-                'dapil' => $request->dapil,
+                'dapil' => $dapil,
             	'tingkat' => $request->tingkat,
-            	'foto' => $foto
+            	'foto' => $foto,
+            	'prov' => $prov,
+            	'kab' => $kab
             	];
 
         $req = new calegModel();
@@ -99,9 +131,11 @@ class calegController extends Controller
 	    else
 	    {
 	    	$req = new calegModel();
+	    	$dataModel = new dataModel();
     		$req = $req->getAllCaleg();
+    		$dapil = $dataModel->getAllDapil();
 
-    		return view('admin.caleg.userlist', compact('req'));
+    		return view('admin.caleg.userlist', compact('req', 'dapil'));
 	    }
     }
 
@@ -119,8 +153,9 @@ class calegController extends Controller
 	    {
 	    	$data = new calegModel();
 	    	$data = $data->getProfile($id_caleg);
-	    	$kecamatan = new dataModel();
-	    	return view('admin.caleg.view', compact('data'));
+	    	$dataModel = new dataModel();
+	    	$dapil = $dataModel->getAllDapil();
+	    	return view('admin.caleg.view', compact('data', 'dapil'));
 	    }
     }
 
@@ -168,99 +203,91 @@ class calegController extends Controller
 	    {
 	    	$data = new calegModel();
 	    	$data = $data->getProfile($id_caleg);
-	    	$kecamatan = new dataModel();
-	    	$partais = $kecamatan->getPartai();
-	    	return view('admin.caleg.edit', compact('data', 'partais'));
+	    	$dataModel = new dataModel();
+	    	$partais = $dataModel->getPartai();
+	    	$dapil = $dataModel->getAllDapil();
+	    	$provinsi = $dataModel->getProv();
+	    	$kab = $dataModel->getAllKab();
+	    	return view('admin.caleg.edit')->with(compact('data', 'dapil', 'partais', 'provinsi', 'kab'));
 	    }
     }
 
     function updateCalegProfile(Request $request)
     {
-    	$data = [];
-    	if($request->hasFile('fotos'))
-    	{
-    		$this->validate($request, [
-    		'id' => 'required|min:1|max:2',
-    		'id.required' => 'ID caleg harus diisi!',
-	        'id.max' => 'ID caleg maximal 2 karakter!',
-	        'id.min' => 'ID caleg minimal 1 karakter!',
-            'fname' => 'required|min:4|max:15',
-            'lname' => 'required|min:4|max:15',
-            'gender' => 'required|min:1|max:1',
-            'partai' => 'required|min:1|max:2',
-            'tingkat' => 'required|min:1|max:1',
-            'dapil' => 'required|min:1|max:2',
-            'fotos' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
-	        ],[
-	            'fname.required'=>'Nama depan tidak boleh kosong!',
-	            'fname.min'=>'Maaf Nama depan minimal 4 karakter!',
-	            'fname.max'=>'Maaf Nama depan maximal 15 karakter!',
-	            'lname.required'=>'Nama belakang tidak boleh kosong!',
-	            'lname.max'=>'Nama maximal 15 karakter!',
-	            'lname.min'=>' Nama belakang minimal 4 karakter!',
-	            'gender.required' => 'Jenis Kelamin tidak boleh kosong!',
-	            'partai.required' => 'Partai harus diisi!',
-	            'partai.max' => 'Partai maximal 1 karakter!',
-	            'partai.max' => 'Partai minimal 1 karakter!',
-	            'tingkat.required' => 'Tingkat harus diisi!',
-	            'tingkat.max' => 'Tingkat maximal 1 karakter!',
-	            'tingkat.max' => 'Tingkat minimal 1 karakter!',
-	            'dapil.required' => 'Dapil tidak boleh kosong',
-	        ]);
-	        $image = $request->file('fotos');
+		$this->validate($request, [
+		'id' => 'required|min:1|max:2',
+		'id.required' => 'ID caleg harus diisi!',
+        'id.max' => 'ID caleg maximal 2 karakter!',
+        'id.min' => 'ID caleg minimal 1 karakter!',
+        'fname' => 'required|min:4|max:15',
+        'lname' => 'required|min:4|max:15',
+        'gender' => 'required|min:1|max:1',
+        'partai' => 'required|min:1|max:2',
+        'tingkat' => 'required|min:1|max:1',
+        'dapil' => 'min:1|max:2',
+        'fotos' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        ],[
+            'fname.required'=>'Nama depan tidak boleh kosong!',
+            'fname.min'=>'Maaf Nama depan minimal 4 karakter!',
+            'fname.max'=>'Maaf Nama depan maximal 15 karakter!',
+            'lname.required'=>'Nama belakang tidak boleh kosong!',
+            'lname.max'=>'Nama maximal 15 karakter!',
+            'lname.min'=>' Nama belakang minimal 4 karakter!',
+            'gender.required' => 'Jenis Kelamin tidak boleh kosong!',
+            'partai.required' => 'Partai harus diisi!',
+            'partai.max' => 'Partai maximal 1 karakter!',
+            'partai.max' => 'Partai minimal 1 karakter!',
+            'tingkat.required' => 'Tingkat harus diisi!',
+            'tingkat.max' => 'Tingkat maximal 1 karakter!',
+            'tingkat.max' => 'Tingkat minimal 1 karakter!',
+        ]);
+        if($request->hasFile('fotos'))
+        {
+        	$image = $request->file('fotos');
 	        $foto = time().'.'.$image->getClientOriginalExtension();
 	        $image->move(public_path('img/caleg'), $foto);
+        }
+        else
+        {
+        	$foto = "default_avatar.jpg";
+        }
+        
+        if($request->tingkat == 'a')
+        {
+        	$prov = null;
+        	$kab = null;
+        	$dapil = null;
+        }
+        elseif($request->tingkat == 'b')
+        {
+        	$prov = $request->prov;
+        	$kab = null;
+        	$dapil = null;
+        }
+        elseif($request->tingkat == 'c' || $request->tingkat == 'd')
+        {
+        	$prov = $request->prov;
+        	$kab = null;
+        	$dapil = $request->dapil;
+        }
+        else
+        {
+        	$prov = $request->prov;
+        	$kab = $request->kab;
+        	$dapil = $request->dapil;
+        }
 
-	        $data = ['id' => $request->id,
-	        		'fname' => $request->fname,
-	                'lname' => $request->lname,
-	                'gender' => $request->gender,
-	                'partai' => $request->partai,
-	                'dapil' => $request->dapil,
-	            	'tingkat' => $request->tingkat,
-	            	'foto' => $foto
-	            	];
-    	}
-    	else
-    	{
-    		$this->validate($request, [
-        	'id' => 'required|min:1|max:2',
-            'fname' => 'required|min:4|max:15',
-            'lname' => 'required|min:4|max:15',
-            'gender' => 'required|min:1|max:1',
-            'partai' => 'required|min:1|max:1',
-            'tingkat' => 'required|min:1|max:1',
-            'dapil' => 'required|min:1|max:2',
-            'foto' => 'required'
-	        ],[
-	        	'id.required' => 'ID caleg harus diisi!',
-	            'id.max' => 'ID caleg maximal 2 karakter!',
-	            'id.min' => 'ID caleg minimal 1 karakter!',
-	            'fname.required'=>'Nama depan tidak boleh kosong!',
-	            'fname.min'=>'Maaf Nama depan minimal 4 karakter!',
-	            'fname.max'=>'Maaf Nama depan maximal 15 karakter!',
-	            'lname.required'=>'Nama belakang tidak boleh kosong!',
-	            'lname.max'=>'Nama maximal 15 karakter!',
-	            'lname.min'=>' Nama belakang minimal 4 karakter!',
-	            'gender.required' => 'Jenis Kelamin tidak boleh kosong!',
-	            'partai.required' => 'Partai harus diisi!',
-	            'partai.max' => 'Partai maximal 1 karakter!',
-	            'partai.min' => 'Partai minimal 1 karakter!',
-	            'tingkat.required' => 'Tingkat harus diisi!',
-	            'tingkat.max' => 'Tingkat maximal 1 karakter!',
-	            'tingkat.min' => 'Tingkat minimal 1 karakter!',
-	            'dapil.required' => 'Dapil tidak boleh kosong',
-	        ]);
-
-	        $data = ['id' => $request->id,
-	        		'fname' => $request->fname,
-	                'lname' => $request->lname,
-	                'gender' => $request->gender,
-	                'partai' => $request->partai,
-	                'dapil' => $request->dapil,
-	            	'tingkat' => $request->tingkat,
-	            	'foto' => $request->foto];
-    	}
+        $data = ['id' => $request->id,
+        		'fname' => $request->fname,
+                'lname' => $request->lname,
+                'gender' => $request->gender,
+                'partai' => $request->partai,
+                'dapil' => $dapil,
+            	'tingkat' => $request->tingkat,
+            	'foto' => $foto,
+            	'prov' => $prov,
+            	'kab' => $kab
+            	];
 
         $req = new calegModel();
         $req = $req->updateProfile($data);

@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.1
+-- version 4.6.6deb5
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Oct 27, 2018 at 12:28 PM
--- Server version: 10.1.33-MariaDB
--- PHP Version: 7.1.18
+-- Host: localhost:3306
+-- Generation Time: Feb 11, 2019 at 02:10 AM
+-- Server version: 5.7.22-0ubuntu18.04.1
+-- PHP Version: 7.2.7-0ubuntu0.18.04.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -198,7 +196,7 @@ END IF;
 SELECT msg;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `input_data_pil` (IN `fname` VARCHAR(15), IN `lname` VARCHAR(15), IN `partai` INT(2), IN `dapil` INT(2), IN `tingkat` ENUM('a','b','c','d','e'), IN `gender` CHAR(1), IN `foto` VARCHAR(255))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `input_data_pil` (IN `fname` VARCHAR(15), IN `lname` VARCHAR(15), IN `partai` INT(2), IN `dapil` INT(2), IN `tingkat` ENUM('a','b','c','d','e'), IN `gender` CHAR(1), IN `foto` VARCHAR(255), IN `prov` INT(2), IN `kab` INT(3))  BEGIN
 
 DECLARE code CHAR(5) DEFAULT '00000';
 DECLARE msg TEXT;
@@ -213,7 +211,7 @@ END;
 
 START TRANSACTION;
 
-INSERT INTO pil(nama_depan, nama_belakang, gender, tingkat, id_partai, id_dapil, foto) VALUES (fname, lname, gender, tingkat, partai, dapil, foto);
+INSERT INTO pil(nama_depan, nama_belakang, gender, tingkat, id_prov, id_kab, id_partai, id_dapil, foto) VALUES (fname, lname, gender, tingkat, prov, kab, partai, dapil, foto);
 
 IF code != '00000' OR rb = 1 THEN
   ROLLBACK;
@@ -313,7 +311,7 @@ END IF;
 SELECT msg;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `input_suara` (IN `j_suara` INT(7), IN `caleg` INT(2), IN `saksi` INT(3), IN `tps` INT(3), IN `tipe` ENUM('p','c'), IN `partai` INT(3))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `input_suara` (IN `j_suara` INT(7), IN `caleg` INT(2), IN `saksi` INT(3), IN `tps` INT(3), IN `tipe` ENUM('p','c'), IN `partai` INT(3), IN `tingkat` ENUM('a','b','c','d','e'))  BEGIN
 
 DECLARE code CHAR(5) DEFAULT '00000';
 DECLARE msg TEXT;
@@ -330,7 +328,7 @@ END;
 START TRANSACTION;
 SET jml := (SELECT COUNT(*) FROM saksi WHERE id = saksi AND status = 'l');
 
-INSERT INTO suara (suara, id_caleg, id_saksi, tanggal, updated, id_tps, id_partai, jenis_suara) VALUES (j_suara, caleg, saksi, NOW(), NOW(), tps, partai, tipe);
+INSERT INTO suara (suara, id_caleg, id_saksi, tanggal, updated, id_tps, id_partai, jenis_suara, tingkat_suara) VALUES (j_suara, caleg, saksi, NOW(), NOW(), tps, partai, tipe, tingkat);
 
 IF code != '00000' OR rb = 1 THEN
   ROLLBACK;
@@ -367,7 +365,7 @@ END IF;
 SELECT msg;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `update_data_pil` (IN `ids` INT(2), IN `fname` VARCHAR(15), IN `lname` VARCHAR(15), IN `partai` INT(2), IN `dapil` INT(2), IN `tingkat` ENUM('a','b','c','d','e'), IN `gender` CHAR(1), IN `foto` VARCHAR(255))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_data_pil` (IN `ids` INT(2), IN `fname` VARCHAR(15), IN `lname` VARCHAR(15), IN `partai` INT(2), IN `dapil` INT(2), IN `tingkat` ENUM('a','b','c','d','e'), IN `gender` CHAR(1), IN `foto` VARCHAR(255), IN `prov` INT(2), IN `kab` INT(3))  BEGIN
 
 DECLARE code CHAR(5) DEFAULT '00000';
 DECLARE msg TEXT;
@@ -386,7 +384,7 @@ START TRANSACTION;
 SET jml := (SELECT COUNT(*) FROM pil WHERE id = ids);
 
 IF jml>0 THEN
-UPDATE pil SET nama_depan = fname, nama_belakang = lname, id_partai = partai, id_dapil = dapil, tingkat = tingkat, gender = gender, foto = foto WHERE id = ids;
+UPDATE pil SET nama_depan = fname, nama_belakang = lname, id_partai = partai, id_dapil = dapil, tingkat = tingkat, gender = gender, foto = foto, id_prov = prov, id_kab = kab WHERE id = ids;
 
 IF code != '00000' OR rb = 1 THEN
   ROLLBACK;
@@ -502,7 +500,7 @@ SELECT msg;
 
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `update_suara` (IN `ids` INT(2), IN `j_suara` INT(7), IN `caleg` INT(2), IN `saksi` INT(3), IN `tps` INT(2), IN `tipe` ENUM('p','c'), IN `partai` INT(3))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_suara` (IN `ids` INT(2), IN `j_suara` INT(7), IN `caleg` INT(2), IN `saksi` INT(3), IN `tps` INT(2), IN `tipe` ENUM('p','c'), IN `partai` INT(3), IN `tingkat` ENUM('a','b','c','d','e'))  BEGIN
 
 DECLARE code CHAR(5) DEFAULT '00000';
 DECLARE msg TEXT;
@@ -521,7 +519,7 @@ START TRANSACTION;
 SET jml := (SELECT COUNT(*) FROM suara WHERE id = ids AND status = 'l');
 
 IF jml>0 THEN
-UPDATE suara SET suara = j_suara, id_caleg = caleg, id_saksi = saksi, id_tps = tps, updated = NOW(), jenis_suara = tipe, id_partai = partai WHERE id = ids;
+UPDATE suara SET suara = j_suara, id_caleg = caleg, id_saksi = saksi, id_tps = tps, updated = NOW(), jenis_suara = tipe, id_partai = partai, tingkat_suara = tingkat WHERE id = ids;
 
 IF code != '00000' OR rb = 1 THEN
   ROLLBACK;
@@ -598,21 +596,27 @@ INSERT INTO `admin` (`id`, `username`, `pass`) VALUES
 --
 
 CREATE TABLE `dapil` (
-  `id` int(2) NOT NULL,
+  `id` int(11) NOT NULL,
+  `dapil` int(3) NOT NULL,
+  `id_prov` int(2) DEFAULT NULL,
+  `id_kab` int(3) DEFAULT NULL,
   `kursi` int(2) DEFAULT NULL,
-  `DPT` int(6) DEFAULT NULL
+  `DPT` int(6) DEFAULT NULL,
+  `jenis` enum('a','b','c','d','e') NOT NULL COMMENT 'a=pres. b = dpd. c = dprri. d = dpr prov. e = dpr kab'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `dapil`
 --
 
-INSERT INTO `dapil` (`id`, `kursi`, `DPT`) VALUES
-(1, 12, 278333),
-(2, 8, 183939),
-(3, 8, 176297),
-(4, 11, 236374),
-(5, 11, 241400);
+INSERT INTO `dapil` (`id`, `dapil`, `id_prov`, `id_kab`, `kursi`, `DPT`, `jenis`) VALUES
+(1, 1, 1, 1, 12, 278333, 'e'),
+(2, 2, 1, 1, 8, 183939, 'e'),
+(3, 3, 1, 1, 8, 176297, 'e'),
+(4, 4, 1, 1, 11, 236374, 'e'),
+(5, 5, 1, 1, 11, 241400, 'e'),
+(6, 1, 1, NULL, 112, NULL, 'c'),
+(7, 1, 1, NULL, 1245, NULL, 'd');
 
 -- --------------------------------------------------------
 
@@ -623,15 +627,16 @@ INSERT INTO `dapil` (`id`, `kursi`, `DPT`) VALUES
 CREATE TABLE `kab` (
   `id` int(2) NOT NULL,
   `kab` varchar(25) DEFAULT NULL,
-  `id_prov` int(2) DEFAULT NULL
+  `id_prov` int(2) DEFAULT NULL,
+  `id_dapil` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `kab`
 --
 
-INSERT INTO `kab` (`id`, `kab`, `id_prov`) VALUES
-(1, 'Demak', 1);
+INSERT INTO `kab` (`id`, `kab`, `id_prov`, `id_dapil`) VALUES
+(1, 'Demak', 1, 7);
 
 -- --------------------------------------------------------
 
@@ -945,6 +950,7 @@ INSERT INTO `kel` (`id`, `kel`, `pos`, `id_kec`, `id_kab`, `id_prov`) VALUES
 CREATE TABLE `partai` (
   `id` int(2) NOT NULL,
   `partai` varchar(15) DEFAULT NULL,
+  `no_urut` int(3) NOT NULL,
   `foto` varchar(255) NOT NULL DEFAULT 'demak.png'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -952,9 +958,9 @@ CREATE TABLE `partai` (
 -- Dumping data for table `partai`
 --
 
-INSERT INTO `partai` (`id`, `partai`, `foto`) VALUES
-(1, 'Demokrat', 'demak.png'),
-(2, 'Golongan Karya', '1534913498.jpg');
+INSERT INTO `partai` (`id`, `partai`, `no_urut`, `foto`) VALUES
+(1, 'Demokrat', 1, 'demak.png'),
+(2, 'Golongan Karya', 1, '1534913498.jpg');
 
 -- --------------------------------------------------------
 
@@ -969,6 +975,8 @@ CREATE TABLE `pil` (
   `gender` char(1) NOT NULL,
   `foto` varchar(255) NOT NULL DEFAULT 'default_avatar.jpg',
   `tingkat` enum('a','b','c','d','e') NOT NULL COMMENT 'a = presiden. b = dpd. c = dppri. d = dpr prov. e = dpr kab',
+  `id_prov` int(2) DEFAULT NULL,
+  `id_kab` int(3) DEFAULT NULL,
   `id_partai` int(2) DEFAULT NULL,
   `id_dapil` int(2) DEFAULT NULL,
   `status` char(1) NOT NULL DEFAULT 'l' COMMENT '''l'' untuk data masih digunakan, ''d'' untuk data sudah dihapus'
@@ -978,8 +986,16 @@ CREATE TABLE `pil` (
 -- Dumping data for table `pil`
 --
 
-INSERT INTO `pil` (`id`, `nama_depan`, `nama_belakang`, `gender`, `foto`, `tingkat`, `id_partai`, `id_dapil`, `status`) VALUES
-(1, 'Misbahul', 'Munir S.E, M.Pd', 'l', '1540635564.png', 'e', 1, 1, 'l');
+INSERT INTO `pil` (`id`, `nama_depan`, `nama_belakang`, `gender`, `foto`, `tingkat`, `id_prov`, `id_kab`, `id_partai`, `id_dapil`, `status`) VALUES
+(1, 'Misbahul', 'Munir S.E, M.Pd', 'l', 'default_avatar.jpg', 'c', 1, NULL, 1, 6, 'l'),
+(2, 'Irham', 'Najib', 'l', '1549203514.png', 'e', 1, 1, 2, 1, 'd'),
+(3, 'Aninda', 'Ariani', 'p', '1549283581.png', 'e', 1, 1, 2, 1, 'l'),
+(4, 'Bulma', 'Majid', 'l', '1549312669.jpg', 'e', 1, 1, 2, 2, 'l'),
+(5, 'Amirul', 'Darmawan', 'l', 'default_avatar.jpg', 'e', 1, 1, 1, 1, 'l'),
+(8, 'Irham', 'Maulana', 'l', 'default_avatar.jpg', 'd', 1, NULL, 1, 7, 'l'),
+(9, 'Bulma', 'Majid', 'l', 'default_avatar.jpg', 'c', 1, NULL, 1, 6, 'l'),
+(10, 'Irham', 'Goku', 'l', 'default_avatar.jpg', 'b', NULL, NULL, 1, NULL, 'd'),
+(12, 'Joko', 'Widodo', 'l', 'default_avatar.jpg', 'a', NULL, NULL, 2, NULL, 'l');
 
 -- --------------------------------------------------------
 
@@ -1063,20 +1079,9 @@ CREATE TABLE `saksi` (
 --
 
 INSERT INTO `saksi` (`id`, `nama_depan`, `nama_belakang`, `gender`, `alamat`, `id_kel`, `id_kec`, `id_kab`, `id_prov`, `id_dapil`, `nik`, `foto`, `telp`, `id_tps`, `status`) VALUES
-(1, 'Muhammad', 'Haimin', 'l', 'Jl. Kyai Singki no.45', 1, 1, 1, 1, 1, '337230934799234+deleted', 'Images2.jpg', '089667823877', 2, 'd'),
-(2, 'Rozikin', 'Ahmad', 'l', 'Jl. Pahlawan no.11', 1, 1, 1, 1, 1, '3340034987239080+deleted', 'default_avatar.jpg', '089668623899', 2, 'd'),
-(3, 'Fadli', 'Ihsan', 'l', 'Jl. Tentara Pelajar no.11', 1, 1, 1, 1, 1, '3302210111900006', 'default_avatar.jpg', '089668623333', 2, 'l'),
-(4, 'Ziat', 'Ahmad', 'l', 'Jl. Wadak Sempal no.11', 1, 1, 1, 1, 1, '3302210111900007', 'default_avatar.jpg', '089667865658', 2, 'l'),
-(5, 'Ahmad', 'Husain', 'l', 'Jl. Kyai Singkil no.4', 1, 1, 1, 1, 1, '3302210111900004', 'default_avatar.jpg', '08966862385', 2, 'l'),
-(6, 'Ahmad', 'Roziqin', 'l', 'Jl. Kyai Singkil no.45', 1, 1, 1, 1, 1, '3302210111900001', 'default_avatar.jpg', '089667682352', 2, 'l'),
-(7, 'Ahmad', 'Zaenudin', 'l', 'Jl. Tentara plejar no.4', 1, 1, 1, 1, 1, '3302210111900009', 'default_avatar.jpg', '089668687263', 2, 'l'),
-(8, 'Toriq', 'Ahmad', 'l', 'Jl. Wiku 2 no.4', 1, 1, 1, 1, 1, '3302210111900000', 'default_avatar.jpg', '0896678268376', 2, 'l'),
-(9, 'Zuli', 'Husadah', 'l', 'Jl. Kyai Singkil no.45', 1, 1, 1, 1, 1, '3302210111900012', 'default_avatar.jpg', '089556753242', 2, 'l'),
-(10, 'Ahmad', 'Zubair', 'l', 'Jl. Kyai jebat no.11', 1, 1, 1, 1, 1, '3302210111900014', 'default_avatar.jpg', '08966768564', 2, 'l'),
-(11, 'Toriq', 'Ahmad', 'l', 'Jl. Kyai Singkil no.45', 1, 1, 1, 1, 1, '3325436456567567', 'default_avatar.jpg', '089668623333', 2, 'l'),
-(12, 'Misbahuls', 'Munir S.E, M.Pd', 'l', 'Jl. Kyai Singkil no.45', 70, 5, 1, 1, 2, '3324455667783943', '1534922517.jpg', '0896686233323', 2, 'l'),
-(13, 'Gufron', 'Ibrahim', 'l', 'Jl. Kyai Singkil no.45', 1, 1, 1, 1, 1, '3324455667783940', 'default_avatar.jpg', '089668623373', 2, 'l'),
-(14, 'Gufron', 'Ahmad', 'l', 'Jl. Kyai Singkil no.45', 1, 1, 1, 1, 1, '3324455667788551', '1533979114.png', '0896686233326', 2, 'l');
+(3, 'Fadli', 'Ihsan', 'l', 'Jl. Tentara Pelajar no.47', 1, 1, 1, 1, 1, '3302210111900006', 'default_avatar.jpg', '089668623333', 3, 'l'),
+(4, 'Ziat', 'Ahmad', 'l', 'Jl. Wadak Sempal no.11', 1, 1, 1, 1, 1, '3302210111900007', 'default_avatar.jpg', '089667865658', 3, 'l'),
+(17, 'Aninda', 'Najib', 'p', 'Jl. Tentara Pelajar no.47', 1, 1, 1, 1, 1, '3322423974879076', '1549375567.jpg', '08767364776', 3, 'l');
 
 --
 -- Triggers `saksi`
@@ -1102,15 +1107,19 @@ CREATE TABLE `suara` (
   `id_tps` int(3) DEFAULT NULL,
   `status` char(1) NOT NULL DEFAULT 'l' COMMENT '''l'' untuk data masih digunakan, ''d'' untuk data sudah dihapus',
   `id_partai` int(2) DEFAULT NULL,
-  `jenis_suara` enum('p','c') NOT NULL COMMENT 'p = suara partai, c = suara caleg'
+  `jenis_suara` enum('p','c') NOT NULL COMMENT 'p = suara partai, c = suara caleg',
+  `tingkat_suara` enum('a','b','c','d','e') NOT NULL COMMENT 'a=pres. b = dpd. c = dprri. d = dpr prov. e = dpr kab'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `suara`
 --
 
-INSERT INTO `suara` (`id`, `suara`, `id_caleg`, `id_saksi`, `tanggal`, `updated`, `id_tps`, `status`, `id_partai`) VALUES
-(1, 1400, 2, 1, '2018-06-21 12:48:26', '2018-06-21 12:54:52', NULL, 'd', NULL);
+INSERT INTO `suara` (`id`, `suara`, `id_caleg`, `id_saksi`, `tanggal`, `updated`, `id_tps`, `status`, `id_partai`, `jenis_suara`, `tingkat_suara`) VALUES
+(18, 345, NULL, 4, '2019-02-05 20:33:47', '2019-02-05 20:34:22', 3, 'l', 1, 'p', 'e'),
+(19, 980, 1, 4, '2019-02-05 20:33:47', '2019-02-05 20:34:22', 3, 'l', 1, 'c', 'e'),
+(20, 348, NULL, 4, '2019-02-05 20:33:49', '2019-02-05 20:33:49', 3, 'l', 2, 'p', 'e'),
+(21, 873, 3, 4, '2019-02-05 20:33:49', '2019-02-05 20:33:49', 3, 'l', 2, 'c', 'e');
 
 -- --------------------------------------------------------
 
@@ -1133,8 +1142,9 @@ CREATE TABLE `tps` (
 --
 
 INSERT INTO `tps` (`id`, `tps`, `id_dapil`, `id_kel`, `id_kec`, `id_kab`, `id_prov`) VALUES
-(2, 'TPS 3', 2, 70, 5, 1, 1),
-(3, 'TPS 1', 1, 1, 1, 1, 1);
+(3, 'TPS 1', 1, 1, 1, 1, 1),
+(5, 'TPS 1', 2, 70, 5, 1, 1),
+(6, 'TPS 2', 1, 2, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1155,20 +1165,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `pass`, `id_saksi`, `status`) VALUES
-(1, '337230934799234+deleted', 'Kbps1234', 1, 'd'),
-(2, '3340034987239080+deleted', '$2a$04$7DNeUGBxI0JUVoW61.JQOe1RbcEqMaqxE.WuBmf/SDmTJvXyt8KCK', 2, 'd'),
 (3, '3302210111900006', '$2y$10$IzgNMJr.Q7N7cgKSnYQb8.8.X5cUA1NraXsXZ9FjUqbeEJgZXrCjS', 3, 'l'),
 (4, '3302210111900007', '$2y$10$7xeIwQhWx22WVMHpxkv80ud505hjxkCN2UgufNYzBTi76PAY0URJC', 4, 'l'),
-(5, '3302210111900004', '$2y$10$37viONb42WPIZgwDrOPYme6V3B15Veg9Wsqt5iHluLbdmNm.YNME6', 5, 'l'),
-(6, '3302210111900001', '$2y$10$58R.0ePmX.z.YWQBTaeUBuU5u8vECfjp7scJo8tMtrkYQ.GzJhdYi', 6, 'l'),
-(7, '3302210111900009', '$2y$10$bcY2dbV3dAlj.PskRfi2peVDDFD97Kqam9CmReFzgsmTAqHZfYfA6', 7, 'l'),
-(8, '3302210111900000', '$2y$10$njZP2GrrP1QhkUJM4hTbDONTNE3AaUdGMgpEfhW4gYARp4SCdt28G', 8, 'l'),
-(9, '3302210111900012', '$2y$10$eWOvA8gYqxL7Diph7uzbJuh6U.q2pxCCHEKgmJirsdh.JanBA1OQm', 9, 'l'),
-(10, '3302210111900014', '$2y$10$sKlQANl6GDZunU2IiJDQheObbO4TxcbbqJvpv6EVFMeWEyqk8hqQu', 10, 'l'),
-(11, '3325436456567567', '$2y$10$wMgvCkUmIWbV52k8/SQ4xulo.ACOHQAbm46D7VxcuscmbSs69ZuDy', 11, 'l'),
-(12, '3324455667783943', '$2y$10$lc.aT5itzlEBvgcaThC50OoYGCZsL3bNBdAhJzJcigTPoFL0V.ira', 12, 'l'),
-(13, '3324455667783940', '$2y$10$4CrlegMERUibfY3jWKsm2e7DIYNN2ZMpPv3bju9/O81B.FOv9Vl4a', 13, 'l'),
-(14, '3324455667788551', '$2y$10$A/a/lfBuvijhonBO69C5/.UPpWfhJziucg/oygsjNwpKtlmB6yY6C', 14, 'l');
+(17, '3322423974879076', '$2y$10$keUziG9woEsNA67xabmrpOC/Bt6YGRmWZnZfnzpNzFTMWwwRu/mBu', 17, 'l');
 
 --
 -- Indexes for dumped tables
@@ -1300,85 +1299,71 @@ ALTER TABLE `users`
 --
 ALTER TABLE `admin`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
 --
 -- AUTO_INCREMENT for table `dapil`
 --
 ALTER TABLE `dapil`
-  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `kab`
 --
 ALTER TABLE `kab`
   MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
 --
 -- AUTO_INCREMENT for table `kec`
 --
 ALTER TABLE `kec`
   MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
-
 --
 -- AUTO_INCREMENT for table `kel`
 --
 ALTER TABLE `kel`
   MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=249;
-
 --
 -- AUTO_INCREMENT for table `partai`
 --
 ALTER TABLE `partai`
   MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
 --
 -- AUTO_INCREMENT for table `pil`
 --
 ALTER TABLE `pil`
-  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `proof`
 --
 ALTER TABLE `proof`
   MODIFY `id` int(2) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `prov`
 --
 ALTER TABLE `prov`
   MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
 --
 -- AUTO_INCREMENT for table `r_suara`
 --
 ALTER TABLE `r_suara`
   MODIFY `id` int(3) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `saksi`
 --
 ALTER TABLE `saksi`
-  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
-
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT for table `suara`
 --
 ALTER TABLE `suara`
-  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 --
 -- AUTO_INCREMENT for table `tps`
 --
 ALTER TABLE `tps`
-  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
-
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 --
 -- Constraints for dumped tables
 --
@@ -1438,15 +1423,6 @@ ALTER TABLE `saksi`
   ADD CONSTRAINT `saksi_tps` FOREIGN KEY (`id_tps`) REFERENCES `tps` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
--- Constraints for table `suara`
---
-ALTER TABLE `suara`
-  ADD CONSTRAINT `suara_ibfk_1` FOREIGN KEY (`id_caleg`) REFERENCES `pil` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
-  ADD CONSTRAINT `suara_ibfk_3` FOREIGN KEY (`id_saksi`) REFERENCES `saksi` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
-  ADD CONSTRAINT `suara_parta` FOREIGN KEY (`id_partai`) REFERENCES `partai` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `suara_tps` FOREIGN KEY (`id_tps`) REFERENCES `tps` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
-
---
 -- Constraints for table `tps`
 --
 ALTER TABLE `tps`
@@ -1455,13 +1431,6 @@ ALTER TABLE `tps`
   ADD CONSTRAINT `tps_ibfk_3` FOREIGN KEY (`id_kec`) REFERENCES `kec` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `tps_ibfk_4` FOREIGN KEY (`id_kab`) REFERENCES `kab` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `tps_ibfk_5` FOREIGN KEY (`id_prov`) REFERENCES `prov` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
-
---
--- Constraints for table `users`
---
-ALTER TABLE `users`
-  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`id_saksi`) REFERENCES `saksi` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

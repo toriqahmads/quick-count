@@ -23,11 +23,16 @@ Route::get('/', function () {
 Route::group(['prefix' => 'data'], function()
 {
 	Route::get('/prov', 'dataController@getProv')->name('prov');
+	Route::get('/kaball/', 'dataController@getAllKab')->name('kaball');
 	Route::get('/kab/{id_prov}', 'dataController@getKab')->name('kab');
+	Route::get('/kabid/{id_kab}', 'dataController@getKabById')->name('kabid');
 	Route::get('/kec/{id_kab}', 'dataController@getKec')->name('kec');
+	Route::get('/kecid/{id}', 'dataController@getKecById')->name('kecid');
 	Route::get('/kel/{id_kec}', 'dataController@getKel')->name('kel');
 	Route::get('/tps/{id_kel}', 'dataController@getTps')->name('tps');
-	Route::get('/dapil', 'dataController@getDapil')->name('dapil');
+	Route::get('/dapil', 'dataController@getAllDapil')->name('alldapil');
+	Route::get('/dapilprov/{prov}/{jenis}', 'dataController@getDapilByProv')->name('dapilprov');
+	Route::get('/dapilkab/{prov}/{kab}/{jenis}', 'dataController@getDapilByKab')->name('dapilkab');
 	Route::get('/partai', 'dataController@getPartai')->name('partai');
 	Route::get('/caleg/{id_dapil}/{id_partai}/{tingkat}', 'dataController@getCaleg')->name('caleg');
 });

@@ -14,9 +14,11 @@ class calegModel extends Model
     	$gender = $data['gender'];
     	$dapil = $data['dapil'];
     	$tingkat = $data['tingkat'];
+        $prov = $data['prov'];
+        $kab = $data['kab'];
         $foto = $data['foto'];
 
-    	$req = DB::select('CALL input_data_pil(?, ?, ?, ?, ?, ?, ?)', array($fname, $lname, $partai, $dapil, $tingkat, $gender, $foto));
+    	$req = DB::select('CALL input_data_pil(?, ?, ?, ?, ?, ?, ?, ?, ?)', array($fname, $lname, $partai, $dapil, $tingkat, $gender, $foto, $prov, $kab));
 
     	return $req;
     }
@@ -24,13 +26,11 @@ class calegModel extends Model
     function getProfile($id_caleg)
     {
         $data = DB::table('pil')
+                ->select('pil.*', 'partai.id as id_partai', 'partai.partai')
                 ->join('partai', 'partai.id', '=', 'pil.id_partai')
-                ->join('dapil', 'dapil.id', '=', 'pil.id_dapil')
                 ->where('pil.id', '=', $id_caleg)
                 ->where('pil.status', '=', 'l')
-                ->select('pil.*', 'partai.id as id_partai', 'partai.partai')
                 ->first();
-
         return $data;
     }
 
@@ -44,8 +44,10 @@ class calegModel extends Model
     	$dapil = $data['dapil'];
     	$tingkat = $data['tingkat'];
         $foto = $data['foto'];
+        $prov = $data['prov'];
+        $kab = $data['kab'];
 
-    	$req = DB::select('CALL update_data_pil(?, ?, ?, ?, ?, ?, ?, ?)', array($id, $fname, $lname, $partai, $dapil, $tingkat, $gender, $foto));
+    	$req = DB::select('CALL update_data_pil(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', array($id, $fname, $lname, $partai, $dapil, $tingkat, $gender, $foto, $prov, $kab));
 
         return $req;
     }
