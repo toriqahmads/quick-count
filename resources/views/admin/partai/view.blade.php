@@ -15,7 +15,10 @@
             </a>
           </div>
           <p class="description">
-            {{ $data->partai }}
+            Nama Partai : {{ $data->partai }}
+          </p>
+          <p class="description">
+            Nomor Urut : {{ $data->no_urut }}
           </p>
         </div>
       </div>

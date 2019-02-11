@@ -185,12 +185,14 @@
                   </select>
                 </div>
               </div>
-              
               <div class="col-md-4 pr-1">
                 <div class="form-group">
                   <label for="exampleFormControlSelect1">Provinsi</label>
                   <select name="prov" class="form-control" id="prov">
-                    <option value="{{ $data->id_prov }}">{{ $data->prov }}</option>
+                    <option value="0">Pilih Provinsi</option>
+                    @foreach($prov as $p)
+                      <option value="{{ $p->id }}" <?php echo $data->id_prov == $p->id ? 'selected' : ''; ?>>{{ $p->prov }}</option>
+                    @endforeach
                   </select>
                 </div>
               </div>
@@ -200,7 +202,10 @@
                 <div class="form-group">
                   <label for="exampleFormControlSelect1">Kabupaten</label>
                   <select name="kab" class="form-control" id="kab">
-                    <option value="{{ $data->id_kab }}">{{ $data->kab }}</option>
+                    <option value="0">Pilih Kabupaten</option>
+                   @foreach($kab as $kab)
+                      <option value="{{ $kab->id }}" <?php echo $data->id_kab == $kab->id ? 'selected' : ''; ?>>{{ $kab->kab }}</option>
+                    @endforeach
                   </select>
                 </div>
               </div>
@@ -209,18 +214,8 @@
                   <label for="exampleFormControlSelect1">Kecamatan</label>
                   <select name="kec" class="form-control" id="kec">
                     <option value="0">Kecamatan</option>
-                    @foreach($kecs as $kec)
-                    {
-                      @if($kec->kec != $data->kec)
-                      {
-                        <option value="{{ $kec->id_kec }}">{{ $kec->kec }}</option>
-                      }
-                      @else
-                      {
-                        <option value="{{ $kec->id_kec }}" selected>{{ $kec->kec }}</option>
-                      }
-                      @endif
-                    }
+                    @foreach($kec as $kec)
+                      <option value="{{ $kec->id }}" <?php echo $data->id_kec == $kec->id ? 'selected' : ''; ?>>{{ $kec->kec }}</option>
                     @endforeach
                   </select>
                 </div>
@@ -230,52 +225,26 @@
                   <label for="exampleFormControlSelect1">Kelurahan</label>
                   <select name="kel" class="form-control" id="kel">
                     <option value="0">Kelurahan</option>
-                    @foreach($kels as $kel)
-                    {
-                      @if($kel->kel != $data->kel)
-                      {
-                        <option value="{{ $kel->id_kel }}">{{ $kel->kel }}</option>
-                      }
-                      @else
-                      {
-                        <option value="{{ $kel->id_kel }}" selected>{{ $kel->kel }}</option>
-                      }
-                      @endif
-                    }
+                    @foreach($kel as $kel)
+                      <option value="{{ $kel->id }}" <?php echo $data->id_kel == $kel->id ? 'selected' : ''; ?>>{{ $kel->kel }}</option>
                     @endforeach
                   </select>
                 </div>
               </div>
             </div>
             <div class="row">
-              <div class="col-md-4 pl-1">
+              <div class="col-md-4 px-1">
                 <div class="form-group">
                   <label for="exampleFormControlSelect1">TPS</label>
                   <select name="tps" class="form-control" id="tps">
                     <option value="0">TPS</option>
-                    @foreach($tps as $tpss)
-                    {
-                      @if($tpss->tps != $data->tps)
-                      {
-                        <option value="{{ $tpss->id_tps }}">{{ $tpss->tps }}</option>
-                      }
-                      @else
-                      {
-                        <option value="{{ $tpss->id_tps }}" selected>{{ $tpss->tps }}</option>
-                      }
-                      @endif
-                    }
+                    @foreach($tps as $tps)
+                      <option value="{{ $tps->id }}" <?php echo $data->id_tps == $tps->id ? 'selected' : ''; ?>>{{ $tps->tps }}</option>
                     @endforeach
                   </select>
                 </div>
               </div>
               <div class="col-md-4 px-1">
-                <div class="form-group">
-                  <label>Dapil</label>
-                  <input id="dapil" name="dapil" type="text" class="form-control" placeholder="Dapil" value="{{ $data->id_dapil }}">
-                </div>
-              </div>
-              <div class="col-md-4 pr-1">
                 <div class="form-group">
                   <label>No. HP</label>
                   <input type="text" name="telp" class="form-control" placeholder="No. HP" value="{{ $data->telp }}">

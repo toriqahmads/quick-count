@@ -14,12 +14,11 @@
               <h5 class="title">{{ $data->nama_depan }} {{ $data->nama_belakang }}</h5>
             </a>
           </div>
-          <p class="description">
-            
-          </p>
+          @if(isset($data->id_dapil))
           <p class="description">
               Dapil : @foreach($dapil as $dap) @if($data->id_dapil == $dap->id){{$dap->dapil}}@endif @endforeach
           </p>
+          @endif
           <p class="description">
             Tingkat :
             @if($data->tingkat == 'a')

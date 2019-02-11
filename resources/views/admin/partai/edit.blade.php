@@ -64,10 +64,16 @@
           <form class="form" method="post" action="{{ url('/partai/updatePartai') }}" enctype="multipart/form-data">
             {{ csrf_field() }}
             <div class="row">
-              <div class="col-md-12">
+              <div class="col-md-6 px-1">
                 <div class="form-group">
                   <label>Nama Partai</label>
                   <input type="text" name="partai" class="form-control" id='partai' placeholder="Nama Partai" value="{{ $data->partai }}">
+                </div>
+              </div>
+              <div class="col-md-6 px-1">
+                <div class="form-group">
+                  <label>Nomor urut</label>
+                  <input type="number" name="no_urut" class="form-control" id='no_urut' placeholder="Nomor urut" value="{{ $data->no_urut }}">
                 </div>
               </div>
             </div>

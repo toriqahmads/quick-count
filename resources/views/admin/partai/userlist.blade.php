@@ -25,6 +25,9 @@
                 <th onclick="sortTable(1)" style="cursor: pointer;">
                   Nama Partai
                 </th>
+                <th onclick="sortTable(2)" style="cursor: pointer;">
+                  Nomor Urut
+                </th>
                 <th>
                   Aksi
                 </th>
@@ -35,6 +38,7 @@
                   <tr id="{{$data->id}}">
                       <td>{{$no++}}</td>
                       <td>{{ $data->partai }}</td>
+                      <td>{{ $data->no_urut }}</td>
                       <td>
                         <form method="GET" action="{{ route('view.partai', [$data->id]) }}" class="btn btn-info btn-sm btn-icon">
                           <button type="submit" rel="tooltip" title="Lihat" class="btn btn-info btn-sm btn-icon">

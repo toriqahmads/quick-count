@@ -35,17 +35,30 @@ class partaiController extends Controller
     {
         $this->validate($request, [
             'partai' => 'required|min:5|max:25',
-            'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'foto' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'no_urut' => 'required|int|min:1|max:3'
         ],[ 'partai.required' => 'Partai harus diisi!',
             'partai.max' => 'Partai maximal 25 karakter!',
             'partai.min' => 'Partai minimal 5 karakter!',
+            'no_urut.required' => 'Nomor urut harus diisi!',
+            'no_urut.int' => 'Nomor urut harus bilangan!',
+            'no_urut.min' => 'Nomor urut minimal 1 bilangan!',
+            'no_urut.max' => 'Nomor urut maksimal 3 bilangan!'
         ]);
-        $image = $request->file('foto');
-        $foto = time().'.'.$image->getClientOriginalExtension();
-        $image->move(public_path('img/partai'), $foto);
+        if($request->hasFile('foto'))
+        {
+        	$image = $request->file('foto');
+	        $foto = time().'.'.$image->getClientOriginalExtension();
+	        $image->move(public_path('img/partai'), $foto);
+        }
+        else
+        {
+        	$foto = "default_avatar.jpg";
+        }
 
         $data = ['partai' => $request->partai,
-            	'foto' => $foto
+            	'foto' => $foto,
+            	'no_urut' => $request->no_urut
             	];
 
         $req = new partaiModel();
@@ -104,14 +117,22 @@ class partaiController extends Controller
     	{
     		$this->validate($request, [
             'partai' => 'required|min:5|max:25',
-            'fotos' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'fotos' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'no_urut' => 'required|int|min:1|max:3'
 	        ],[ 'partai.required' => 'Partai harus diisi!',
 	            'partai.max' => 'Partai maximal 25 karakter!',
 	            'partai.min' => 'Partai minimal 5 karakter!',
 	        ]);
-	        $image = $request->file('fotos');
-       	 	$foto = time().'.'.$image->getClientOriginalExtension();
-        	$image->move(public_path('img/partai'), $foto);
+	        if($request->hasFile('fotos'))
+	        {
+	        	$image = $request->file('fotos');
+		        $foto = time().'.'.$image->getClientOriginalExtension();
+		        $image->move(public_path('img/partai'), $foto);
+	        }
+	        else
+	        {
+	        	$foto = "default_avatar.jpg";
+	        }
 	        $data = ['id' => $request->id,
 	        		'partai' => $request->partai,
 	            	'foto' => $foto
@@ -125,10 +146,15 @@ class partaiController extends Controller
 	        ],[ 'partai.required' => 'Partai harus diisi!',
 	            'partai.max' => 'Partai maximal 25 karakter!',
 	            'partai.min' => 'Partai minimal 5 karakter!',
+	            'no_urut.required' => 'Nomor urut harus diisi!',
+	            'no_urut.int' => 'Nomor urut harus bilangan!',
+	            'no_urut.min' => 'Nomor urut minimal 1 bilangan!',
+	            'no_urut.max' => 'Nomor urut maksimal 3 bilangan!'
 	        ]);
 	        $data = ['id' => $request->id,
 	        		'partai' => $request->partai,
-	            	'foto' => $request->foto
+	            	'foto' => $request->foto,
+	            	'no_urut' => $request->no_urut
 	            	];
     	}
         

@@ -17,8 +17,9 @@ class calegModel extends Model
         $prov = $data['prov'];
         $kab = $data['kab'];
         $foto = $data['foto'];
+        $no_urut = $data['no_urut'];
 
-    	$req = DB::select('CALL input_data_pil(?, ?, ?, ?, ?, ?, ?, ?, ?)', array($fname, $lname, $partai, $dapil, $tingkat, $gender, $foto, $prov, $kab));
+    	$req = DB::select('CALL input_data_pil(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', array($fname, $lname, $partai, $dapil, $tingkat, $gender, $foto, $prov, $kab, $no_urut));
 
     	return $req;
     }
@@ -46,8 +47,9 @@ class calegModel extends Model
         $foto = $data['foto'];
         $prov = $data['prov'];
         $kab = $data['kab'];
+        $no_urut = $data['no_urut'];
 
-    	$req = DB::select('CALL update_data_pil(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', array($id, $fname, $lname, $partai, $dapil, $tingkat, $gender, $foto, $prov, $kab));
+    	$req = DB::select('CALL update_data_pil(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', array($id, $fname, $lname, $partai, $dapil, $tingkat, $gender, $foto, $prov, $kab, $no_urut));
 
         return $req;
     }

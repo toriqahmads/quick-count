@@ -9,7 +9,7 @@
             }
             else
             {
-                if(tingkat == 'c' || tingkat == 'd' || tingkat == 'e')
+                if(tingkat == 'b' || tingkat == 'c' || tingkat == 'd' || tingkat == 'e')
                 {
                     $.ajax({
                       url: window.location.origin+"/data/prov",
@@ -22,22 +22,37 @@
                             res = res + "<option value='" + val.id +"'>" + val.prov + "</option>";
                         });
                         $(".prov").prop('hidden', false);
+                        $("#prov").prop('disabled', false);
                         $("#prov").html(res);
                       },
                       error: function(xhr, Status, err) {
                          showNotification('top', 'right','Terjadi error : '+ Status, 'danger');
                        } 
                     });
+
+                    if(tingkat == 'b')
+                    {
+                      $("#kab").prop('disabled', true);
+                      $("#kec").prop('disabled', true);
+                    }
+                    else if(tingkat == 'c' || tingkat == 'd')
+                    {
+                      $("#kec").prop('disabled', true);
+                    }
                     $(".kab").prop('hidden', true);
                     $(".kec").prop('hidden', true);
                     $(".dapil").prop('hidden', true);
                 }
-                else if(tingkat == 'a' ||  tingkat == 'b')
+                else if(tingkat == 'a')
                 {
-                    $(".dapil").prop('hidden', true);
                     $(".prov").prop('hidden', true);
                     $(".kab").prop('hidden', true);
                     $(".kec").prop('hidden', true);
+                    $(".dapil").prop('hidden', true);
+                    $("#prov").prop('disabled', true);
+                    $("#kab").prop('disabled', true);
+                    $("#kec").prop('disabled', true);
+                    $("#dapil").prop('disabled', true);
                 }
                 
             }
@@ -54,10 +69,10 @@
             }
             else
             {
-                if(tingkat == 'c')
+                if(tingkat == 'b')
                 {
                     $.ajax({
-                      url: window.location.origin+"/data/dapilprov/" + prov + "/c",
+                      url: window.location.origin+"/data/dapilprov/" + prov + "/a",
                       type: "GET",
                       success: function(html){
 
@@ -75,6 +90,7 @@
                             
                         });
                         $(".dapil").prop('hidden', false);
+                        $("#dapil").prop('disabled', false);
                         $("#dapil").html(res);
                       },
                       error: function(xhr, Status, err) {
@@ -83,19 +99,19 @@
                     });
                 }
 
-                if(tingkat == 'd' || tingkat == 'e')
+                if(tingkat == 'c' || tingkat == 'd' || tingkat == 'e')
                 {
                     $.ajax({
                       url: window.location.origin+"/data/kab/" + prov,
                       type: "GET",
                       success: function(html){
-
                         var res = '<option value="0" selected>Pilih kabupaten</option>';
                         $.each(html, function(key, val)
                         {
                             res = res + "<option value='" + val.id +"'>" + val.kab + "</option>";
                         });
                         $(".kab").prop('hidden', false);
+                        $("#kab").prop('disabled', false);
                         $("#kab").html(res);
                       },
                       error: function(xhr, Status, err) {
@@ -118,10 +134,10 @@
             }
             else
             {
-                if(tingkat == 'd')
+                if(tingkat == 'd' || tingkat == 'c')
                 {
                     $.ajax({
-                      url: window.location.origin+"/data/dapilprov/" + prov + "/d",
+                      url: window.location.origin+"/data/dapilprov/" + prov + "/b",
                       type: "GET",
                       success: function(html){
                         $.ajax({
@@ -142,6 +158,7 @@
                                 
                             });
                             $(".dapil").prop('hidden', false);
+                            $("#dapil").prop('disabled', false);
                             $("#dapil").html(res);
                           },
                           error: function(xhr, Status, err) {
@@ -167,6 +184,9 @@
                             res = res + "<option value='" + val.id_kec +"'>" + val.kec + "</option>";   
                         });
                         $(".kec").prop('hidden', false);
+                        $("#kec").prop('disabled', false);
+                        $(".dapil").prop('hidden', true);
+                        $("#dapil").prop('disabled', true);
                         $("#kec").html(res);
                       },
                       error: function(xhr, Status, err) {
@@ -193,7 +213,7 @@
                 if(tingkat == 'e')
                 {
                     $.ajax({
-                      url: window.location.origin+"/data/dapilkab/" + prov + "/" + kab + "/e",
+                      url: window.location.origin+"/data/dapilkab/" + prov + "/" + kab + "/c",
                       type: "GET",
                       success: function(html){
                         $.ajax({
@@ -214,6 +234,7 @@
                                 
                             });
                             $(".dapil").prop('hidden', false);
+                            $("#dapil").prop('disabled', false);
                             $("#dapil").html(res);
                           },
                           error: function(xhr, Status, err) {

@@ -11,9 +11,10 @@ class partaiModel extends Model
     {
     	$partai = $data['partai'];
         $foto = $data['foto'];
+        $no_urut = $data['no_urut'];
 
     	$req = DB::table('partai')->insertGetId(
-		    ['partai' => $partai, 'foto' => $foto]
+		    ['partai' => $partai, 'foto' => $foto, 'no_urut' => $no_urut]
 		);
 
     	return $req;
@@ -42,10 +43,11 @@ class partaiModel extends Model
         $id = $data['id'];
     	$partai = $data['partai'];
         $foto = $data['foto'];
+        $no_urut = $data['no_urut'];
 
     	$req = DB::table('partai')
             ->where('id', $id)
-            ->update(['partai' => $partai, 'foto' => $foto]);
+            ->update(['partai' => $partai, 'foto' => $foto, 'no_urut' => $no_urut]);
 
         return $req;
     }

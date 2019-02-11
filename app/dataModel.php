@@ -18,6 +18,7 @@ class dataModel extends Model
     	$data = DB::table('kab')
                 ->join('prov', 'prov.id', '=', 'kab.id_prov')
     			->where('id_prov', $id_prov)
+                ->select('kab.*')
     			->get();
     	return $data;
     }

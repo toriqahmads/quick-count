@@ -178,40 +178,56 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-4 pl-1">
+              <div class="col-md-3 px-1">
+                <div class="form-group">
+                  <label for="exampleFormControlSelect1">Provinsi</label>
+                  <select name="prov" id="prov" class="form-control">
+                    <option value="0" selected>Pilih Provinsi</option>
+                    @foreach($data as $d)
+                      <option value="{{$d->id}}">{{$d->prov}}</option>
+                    @endforeach
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-3 px-1">
+                  <div class="form-group">
+                    <label>Kecamatan</label>
+                    <select name="kab" id="kab" class="form-control">
+                      <option value="0" selected>Pilih Kabupaten</option>
+                    </select>
+                  </div>
+              </div>
+              <div class="col-md-3 px-1">
                   <div class="form-group">
                     <label>Kecamatan</label>
                     <select name="kec" id="kec" class="form-control">
-                      <option value="0" selected>Kecamatan</option>
-                      @foreach($data as $kecs)
-                      {
-                          <option value="{{ $kecs->id_kec }}">{{ $kecs->kec }}</option>
-                      }
-                      @endforeach
+                      <option value="0" selected>Pilih Kecamatan</option>
                     </select>
                   </div>
               </div> 
-              <div class="col-md-4 px-1">
+              <div class="col-md-3 px-1">
                     <label>Kelurahan</label>
                     <select name="kel" id="kel" class="form-control">
-                      <option value="0" selected>Kelurahan</option>
+                      <option value="0" selected>Pilih Kelurahan</option>
                     </select>
               </div>
-              <div class="col-md-4 pr-1">
-                  <label>TPS</label>
-                    <select name="tps" id="tps" class="form-control">
-                      <option value="0" selected>TPS</option>
-                    </select>
-              </div>
-          </div>
-          <div class="col-md-12">
-            <div class="form-group">
-            <label>Alamat</label>
-            <input type="text" name="alamat" class="form-control" id="inputAddress" placeholder="Alamat" value="{{ old('alamat') }}">
-          </div>
           </div>
           <div class="row">
-              <div class="col-md-6 pl-1">
+            <div class="col-md-6 px-1">
+              <div class="form-group">
+              <label>Alamat</label>
+              <input type="text" name="alamat" class="form-control" id="inputAddress" placeholder="Alamat" value="{{ old('alamat') }}">
+            </div>
+            </div>
+            <div class="col-md-6 px-1">
+                <label>TPS</label>
+                  <select name="tps" id="tps" class="form-control">
+                    <option value="0" selected>Pilih TPS</option>
+                  </select>
+            </div>
+        </div>
+          <div class="row">
+              <div class="col-md-6 px-1">
                 <div class="form-group">
                   <label>Password</label>
                   <input type="password" name="password" class="form-control" placeholder="Password">
@@ -225,7 +241,7 @@
               </div>
           </div>
           <div class="row">
-            <div class="col-md-6 pl-1">
+            <div class="col-md-6 px-1">
                 <div class="form-group">
                     <label>Foto</label>
                     <div class="input-group">
@@ -237,7 +253,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 pr-1">
+            <div class="col-md-6 px-1">
               <label>Preview</label>
               <div class="form-group">
                 
@@ -245,9 +261,6 @@
               </div>
             </div>
           </div>
-                <input type="hidden" id="prov" name="prov" value="">
-                <input type="hidden" id="kab" name="kab" value="">
-                <input type="hidden" id="dapil" name="dapil" value="">
             <div class="input-group form-group-no-border input-lg">
                 <input type="submit" class="btn-primary btn btn-round btn-block" value="Registrasi" />
             </div>

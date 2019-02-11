@@ -36,19 +36,20 @@ class calegController extends Controller
     function registerPostCaleg(Request $request)
     {
         $this->validate($request, [
-            'fname' => 'required|min:4|max:15',
-            'lname' => 'required|min:4|max:15',
+            'fname' => 'required|min:2|max:15',
+            'lname' => 'required|min:2|max:15',
             'gender' => 'required|min:1|max:1',
             'partai' => 'required|min:1|max:2',
             'tingkat' => 'required|min:1|max:1',
-            'foto' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'foto' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'no_urut' => 'required|int|min:1|max:3'
         ],[
             'fname.required'=>'Nama depan tidak boleh kosong!',
-            'fname.min'=>'Maaf Nama depan minimal 4 karakter!',
+            'fname.min'=>'Maaf Nama depan minimal 2 karakter!',
             'fname.max'=>'Maaf Nama depan maximal 15 karakter!',
             'lname.required'=>'Nama belakang tidak boleh kosong!',
             'lname.max'=>'Nama maximal 15 karakter!',
-            'lname.min'=>' Nama belakang minimal 4 karakter!',
+            'lname.min'=>' Nama belakang minimal 2 karakter!',
             'gender.required' => 'Jenis Kelamin tidak boleh kosong!',
             'partai.required' => 'Partai harus diisi!',
             'partai.max' => 'Partai maximal 1 karakter!',
@@ -56,6 +57,10 @@ class calegController extends Controller
             'tingkat.required' => 'Tingkat harus diisi!',
             'tingkat.max' => 'Tingkat maximal 1 karakter!',
             'tingkat.max' => 'Tingkat minimal 1 karakter!',
+            'no_urut.required' => 'Nomor urut harus diisi!',
+            'no_urut.int' => 'Nomor urut harus bilangan!',
+            'no_urut.min' => 'Nomor urut minimal 1 bilangan!',
+            'no_urut.max' => 'Nomor urut maksimal 3 bilangan!'
         ]);
         
         if($request->hasFile('foto'))
@@ -102,7 +107,8 @@ class calegController extends Controller
             	'tingkat' => $request->tingkat,
             	'foto' => $foto,
             	'prov' => $prov,
-            	'kab' => $kab
+            	'kab' => $kab,
+                'no_urut' => $request->no_urut
             	];
 
         $req = new calegModel();
@@ -219,20 +225,21 @@ class calegController extends Controller
 		'id.required' => 'ID caleg harus diisi!',
         'id.max' => 'ID caleg maximal 2 karakter!',
         'id.min' => 'ID caleg minimal 1 karakter!',
-        'fname' => 'required|min:4|max:15',
-        'lname' => 'required|min:4|max:15',
+        'fname' => 'required|min:2|max:15',
+        'lname' => 'required|min:2|max:15',
         'gender' => 'required|min:1|max:1',
         'partai' => 'required|min:1|max:2',
         'tingkat' => 'required|min:1|max:1',
         'dapil' => 'min:1|max:2',
-        'fotos' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        'fotos' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'no_urut' => 'required|int|min:1|max:3'
         ],[
             'fname.required'=>'Nama depan tidak boleh kosong!',
-            'fname.min'=>'Maaf Nama depan minimal 4 karakter!',
+            'fname.min'=>'Maaf Nama depan minimal 2 karakter!',
             'fname.max'=>'Maaf Nama depan maximal 15 karakter!',
             'lname.required'=>'Nama belakang tidak boleh kosong!',
             'lname.max'=>'Nama maximal 15 karakter!',
-            'lname.min'=>' Nama belakang minimal 4 karakter!',
+            'lname.min'=>' Nama belakang minimal 2 karakter!',
             'gender.required' => 'Jenis Kelamin tidak boleh kosong!',
             'partai.required' => 'Partai harus diisi!',
             'partai.max' => 'Partai maximal 1 karakter!',
@@ -240,6 +247,10 @@ class calegController extends Controller
             'tingkat.required' => 'Tingkat harus diisi!',
             'tingkat.max' => 'Tingkat maximal 1 karakter!',
             'tingkat.max' => 'Tingkat minimal 1 karakter!',
+            'no_urut.required' => 'Nomor urut harus diisi!',
+            'no_urut.int' => 'Nomor urut harus bilangan!',
+            'no_urut.min' => 'Nomor urut minimal 1 bilangan!',
+            'no_urut.max' => 'Nomor urut maksimal 3 bilangan!'
         ]);
         if($request->hasFile('fotos'))
         {
@@ -286,7 +297,8 @@ class calegController extends Controller
             	'tingkat' => $request->tingkat,
             	'foto' => $foto,
             	'prov' => $prov,
-            	'kab' => $kab
+            	'kab' => $kab,
+                'no_urut' => $request->no_urut
             	];
 
         $req = new calegModel();

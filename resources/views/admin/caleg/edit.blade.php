@@ -114,6 +114,12 @@
                     </select>
                 </div>
               </div>
+              <div class="col-md-6 px-1">
+                <div class="form-group">
+                  <label for="exampleFormControlSelect1">Nomor urut</label>
+                  <input type="number" name="no_urut" class="form-control" placeholder="Nomor urut calon" value="{{ $data->no_urut }}" required>
+                </div>
+              </div>
             </div>
             <div class="row">
               @if(isset($data->id_prov))
@@ -204,9 +210,11 @@
               <h5 class="title">{{ $data->nama_depan }} {{ $data->nama_belakang }}</h5>
             </a>
           </div>
+          @if(isset($data->id_dapil))
           <p class="description">
               Dapil : @foreach($dapil as $dap) @if($data->id_dapil == $dap->id){{$dap->dapil}}@endif @endforeach
           </p>
+          @endif
           <p class="description">
             Tingkat :
             @if($data->tingkat == 'a')

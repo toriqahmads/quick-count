@@ -64,13 +64,13 @@
           <form class="form" method="post" action="{{ url('/caleg/registerPost') }}" enctype="multipart/form-data">
             {{ csrf_field() }}
             <div class="row">
-              <div class="col-md-6 pl-1">
+              <div class="col-md-6 px-1">
                 <div class="form-group">
                   <label>Nama Depan</label>
                   <input type="text" name="fname" class="form-control" placeholder="Nama Depan" value="{{ old('fname') }}">
                 </div>
               </div>
-              <div class="col-md-6 pr-1">
+              <div class="col-md-6 px-1">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Nama Belakang</label>
                   <input type="text" name="lname" class="form-control" placeholder="Nama Belakang" value="{{ old('lname') }}">
@@ -78,7 +78,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-4 pl-1">
+              <div class="col-md-3 px-1">
                   <div class="form-group">
                     <label>Partai</label>
                     <select name="partai" id="partai" class="form-control">
@@ -91,7 +91,7 @@
                       </select>
                   </div>
               </div>
-              <div class="col-md-4 px-1">
+              <div class="col-md-3 px-1">
                   <div class="form-group">
                     <label>Tingkatan Caleg</label>
                     <select name="tingkat" id="tingkat" class="form-control">
@@ -105,7 +105,7 @@
                   </div>
               </div>
             
-              <div class="col-md-4 pr-1">
+              <div class="col-md-3 px-1">
                   <div class="form-group">
                     <label for="exampleFormControlSelect1">Jenis Kelamin</label>
                     <select name="gender" id="gender" class="form-control">
@@ -114,7 +114,13 @@
                           <option value="p">Perempuan</option>
                     </select>
                   </div>
-              </div>              
+              </div>
+              <div class="col-md-3 px-1">
+                  <div class="form-group">
+                    <label for="exampleFormControlSelect1">Nomor urut</label>
+                    <input type="number" class="form-control" name="no_urut" placeholder="Nomor urut calon" required>
+                  </div>
+              </div>               
           </div>
           <div class="row">
             <div class="col-md-3 px-1 prov" hidden="true">
@@ -148,7 +154,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-md-6 pl-1">
+            <div class="col-md-6 px-1">
                 <div class="form-group">
                     <label>Foto</label>
                     <div class="input-group">
@@ -160,7 +166,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 pr-1">
+            <div class="col-md-6 px-1">
               <label>Preview</label>
               <div class="form-group">
                 

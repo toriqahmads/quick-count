@@ -32,11 +32,10 @@ class saksiModel extends Model
     	$tps = $data['tps'];
     	$prov = $data['prov'];
     	$kab = $data['kab'];
-    	$dapil = $data['dapil'];
     	$pass = $data['password'];
     	$foto = $data['foto'];
 
-    	$req = DB::select('CALL input_data_saksi(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', array($fname, $lname, $gender, $alamat, $kel, $kec, $kab, $prov, $dapil, $nik, $telp, $tps, $pass, $foto));
+    	$req = DB::select('CALL input_data_saksi(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', array($fname, $lname, $gender, $alamat, $kel, $kec, $kab, $prov, $nik, $telp, $tps, $pass, $foto));
 
     	return $req;
     }
@@ -75,10 +74,9 @@ class saksiModel extends Model
         $tps = $data['tps'];
         $prov = $data['prov'];
         $kab = $data['kab'];
-        $dapil = $data['dapil'];
         $foto = $data['foto'];
 
-        $req = DB::select('CALL update_data_saksi(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', array($id, $fname, $lname, $gender, $alamat, $kel, $kec, $kab, $prov, $dapil, $nik, $telp, $tps, $foto));
+        $req = DB::select('CALL update_data_saksi(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', array($id, $fname, $lname, $gender, $alamat, $kel, $kec, $kab, $prov, $nik, $telp, $tps, $foto));
 
         return $req;
     }
