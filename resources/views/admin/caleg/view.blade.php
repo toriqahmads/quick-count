@@ -14,6 +14,21 @@
               <h5 class="title">{{ $data->nama_depan }} {{ $data->nama_belakang }}</h5>
             </a>
           </div>
+          @if(isset($data->id_prov))
+          <p class="description">
+              Provinsi : @foreach($provinsi as $p) @if($data->id_prov == $p->id){{$p->prov}}@endif @endforeach
+          </p>
+          @endif
+          @if(isset($data->id_kab))
+          <p class="description">
+              Kabupaten : @foreach($kab as $k) @if($data->id_kab == $k->id){{$k->kab}}@endif @endforeach
+          </p>
+          @endif
+          @if(isset($data->id_kec))
+          <p class="description">
+              Kecamatan : @foreach($kec as $kec) @if($data->id_kec == $kec->id_kec){{$kec->id_kec}}@endif @endforeach
+          </p>
+          @endif
           @if(isset($data->id_dapil))
           <p class="description">
               Dapil : @foreach($dapil as $dap) @if($data->id_dapil == $dap->id){{$dap->dapil}}@endif @endforeach

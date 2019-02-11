@@ -14,6 +14,14 @@ class dataController extends Controller
         return $data;
     }
 
+    function getProvById($id)
+    {
+        $data = new dataModel();
+        $data = $data->getProvById($id);
+
+        return $data;
+    }
+
     function getAllKab()
     {
         $data = new dataModel();
@@ -106,6 +114,22 @@ class dataController extends Controller
     {
         $data = new dataModel();
         $data = $data->getAllCaleg($id_dapil, $id_partai, $tingkat);
+
+        return $data;
+    }
+
+    function getCalegDpd($prov, $id_partai, $tingkat)
+    {
+        $data = new dataModel();
+        $data = $data->getAllCalegDpd($prov, $id_partai, $tingkat);
+
+        return $data;
+    }
+
+    function getAllPres($id_partai, $tingkat)
+    {
+        $data = new dataModel();
+        $data = $data->getAllPres($id_partai, $tingkat);
 
         return $data;
     }

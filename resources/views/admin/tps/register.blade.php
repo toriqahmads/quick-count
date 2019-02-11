@@ -20,44 +20,6 @@
       });
         };
 </script>
-<script type="text/javascript">
-  $("#ntps").change(function()
-        {
-            var gender = $("#ntps").val();
-            if(gender === '0' || gender === null || gender === undefined)
-            {
-                showNotification('top', 'right','Harap isi nama TPS!', 'danger');
-            }
-            else
-            {
-                return false;
-            }
-        });
-  $("#kel").change(function()
-        {
-            var gender = $("#kel").val();
-            if(gender === '0' || gender === null || gender === undefined)
-            {
-                showNotification('top', 'right','Harap pilih Kelurahan!', 'danger');
-            }
-            else
-            {
-                return false;
-            }
-        });
-  $("#kec").change(function()
-        {
-            var gender = $("#kec").val();
-            if(gender === '0' || gender === null || gender === undefined)
-            {
-                showNotification('top', 'right','Harap pilih Kecamatan!', 'danger');
-            }
-            else
-            {
-                return false;
-            }
-        });
-</script>
 
 @if(\Session::has('alert'))
     <script type="text/javascript">
@@ -102,36 +64,49 @@
           <form class="form" method="post" action="{{ url('/tps/registerPost') }}" enctype="multipart/form-data">
             {{ csrf_field() }}
             <div class="row">
-              <div class="col-md-4 pl-1">
+              <div class="col-md-12 px-1">
                 <div class="form-group">
                   <label>Nama TPS</label>
                   <input type="text" name="tps" class="form-control" id='ntps' placeholder="Nama TPS" value="{{ old('tps') }}">
                 </div>
               </div>
-              <div class="col-md-4 px-1">
+            </div>
+            <div class="row">
+              <div class="col-md-3 px-1">
+                <div class="form-group">
+                  <label for="exampleFormControlSelect1">Provinsi</label>
+                  <select name="prov" id="prov" class="form-control">
+                    <option value="0" selected>Pilih Provinsi</option>
+                    @foreach($data as $d)
+                      <option value="{{$d->id}}">{{$d->prov}}</option>
+                    @endforeach
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-3 px-1">
+                  <div class="form-group">
+                    <label>Kecamatan</label>
+                    <select name="kab" id="kab" class="form-control">
+                      <option value="0" selected>Pilih Kabupaten</option>
+                    </select>
+                  </div>
+              </div>
+              <div class="col-md-3 px-1">
                   <div class="form-group">
                     <label>Kecamatan</label>
                     <select name="kec" id="kec" class="form-control">
-                      <option value="0" selected>Kecamatan</option>
-                      @foreach($kec as $kecs)
-                      {
-                          <option value="{{ $kecs->id_kec }}">{{ $kecs->kec }}</option>
-                      }
-                      @endforeach
+                      <option value="0" selected>Pilih Kecamatan</option>
                     </select>
                   </div>
-              </div> 
-            <div class="col-md-4 pr-1">
-                  <label>Kelurahan</label>
-                  <select name="kel" id="kel" class="form-control">
-                    <option value="0" selected>Kelurahan</option>
-                  </select>
-            </div>
+              </div>
+              <div class="col-md-3 px-1">
+                    <label>Kelurahan</label>
+                    <select name="kel" id="kel" class="form-control">
+                      <option value="0" selected>Pilih Kelurahan</option>
+                    </select>
+              </div>
           </div>
             </div>
-                <input type="hidden" id="prov" name="prov" value="">
-                <input type="hidden" id="kab" name="kab" value="">
-                <input type="hidden" id="dapil" name="dapil" value="">
             <div class="input-group form-group-no-border input-lg">
                 <input type="submit" class="btn-primary btn btn-round btn-block" value="Submit" />
             </div>

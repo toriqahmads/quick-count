@@ -17,9 +17,6 @@
           <p class="description">
             {{ $data->kel }}, {{ $data->kec }}, {{ $data->kab }}, {{ $data->prov }}
           </p>
-          <p class="description">
-              Dapil : {{ $data->id_dapil }}
-          </p>
         </div>
       </div>
     </div>

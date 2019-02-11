@@ -34,9 +34,6 @@
                 <th onclick="sortTable(4)" style="cursor: pointer;">
                   Kelurahan
                 </th>
-                <th onclick="sortTable(5)" style="cursor: pointer;">
-                  Dapil
-                </th>
                 <th>
                   Aksi
                 </th>
@@ -50,7 +47,6 @@
                       <td>{{ $data->kab }}</td>
                       <td>{{ $data->kec }}</td>
                       <td>{{ $data->kel }}</td>
-                      <td>{{ $data->dapil }}
                       </td>
                       <td>
                         <form method="GET" action="{{ route('view.tps', [$data->id]) }}" class="btn btn-info btn-sm btn-icon">

@@ -13,10 +13,10 @@ class suaraModel extends Model
     	$id_saksi = $data['saksi'];
     	$id_tps = $data['tps'];
     	$jenis = $data['jenis'];
-        $tingkat = $data['tingkat']
+        $tingkat = $data['tingkat'];
     	$id_partai = $data['partai'];
 
-    	$req = DB::select('CALL input_suara(?, ?, ?, ?, ?, ?, ?, ?)', array($suara, $id_caleg, $id_saksi, $id_tps, $jenis, $id_partai, $tingkat));
+    	$req = DB::select('CALL input_suara(?, ?, ?, ?, ?, ?, ?)', array($suara, $id_caleg, $id_saksi, $id_tps, $jenis, $id_partai, $tingkat));
 
     	return $req;
     }

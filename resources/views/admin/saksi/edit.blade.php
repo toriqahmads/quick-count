@@ -1,82 +1,7 @@
 @extends('admin.basedashboard')
 @section('content')
-<script type="text/javascript">
-    $(document).ready(function()
-    {
-        $("#kec").change(function()
-        {
-            var kec_id = $("#kec").val();
-            if(kec_id === '0' || kec_id === null || kec_id === undefined)
-            {
-                showNotification('top', 'right','Harap pilih kecamatan!', 'danger');
-            }
-            else
-            {
-                $.ajax({
-                  url: window.location.origin+"/data/kel/" + kec_id,
-                  type: "GET",
-                  success: function(html){
-                    var res = "<option value='0'>Kelurahan</option>";
-                    $.each(html, function(key, val)
-                    {
-                        res = res + "<option value='" + val.id_kel +"'>" + val.kel + "</option>";
-                        $('#dapil').val(val.id_dapil);
-                    });
-                    $('#kel').html(res);
-                    $('#tps').empty().append('<option selected value="0">TPS</option>');
-                  },
-                  error: function(xhr, Status, err) {
-                     showNotification('top', 'right','Terjadi error : '+ Status, 'danger');
-                   } 
-                });
-            }
-            return false;
-        });
-
-        $("#kel").change(function()
-        {
-            var kel_id = $("#kel").val();
-            
-            if(kel_id === '0' || kel_id === null || kel_id === undefined)
-            {
-                showNotification('top', 'right','Harap pilih kelurahan!', 'danger');
-            }
-            else
-            {
-                $.ajax({
-                  url: window.location.origin+"/data/tps/" + kel_id,
-                  type: "GET",
-                  success: function(html){
-
-                    var res = "<option value'0'>TPS</option>";
-                    $.each(html, function(key, val)
-                    {
-                        res = res + "<option value='" + val.id_tps +"'>" + val.tps + "</option>";
-                    });
-                    $("#tps").html(res);
-                  },
-                  error: function(xhr, Status, err) {
-                     showNotification('top', 'right','Terjadi error : '+ Status, 'danger');
-                   } 
-                });
-            }
-            return false;
-        });
-
-        $("#gender").change(function()
-        {
-            var gender = $("#gender").val();
-            if(gender === '0' || gender === null || gender === undefined)
-            {
-                showNotification('top', 'right','Harap pilih jenis kelamin!', 'danger');
-            }
-            else
-            {
-                return false;
-            }
-        });
-    });
-</script>
+<script src="{{ asset('js/upload.js') }}"></script>
+<script src="{{ asset('js/getreg.js') }}"></script>
 
 <script type="text/javascript">
             function showNotification(from, align, msg, color){
@@ -215,7 +140,7 @@
                   <select name="kec" class="form-control" id="kec">
                     <option value="0">Kecamatan</option>
                     @foreach($kec as $kec)
-                      <option value="{{ $kec->id }}" <?php echo $data->id_kec == $kec->id ? 'selected' : ''; ?>>{{ $kec->kec }}</option>
+                      <option value="{{ $kec->id_kec }}" <?php echo $data->id_kec == $kec->id_kec ? 'selected' : ''; ?>>{{ $kec->kec }}</option>
                     @endforeach
                   </select>
                 </div>
@@ -226,7 +151,7 @@
                   <select name="kel" class="form-control" id="kel">
                     <option value="0">Kelurahan</option>
                     @foreach($kel as $kel)
-                      <option value="{{ $kel->id }}" <?php echo $data->id_kel == $kel->id ? 'selected' : ''; ?>>{{ $kel->kel }}</option>
+                      <option value="{{ $kel->id_kel }}" <?php echo $data->id_kel == $kel->id_kel ? 'selected' : ''; ?>>{{ $kel->kel }}</option>
                     @endforeach
                   </select>
                 </div>
@@ -239,7 +164,7 @@
                   <select name="tps" class="form-control" id="tps">
                     <option value="0">TPS</option>
                     @foreach($tps as $tps)
-                      <option value="{{ $tps->id }}" <?php echo $data->id_tps == $tps->id ? 'selected' : ''; ?>>{{ $tps->tps }}</option>
+                      <option value="{{ $tps->id_tps }}" <?php echo $data->id_tps == $tps->id_tps ? 'selected' : ''; ?>>{{ $tps->tps }}</option>
                     @endforeach
                   </select>
                 </div>
@@ -300,9 +225,6 @@
           </div>
           <p class="description">
             {{ $data->alamat }}, {{ $data->kel }}, {{ $data->kec }}, {{ $data->kab }}, {{ $data->prov }}
-          </p>
-          <p class="description">
-              Dapil : {{ $data->id_dapil }}
           </p>
           <p class="description">
               TPS : {{ $data->tps }}

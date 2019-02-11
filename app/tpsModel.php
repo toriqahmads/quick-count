@@ -13,9 +13,8 @@ class tpsModel extends Model
     	$kel = $data['kel'];
     	$prov = $data['prov'];
     	$kab = $data['kab'];
-    	$dapil = $data['dapil'];
 
-    	$req = DB::select('CALL input_tps(?, ?, ?, ?, ?, ?)', array($name, $dapil, $kel, $kec, $kab, $prov));
+    	$req = DB::select('CALL input_tps(?, ?, ?, ?, ?)', array($name, $kel, $kec, $kab, $prov));
 
     	return $req;
     }
@@ -27,8 +26,7 @@ class tpsModel extends Model
                 ->join('kec', 'kec.id', '=', 'kel.id_kec')
                 ->join('kab', 'kab.id', '=', 'kec.id_kab')
                 ->join('prov', 'prov.id', '=', 'kab.id_prov')
-                ->join('dapil', 'dapil.id', '=', 'tps.id_dapil')
-                ->select('tps.*', 'kel.id as id_kel', 'kel.kel', 'kec.id as id_kec', 'kec.kec', 'kab.id as id_kab', 'kab.kab', 'prov.id as id_prov', 'prov.prov', 'dapil.id as dapil')
+                ->select('tps.*', 'kel.id as id_kel', 'kel.kel', 'kec.id as id_kec', 'kec.kec', 'kab.id as id_kab', 'kab.kab', 'prov.id as id_prov', 'prov.prov')
                 ->paginate('10');
         return $data;
     }
@@ -40,9 +38,8 @@ class tpsModel extends Model
                 ->join('kec', 'kec.id', '=', 'kel.id_kec')
                 ->join('kab', 'kab.id', '=', 'kec.id_kab')
                 ->join('prov', 'prov.id', '=', 'kab.id_prov')
-                ->join('dapil', 'dapil.id', '=', 'tps.id_dapil')
                 ->where('tps.id', '=', $id_tps)
-                ->select('tps.*', 'kel.id as id_kel', 'kel.kel', 'kec.id as id_kec', 'kec.kec', 'kab.id as id_kab', 'kab.kab', 'prov.id as id_prov', 'prov.prov', 'dapil.id as dapil')
+                ->select('tps.*', 'kel.id as id_kel', 'kel.kel', 'kec.id as id_kec', 'kec.kec', 'kab.id as id_kab', 'kab.kab', 'prov.id as id_prov', 'prov.prov')
                 ->first();
         return $data;
     }
@@ -55,9 +52,8 @@ class tpsModel extends Model
     	$kel = $data['kel'];
     	$prov = $data['prov'];
     	$kab = $data['kab'];
-    	$dapil = $data['dapil'];
 
-    	$req = DB::select('CALL update_tps(?, ?, ?, ?, ?, ?, ?)', array($id, $name, $dapil, $kel, $kec, $kab, $prov));
+    	$req = DB::select('CALL update_tps(?, ?, ?, ?, ?, ?)', array($id, $name, $kel, $kec, $kab, $prov));
 
     	return $req;
     }

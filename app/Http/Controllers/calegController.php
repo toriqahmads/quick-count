@@ -42,7 +42,7 @@ class calegController extends Controller
             'partai' => 'required|min:1|max:2',
             'tingkat' => 'required|min:1|max:1',
             'foto' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'no_urut' => 'required|int|min:1|max:3'
+            'no_urut' => 'required|int|min:1|max:100'
         ],[
             'fname.required'=>'Nama depan tidak boleh kosong!',
             'fname.min'=>'Maaf Nama depan minimal 2 karakter!',
@@ -79,27 +79,32 @@ class calegController extends Controller
         	$prov = null;
         	$kab = null;
         	$dapil = null;
+        	$kec = null;
         }
         elseif($request->tingkat == 'b')
         {
         	$prov = $request->prov;
         	$kab = null;
         	$dapil = null;
+        	$kec = null;
         }
         elseif($request->tingkat == 'c' || $request->tingkat == 'd')
         {
         	$prov = $request->prov;
-        	$kab = null;
+        	$kab = $request->kab;
+        	$kec = null;
         	$dapil = $request->dapil;
         }
         else
         {
+        	$kec = $request->kec;
         	$prov = $request->prov;
         	$kab = $request->kab;
         	$dapil = $request->dapil;
         }
 
-        $data = ['fname' => $request->fname,
+        $data = ['id' => $request->id,
+        		'fname' => $request->fname,
                 'lname' => $request->lname,
                 'gender' => $request->gender,
                 'partai' => $request->partai,
@@ -108,6 +113,7 @@ class calegController extends Controller
             	'foto' => $foto,
             	'prov' => $prov,
             	'kab' => $kab,
+            	'kec' => $kec,
                 'no_urut' => $request->no_urut
             	];
 
@@ -159,9 +165,32 @@ class calegController extends Controller
 	    {
 	    	$data = new calegModel();
 	    	$data = $data->getProfile($id_caleg);
-	    	$dataModel = new dataModel();
-	    	$dapil = $dataModel->getAllDapil();
-	    	return view('admin.caleg.view', compact('data', 'dapil'));
+
+	    	$reg = new dataModel();
+	    	$partais = $reg->getPartai();
+            $provinsi = $reg->getProv();
+            if($data->tingkat == 'a')
+            {
+            	return view('admin.caleg.view')->with(compact('data', 'partais')); 
+            }
+            elseif($data->tingkat == 'b') 
+            {
+            	$dapil = $reg->getDapilByProv($data->id_prov, 'a');
+            	return view('admin.caleg.view')->with(compact('data', 'partais', 'provinsi', 'dapil'));
+            }
+            elseif($data->tingkat == 'c' || $data->tingkat == 'd')
+            {
+            	$dapil = $reg->getDapilByProv($data->id_prov, 'b');
+            	$kab = $reg->getKab($data->id_prov);
+            	return view('admin.caleg.view')->with(compact('data', 'partais', 'provinsi', 'kab', 'dapil'));
+            }
+            elseif($data->tingkat == 'e')
+            {
+            	$dapil = $reg->getDapilByKab($data->id_prov, $data->id_kab, 'c');
+            	$kab = $reg->getKab($data->id_prov);
+            	$kec = $reg->getKec($data->id_kab);
+            	return view('admin.caleg.view')->with(compact('data', 'partais', 'provinsi', 'kab', 'kec', 'dapil'));
+            }
 	    }
     }
 
@@ -209,12 +238,31 @@ class calegController extends Controller
 	    {
 	    	$data = new calegModel();
 	    	$data = $data->getProfile($id_caleg);
-	    	$dataModel = new dataModel();
-	    	$partais = $dataModel->getPartai();
-	    	$dapil = $dataModel->getAllDapil();
-	    	$provinsi = $dataModel->getProv();
-	    	$kab = $dataModel->getAllKab();
-	    	return view('admin.caleg.edit')->with(compact('data', 'dapil', 'partais', 'provinsi', 'kab'));
+	    	$reg = new dataModel();
+	    	$partais = $reg->getPartai();
+            $provinsi = $reg->getProv();
+            if($data->tingkat == 'a')
+            {
+            	return view('admin.caleg.edit')->with(compact('data', 'partais')); 
+            }
+            elseif($data->tingkat == 'b') 
+            {
+            	$dapil = $reg->getDapilByProv($data->id_prov, 'a');
+            	return view('admin.caleg.edit')->with(compact('data', 'partais', 'provinsi', 'dapil'));
+            }
+            elseif($data->tingkat == 'c' || $data->tingkat == 'd')
+            {
+            	$dapil = $reg->getDapilByProv($data->id_prov, 'b');
+            	$kab = $reg->getKab($data->id_prov);
+            	return view('admin.caleg.edit')->with(compact('data', 'partais', 'provinsi', 'kab', 'dapil'));
+            }
+            elseif($data->tingkat == 'e')
+            {
+            	$dapil = $reg->getDapilByKab($data->id_prov, $data->id_kab, 'c');
+            	$kab = $reg->getKab($data->id_prov);
+            	$kec = $reg->getKec($data->id_kab);
+            	return view('admin.caleg.edit')->with(compact('data', 'partais', 'provinsi', 'kab', 'kec', 'dapil'));
+            }            
 	    }
     }
 
@@ -232,7 +280,7 @@ class calegController extends Controller
         'tingkat' => 'required|min:1|max:1',
         'dapil' => 'min:1|max:2',
         'fotos' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        'no_urut' => 'required|int|min:1|max:3'
+        'no_urut' => 'required|int|min:1|max:100'
         ],[
             'fname.required'=>'Nama depan tidak boleh kosong!',
             'fname.min'=>'Maaf Nama depan minimal 2 karakter!',
@@ -268,21 +316,25 @@ class calegController extends Controller
         	$prov = null;
         	$kab = null;
         	$dapil = null;
+        	$kec = null;
         }
         elseif($request->tingkat == 'b')
         {
         	$prov = $request->prov;
         	$kab = null;
         	$dapil = null;
+        	$kec = null;
         }
         elseif($request->tingkat == 'c' || $request->tingkat == 'd')
         {
         	$prov = $request->prov;
-        	$kab = null;
+        	$kab = $request->kab;
+        	$kec = null;
         	$dapil = $request->dapil;
         }
         else
         {
+        	$kec = $request->kec;
         	$prov = $request->prov;
         	$kab = $request->kab;
         	$dapil = $request->dapil;
@@ -298,6 +350,7 @@ class calegController extends Controller
             	'foto' => $foto,
             	'prov' => $prov,
             	'kab' => $kab,
+            	'kec' => $kec,
                 'no_urut' => $request->no_urut
             	];
 

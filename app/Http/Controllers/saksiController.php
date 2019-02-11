@@ -114,7 +114,17 @@ class saksiController extends Controller
 
     function registerSaksiPost(Request $request)
     {
-        $this->validate($request, [
+        if(!Session::get('login'))
+        {
+            return redirect('/')->with('Anda harus login terlebih dahulu');
+        }
+        elseif(Session::get('role') != 'admin')
+        {
+            return redirect('/')->with('alert', 'Forbidden!');
+        }
+        else
+        {
+            $this->validate($request, [
             'fname' => 'required|min:4|max:15',
             'lname' => 'required|min:4|max:15',
             'nik' => 'required|min:16|unique:saksi|max:16',
@@ -129,155 +139,167 @@ class saksiController extends Controller
             'password' => 'required|min:6',
             'confirmation' => 'required|same:password|min:6',
             'foto' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
-        ],[
-            'fname.required'=>'Nama depan tidak boleh kosong!',
-            'fname.min'=>'Maaf Nama depan minimal 4 karakter!',
-            'fname.max'=>'Maaf Nama depan maximal 15 karakter!',
-            'lname.required'=>'Nama belakang tidak boleh kosong!',
-            'lname.max'=>'Nama maximal 15 karakter!',
-            'lname.min'=>' Nama belakang minimal 4 karakter!',
-            'nik.required' => 'NIK tidak boleh kosong!',
-            'nik.min' => 'NIK minimal 16 karakter!',
-            'nik.max' => 'NIK maximal 16 karakter!',
-            'nik.unique' => 'NIK sudah terdaftar.',
-            'telp.required' => 'Telephone boleh kosong!',
-            'telp.min' => 'Telephone minimal 11 karakter!',
-            'telp.max' => 'Telephone maximal 13 karakter!',
-            'gender.required' => 'Jenis Kelamin tidak boleh kosong!',
-            'alamat.required' => 'Alamat tidak boleh kosong!',
-            'alamat.min' => 'Alamat minimal 10 karakter!',
-            'alamat.max' => 'Alamat minimal 30 karakter!',
-            'kec.required' => 'Kecapatan tidak boleh kosong!',
-            'kel.required' => 'Kelurahan tidak boleh kosong!',
-            'tps.required' => 'TPS tidak boleh kosong!',
-            'prov.required' => 'Provinsi tidak boleh kosong',
-            'kab.required' => 'Kabupaten tidak boleh kosong',
-            'password.required' => 'Password tidak boleh kosong!',
-            'password.min' => 'Password minimal 6 karakter!',
-            'confirmation.required' => 'Konfirmasi password tidak boleh kosong!',
-            'confirmation.min' => 'Maaf, password minimal 6 karakter!',
-            'confirmation.same' => 'Maaf, password yang Anda masukkan tidak sama!'
-        ]);
+            ],[
+                'fname.required'=>'Nama depan tidak boleh kosong!',
+                'fname.min'=>'Maaf Nama depan minimal 4 karakter!',
+                'fname.max'=>'Maaf Nama depan maximal 15 karakter!',
+                'lname.required'=>'Nama belakang tidak boleh kosong!',
+                'lname.max'=>'Nama maximal 15 karakter!',
+                'lname.min'=>' Nama belakang minimal 4 karakter!',
+                'nik.required' => 'NIK tidak boleh kosong!',
+                'nik.min' => 'NIK minimal 16 karakter!',
+                'nik.max' => 'NIK maximal 16 karakter!',
+                'nik.unique' => 'NIK sudah terdaftar.',
+                'telp.required' => 'Telephone boleh kosong!',
+                'telp.min' => 'Telephone minimal 11 karakter!',
+                'telp.max' => 'Telephone maximal 13 karakter!',
+                'gender.required' => 'Jenis Kelamin tidak boleh kosong!',
+                'alamat.required' => 'Alamat tidak boleh kosong!',
+                'alamat.min' => 'Alamat minimal 10 karakter!',
+                'alamat.max' => 'Alamat minimal 30 karakter!',
+                'kec.required' => 'Kecapatan tidak boleh kosong!',
+                'kel.required' => 'Kelurahan tidak boleh kosong!',
+                'tps.required' => 'TPS tidak boleh kosong!',
+                'prov.required' => 'Provinsi tidak boleh kosong',
+                'kab.required' => 'Kabupaten tidak boleh kosong',
+                'password.required' => 'Password tidak boleh kosong!',
+                'password.min' => 'Password minimal 6 karakter!',
+                'confirmation.required' => 'Konfirmasi password tidak boleh kosong!',
+                'confirmation.min' => 'Maaf, password minimal 6 karakter!',
+                'confirmation.same' => 'Maaf, password yang Anda masukkan tidak sama!'
+            ]);
 
-        if($request->hasFile('foto'))
-        {
-            $image = $request->file('foto');
-            $foto = time().'.'.$image->getClientOriginalExtension();
-            $image->move(public_path('img/saksi'), $foto); 
-        }
-        else
-        {
-            $foto = "default_avatar.jpg";
-        }
-
-        $data = ['fname' => $request->fname,
-                'lname' => $request->lname,
-                'nik' => $request->nik,
-                'telp' => $request->telp,
-                'gender' => $request->gender,
-                'alamat' => $request->alamat,
-                'kec' => $request->kec,
-                'kel' => $request->kel,
-                'tps' => $request->tps,
-                'prov' => $request->prov,
-                'kab' => $request->kab,
-                'password' => bcrypt($request->password),
-            	'foto' => $foto];
-
-        $req = new saksiModel();
-        $req = $req->registerPost($data);
-        $req = json_decode(json_encode($req), true);
-        if($req[0]['msg'] == "success")
-        {
-            return redirect()->back()->with('alert-success','Registrasi data saksi sukses!');
-        }
-        else
-        {
-            return redirect()->back()->with('alert','Registrasi data saksi gagal!');
-        }
-    }
-
-    function updateSaksiProfile(Request $request)
-    {
-        $this->validate($request, [
-    	'id' => 'required|min:1|max:2',
-        'fname' => 'required|min:4|max:15',
-            'lname' => 'required|min:4|max:15',
-            'nik' => 'required|min:16|unique:saksi,nik,'.$request->id.'|max:16',
-            'telp' => 'required|min:11|max:13',
-            'gender' => 'required|min:1|max:1',
-            'alamat' => 'required|min:10|max:30',
-            'kec' => 'required|min:1|max:3',
-            'kel' => 'required|min:1|max:3',
-            'tps' => 'required|min:1|max:5',
-            'prov' => 'required|min:1|max:2',
-            'kab' => 'required|min:1|max:3',
-            'fotos' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
-	        ],[
-	        	'id.required' => 'ID saksi harus diisi!',
-            	'id.max' => 'ID saksi maximal 2 karakter!',
-            	'id.min' => 'ID saksi minimal 1 karakter!',
-	            'fname.required'=>'Nama depan tidak boleh kosong!',
-	            'fname.min'=>'Maaf Nama depan minimal 4 karakter!',
-	            'fname.max'=>'Maaf Nama depan maximal 15 karakter!',
-	            'lname.required'=>'Nama belakang tidak boleh kosong!',
-	            'lname.max'=>'Nama maximal 15 karakter!',
-	            'lname.min'=>' Nama belakang minimal 4 karakter!',
-	            'nik.required' => 'NIK tidak boleh kosong!',
-	            'nik.min' => 'NIK minimal 16 karakter!',
-	            'nik.max' => 'NIK maximal 16 karakter!',
-	            'nik.unique' => 'NIK sudah terdaftar.',
-	            'telp.required' => 'Telephone boleh kosong!',
-	            'telp.min' => 'Telephone minimal 11 karakter!',
-	            'telp.max' => 'Telephone maximal 13 karakter!',
-	            'gender.required' => 'Jenis Kelamin tidak boleh kosong!',
-	            'alamat.required' => 'Alamat tidak boleh kosong!',
-	            'alamat.min' => 'Alamat minimal 10 karakter!',
-	            'alamat.max' => 'Alamat minimal 30 karakter!',
-	            'kec.required' => 'Kecapatan tidak boleh kosong!',
-	            'kel.required' => 'Kelurahan tidak boleh kosong!',
-	            'tps.required' => 'TPS tidak boleh kosong!',
-	            'prov.required' => 'Provinsi tidak boleh kosong',
-	            'kab.required' => 'Kabupaten tidak boleh kosong',
-	        ]);
-
-            if($request->hasFile('fotos'))
+            if($request->hasFile('foto'))
             {
-                $image = $request->file('fotos');
+                $image = $request->file('foto');
                 $foto = time().'.'.$image->getClientOriginalExtension();
-                $image->move(public_path('img/saksi'), $foto);
+                $image->move(public_path('img/saksi'), $foto); 
             }
             else
             {
                 $foto = "default_avatar.jpg";
             }
-	        
-	        $data = ['id' => $request->id,
-	        		'fname' => $request->fname,
-	                'lname' => $request->lname,
-	                'nik' => $request->nik,
-	                'telp' => $request->telp,
-	                'gender' => $request->gender,
-	                'alamat' => $request->alamat,
-	                'kec' => $request->kec,
-	                'kel' => $request->kel,
-	                'tps' => $request->tps,
-	                'prov' => $request->prov,
-	                'kab' => $request->kab,
-	                'password' => bcrypt($request->password),
-	            	'foto' => $foto];
 
-    	$req = new saksiModel();
-    	$req = $req->updateProfile($data);
-    	$req = json_decode(json_encode($req), true);
-    	if($req[0]['msg'] == "success")
-    	{
-    		return redirect()->back()->with('alert-success','Update data saksi sukses!');
-    	}
-    	else
-    	{
-    		return redirect()->back()->with('alert','Update data saksi gagal!');
-    	}
+            $data = ['fname' => $request->fname,
+                    'lname' => $request->lname,
+                    'nik' => $request->nik,
+                    'telp' => $request->telp,
+                    'gender' => $request->gender,
+                    'alamat' => $request->alamat,
+                    'kec' => $request->kec,
+                    'kel' => $request->kel,
+                    'tps' => $request->tps,
+                    'prov' => $request->prov,
+                    'kab' => $request->kab,
+                    'password' => bcrypt($request->password),
+                    'foto' => $foto];
+
+            $req = new saksiModel();
+            $req = $req->registerPost($data);
+            $req = json_decode(json_encode($req), true);
+            if($req[0]['msg'] == "success")
+            {
+                return redirect()->back()->with('alert-success','Registrasi data saksi sukses!');
+            }
+            else
+            {
+                return redirect()->back()->with('alert','Registrasi data saksi gagal!');
+            }
+        }
+    }
+
+    function updateSaksiProfile(Request $request)
+    {
+        if(!Session::get('login'))
+        {
+            return redirect('/')->with('Anda harus login terlebih dahulu');
+        }
+        elseif(Session::get('role') != 'admin')
+        {
+            return redirect('/')->with('alert', 'Forbidden!');
+        }
+        else
+        {
+            $this->validate($request, [
+        	'id' => 'required|min:1|max:2',
+            'fname' => 'required|min:4|max:15',
+                'lname' => 'required|min:4|max:15',
+                'nik' => 'required|min:16|unique:saksi,nik,'.$request->id.'|max:16',
+                'telp' => 'required|min:11|max:13',
+                'gender' => 'required|min:1|max:1',
+                'alamat' => 'required|min:10|max:30',
+                'kec' => 'required|min:1|max:3',
+                'kel' => 'required|min:1|max:3',
+                'tps' => 'required|min:1|max:5',
+                'prov' => 'required|min:1|max:2',
+                'kab' => 'required|min:1|max:3',
+                'fotos' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+    	        ],[
+    	        	'id.required' => 'ID saksi harus diisi!',
+                	'id.max' => 'ID saksi maximal 2 karakter!',
+                	'id.min' => 'ID saksi minimal 1 karakter!',
+    	            'fname.required'=>'Nama depan tidak boleh kosong!',
+    	            'fname.min'=>'Maaf Nama depan minimal 4 karakter!',
+    	            'fname.max'=>'Maaf Nama depan maximal 15 karakter!',
+    	            'lname.required'=>'Nama belakang tidak boleh kosong!',
+    	            'lname.max'=>'Nama maximal 15 karakter!',
+    	            'lname.min'=>' Nama belakang minimal 4 karakter!',
+    	            'nik.required' => 'NIK tidak boleh kosong!',
+    	            'nik.min' => 'NIK minimal 16 karakter!',
+    	            'nik.max' => 'NIK maximal 16 karakter!',
+    	            'nik.unique' => 'NIK sudah terdaftar.',
+    	            'telp.required' => 'Telephone boleh kosong!',
+    	            'telp.min' => 'Telephone minimal 11 karakter!',
+    	            'telp.max' => 'Telephone maximal 13 karakter!',
+    	            'gender.required' => 'Jenis Kelamin tidak boleh kosong!',
+    	            'alamat.required' => 'Alamat tidak boleh kosong!',
+    	            'alamat.min' => 'Alamat minimal 10 karakter!',
+    	            'alamat.max' => 'Alamat minimal 30 karakter!',
+    	            'kec.required' => 'Kecapatan tidak boleh kosong!',
+    	            'kel.required' => 'Kelurahan tidak boleh kosong!',
+    	            'tps.required' => 'TPS tidak boleh kosong!',
+    	            'prov.required' => 'Provinsi tidak boleh kosong',
+    	            'kab.required' => 'Kabupaten tidak boleh kosong',
+    	        ]);
+
+                if($request->hasFile('fotos'))
+                {
+                    $image = $request->file('fotos');
+                    $foto = time().'.'.$image->getClientOriginalExtension();
+                    $image->move(public_path('img/saksi'), $foto);
+                }
+                else
+                {
+                    $foto = "default_avatar.jpg";
+                }
+    	        
+    	        $data = ['id' => $request->id,
+    	        		'fname' => $request->fname,
+    	                'lname' => $request->lname,
+    	                'nik' => $request->nik,
+    	                'telp' => $request->telp,
+    	                'gender' => $request->gender,
+    	                'alamat' => $request->alamat,
+    	                'kec' => $request->kec,
+    	                'kel' => $request->kel,
+    	                'tps' => $request->tps,
+    	                'prov' => $request->prov,
+    	                'kab' => $request->kab,
+    	                'password' => bcrypt($request->password),
+    	            	'foto' => $foto];
+
+        	$req = new saksiModel();
+        	$req = $req->updateProfile($data);
+        	$req = json_decode(json_encode($req), true);
+        	if($req[0]['msg'] == "success")
+        	{
+        		return redirect()->back()->with('alert-success','Update data saksi sukses!');
+        	}
+        	else
+        	{
+        		return redirect()->back()->with('alert','Update data saksi gagal!');
+        	}
+        }
     }
 
     function getAllSaksi()
@@ -312,12 +334,14 @@ class saksiController extends Controller
 	    else
 	    {
 	    	$data = new saksiModel();
-	    	$data = $data->getProfile($nik, $id_saksi);
-	    	$kecamatan = new dataModel();
-	    	$kecs = $kecamatan->getKec(1);
-	    	$kels = $kecamatan->getKel($data->id_kec);
-	    	$tps = $kecamatan->getTps($data->id_kel);
-	    	return view('admin.saksi.edit', compact('data', 'kecs', 'kels', 'tps'));
+            $data = $data->getProfile($nik, $id_saksi);
+            $reg = new dataModel();
+            $prov = $reg->getProv();
+            $kab = $reg->getKab($data->id_prov);
+            $kec = $reg->getKec($data->id_kab);
+            $kel = $reg->getKel($data->id_kec);
+            $tps = $reg->getTps($data->id_kel);
+            return view('admin.saksi.edit', compact('data', 'prov', 'kab', 'kec', 'kel', 'tps'));
 	    }
     }
 
@@ -327,7 +351,7 @@ class saksiController extends Controller
 	    {
 	    	return redirect('/')->with('Anda harus login terlebih dahulu');
 	    }
-	    elseif(Session::get('role') != 'admin'  || Session::get('role') != 'saksi')
+	    elseif(Session::get('role') != 'admin' && Session::get('role') != 'saksi')
 	    {
 	    	return redirect('/')->with('alert', 'Forbidden!');
 	    }
@@ -335,7 +359,6 @@ class saksiController extends Controller
 	    {
 	    	$data = new saksiModel();
 	    	$data = $data->getProfile($nik, $id_saksi);
-	    	$kecamatan = new dataModel();
 	    	return view('admin.saksi.view', compact('data'));
 	    }
     }
@@ -354,11 +377,13 @@ class saksiController extends Controller
         {
             $data = new saksiModel();
             $data = $data->getProfile(Session::get('username'), Session::get('id'));
-            $kecamatan = new dataModel();
-            $kecs = $kecamatan->getKec(1);
-            $kels = $kecamatan->getKel($data->id_kec);
-            $tps = $kecamatan->getTps($data->id_kel);
-            return view('saksi.saksi.edit', compact('data', 'kecs', 'kels', 'tps'));
+            $reg = new dataModel();
+            $prov = $reg->getProv();
+            $kab = $reg->getKab($data->id_prov);
+            $kec = $reg->getKec($data->id_kab);
+            $kel = $reg->getKel($data->id_kec);
+            $tps = $reg->getTps($data->id_kel);
+            return view('saksi.saksi.edit', compact('data', 'prov', 'kab', 'kec', 'kel', 'tps'));
         }
     }
 

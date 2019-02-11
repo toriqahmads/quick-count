@@ -29,9 +29,9 @@ class tpsController extends Controller
 	    else
 	    {
 	    	$data = new dataModel();
-	    	$kec = $data->getKec(1);
+	    	$data = $data->getProv();
 	    	
-	    	return view('admin.tps.register', compact('kec'));
+	    	return view('admin.tps.register', compact('data'));
 	    }
     }
 
@@ -43,7 +43,6 @@ class tpsController extends Controller
             'kel' => 'required|min:1|max:3',
             'prov' => 'required|min:1|max:2',
             'kab' => 'required|min:1|max:3',
-            'dapil' => 'required|min:1|max:2',
         ],[
             'tps.required'=>'Nama depan tidak boleh kosong!',
             'tps.min'=>'Maaf Nama depan minimal 4 karakter!',
@@ -52,14 +51,12 @@ class tpsController extends Controller
             'kel.required' => 'Kelurahan tidak boleh kosong!',
             'prov.required' => 'Provinsi tidak boleh kosong',
             'kab.required' => 'Kabupaten tidak boleh kosong',
-            'dapil.required' => 'Dapil tidak boleh kosong',
         ]);
         $data = ['tps' => $request->tps,
                 'kec' => $request->kec,
                 'kel' => $request->kel,
                 'prov' => $request->prov,
                 'kab' => $request->kab,
-                'dapil' => $request->dapil
             	];
 
         $req = new tpsModel();
@@ -108,10 +105,12 @@ class tpsController extends Controller
 	    {
 	    	$data = new tpsModel();
 	    	$data = $data->getProfile($id_tps);
-	    	$kecamatan = new dataModel();
-	    	$kecs = $kecamatan->getKec(1);
-	    	$kels = $kecamatan->getKel($data->id_kec);
-	    	return view('admin.tps.edit', compact('data', 'kecs', 'kels'));
+	    	$reg = new dataModel();
+	    	$prov = $reg->getProv();
+            $kab = $reg->getKab($data->id_prov);
+            $kec = $reg->getKec($data->id_kab);
+            $kel = $reg->getKel($data->id_kec);
+	    	return view('admin.tps.edit', compact('data', 'prov', 'kab', 'kec', 'kel'));
 	    }
     }
 
@@ -124,7 +123,6 @@ class tpsController extends Controller
             'kel' => 'required|min:1|max:3',
             'prov' => 'required|min:1|max:2',
             'kab' => 'required|min:1|max:3',
-            'dapil' => 'required|min:1|max:2',
         ],[
             'tps.required'=>'Nama depan tidak boleh kosong!',
             'tps.min'=>'Maaf Nama depan minimal 4 karakter!',
@@ -133,7 +131,6 @@ class tpsController extends Controller
             'kel.required' => 'Kelurahan tidak boleh kosong!',
             'prov.required' => 'Provinsi tidak boleh kosong',
             'kab.required' => 'Kabupaten tidak boleh kosong',
-            'dapil.required' => 'Dapil tidak boleh kosong',
         ]);
         $data = ['id' => $request->id,
         		'tps' => $request->tps,
@@ -141,7 +138,6 @@ class tpsController extends Controller
                 'kel' => $request->kel,
                 'prov' => $request->prov,
                 'kab' => $request->kab,
-                'dapil' => $request->dapil
             	];
 
         $req = new tpsModel();

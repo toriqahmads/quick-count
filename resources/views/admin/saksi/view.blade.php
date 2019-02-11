@@ -24,9 +24,6 @@
             {{ $data->alamat }}, {{ $data->kel }}, {{ $data->kec }}, {{ $data->kab }}, {{ $data->prov }}
           </p>
           <p class="description">
-              Dapil : {{ $data->id_dapil }}
-          </p>
-          <p class="description">
               TPS : {{ $data->tps }}
           </p>
         </div>

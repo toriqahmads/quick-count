@@ -122,18 +122,26 @@
               </div>
             </div>
             <div class="row">
-              @if(isset($data->id_prov))
+            @if(isset($data->id_prov))
               <div class="col-md-3 px-1 prov">
-              <div class="form-group">
-                  <label for="exampleFormControlSelect1">Provinsi</label>
-                  <select name="prov" id="prov" class="form-control">
-                    <option value="0">Pilih provinsi</option>
-                    @foreach($provinsi as $province)
-                      <option value="{{$province->id}}" <?php echo $data->id_prov == $province->id ? 'selected' : ''; ?>>{{$province->prov}}</option>
-                    @endforeach
-                  </select>
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Provinsi</label>
+                    <select name="prov" id="prov" class="form-control">
+                      <option value="0">Pilih provinsi</option>
+                      @foreach($provinsi as $province)
+                        <option value="{{$province->id}}" <?php echo $data->id_prov == $province->id ? 'selected' : ''; ?>>{{$province->prov}}</option>
+                      @endforeach
+                    </select>
+                </div>
               </div>
-            </div>
+            @else
+              <div class="col-md-3 px-1 prov" hidden="true">
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Provinsi</label>
+                    <select name="prov" id="prov" class="form-control">
+                    </select>
+                </div>
+              </div>
             @endif
             @if(isset($data->id_kab))
             <div class="col-md-3 px-1 kab">
@@ -147,7 +155,28 @@
                   </select>
               </div>
             </div>
+            @else
+            <div class="col-md-3 px-1 kab" hidden="true">
+              <div class="form-group">
+                  <label for="exampleFormControlSelect1">Kabupaten</label>
+                  <select name="kab" id="kab" class="form-control">
+                  </select>
+              </div>
+            </div>
             @endif
+            @if(isset($data->id_kec))
+            <div class="col-md-3 px-1 kec">
+              <div class="form-group">
+                  <label for="exampleFormControlSelect1">Kecamatan</label>
+                  <select name="kec" id="kec" class="form-control">
+                    <option value="0">Pilih kecamatan</option>
+                    @foreach($kec as $kec)
+                      <option value="{{$kec->id_kec}}" <?php echo $data->id_kec == $kec->id_kec ? 'selected' : ''; ?>>{{$kec->kec}}</option>
+                    @endforeach
+                  </select>
+              </div>
+            </div>
+            @else
             <div class="col-md-3 px-1 kec" hidden="true">
               <div class="form-group">
                   <label for="exampleFormControlSelect1">Kecamatan</label>
@@ -155,6 +184,7 @@
                   </select>
               </div>
             </div>
+            @endif
             @if(isset($data->id_dapil))
             <div class="col-md-3 px-1 dapil">
                   <div class="form-group">
@@ -162,11 +192,21 @@
                     <select name="dapil" id="dapil" class="form-control">
                       <option value="0">Pilih Dapil</option>
                       @foreach($dapil as $dap)
-                          <option value="{{ $dap->id }}" <?php echo $data->id_dapil == $dap->id ? 'selected' : ''; ?>>{{ $dap->dapil }}</option>
+                          @if($data->id_dapil == $dap->id)<option value="{{ $dap->id }}" selected>{{ $dap->dapil }}</option>
+                          @endif
                       @endforeach
                     </select>
                   </div>
               </div>
+            @else
+            <div class="col-md-3 px-1 dapil" hidden="true">
+              <div class="form-group">
+                  <label for="exampleFormControlSelect1">Dapil</label>
+                  <select name="dapil" id="dapil" class="form-control">
+                    <option value="0" selected>Pilih dapil</option>
+                  </select>
+              </div>
+            </div>
             @endif
           </div>
             <input type="hidden" name="id" value="{{ $data->id }}">

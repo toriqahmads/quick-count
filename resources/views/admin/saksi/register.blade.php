@@ -1,6 +1,7 @@
 @extends('admin.basedashboard')
 @section('content')
 <script src="{{ asset('js/upload.js') }}"></script>
+<script src="{{ asset('js/getreg.js') }}"></script>
 <script type="text/javascript">
             function showNotification(from, align, msg, color){
     color = color
@@ -18,84 +19,6 @@
           }
       });
         };
-</script>
-<script type="text/javascript">
-    $(document).ready(function()
-    {
-        $("#kec").change(function()
-        {
-            var kec_id = $("#kec").val();
-            if(kec_id === '0' || kec_id === null || kec_id === undefined)
-            {
-                showNotification('top', 'right','Harap pilih kecamatan!', 'danger');
-            }
-            else
-            {
-                $.ajax({
-                  url: window.location.origin+"/data/kel/" + kec_id,
-                  type: "GET",
-                  success: function(html){
-                    var res = "<option value='0'>Kelurahan</option>";
-                    $.each(html, function(key, val)
-                    {
-                        res = res + "<option value='" + val.id_kel +"'>" + val.kel + "</option>";
-                        $("#dapil").val(val.id_dapil);
-                    });
-                    $('#kel').html(res);
-                  },
-                  error: function(xhr, Status, err) {
-                     showNotification('top', 'right','Terjadi error : '+ Status, 'danger');
-                   } 
-                });
-            }
-            return false;
-        });
-
-        $("#kel").change(function()
-        {
-            var kel_id = $("#kel").val();
-            
-            if(kel_id === '0' || kel_id === null || kel_id === undefined)
-            {
-                showNotification('top', 'right','Harap pilih kelurahan!', 'danger');
-            }
-            else
-            {
-                $.ajax({
-                  url: window.location.origin+"/data/tps/" + kel_id,
-                  type: "GET",
-                  success: function(html){
-
-                    var res = "<option value='0'>TPS</option>";
-                    $.each(html, function(key, val)
-                    {
-                        res = res + "<option value='" + val.id_tps +"'>" + val.tps + "</option>";
-                        $("#prov").val(val.id_prov);
-                        $("#kab").val(val.id_kab);
-                    });
-                    $("#tps").html(res);
-                  },
-                  error: function(xhr, Status, err) {
-                     showNotification('top', 'right','Terjadi error : '+ Status, 'danger');
-                   } 
-                });
-            }
-            return false;
-        });
-
-        $("#gender").change(function()
-        {
-            var gender = $("#gender").val();
-            if(gender === '0' || gender === null || gender === undefined)
-            {
-                showNotification('top', 'right','Harap pilih jenis kelamin!', 'danger');
-            }
-            else
-            {
-                return false;
-            }
-        });
-    });
 </script>
 @if(\Session::has('alert'))
     <script type="text/javascript">
@@ -140,13 +63,13 @@
           <form class="form" method="post" action="{{ url('/saksi/registerPost') }}" enctype="multipart/form-data">
             {{ csrf_field() }}
             <div class="row">
-              <div class="col-md-6 pl-1">
+              <div class="col-md-6 px-1">
                 <div class="form-group">
                   <label>Nama Depan</label>
                   <input type="text" name="fname" class="form-control" placeholder="Nama Depan" value="{{ old('fname') }}">
                 </div>
               </div>
-              <div class="col-md-6 pr-1">
+              <div class="col-md-6 px-1">
                 <div class="form-group">
                   <label>Nama Belakang</label>
                   <input type="text" name="lname" class="form-control" placeholder="Nama Belakang" value="{{ old('lname') }}">
@@ -154,7 +77,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-4 pl-1">
+              <div class="col-md-4 px-1">
                 <div class="form-group">
                   <label>NIK</label>
                   <input type="text" name="nik" class="form-control" placeholder="Nomor NIK" value="{{ old('nik') }}">
@@ -166,7 +89,7 @@
                   <input type="text" name="telp" placeholder="Nomor HP" class="form-control" value="{{ old('telp') }}">
                 </div>
               </div>
-              <div class="col-md-4 pr-1">
+              <div class="col-md-4 px-1">
                   <div class="form-group">
                     <label>Jenis Kelamin</label>
                   <select name="gender" id="gender" class="form-control">
@@ -214,16 +137,16 @@
           </div>
           <div class="row">
             <div class="col-md-6 px-1">
-              <div class="form-group">
-              <label>Alamat</label>
-              <input type="text" name="alamat" class="form-control" id="inputAddress" placeholder="Alamat" value="{{ old('alamat') }}">
-            </div>
-            </div>
-            <div class="col-md-6 px-1">
                 <label>TPS</label>
                   <select name="tps" id="tps" class="form-control">
                     <option value="0" selected>Pilih TPS</option>
                   </select>
+            </div>
+            <div class="col-md-6 px-1">
+              <div class="form-group">
+              <label>Alamat</label>
+              <input type="text" name="alamat" class="form-control" id="inputAddress" placeholder="Alamat" value="{{ old('alamat') }}">
+            </div>
             </div>
         </div>
           <div class="row">
@@ -233,7 +156,7 @@
                   <input type="password" name="password" class="form-control" placeholder="Password">
                 </div>
               </div>
-              <div class="col-md-6 pr-1">
+              <div class="col-md-6 px-1">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Konfirmasi Password</label>
                   <input type="password" name="confirmation" placeholder="Confirm Password" class="form-control" />

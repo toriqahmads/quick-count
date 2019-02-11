@@ -23,6 +23,7 @@ Route::get('/', function () {
 Route::group(['prefix' => 'data'], function()
 {
 	Route::get('/prov', 'dataController@getProv')->name('prov');
+	Route::get('/provid/{id}', 'dataController@getProvById')->name('provid');
 	Route::get('/kaball/', 'dataController@getAllKab')->name('kaball');
 	Route::get('/kab/{id_prov}', 'dataController@getKab')->name('kab');
 	Route::get('/kabid/{id_kab}', 'dataController@getKabById')->name('kabid');
@@ -35,6 +36,8 @@ Route::group(['prefix' => 'data'], function()
 	Route::get('/dapilkab/{prov}/{kab}/{jenis}', 'dataController@getDapilByKab')->name('dapilkab');
 	Route::get('/partai', 'dataController@getPartai')->name('partai');
 	Route::get('/caleg/{id_dapil}/{id_partai}/{tingkat}', 'dataController@getCaleg')->name('caleg');
+	Route::get('/calegdpd/{prov}/{id_partai}/{tingkat}', 'dataController@getCalegDpd')->name('caleg.dpd');
+	Route::get('/getpres/{id_partai}/{tingkat}', 'dataController@getAllPres')->name('pres');
 });
 
 /*
@@ -106,6 +109,12 @@ Route::group(['prefix' => 'tps'], function()
 Route::group(['prefix' => 'suara'], function()
 {
 	Route::get('/register', 'suaraController@registerSuara')->name('register.suara');
+	Route::get('/register/dprkab', 'suaraController@registerDprKab')->name('register.dprkab');
+	Route::get('/register/dprprov', 'suaraController@registerDprProv')->name('register.dprprov');
+	Route::get('/register/dprri', 'suaraController@registerDprRi')->name('register.dprri');
+	Route::get('/register/dpd', 'suaraController@registerDpd')->name('register.dpd');
+	Route::get('/register/presiden', 'suaraController@registerPres')->name('register.presiden');
+	Route::post('/registerForm', 'suaraController@registerForm')->name('register.form');
 	Route::get('/suarapartai/{id_dapil}/{id_partai}/{id_tps}', 'suaraController@getAllSuaraPartai')->name('suarapartai');
 	Route::get('/suarapartaibysaksi/{id_dapil}/{id_partai}/{id_tps}/{id_saksi}', 'suaraController@getAllSuaraPartaiBySaksi')->name('suarapartaisaksi');
 	Route::get('/suarapartaibydapil/{id_dapil}/{id_partai}', 'suaraController@getAllSuaraPartaiByDapil')->name('suarapartaibydapil');

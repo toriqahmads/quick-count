@@ -64,7 +64,7 @@
           <form class="form" method="post" action="{{ url('/tps/updateTPS') }}">
             {{ csrf_field() }}
             <div class="row">
-              <div class="col-md-6 pl-1">
+              <div class="col-md-12 px-1">
                 <div class="form-group">
                   <label>Nama TPS</label>
                   <input type="text" name="tps" class="form-control" id='ntps' placeholder="Nama TPS" value="{{ $data->tps }}">
@@ -72,7 +72,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-4 px-1">
+              <div class="col-md-3 px-1">
                 <div class="form-group">
                   <label for="exampleFormControlSelect1">Provinsi</label>
                   <select name="prov" class="form-control" id="prov">
@@ -80,66 +80,38 @@
                   </select>
                 </div>
               </div>
-              <div class="col-md-4 pr-1">
-                <div class="form-group">
-                  <label>Dapil</label>
-                  <input id="dapil" name="dapil" type="text" class="form-control" placeholder="Dapil" value="{{ $data->id_dapil }}">
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-4 pl-1">
+              <div class="col-md-3 px-1">
                 <div class="form-group">
                   <label for="exampleFormControlSelect1">Kabupaten</label>
                   <select name="kab" class="form-control" id="kab">
-                    <option value="{{ $data->id_kab }}">{{ $data->kab }}</option>
+                    @foreach($kab as $kab)
+                      <option value="{{ $kab->id }}" <?php echo $data->id_kab == $kab->id ? 'selected' : ''?>>{{ $kab->kab }}</option>
+                    @endforeach
                   </select>
                 </div>
               </div>
-              <div class="col-md-4 px-1">
+              <div class="col-md-3 px-1">
                 <div class="form-group">
                   <label for="exampleFormControlSelect1">Kecamatan</label>
                   <select name="kec" class="form-control" id="kec">
                     <option value="0">Kecamatan</option>
-                    @foreach($kecs as $kec)
-                    {
-                      @if($kec->kec != $data->kec)
-                      {
-                        <option value="{{ $kec->id_kec }}">{{ $kec->kec }}</option>
-                      }
-                      @else
-                      {
-                        <option value="{{ $kec->id_kec }}" selected>{{ $kec->kec }}</option>
-                      }
-                      @endif
-                    }
+                    @foreach($kec as $kec)
+                      <option value="{{ $kec->id_kec }}" <?php echo $data->id_kec == $kec->id_kec ? 'selected' : ''?>>{{ $kec->kec }}</option>
                     @endforeach
                   </select>
                 </div>
               </div>
-              <div class="col-md-4 pr-1">
+              <div class="col-md-3 px-1">
                 <div class="form-group">
                   <label for="exampleFormControlSelect1">Kelurahan</label>
                   <select name="kel" class="form-control" id="kel">
                     <option value="0">Kelurahan</option>
-                    @foreach($kels as $kel)
-                    {
-                      @if($kel->id_kel != $data->id_kel)
-                      {
-                        <option value="{{ $kel->id_kel }}">{{ $kel->kel }}</option>
-                      }
-                      @else
-                      {
-                        <option value="{{ $kel->id_kel }}" selected>{{ $kel->kel }}</option>
-                      }
-                      @endif
-                    }
+                    @foreach($kel as $kel)
+                      <option value="{{ $kel->id_kel }}" <?php echo $data->id_kel == $kel->id_kel ? 'selected' : ''?>>{{ $kel->kel }}</option>
                     @endforeach
                   </select>
                 </div>
               </div>
-            </div>
-            <div class="row">
             </div>
             <input type="hidden" name="id" value="{{ $data->id }}">
             <div class="input-group form-group-no-border input-lg">

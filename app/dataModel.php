@@ -13,6 +13,14 @@ class dataModel extends Model
         return $data;
     }
 
+    function getProvById($id)
+    {
+        $data = DB::table('prov')
+                ->where('id', $id)
+                ->get();
+        return $data;
+    }
+
 	function getKab($id_prov)
     {
     	$data = DB::table('kab')
@@ -116,6 +124,7 @@ class dataModel extends Model
     function getPartai()
     {
         $data = DB::table('partai')
+                ->orderBy('no_urut', 'asc')
                 ->get();
         return $data;
     }
@@ -130,6 +139,34 @@ class dataModel extends Model
                 ->where('partai.id', '=', $partai)
                 ->where('pil.tingkat', '=', $tingkat)
                 ->select('pil.*', 'partai.id as id_partai', 'partai.partai')
+                ->orderBy('no_urut', 'asc')
+                ->get();
+        return $data;
+    }
+
+    function getAllCalegDpd($prov, $partai, $tingkat)
+    {
+        $data = DB::table('pil')
+                ->join('partai', 'partai.id', '=', 'pil.id_partai')
+                ->where('pil.status', '=', 'l')
+                ->where('pil.id_prov', '=', $prov)
+                ->where('partai.id', '=', $partai)
+                ->where('pil.tingkat', '=', $tingkat)
+                ->select('pil.*', 'partai.id as id_partai', 'partai.partai')
+                ->orderBy('no_urut', 'asc')
+                ->get();
+        return $data;
+    }
+
+    function getAllPres($partai, $tingkat)
+    {
+        $data = DB::table('pil')
+                ->join('partai', 'partai.id', '=', 'pil.id_partai')
+                ->where('pil.status', '=', 'l')
+                ->where('partai.id', '=', $partai)
+                ->where('pil.tingkat', '=', $tingkat)
+                ->select('pil.*', 'partai.id as id_partai', 'partai.partai')
+                ->orderBy('no_urut', 'asc')
                 ->get();
         return $data;
     }
