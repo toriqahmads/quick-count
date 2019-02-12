@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 12, 2019 at 12:51 AM
+-- Generation Time: Feb 12, 2019 at 11:57 PM
 -- Server version: 5.7.22-0ubuntu18.04.1
 -- PHP Version: 7.2.7-0ubuntu0.18.04.2
 
@@ -962,7 +962,7 @@ CREATE TABLE `partai` (
 
 INSERT INTO `partai` (`id`, `partai`, `no_urut`, `foto`) VALUES
 (1, 'Demokrat', 1, 'demak.png'),
-(2, 'Golongan Karya', 2, '1534913498.jpg');
+(3, 'PDI Perjuangan', 2, 'default_avatar.jpg');
 
 -- --------------------------------------------------------
 
@@ -991,8 +991,10 @@ CREATE TABLE `pil` (
 --
 
 INSERT INTO `pil` (`id`, `nama_depan`, `nama_belakang`, `gender`, `foto`, `tingkat`, `id_prov`, `id_kab`, `id_kec`, `id_partai`, `id_dapil`, `no_urut`, `status`) VALUES
-(1, 'Irham', 'Maulana', 'l', 'default_avatar.jpg', 'a', NULL, NULL, NULL, 1, NULL, 1, 'l'),
-(2, 'Misbahul', 'Munir', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 1, 7, 2, 'l');
+(1, 'Irham', 'Maulana', 'l', 'default_avatar.jpg', 'e', 1, 1, 1, 1, 1, 1, 'l'),
+(2, 'Misbahul', 'Munir', 'l', 'default_avatar.jpg', 'e', 1, 1, 1, 1, 1, 2, 'l'),
+(3, 'Ainun', 'Rofiq', 'l', 'default_avatar.jpg', 'e', 1, 1, 1, 3, 1, 3, 'l'),
+(4, 'Amirul', 'Darmawan', 'l', 'default_avatar.jpg', 'e', 1, 1, 2, 3, 1, 5, 'l');
 
 -- --------------------------------------------------------
 
@@ -1076,7 +1078,7 @@ CREATE TABLE `saksi` (
 --
 
 INSERT INTO `saksi` (`id`, `nama_depan`, `nama_belakang`, `gender`, `alamat`, `id_kel`, `id_kec`, `id_kab`, `id_prov`, `nik`, `foto`, `telp`, `id_tps`, `status`) VALUES
-(3, 'Fadli', 'Ihsan', 'l', 'Jl. Tentara Pelajar no.47', 1, 1, 1, 1, '3302210111900006', 'default_avatar.jpg', '089668623333', 3, 'l'),
+(1, 'Fadli', 'Ihsan', 'l', 'Jl. Tentara Pelajar no.47', 1, 1, 1, 1, '3302210111900006', 'default_avatar.jpg', '089668623333', 3, 'l'),
 (4, 'Ziat', 'Ahmad', 'l', 'Jl. Wadak Sempal no.11', 1, 1, 1, 1, '3302210111900007', 'default_avatar.jpg', '089667865658', 3, 'l'),
 (17, 'Aninda', 'Najib', 'p', 'Jl. Tentara Pelajar no.47', 1, 1, 1, 1, '3322423974879076', '1549375567.jpg', '08767364776', 3, 'l'),
 (18, 'Ahmad', 'Mubaroq', 'l', 'Jl. Mulawarman no.10', 1, 1, 1, 1, '3322423974879066', 'default_avatar.jpg', '08767364772', 3, 'l');
@@ -1114,21 +1116,18 @@ CREATE TABLE `suara` (
 --
 
 INSERT INTO `suara` (`id`, `suara`, `id_caleg`, `id_saksi`, `tanggal`, `updated`, `id_tps`, `status`, `id_partai`, `jenis_suara`, `tingkat_suara`) VALUES
-(1, 123, NULL, 1, '2019-02-11 23:21:52', '2019-02-11 23:21:52', 3, 'l', 1, 'p', 'e'),
-(2, 2134, 1, 1, '2019-02-11 23:21:52', '2019-02-11 23:21:52', 3, 'l', 1, 'c', 'e'),
-(3, 12344, 2, 1, '2019-02-11 23:21:52', '2019-02-11 23:21:52', 3, 'l', 1, 'c', 'e'),
-(4, 234, NULL, 1, '2019-02-12 00:06:26', '2019-02-12 00:06:26', 3, 'l', 1, 'p', 'd'),
-(5, 565, 1, 1, '2019-02-12 00:06:26', '2019-02-12 00:06:26', 3, 'l', 1, 'c', 'd'),
-(6, 789, 2, 1, '2019-02-12 00:06:27', '2019-02-12 00:06:27', 3, 'l', 1, 'c', 'd'),
-(7, 123, NULL, 1, '2019-02-12 00:12:13', '2019-02-12 00:12:13', 3, 'l', 1, 'p', 'c'),
-(8, 134, 1, 1, '2019-02-12 00:12:13', '2019-02-12 00:12:13', 3, 'l', 1, 'c', 'c'),
-(9, 123, 2, 1, '2019-02-12 00:12:13', '2019-02-12 00:12:13', 3, 'l', 1, 'c', 'c'),
-(10, 839, NULL, 1, '2019-02-12 00:38:42', '2019-02-12 00:38:42', 3, 'l', 1, 'p', 'b'),
-(11, 834, 1, 1, '2019-02-12 00:38:42', '2019-02-12 00:38:42', 3, 'l', 1, 'c', 'b'),
-(12, 878, NULL, 1, '2019-02-12 00:44:42', '2019-02-12 00:44:42', 6, 'l', 1, 'p', 'c'),
-(13, 897, 2, 1, '2019-02-12 00:44:42', '2019-02-12 00:44:42', 6, 'l', 1, 'c', 'c'),
-(14, 98, NULL, 1, '2019-02-12 00:50:26', '2019-02-12 00:50:26', 0, 'l', 1, 'p', 'b'),
-(15, 89, 1, 1, '2019-02-12 00:50:26', '2019-02-12 00:50:26', 0, 'l', 1, 'c', 'b');
+(1, 234, NULL, 1, '2019-02-12 20:53:35', '2019-02-12 20:53:35', 3, 'l', 1, 'p', 'e'),
+(2, 123, 1, 1, '2019-02-12 20:53:35', '2019-02-12 20:53:35', 3, 'l', 1, 'c', 'e'),
+(3, 456, 2, 1, '2019-02-12 20:53:35', '2019-02-12 20:53:35', 3, 'l', 1, 'c', 'e'),
+(4, 98, NULL, 1, '2019-02-12 21:19:27', '2019-02-12 21:19:27', 3, 'l', 3, 'p', 'e'),
+(5, 79, 3, 1, '2019-02-12 21:19:27', '2019-02-12 21:19:27', 3, 'l', 3, 'c', 'e'),
+(6, 90, 4, 1, '2019-02-12 21:19:27', '2019-02-12 21:19:27', 3, 'l', 3, 'c', 'e'),
+(7, 98, NULL, 1, '2019-02-12 23:51:20', '2019-02-12 23:51:20', 8, 'l', 1, 'p', 'e'),
+(8, 67, 1, 1, '2019-02-12 23:51:20', '2019-02-12 23:51:20', 8, 'l', 1, 'c', 'e'),
+(9, 89, 2, 1, '2019-02-12 23:51:20', '2019-02-12 23:51:20', 8, 'l', 1, 'c', 'e'),
+(10, 90, NULL, 1, '2019-02-12 23:51:27', '2019-02-12 23:51:27', 8, 'l', 3, 'p', 'e'),
+(11, 65, 3, 1, '2019-02-12 23:51:27', '2019-02-12 23:51:27', 8, 'l', 3, 'c', 'e'),
+(12, 89, 4, 1, '2019-02-12 23:51:27', '2019-02-12 23:51:27', 8, 'l', 3, 'c', 'e');
 
 -- --------------------------------------------------------
 
@@ -1153,7 +1152,8 @@ INSERT INTO `tps` (`id`, `tps`, `id_kel`, `id_kec`, `id_kab`, `id_prov`) VALUES
 (3, 'TPS 1', 1, 1, 1, 1),
 (5, 'TPS 1', 70, 5, 1, 1),
 (6, 'TPS 2', 2, 1, 1, 1),
-(7, 'TPS 2', 2, 1, 1, 1);
+(7, 'TPS 2', 2, 1, 1, 1),
+(8, 'TPS 1', 20, 2, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1331,12 +1331,12 @@ ALTER TABLE `kel`
 -- AUTO_INCREMENT for table `partai`
 --
 ALTER TABLE `partai`
-  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `pil`
 --
 ALTER TABLE `pil`
-  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `proof`
 --
@@ -1361,12 +1361,12 @@ ALTER TABLE `saksi`
 -- AUTO_INCREMENT for table `suara`
 --
 ALTER TABLE `suara`
-  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `tps`
 --
 ALTER TABLE `tps`
-  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `users`
 --

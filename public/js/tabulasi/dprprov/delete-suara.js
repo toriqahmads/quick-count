@@ -1,10 +1,9 @@
-$(".hapus").on('click', function(e){
+$(document).on('click', 'input[name="hapus"]', function(e){
     e.preventDefault();
     id = $(this).parents("form").attr("id");
-    idtr = $(this).parents("tr").attr("id");
     $.confirm({
         title: 'Konfirmasi',
-        content: 'Anda yakin akan menghapus data caleg tersebut?',
+        content: 'Anda yakin akan menghapus data suara tersebut?',
         type: 'red',
         typeAnimated: true,
         boxWidth: '30%',
@@ -16,18 +15,21 @@ $(".hapus").on('click', function(e){
             Yakin: {
                 btnClass: 'btn-red',
                 action : function(){
+                $("#"+id+" :input").prop("disabled", false);
                 $.ajax({
-                       url: $('#'+id).attr('action'),
+                       url: window.location.origin+"/suara/delete",
                        type: 'POST',
-                       data: $('#'+id).serialize(),
+                       data: $('#'+id).serialize()+"&_method=DELETE",
                        success: function(response) 
                        {
-                         jQuery.alert('Data TPS berhasil dihapus!');
-                         $('#'+idtr).remove();
+                         jQuery.alert('Data suara berhasil dihapus!');
+                         $('#'+id).remove();
                        },
                        error: function(xhr, Status, err)
                        {
                          jQuery.alert(Status);
+                         $("#"+id+" :input").prop("disabled", true);
+                         $("#"+id+" :input[type='submit']").prop("disabled", false);
                        }
                     });
                 }

@@ -723,42 +723,4 @@ class suaraController extends Controller
 	        }
     	}
 	}
-
-	function getAllSuaraPartaiForChartByDapil($id_dapil)
-    {
-    	if(!Session::get('login'))
-	    {
-	    	return redirect('/')->with('Anda harus login terlebih dahulu');
-	    }
-	    elseif(Session::get('role') != 'admin')
-	    {
-	    	return redirect('admin/login')->with('Forbidden');
-	    }
-	    else
-	    {
-	    	$req = new suaraModel();
-    		$req = $req->getAllSuaraPartaiForChartByDapil($id_dapil);
-
-    		return $req;
-	    }
-    }
-
-    function getAllSuaraPartaiForChartByTps($id_dapil, $id_tps)
-    {
-    	if(!Session::get('login'))
-	    {
-	    	return redirect('/')->with('Anda harus login terlebih dahulu');
-	    }
-	    elseif(Session::get('role') != 'admin')
-	    {
-	    	return redirect('admin/login')->with('Forbidden');
-	    }
-	    else
-	    {
-	    	$req = new suaraModel();
-    		$req = $req->getAllSuaraPartaiForChartByTps($id_dapil, $id_tps);
-
-    		return $req;
-	    }
-    }
 }

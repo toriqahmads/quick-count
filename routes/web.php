@@ -126,14 +126,9 @@ Route::group(['prefix' => 'suara'], function()
 
 	Route::get('/suarapartai/{id_partai}/{id_tps}/{tingkat}', 'suaraController@getAllSuaraPartai')->name('suarapartai');
 	Route::get('/suarapartaibysaksi/{id_partai}/{id_tps}/{id_saksi}/{tingkat}', 'suaraController@getAllSuaraPartaiBySaksi')->name('suarapartaisaksi');
-	Route::get('/suarapartaibydapil/{id_dapil}/{id_partai}', 'suaraController@getAllSuaraPartaiByDapil')->name('suarapartaibydapil');
-
-	Route::get('/suarapartaibydapilforchart/{id_dapil}', 'suaraController@getAllSuaraPartaiForChartByDapil')->name('suarapartaibydapilforchart');
-	Route::get('/suarapartaibytpsforchart/{id_dapil}/{id_tps}', 'suaraController@getAllSuaraPartaiForChartByTps')->name('suarapartaibytpsforchart');
 
 	Route::get('/suaracaleg/{id_partai}/{id_tps}/{tingkat}', 'suaraController@getAllSuaraCaleg')->name('suarapartai');
 	Route::get('/suaracalegbysaksi/{id_partai}/{id_tps}/{id_saksi}/{tingkat}', 'suaraController@getAllSuaraCalegBySaksi')->name('suaracalegsaksi');
-	Route::get('/suaracalegbydapil/{id_dapil}/{id_partai}', 'suaraController@getAllSuaraCalegByDapil')->name('suaracalegbydapil');
 
 	Route::get('/view', 'suaraController@viewSuara')->name('view.suara');
 	Route::delete('/delete', 'suaraController@deleteSuara')->name('delete.suara');
@@ -143,6 +138,17 @@ Route::group(['prefix' => 'suara'], function()
 
 Route::group(['prefix' => 'tabulasi'], function()
 {
-	Route::get('/dapil', 'tabulasiController@tabulasiDapil')->name('tabulasi.dapil');
-	Route::get('/tps', 'tabulasiController@tabulasiTps')->name('tabulasi.tps');
+	Route::get('/view', 'tabulasiController@tabulasi')->name('tabulasi');
+	Route::get('/tabulasi/{tingkat}/{jenis}', 'tabulasiController@viewTabulasi')->name('view.tabulasi');
+	Route::post('/viewForm', 'tabulasiController@viewForm')->name('tabulasi.form');
+
+	Route::get('/partai/tps/{tps}/{tingkat}', 'tabulasiController@tabulasiPartaiByTps')->name('partai.tps');
+	Route::get('/partai/kel/{kel}/{tingkat}', 'tabulasiController@tabulasiPartaiByKel')->name('partai.kel');
+	Route::get('/partai/kec/{kec}/{tingkat}', 'tabulasiController@tabulasiPartaiByKec')->name('partai.kec');
+	Route::get('/partai/dapil/{dapil}/{tingkat}', 'tabulasiController@tabulasiPartaiByDapil')->name('partai.dapil');
+
+	Route::get('/caleg/tps/{partai}/{tps}/{tingkat}', 'tabulasiController@tabulasiCalegByTps')->name('caleg.tps');
+	Route::get('/caleg/kel/{partai}/{kel}/{tingkat}', 'tabulasiController@tabulasiCalegByKel')->name('caleg.kel');
+	Route::get('/caleg/kec/{partai}/{kec}/{tingkat}', 'tabulasiController@tabulasiCalegByKec')->name('caleg.kec');
+	Route::get('/caleg/dapil/{partai}/{dapil}/{tingkat}', 'tabulasiController@tabulasiCalegByDapil')->name('caleg.dapil');
 });

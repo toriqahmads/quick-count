@@ -46,16 +46,10 @@
               <p>Home</p>
             </a>
           </li>
-          <li id='tabdapil'>
-            <a href="{{ url('/tabulasi/dapil') }}" class="sidemenu">
+          <li id='tabulasi'>
+            <a href="{{ url('/tabulasi/view') }}" class="sidemenu">
               <i class="now-ui-icons business_chart-bar-32"></i>
-              <p>Tabulasi by Dapil</p>
-            </a>
-          </li>
-          <li id='tabtps'>
-            <a href="{{ url('/tabulasi/tps') }}" class="sidemenu">
-              <i class="now-ui-icons business_chart-bar-32"></i>
-              <p>Tabulasi by TPS</p>
+              <p>Tabulasi</p>
             </a>
           </li>
           <li id='listcaleg'>
@@ -263,13 +257,9 @@
       {
         $("#listpartai").addClass('active');
       }
-      else if(pathname == '/tabulasi/dapil')
+      else if(pathname == '/tabulasi/view')
       {
-        $("#tabdapil").addClass('active');
-      }
-      else if(pathname == '/tabulasi/tps')
-      {
-        $("#tabtps").addClass('active');
+        $("#tabulasi").addClass('active');
       }
       else
       {

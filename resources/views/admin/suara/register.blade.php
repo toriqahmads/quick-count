@@ -84,5 +84,6 @@
    	</div>
    </div>
   </div>
+</div>
 <script src="{{ asset('js/kirim-suara.js')}}" type="text/javascript"></script>
 @endsection
