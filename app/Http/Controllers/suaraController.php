@@ -275,7 +275,7 @@ class suaraController extends Controller
         }
     }
 
-    function getAllSuaraPartai($id_dapil, $id_partai, $id_tps)
+    function getAllSuaraPartai($id_partai, $id_tps, $tingkat)
     {
     	if(!Session::get('login'))
 	    {
@@ -288,13 +288,13 @@ class suaraController extends Controller
 	    else
 	    {
 	    	$req = new suaraModel();
-    		$req = $req->getAllSuaraPartai($id_dapil, $id_partai, $id_tps);
+    		$req = $req->getAllSuaraPartai($id_partai, $id_tps, $tingkat);
 
     		return $req;
 	    }
     }
 
-    function getAllSuaraPartaiBySaksi($id_dapil, $id_partai, $id_tps, $id_saksi)
+    function getAllSuaraPartaiBySaksi($id_partai, $id_tps, $id_saksi, $tingkat)
     {
     	if(!Session::get('login'))
 	    {
@@ -307,7 +307,7 @@ class suaraController extends Controller
 	    else
 	    {
 	    	$req = new suaraModel();
-    		$req = $req->getAllSuaraPartaiBySaksi($id_dapil, $id_partai, $id_tps, $id_saksi);
+    		$req = $req->getAllSuaraPartaiBySaksi($id_partai, $id_tps, $id_saksi, $tingkat);
 
     		return $req;
 	    }
@@ -332,7 +332,7 @@ class suaraController extends Controller
 	    }
     }
 
-    function getAllSuaraCaleg($id_dapil, $id_partai, $id_tps)
+    function getAllSuaraCaleg($id_partai, $id_tps, $tingkat)
     {
     	if(!Session::get('login'))
 	    {
@@ -345,7 +345,7 @@ class suaraController extends Controller
 	    else
 	    {
 	    	$req = new suaraModel();
-    		$req = $req->getAllSuaraCaleg($id_dapil, $id_partai, $id_tps);
+    		$req = $req->getAllSuaraCaleg($id_partai, $id_tps, $tingkat);
 
     		return $req;
 	    }
@@ -386,24 +386,6 @@ class suaraController extends Controller
     		$req = $req->getAllSuaraCalegByDapil($id_dapil, $id_partai);
 
     		return $req;
-	    }
-    }
-
-    function editSuara($id_partai)
-    {
-	    if(!Session::get('login'))
-	    {
-	    	return redirect('/')->with('alert', 'Maaf Anda harus login terlebih dahulu!');
-	    }
-	    elseif(Session::get('role') != 'admin' && Session::get('role') != 'saksi')
-	    {
-	    	return redirect('/')->with('alert', 'Forbidden!');
-	    }
-	    else
-	    {
-	    	$data = new partaiModel();
-	    	$data = $data->getProfile($id_partai);
-	    	return view('admin.suara.edit', compact('data'));
 	    }
     }
 
@@ -459,6 +441,7 @@ class suaraController extends Controller
 		        	$data['caleg'] = $id_caleg;
 		        	$data['partai'] = $id_partai;
 		        	$data['jenis'] = 'c';
+		        	$data['tingkat'] = $input['tingkat'];
 
 		        	$proses->updateSuara($data);
 
@@ -481,7 +464,71 @@ class suaraController extends Controller
 
     function viewSuara()
     {
-	    if(!Session::get('login'))
+    	if(!Session::get('login'))
+	    {
+	    	return redirect('/')->with('alert', 'Maaf Anda harus login terlebih dahulu!');
+	    }
+	    elseif(Session::get('role') != 'admin' && Session::get('role') != 'saksi')
+	    {
+	    	return redirect('/')->with('alert', 'Forbidden!');
+	    }
+	    else
+	    {
+	    	if(Session::get('role') == 'admin')
+	    	{
+	    		return view('admin.suara.view');
+	    	}
+	    	else
+	    	{
+	    		return view('saksi.suara.view');
+	    	}
+	    }
+    }
+
+    function viewForm(Request $request)
+    {
+    	if(!Session::get('login'))
+	    {
+	    	return redirect('/')->with('alert', 'Maaf Anda harus login terlebih dahulu!');
+	    }
+	    elseif(Session::get('role') != 'admin' && Session::get('role') != 'saksi')
+	    {
+	    	return redirect('/')->with('alert', 'Forbidden!');
+	    }
+	    else
+	    {
+	    	$jenis = $request->jenis;
+	    	$data = new dataModel();
+	    	$partai = $data->getPartai();
+	    	$form = '';
+	  		if($jenis == 'a')
+	  		{
+	  			$form = 'presiden';
+	  		}
+	  		elseif($jenis == 'b')
+	  		{
+	  			$form = 'dpd';
+	  		}
+	  		elseif($jenis == 'c')
+	  		{
+	  			$form = 'dprri';
+	  		}
+	  		elseif($jenis == 'd')
+	  		{
+	  			$form = 'dprprov';
+	  		}
+	  		elseif($jenis == 'e')
+	  		{
+	  			$form = 'dprkab';
+	  		}
+
+  			return redirect()->route('view.'.$form);
+	    }
+    }
+
+    function viewDprKab()
+    {
+    	if(!Session::get('login'))
 	    {
 	    	return redirect('/')->with('alert', 'Maaf Anda harus login terlebih dahulu!');
 	    }
@@ -492,17 +539,119 @@ class suaraController extends Controller
 	    else
 	    {
 	    	$data = new dataModel();
-	    	$dapil = $data->getDapil();
+	    	$prov = $data->getProv();
 	    	$partai = $data->getPartai();
-	    	$kec = $data->getKec(1);
-
 	    	if(Session::get('role') == 'admin')
 	    	{
-	    		return view('admin.suara.view', compact('dapil', 'partai', 'kec'));
+	    		return view('admin.suara.vdprkab', compact('prov', 'partai'));
 	    	}
 	    	else
 	    	{
-	    		return view('saksi.suara.view', compact('dapil', 'partai', 'kec'));
+	    		return view('saksi.suara.vdprkab', compact('prov', 'partai'));
+	    	}
+	    }
+    }
+
+    function viewDprProv()
+    {
+    	if(!Session::get('login'))
+	    {
+	    	return redirect('/')->with('alert', 'Maaf Anda harus login terlebih dahulu!');
+	    }
+	    elseif(Session::get('role') != 'admin' && Session::get('role') != 'saksi')
+	    {
+	    	return redirect('/')->with('alert', 'Forbidden!');
+	    }
+	    else
+	    {
+	    	$data = new dataModel();
+	    	$prov = $data->getProv();
+	    	$partai = $data->getPartai();
+	    	if(Session::get('role') == 'admin')
+	    	{
+	    		return view('admin.suara.vdprprov', compact('prov', 'partai'));
+	    	}
+	    	else
+	    	{
+	    		return view('saksi.suara.vdprprov', compact('prov', 'partai'));
+	    	}
+	    }
+    }
+
+    function viewDprRi()
+    {
+    	if(!Session::get('login'))
+	    {
+	    	return redirect('/')->with('alert', 'Maaf Anda harus login terlebih dahulu!');
+	    }
+	    elseif(Session::get('role') != 'admin' && Session::get('role') != 'saksi')
+	    {
+	    	return redirect('/')->with('alert', 'Forbidden!');
+	    }
+	    else
+	    {
+	    	$data = new dataModel();
+	    	$prov = $data->getProv();
+	    	$partai = $data->getPartai();
+	    	if(Session::get('role') == 'admin')
+	    	{
+	    		return view('admin.suara.vdprri', compact('prov', 'partai'));
+	    	}
+	    	else
+	    	{
+	    		return view('saksi.suara.vdprri', compact('prov', 'partai'));
+	    	}
+	    }
+    }
+
+    function viewDpd()
+    {
+    	if(!Session::get('login'))
+	    {
+	    	return redirect('/')->with('alert', 'Maaf Anda harus login terlebih dahulu!');
+	    }
+	    elseif(Session::get('role') != 'admin' && Session::get('role') != 'saksi')
+	    {
+	    	return redirect('/')->with('alert', 'Forbidden!');
+	    }
+	    else
+	    {
+	    	$data = new dataModel();
+	    	$prov = $data->getProv();
+	    	$partai = $data->getPartai();
+	    	if(Session::get('role') == 'admin')
+	    	{
+	    		return view('admin.suara.vdpd', compact('prov', 'partai'));
+	    	}
+	    	else
+	    	{
+	    		return view('saksi.suara.vdpd', compact('prov', 'partai'));
+	    	}
+	    }
+    }
+
+    function viewPres()
+    {
+    	if(!Session::get('login'))
+	    {
+	    	return redirect('/')->with('alert', 'Maaf Anda harus login terlebih dahulu!');
+	    }
+	    elseif(Session::get('role') != 'admin' && Session::get('role') != 'saksi')
+	    {
+	    	return redirect('/')->with('alert', 'Forbidden!');
+	    }
+	    else
+	    {
+	    	$data = new dataModel();
+	    	$prov = $data->getProv();
+	    	$partai = $data->getPartai();
+	    	if(Session::get('role') == 'admin')
+	    	{
+	    		return view('admin.suara.vpres', compact('prov', 'partai'));
+	    	}
+	    	else
+	    	{
+	    		return view('saksi.suara.vpres', compact('prov', 'partai'));
 	    	}
 	    }
     }

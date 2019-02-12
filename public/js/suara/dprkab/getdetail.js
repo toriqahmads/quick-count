@@ -143,7 +143,7 @@ $(document).ready(function()
             type: "GET",
             success: function(html){
 
-              var res = "<option value'0'>TPS</option>";
+              var res = "<option value='0'>TPS</option>";
               $.each(html, function(key, val)
               {
                   res = res + "<option value='" + val.id_tps +"'>" + val.tps + "</option>";

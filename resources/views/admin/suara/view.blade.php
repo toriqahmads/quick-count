@@ -62,69 +62,32 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-body">
-      <div class="row">
-      <div class="col-md-3 px-1">
-         <div class="form-group">
-              <label>Kecamatan</label>
-              <select name="kec" id="kec" class="form-control">
-                <option value="0" selected>Kecamatan</option>
-                @foreach($kec as $kecs)
-                <option value="{{ $kecs->id_kec }}">{{ $kecs->kec }}</option>
-                @endforeach
-              </select>
+          <form id="form" method="post" action="{{ url('/suara/viewForm') }}">
+        <div class="row">
+          {{ csrf_field() }}
+          <div class="col-md-4 px-1">
+          <div class="form-group">
+              <label for="exampleFormControlSelect1">Tingkatan</label>
+              <select name="jenis" class="form-control" id="jenis">
+                <option value="0" selected>Tingkatan</option>
+                    <option value="a">Presiden</option>
+                    <option value="b">DPD</option>
+                    <option value="c">DPR RI</option>
+                    <option value="d">DPR Provinsi</option>
+                    <option value="e">DPR Kabupaten</option>
+                </select>
             </div>
-        </div> 
-        <div class="col-md-3 px-1">
-          <div class="form-group">
-            <label>Kelurahan</label>
-            <select name="kel" id="kel" class="form-control">
-              <option value="0" selected>Kelurahan</option>
-            </select>
-        </div>
-        </div>
-        <div class="col-md-3 px-1">
-          <div class="form-group">
-            <label>TPS</label>
-              <select name="tps" id="tps" class="form-control">
-                <option value="0" selected>TPS</option>
-              </select>
           </div>
+            <div class="input-group form-group-no-border input-lg">
+                <input type="submit" class="btn-primary btn btn-round btn-block" value="Go" />
+            </div>
         </div>
-        <div class="col-md-3 px-1">
-          <div class="form-group">
-            <label>Dapil</label>
-              <select name="dapil" id="dapil" class="form-control">
-                <option value="0" selected>Dapil</option>
-                @foreach($dapil as $dap)
-                    <option value="{{ $dap->id }}">{{ $dap->id }}</option>
-                @endforeach
-              </select>
-          </div>
-        </div>
-        <input type="hidden" id="saksi" name="saksi" value="{{Session::get('id')}}">
-      </div>
+          </form>
       </div>
     </div>
    </div>
-
-   @foreach($partai as $part)
-   <div class="col-md-3">
-      <div class="card">
-        <div class="card-header">
-          <h5 class="title">{{$part->partai}}</h5>
-        </div>
-        <div class="card-body">
-          <form id="suara{{$part->id}}" class="form" method="post" action="{{ url('/suara/updateSuara') }}" enctype="multipart/form-data">
-            {{ csrf_field() }}
-            <div class="row" id="{{$part->id}}">
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-    @endforeach
   </div>
-</div>
-<!--<script src="{{ asset('js/kirim-suara.js')}}" type="text/javascript"></script>-->
+<script src="{{ asset('js/kirim-suara.js')}}" type="text/javascript"></script>
 
+<!--<script src="{{ asset('js/kirim-suara.js')}}" type="text/javascript"></script>-->
 @endsection

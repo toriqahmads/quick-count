@@ -115,18 +115,26 @@ Route::group(['prefix' => 'suara'], function()
 	Route::get('/register/dpd', 'suaraController@registerDpd')->name('register.dpd');
 	Route::get('/register/presiden', 'suaraController@registerPres')->name('register.presiden');
 	Route::post('/registerForm', 'suaraController@registerForm')->name('register.form');
-	Route::get('/suarapartai/{id_dapil}/{id_partai}/{id_tps}', 'suaraController@getAllSuaraPartai')->name('suarapartai');
-	Route::get('/suarapartaibysaksi/{id_dapil}/{id_partai}/{id_tps}/{id_saksi}', 'suaraController@getAllSuaraPartaiBySaksi')->name('suarapartaisaksi');
+	Route::post('/view', 'suaraController@viewSuara')->name('view.suara');
+	Route::post('/viewForm', 'suaraController@viewForm')->name('view.form');
+	Route::get('/view/dprkab', 'suaraController@viewDprKab')->name('view.dprkab');
+	Route::get('/view/dprprov', 'suaraController@viewDprProv')->name('view.dprprov');
+	Route::get('/view/dprri', 'suaraController@viewDprRi')->name('view.dprri');
+	Route::get('/view/dpd', 'suaraController@viewDpd')->name('view.dpd');
+	Route::get('/view/presiden', 'suaraController@viewPres')->name('view.presiden');
+
+
+	Route::get('/suarapartai/{id_partai}/{id_tps}/{tingkat}', 'suaraController@getAllSuaraPartai')->name('suarapartai');
+	Route::get('/suarapartaibysaksi/{id_partai}/{id_tps}/{id_saksi}/{tingkat}', 'suaraController@getAllSuaraPartaiBySaksi')->name('suarapartaisaksi');
 	Route::get('/suarapartaibydapil/{id_dapil}/{id_partai}', 'suaraController@getAllSuaraPartaiByDapil')->name('suarapartaibydapil');
 
 	Route::get('/suarapartaibydapilforchart/{id_dapil}', 'suaraController@getAllSuaraPartaiForChartByDapil')->name('suarapartaibydapilforchart');
-
 	Route::get('/suarapartaibytpsforchart/{id_dapil}/{id_tps}', 'suaraController@getAllSuaraPartaiForChartByTps')->name('suarapartaibytpsforchart');
 
+	Route::get('/suaracaleg/{id_partai}/{id_tps}/{tingkat}', 'suaraController@getAllSuaraCaleg')->name('suarapartai');
+	Route::get('/suaracalegbysaksi/{id_partai}/{id_tps}/{id_saksi}/{tingkat}', 'suaraController@getAllSuaraCalegBySaksi')->name('suaracalegsaksi');
 	Route::get('/suaracalegbydapil/{id_dapil}/{id_partai}', 'suaraController@getAllSuaraCalegByDapil')->name('suaracalegbydapil');
-	Route::get('/suaracaleg/{id_dapil}/{id_partai}/{id_tps}', 'suaraController@getAllSuaraCaleg')->name('suarapartai');
-	Route::get('/suaracalegbysaksi/{id_dapil}/{id_partai}/{id_tps}/{id_saksi}', 'suaraController@getAllSuaraCalegBySaksi')->name('suaracalegsaksi');
-	Route::get('/edit/{id}', 'suaraController@editSuara')->name('edit.suara');
+
 	Route::get('/view', 'suaraController@viewSuara')->name('view.suara');
 	Route::delete('/delete', 'suaraController@deleteSuara')->name('delete.suara');
 	Route::post('/updateSuara', 'suaraController@updateSuara')->name('update.suara');

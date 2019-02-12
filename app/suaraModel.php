@@ -21,25 +21,25 @@ class suaraModel extends Model
     	return $req;
     }
 
-    function getAllSuaraPartai($id_dapil, $id_partai, $id_tps)
+    function getAllSuaraPartai($id_partai, $id_tps, $tingkat)
     {
         $data = DB::table('suara')
                 ->join('partai', 'partai.id', '=', 'suara.id_partai')
                 ->join('tps', 'tps.id', '=', 'suara.id_tps')
-                ->join('dapil', 'dapil.id', '=', 'tps.id_dapil')
                 ->join('saksi', 'saksi.id', '=', 'suara.id_saksi')
                 ->where('suara.id_tps', '=', $id_tps)
                 ->where('suara.id_partai', '=', $id_partai)
                 ->where('suara.status', '=', 'l')
                 ->where('suara.jenis_suara', '=', 'p')
-                ->where('dapil.id', '=', $id_dapil)
-                ->select('suara.id', 'suara.suara as jumlah_suara', 'suara.id_saksi', 'saksi.nama_depan as nama_depan_saksi', 'saksi.nama_belakang as nama_belakang_saksi', 'partai.id as id_partai', 'partai.partai', 'tps.id as id_tps', 'tps.tps', 'suara.jenis_suara')
+                ->where('suara.tingkat_suara', '=', $tingkat)
+                ->orderBy('partai.no_urut', 'asc')
+                ->select('suara.id', 'partai.no_urut', 'suara.suara as jumlah_suara', 'suara.id_saksi', 'saksi.nama_depan as nama_depan_saksi', 'saksi.nama_belakang as nama_belakang_saksi', 'partai.id as id_partai', 'partai.partai', 'tps.id as id_tps', 'tps.tps', 'suara.jenis_suara', 'suara.tingkat_suara')
                 ->get();
 
         return $data;
     }
 
-    function getAllSuaraPartaiBySaksi($id_dapil, $id_partai, $id_tps, $id_saksi)
+    function getAllSuaraPartaiBySaksi($id_partai, $id_tps, $id_saksi, $tingkat)
     {
         $data = DB::table('suara')
                 ->join('partai', 'partai.id', '=', 'suara.id_partai')
@@ -50,9 +50,10 @@ class suaraModel extends Model
                 ->where('suara.id_partai', '=', $id_partai)
                 ->where('suara.status', '=', 'l')
                 ->where('suara.jenis_suara', '=', 'p')
-                ->where('dapil.id', '=', $id_dapil)
                 ->where('suara.id_saksi', '=', $id_saksi)
-                ->select('suara.id', 'suara.suara as jumlah_suara', 'suara.id_saksi', 'saksi.nama_depan as nama_depan_saksi', 'saksi.nama_belakang as nama_belakang_saksi', 'partai.id as id_partai', 'partai.partai', 'tps.id as id_tps', 'tps.tps', 'suara.jenis_suara')
+                ->where('suara.tingkat_suara', '=', $tingkat) 
+                ->orderBy('partai.no_urut', 'asc')
+                ->select('suara.id', 'partai.no_urut', 'suara.suara as jumlah_suara', 'suara.id_saksi', 'saksi.nama_depan as nama_depan_saksi', 'saksi.nama_belakang as nama_belakang_saksi', 'partai.id as id_partai', 'partai.partai', 'tps.id as id_tps', 'tps.tps', 'suara.jenis_suara', 'suara.tingkat_suara')
                 ->get();
 
         return $data;
@@ -111,25 +112,26 @@ class suaraModel extends Model
         return $data;
     }
 
-    function getAllSuaraCaleg($id_dapil, $id_partai, $id_tps)
+    function getAllSuaraCaleg($id_partai, $id_tps, $tingkat)
     {
         $data = DB::table('suara')
                 ->join('partai', 'partai.id', '=', 'suara.id_partai')
                 ->join('tps', 'tps.id', '=', 'suara.id_tps')
-                ->join('dapil', 'dapil.id', '=', 'tps.id_dapil')
                 ->join('pil', 'pil.id', '=', 'suara.id_caleg')
                 ->join('saksi', 'saksi.id', '=', 'suara.id_saksi')
                 ->where('suara.id_partai', '=', $id_partai)
                 ->where('suara.status', '=', 'l')
                 ->where('suara.jenis_suara', '=', 'c')
-                ->where('dapil.id', '=', $id_dapil)
-                ->select('suara.id', 'suara.suara as jumlah_suara', 'suara.id_saksi', 'saksi.nama_depan as nama_depan_saksi', 'saksi.nama_belakang as nama_belakang_saksi', 'partai.id as id_partai', 'partai.partai', 'pil.id as id_caleg', 'pil.nama_depan as nama_depan_caleg', 'pil.nama_belakang as nama_belakang_caleg', 'tps.id as id_tps', 'tps.tps', 'suara.jenis_suara')
+                ->where('suara.tingkat_suara', '=', $tingkat)
+                ->where('suara.id_tps', '=', $id_tps)
+                ->orderBy('pil.no_urut', 'asc')
+                ->select('suara.id', 'pil.no_urut', 'suara.suara as jumlah_suara', 'suara.id_saksi', 'saksi.nama_depan as nama_depan_saksi', 'saksi.nama_belakang as nama_belakang_saksi', 'partai.id as id_partai', 'partai.partai', 'pil.id as id_caleg', 'pil.nama_depan as nama_depan_caleg', 'pil.nama_belakang as nama_belakang_caleg', 'tps.id as id_tps', 'tps.tps', 'suara.jenis_suara', 'suara.tingkat_suara')
                 ->get();
 
         return $data;
     }
 
-    function getAllSuaraCalegBySaksi($id_dapil, $id_partai, $id_tps, $id_saksi)
+    function getAllSuaraCalegBySaksi($id_partai, $id_tps, $id_saksi, $tingkat)
     {
         $data = DB::table('suara')
                 ->join('partai', 'partai.id', '=', 'suara.id_partai')
@@ -140,9 +142,10 @@ class suaraModel extends Model
                 ->where('suara.id_partai', '=', $id_partai)
                 ->where('suara.status', '=', 'l')
                 ->where('suara.jenis_suara', '=', 'c')
-                ->where('dapil.id', '=', $id_dapil)
+                ->where('suara.tingkat_suara', '=', $tingkat)
                 ->where('suara.id_saksi', '=', $id_saksi)
-                ->select('suara.id', 'suara.suara as jumlah_suara', 'suara.id_saksi', 'saksi.nama_depan as nama_depan_saksi', 'saksi.nama_belakang as nama_belakang_saksi', 'partai.id as id_partai', 'partai.partai', 'pil.id as id_caleg', 'pil.nama_depan as nama_depan_caleg', 'pil.nama_belakang as nama_belakang_caleg', 'tps.id as id_tps', 'tps.tps', 'suara.jenis_suara')
+                ->select('suara.id', 'pil.no_urut', 'suara.suara as jumlah_suara', 'suara.id_saksi', 'saksi.nama_depan as nama_depan_saksi', 'saksi.nama_belakang as nama_belakang_saksi', 'partai.id as id_partai', 'partai.partai', 'pil.id as id_caleg', 'pil.nama_depan as nama_depan_caleg', 'pil.nama_belakang as nama_belakang_caleg', 'tps.id as id_tps', 'tps.tps', 'suara.jenis_suara', 'suara.tingkat_suara')
+                ->orderBy('pil.no_urut', 'asc')
                 ->get();
 
         return $data;
