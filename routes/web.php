@@ -145,10 +145,14 @@ Route::group(['prefix' => 'tabulasi'], function()
 	Route::get('/partai/tps/{tps}/{tingkat}', 'tabulasiController@tabulasiPartaiByTps')->name('partai.tps');
 	Route::get('/partai/kel/{kel}/{tingkat}', 'tabulasiController@tabulasiPartaiByKel')->name('partai.kel');
 	Route::get('/partai/kec/{kec}/{tingkat}', 'tabulasiController@tabulasiPartaiByKec')->name('partai.kec');
+	Route::get('/partai/kab/{kab}/{tingkat}', 'tabulasiController@tabulasiPartaiByKab')->name('partai.kab');
+	Route::get('/partai/prov/{prov}/{tingkat}', 'tabulasiController@tabulasiPartaiByProv')->name('partai.prov');
 	Route::get('/partai/dapil/{dapil}/{tingkat}', 'tabulasiController@tabulasiPartaiByDapil')->name('partai.dapil');
 
 	Route::get('/caleg/tps/{partai}/{tps}/{tingkat}', 'tabulasiController@tabulasiCalegByTps')->name('caleg.tps');
 	Route::get('/caleg/kel/{partai}/{kel}/{tingkat}', 'tabulasiController@tabulasiCalegByKel')->name('caleg.kel');
 	Route::get('/caleg/kec/{partai}/{kec}/{tingkat}', 'tabulasiController@tabulasiCalegByKec')->name('caleg.kec');
+	Route::get('/caleg/kab/{partai}/{kab}/{tingkat}', 'tabulasiController@tabulasiCalegByKab')->name('caleg.kab');
+	Route::get('/caleg/prov/{partai}/{prov}/{tingkat}', 'tabulasiController@tabulasiCalegByProv')->name('caleg.prov');
 	Route::get('/caleg/dapil/{partai}/{dapil}/{tingkat}', 'tabulasiController@tabulasiCalegByDapil')->name('caleg.dapil');
 });

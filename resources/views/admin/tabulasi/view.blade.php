@@ -82,8 +82,8 @@
                     <option value="tps">TPS</option>
                     <option value="kelurahan">Kelurahan</option>
                     <option value="kecamatan">Kecamatan</option>
-                    <!--<option value="kabupaten">Kabupaten</option>-->
-                    <!--<option value="provinsi">Provinsi</option>-->
+                    <option value="kabupaten">Kabupaten</option>
+                    <option value="provinsi">Provinsi</option>
                     <option value="dapil">Dapil</option>
               </select>
             </div>

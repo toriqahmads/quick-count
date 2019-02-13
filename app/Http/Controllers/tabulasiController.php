@@ -185,6 +185,82 @@ class tabulasiController extends Controller
 	    }
     }
 
+    function tabulasiPartaiByKab($id_kab, $tingkat)
+    {
+    	if(!Session::get('login'))
+	    {
+	    	return redirect('/')->with('Anda harus login terlebih dahulu');
+	    }
+	    elseif(Session::get('role') != 'admin')
+	    {
+	    	return redirect('admin/login')->with('Forbidden');
+	    }
+	    else
+	    {
+	    	$req = new tabulasiModel();
+    		$req = $req->tabulasiPartaiByKab($id_kab, $tingkat);
+
+    		return $req;
+	    }
+    }
+
+    function tabulasiCalegByKab($id_partai, $id_kab, $tingkat)
+    {
+    	if(!Session::get('login'))
+	    {
+	    	return redirect('/')->with('Anda harus login terlebih dahulu');
+	    }
+	    elseif(Session::get('role') != 'admin')
+	    {
+	    	return redirect('admin/login')->with('Forbidden');
+	    }
+	    else
+	    {
+	    	$req = new tabulasiModel();
+    		$req = $req->tabulasiCalegByKab($id_partai, $id_kab, $tingkat);
+
+    		return $req;
+	    }
+    }
+
+    function tabulasiPartaiByProv($id_prov, $tingkat)
+    {
+    	if(!Session::get('login'))
+	    {
+	    	return redirect('/')->with('Anda harus login terlebih dahulu');
+	    }
+	    elseif(Session::get('role') != 'admin')
+	    {
+	    	return redirect('admin/login')->with('Forbidden');
+	    }
+	    else
+	    {
+	    	$req = new tabulasiModel();
+    		$req = $req->tabulasiPartaiByProv($id_prov, $tingkat);
+
+    		return $req;
+	    }
+    }
+
+    function tabulasiCalegByProv($id_partai, $id_prov, $tingkat)
+    {
+    	if(!Session::get('login'))
+	    {
+	    	return redirect('/')->with('Anda harus login terlebih dahulu');
+	    }
+	    elseif(Session::get('role') != 'admin')
+	    {
+	    	return redirect('admin/login')->with('Forbidden');
+	    }
+	    else
+	    {
+	    	$req = new tabulasiModel();
+    		$req = $req->tabulasiCalegByProv($id_partai, $id_prov, $tingkat);
+
+    		return $req;
+	    }
+    }
+
     function tabulasiPartaiByDapil($id_dapil, $tingkat)
     {
     	if(!Session::get('login'))
@@ -198,7 +274,14 @@ class tabulasiController extends Controller
 	    else
 	    {
 	    	$req = new tabulasiModel();
-    		$req = $req->tabulasiPartaiByDapil($id_dapil, $tingkat);
+	    	if($tingkat == 'e')
+	    	{
+	    		$req = $req->tabulasiPartaiByDapil($id_dapil, $tingkat);
+	    	}
+	    	elseif($tingkat == 'd' || $tingkat == 'c')
+	    	{
+	    		$req = $req->tabulasiPartaiByDapilKab($id_dapil, $tingkat);
+	    	}
 
     		return $req;
 	    }
@@ -217,7 +300,15 @@ class tabulasiController extends Controller
 	    else
 	    {
 	    	$req = new tabulasiModel();
-    		$req = $req->tabulasiCalegByDapil($id_partai, $id_dapil, $tingkat);
+	    	if($tingkat == 'e')
+	    	{
+	    		$req = $req->tabulasiCalegByDapil($id_partai, $id_dapil, $tingkat);
+	    	}
+	    	elseif($tingkat == 'd' || $tingkat == 'c')
+	    	{
+	    		$req = $req->tabulasiCalegByDapilKab($id_partai, $id_dapil, $tingkat);
+	    	}
+    		
 
     		return $req;
 	    }
