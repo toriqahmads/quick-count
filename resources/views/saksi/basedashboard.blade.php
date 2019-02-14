@@ -180,7 +180,7 @@
   <script src="{{ asset('js/plugins/perfect-scrollbar.jquery.min.js') }}"></script>
   <!--  Google Maps Plugin    -->
   <!-- Chart JS -->
-  <script src="{{ asset('js/plugins/chartjs.min.js') }}"></script>
+  <!--<script src="{{ asset('js/plugins/chartjs.min.js') }}"></script>-->
   <!--  Notifications Plugin    -->
   <script src="{{ asset('js/plugins/bootstrap-notify.js') }}"></script>
   <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->

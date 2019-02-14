@@ -1,7 +1,6 @@
 @extends('saksi.basedashboard')
 @section('content')
 <script src="{{ asset('js/upload.js') }}"></script>
-<script src="{{ asset('js/getdetailforsaksi.js')}}" type="text/javascript"></script>
 <script src="{{ asset('js/suara.js')}}" type="text/javascript"></script>
 <script type="text/javascript">
             function showNotification(from, align, msg, color){
@@ -58,48 +57,32 @@
 <div class="content">
   <div class="row">
   	<div class="col-md-12">
-      <!--<div class="card">
-      	<div class="card-body">
-	    <div class="row">-->
-	  	<input type="hidden" id="kec" name="kec" value="{{Session::get('id_kec')}}"> 
-	    <input type="hidden" id="kel" name="kel" value="{{Session::get('id_kel')}}">
-	  	  <!--<div class="col-md-3 px-1">
-	  	  	<div class="form-group">
-	          <label>TPS</label>
-	            <select name="tps" id="tps" class="form-control">
-	              <option value="0" selected>TPS</option>
-	            </select>
-	        </div>
-	   	  </div>-->
-	   	  <input type="hidden" id="dapil" name="dapil" value="{{Session::get('id_dapil')}}">
-        <input type="hidden" id="tps" name="tps" value="{{Session::get('id_tps')}}">
-        <input type="hidden" id="saksi" name="saksi" value="{{Session::get('id')}}">
-	   	<!--</div>
-	   	</div>
-   	</div>-->
-   </div>
-
-   @foreach($partai as $part)
-   <div class="col-md-3">
       <div class="card">
-        <div class="card-header">
-          <h5 class="title">{{$part->partai}}</h5>
-        </div>
-        <div class="card-body">
-          <form id="suara{{$part->id}}" class="form" method="post" action="{{ url('/suara/registerPostSuara') }}" enctype="multipart/form-data">
-            {{ csrf_field() }}
-            <div class="row" id="{{$part->id}}">
-              <div class="col-md-12 pl-1">
-              </div>
-          	</div>
-            <div class="input-group form-group-no-border input-lg">
-                <input type="submit" class="kirim btn-primary btn btn-round btn-block" value="Kirim" />
+      	<div class="card-body">
+          <form id="form" method="post" action="{{ url('/suara/registerForm') }}">
+        <div class="row">
+          {{ csrf_field() }}
+          <div class="col-md-4 px-1">
+          <div class="form-group">
+              <label for="exampleFormControlSelect1">Tingkatan</label>
+              <select name="jenis" class="form-control" id="jenis">
+                <option value="0" selected>Tingkatan</option>
+                    <option value="a">Presiden</option>
+                    <option value="b">DPD</option>
+                    <option value="c">DPR RI</option>
+                    <option value="d">DPR Provinsi</option>
+                    <option value="e">DPR Kabupaten</option>
+                </select>
             </div>
-          </form>
+          </div>
+            <div class="input-group form-group-no-border input-lg">
+                <input type="submit" class="btn-primary btn btn-round btn-block" value="Go" />
+            </div>
         </div>
-      </div>
-    </div>
-    @endforeach
+          </form>
+	   	</div>
+   	</div>
+   </div>
   </div>
 </div>
 <script src="{{ asset('js/kirim-suara.js')}}" type="text/javascript"></script>

@@ -1,4 +1,4 @@
-@extends('admin.base')
+@extends('saksi.base')
 @section('content')
 <script type="text/javascript">
     $(document).ready(function()

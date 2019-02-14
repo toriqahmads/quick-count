@@ -69,10 +69,14 @@ class saksiController extends Controller
                 {
                     Session::put('username', $data->username);
                     Session::put('id', $data->id);
+                    Session::put('id_prov', $data->id_prov);
+                    Session::put('id_kab', $data->id_kab);
                     Session::put('id_kec', $data->id_kec);
                     Session::put('id_kel', $data->id_kel);
                     Session::put('id_tps', $data->id_tps);
-                    Session::put('id_dapil', $data->id_dapil);
+                    Session::put('dapil_kec', $data->dapil_kec);
+                    Session::put('dapil_kab', $data->dapil_kab);
+                    Session::put('dapil_prov', $data->dapil_prov);
                     Session::put('login', true);
                     Session::put('role', 'saksi');
 

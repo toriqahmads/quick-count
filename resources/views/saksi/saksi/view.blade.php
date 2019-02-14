@@ -23,9 +23,15 @@
           <p class="description">
             {{ $data->alamat }}, {{ $data->kel }}, {{ $data->kec }}, {{ $data->kab }}, {{ $data->prov }}
           </p>
-          <p class="description">
-              Dapil : {{ $data->id_dapil }}
+          <!--<p class="description">
+              ID Dapil Kecamatan : {{ $data->dapil_kec }}
           </p>
+          <p class="description">
+              ID Dapil Kabupaten : {{ $data->dapil_kab }}
+          </p>
+          <p class="description">
+              ID Dapil Provinsi : {{ $data->dapil_prov }}
+          </p>-->
           <p class="description">
               TPS : {{ $data->tps }}
           </p>

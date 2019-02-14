@@ -227,9 +227,6 @@ class suaraController extends Controller
         $proses = new suaraModel();
 
         $data = array();
-        $data['tps'] = $input['tps'];
-        $data['saksi'] = $input['saksi'];
-        $data['tingkat'] = $input['tingkat'];
         $req = array();
 
         foreach ($input['suarapartai'] as $id_partai => $value) 
@@ -238,6 +235,9 @@ class suaraController extends Controller
         	$data['caleg'] = null;
         	$data['partai'] = $id_partai;
         	$data['jenis'] = 'p';
+        	$data['tps'] = $input['tps'];
+	        $data['saksi'] = $input['saksi'];
+	        $data['tingkat'] = $input['tingkat'];
 
         	$proses->registerPost($data);
         	$req['suara_partai'] = "success";
@@ -313,7 +313,7 @@ class suaraController extends Controller
 	    }
     }
 
-    function getAllSuaraPartaiByDapil($id_dapil, $id_partai)
+    function getAllSuaraPartaiByDapil($id_partai, $id_tps, $id_saksi, $tingkat)
     {
     	if(!Session::get('login'))
 	    {
@@ -351,7 +351,7 @@ class suaraController extends Controller
 	    }
     }
 
-    function getAllSuaraCalegBySaksi($id_dapil, $id_partai, $id_tps, $id_saksi)
+    function getAllSuaraCalegBySaksi($id_partai, $id_tps, $id_saksi, $tingkat)
     {
     	if(!Session::get('login'))
 	    {
@@ -364,7 +364,7 @@ class suaraController extends Controller
 	    else
 	    {
 	    	$req = new suaraModel();
-    		$req = $req->getAllSuaraCalegBySaksi($id_dapil, $id_partai, $id_tps, $id_saksi);
+    		$req = $req->getAllSuaraCalegBySaksi($id_partai, $id_tps, $id_saksi, $tingkat);
 
     		return $req;
 	    }
@@ -406,15 +406,15 @@ class suaraController extends Controller
         $proses = new suaraModel();
 
         $data = array();
-        $data['tps'] = $input['tps'];
-        $data['saksi'] = $input['saksi'];
-        $data['tingkat'] = $input['tingkat'];
         $req = array();
 
         foreach ($input['suarapartai'] as $id_partai => $value) 
         {
         	foreach ($value as $id => $values) 
         	{
+        		$data['tps'] = $input['tps'];
+		        $data['saksi'] = $input['saksi'];
+		        $data['tingkat'] = $input['tingkat'];
         		$data['id'] = $id;
         		$data['suara'] = $values;
 	        	$data['caleg'] = null;
