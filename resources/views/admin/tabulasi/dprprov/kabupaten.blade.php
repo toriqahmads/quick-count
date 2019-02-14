@@ -3,6 +3,7 @@
 <script src="{{ asset('js/amchartsCore.js')}}" type="text/javascript"></script>
 <script src="{{ asset('js/amcharts.js')}}" type="text/javascript"></script>
 <script src="{{ asset('js/amchartsAnimate.js')}}" type="text/javascript"></script>
+<script src="{{ asset('js/chart.js')}}" type="text/javascript"></script>
 <script type="text/javascript">
   function showNotification(from, align, msg, color){
     color = color

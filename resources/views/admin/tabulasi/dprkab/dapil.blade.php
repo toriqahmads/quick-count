@@ -3,6 +3,7 @@
 <script src="{{ asset('js/amchartsCore.js')}}" type="text/javascript"></script>
 <script src="{{ asset('js/amcharts.js')}}" type="text/javascript"></script>
 <script src="{{ asset('js/amchartsAnimate.js')}}" type="text/javascript"></script>
+<script src="{{ asset('js/chart.js')}}" type="text/javascript"></script>
 <script type="text/javascript">
             function showNotification(from, align, msg, color){
     color = color
@@ -61,7 +62,7 @@
       <div class="card">
         <div class="card-body">
         <div class="row">
-          <h3>Tabulasi Suara DPR Kabupaten By Kecamatan</h3>
+          <h3>Tabulasi Suara DPR Kabupaten By Dapil</h3>
         </div>
       <div class="row">
         <div class="col-md-4 px-1 prov">

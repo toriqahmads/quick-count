@@ -33,7 +33,7 @@ class tabulasiModel extends Model
                 ->where('suara.status', '=', 'l')
                 ->where('suara.jenis_suara', '=', 'c')
                 ->where('suara.tingkat_suara', '=', $tingkat)
-                ->where('suara.id_partai', '=', $id_partai)
+                ->whereIn('suara.id_partai', $id_partai)
                 ->where('tps.id', '=', $id_tps)
                 ->groupBy('suara.id_caleg', 'tps.id')
                 ->get();
@@ -69,7 +69,7 @@ class tabulasiModel extends Model
                 ->where('suara.status', '=', 'l')
                 ->where('suara.jenis_suara', '=', 'c')
                 ->where('suara.tingkat_suara', '=', $tingkat)
-                ->where('suara.id_partai', '=', $id_partai)
+                ->whereIn('suara.id_partai', $id_partai)
                 ->where('kel.id', '=', $id_kel)
                 ->groupBy('suara.id_caleg', 'kel.id')
                 ->get();
@@ -105,7 +105,7 @@ class tabulasiModel extends Model
                 ->where('suara.status', '=', 'l')
                 ->where('suara.jenis_suara', '=', 'c')
                 ->where('suara.tingkat_suara', '=', $tingkat)
-                ->where('suara.id_partai', '=', $id_partai)
+                ->whereIn('suara.id_partai', $id_partai)
                 ->where('kec.id', '=', $id_kec)
                 ->groupBy('suara.id_caleg', 'kec.id')
                 ->get();
@@ -141,7 +141,7 @@ class tabulasiModel extends Model
                 ->where('suara.status', '=', 'l')
                 ->where('suara.jenis_suara', '=', 'c')
                 ->where('suara.tingkat_suara', '=', $tingkat)
-                ->where('suara.id_partai', '=', $id_partai)
+                ->whereIn('suara.id_partai', $id_partai)
                 ->where('kab.id', '=', $id_kab)
                 ->groupBy('suara.id_caleg', 'kab.id')
                 ->get();
@@ -177,7 +177,7 @@ class tabulasiModel extends Model
                 ->where('suara.status', '=', 'l')
                 ->where('suara.jenis_suara', '=', 'c')
                 ->where('suara.tingkat_suara', '=', $tingkat)
-                ->where('suara.id_partai', '=', $id_partai)
+                ->whereIn('suara.id_partai', $id_partai)
                 ->where('prov.id', '=', $id_prov)
                 ->groupBy('suara.id_caleg', 'prov.id')
                 ->get();
@@ -215,7 +215,7 @@ class tabulasiModel extends Model
                 ->where('suara.status', '=', 'l')
                 ->where('suara.jenis_suara', '=', 'c')
                 ->where('suara.tingkat_suara', '=', $tingkat)
-                ->where('suara.id_partai', '=', $id_partai)
+                ->whereIn('suara.id_partai', $id_partai)
                 ->where('dapil.id', '=', $id_dapil)
                 ->groupBy('suara.id_caleg', 'dapil.id')
                 ->get();
@@ -253,7 +253,7 @@ class tabulasiModel extends Model
                 ->where('suara.status', '=', 'l')
                 ->where('suara.jenis_suara', '=', 'c')
                 ->where('suara.tingkat_suara', '=', $tingkat)
-                ->where('suara.id_partai', '=', $id_partai)
+                ->whereIn('suara.id_partai', $id_partai)
                 ->where('dapil.id', '=', $id_dapil)
                 ->groupBy('suara.id_caleg', 'dapil.id')
                 ->get();

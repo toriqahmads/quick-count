@@ -155,7 +155,7 @@
       
                         $.each(data, function(key, val2)
                         {
-                            res = res + '<div class="col-md-12 px-1"><div class="form-group"><label>'+val2.partai+'</label><input type="number" name="suarapartai['+val2.id_partai+']['+val2.id+']" class="form-control" value="'+val2.jumlah_suara+'" placeholder="'+val2.partai+'" disabled></div></div>';
+                            res = res + '<div class="col-md-12 px-1"><div class="form-group"><label>'+val2.partai+'</label><input type="number" id="spartai'+data[0]['id']+'" name="suarapartai['+val2.id_partai+']['+val2.id+']" class="form-control" value="0" placeholder="'+val2.partai+'" disabled><b>Suara partai harus diisi 0!</b></div></div>';
                         });
                         
                         $.ajax({

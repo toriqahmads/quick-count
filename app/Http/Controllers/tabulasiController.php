@@ -103,6 +103,7 @@ class tabulasiController extends Controller
 	    else
 	    {
 	    	$req = new tabulasiModel();
+	    	$id_partai = json_decode($id_partai);
     		$req = $req->tabulasiCalegByTps($id_partai, $id_tps, $tingkat);
 
     		return $req;
@@ -141,6 +142,7 @@ class tabulasiController extends Controller
 	    else
 	    {
 	    	$req = new tabulasiModel();
+	    	$id_partai = json_decode($id_partai);
     		$req = $req->tabulasiCalegByKel($id_partai, $id_kel, $tingkat);
 
     		return $req;
@@ -179,6 +181,7 @@ class tabulasiController extends Controller
 	    else
 	    {
 	    	$req = new tabulasiModel();
+	    	$id_partai = json_decode($id_partai);
     		$req = $req->tabulasiCalegByKec($id_partai, $id_kec, $tingkat);
 
     		return $req;
@@ -217,6 +220,7 @@ class tabulasiController extends Controller
 	    else
 	    {
 	    	$req = new tabulasiModel();
+	    	$id_partai = json_decode($id_partai);
     		$req = $req->tabulasiCalegByKab($id_partai, $id_kab, $tingkat);
 
     		return $req;
@@ -255,6 +259,7 @@ class tabulasiController extends Controller
 	    else
 	    {
 	    	$req = new tabulasiModel();
+	    	$id_partai = json_decode($id_partai);
     		$req = $req->tabulasiCalegByProv($id_partai, $id_prov, $tingkat);
 
     		return $req;
@@ -299,6 +304,7 @@ class tabulasiController extends Controller
 	    }
 	    else
 	    {
+	    	$id_partai = json_decode($id_partai);
 	    	$req = new tabulasiModel();
 	    	if($tingkat == 'e')
 	    	{
