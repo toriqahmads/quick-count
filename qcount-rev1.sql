@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 13, 2019 at 09:59 PM
+-- Generation Time: Feb 18, 2019 at 11:48 PM
 -- Server version: 5.7.22-0ubuntu18.04.1
 -- PHP Version: 7.2.7-0ubuntu0.18.04.2
 
@@ -579,15 +579,16 @@ DELIMITER ;
 CREATE TABLE `admin` (
   `id` int(11) NOT NULL,
   `username` varchar(25) NOT NULL,
-  `pass` varchar(255) NOT NULL
+  `pass` varchar(255) NOT NULL,
+  `role_id` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`id`, `username`, `pass`) VALUES
-(1, 'admin', '$2y$10$NWIsiNRuhhh3s0WQw.z.7uPm9Lfm.HApQCTgyhziN//In8k.Pcr/W');
+INSERT INTO `admin` (`id`, `username`, `pass`, `role_id`) VALUES
+(1, 'admin', '$2y$10$NWIsiNRuhhh3s0WQw.z.7uPm9Lfm.HApQCTgyhziN//In8k.Pcr/W', 112);
 
 -- --------------------------------------------------------
 
@@ -956,14 +957,6 @@ CREATE TABLE `partai` (
   `foto` varchar(255) NOT NULL DEFAULT 'default_avatar.jpg'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `partai`
---
-
-INSERT INTO `partai` (`id`, `partai`, `no_urut`, `foto`) VALUES
-(1, 'Demokrat', 1, 'demak.png'),
-(3, 'PDI Perjuangan', 2, 'default_avatar.jpg');
-
 -- --------------------------------------------------------
 
 --
@@ -985,30 +978,6 @@ CREATE TABLE `pil` (
   `no_urut` int(3) NOT NULL,
   `status` char(1) NOT NULL DEFAULT 'l' COMMENT '''l'' untuk data masih digunakan, ''d'' untuk data sudah dihapus'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `pil`
---
-
-INSERT INTO `pil` (`id`, `nama_depan`, `nama_belakang`, `gender`, `foto`, `tingkat`, `id_prov`, `id_kab`, `id_kec`, `id_partai`, `id_dapil`, `no_urut`, `status`) VALUES
-(1, 'Irham', 'Maulana', 'l', 'default_avatar.jpg', 'e', 1, 1, 1, 1, 1, 1, 'l'),
-(2, 'Misbahul', 'Munir', 'l', 'default_avatar.jpg', 'e', 1, 1, 1, 1, 1, 2, 'l'),
-(3, 'Ainun', 'Rofiq', 'l', 'default_avatar.jpg', 'e', 1, 1, 1, 3, 1, 3, 'l'),
-(4, 'Amirul', 'Darmawan', 'l', 'default_avatar.jpg', 'e', 1, 1, 2, 3, 1, 5, 'l'),
-(5, 'Najla', 'Ariqoh', 'p', 'default_avatar.jpg', 'c', 1, 1, NULL, 1, 7, 1, 'l'),
-(6, 'Arif', 'Ilham', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 1, 7, 2, 'l'),
-(7, 'Fairuz', 'Ahmad', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 3, 7, 1, 'l'),
-(8, 'Aldi', 'Nugroho', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 3, 7, 2, 'l'),
-(9, 'Munir', 'Fauzi', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 1, 7, 1, 'l'),
-(10, 'Aninda', 'Ariani', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 1, 7, 2, 'l'),
-(11, 'Firza', 'Ainun', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 3, 7, 1, 'l'),
-(12, 'Rahmad', 'Efendi', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 3, 7, 2, 'l'),
-(13, 'Fadli', 'Mukmin', 'l', 'default_avatar.jpg', 'b', 1, NULL, NULL, 1, NULL, 1, 'l'),
-(14, 'Fani', 'Irul', 'l', 'default_avatar.jpg', 'b', 1, NULL, NULL, 1, NULL, 2, 'l'),
-(15, 'Zaenuri', 'Rizal', 'l', 'default_avatar.jpg', 'b', 1, NULL, NULL, 3, NULL, 1, 'l'),
-(16, 'Amirul', 'Ihza', 'p', 'default_avatar.jpg', 'b', 1, NULL, NULL, 3, NULL, 2, 'l'),
-(17, 'Joko', 'Widodo', 'l', 'default_avatar.jpg', 'a', NULL, NULL, NULL, 3, NULL, 1, 'l'),
-(18, 'Prabowo', 'Subianto', 'l', 'default_avatar.jpg', 'a', NULL, NULL, NULL, 1, NULL, 2, 'l');
 
 -- --------------------------------------------------------
 
@@ -1046,6 +1015,25 @@ CREATE TABLE `prov` (
 
 INSERT INTO `prov` (`id`, `prov`, `id_dapil`) VALUES
 (1, 'Jawa Tengah', 6);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `roles`
+--
+
+CREATE TABLE `roles` (
+  `id` int(1) NOT NULL,
+  `role` varchar(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `roles`
+--
+
+INSERT INTO `roles` (`id`, `role`) VALUES
+(112, 'admin'),
+(123, 'saksi');
 
 -- --------------------------------------------------------
 
@@ -1088,16 +1076,6 @@ CREATE TABLE `saksi` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `saksi`
---
-
-INSERT INTO `saksi` (`id`, `nama_depan`, `nama_belakang`, `gender`, `alamat`, `id_kel`, `id_kec`, `id_kab`, `id_prov`, `nik`, `foto`, `telp`, `id_tps`, `status`) VALUES
-(1, 'Fadli', 'Ihsan', 'l', 'Jl. Tentara Pelajar no.47', 1, 1, 1, 1, '3302210111900006', 'default_avatar.jpg', '089668623333', 3, 'l'),
-(4, 'Ziat', 'Ahmad', 'l', 'Jl. Wadak Sempal no.11', 1, 1, 1, 1, '3302210111900007', 'default_avatar.jpg', '089667865658', 3, 'l'),
-(17, 'Aninda', 'Najib', 'p', 'Jl. Tentara Pelajar no.47', 1, 1, 1, 1, '3322423974879076', '1549375567.jpg', '08767364776', 3, 'l'),
-(18, 'Ahmad', 'Mubaroq', 'l', 'Jl. Mulawarman no.10', 1, 1, 1, 1, '3322423974879066', 'default_avatar.jpg', '08767364772', 3, 'l');
-
---
 -- Triggers `saksi`
 --
 DELIMITER $$
@@ -1125,68 +1103,6 @@ CREATE TABLE `suara` (
   `tingkat_suara` enum('a','b','c','d','e') NOT NULL COMMENT 'a=pres. b = dpd. c = dprri. d = dpr prov. e = dpr kab'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `suara`
---
-
-INSERT INTO `suara` (`id`, `suara`, `id_caleg`, `id_saksi`, `tanggal`, `updated`, `id_tps`, `status`, `id_partai`, `jenis_suara`, `tingkat_suara`) VALUES
-(1, 234, NULL, 1, '2019-02-12 20:53:35', '2019-02-12 20:53:35', 3, 'l', 1, 'p', 'e'),
-(2, 123, 1, 1, '2019-02-12 20:53:35', '2019-02-12 20:53:35', 3, 'l', 1, 'c', 'e'),
-(3, 456, 2, 1, '2019-02-12 20:53:35', '2019-02-12 20:53:35', 3, 'l', 1, 'c', 'e'),
-(4, 98, NULL, 1, '2019-02-12 21:19:27', '2019-02-12 21:19:27', 3, 'l', 3, 'p', 'e'),
-(5, 79, 3, 1, '2019-02-12 21:19:27', '2019-02-12 21:19:27', 3, 'l', 3, 'c', 'e'),
-(6, 90, 4, 1, '2019-02-12 21:19:27', '2019-02-12 21:19:27', 3, 'l', 3, 'c', 'e'),
-(7, 98, NULL, 1, '2019-02-12 23:51:20', '2019-02-12 23:51:20', 8, 'l', 1, 'p', 'e'),
-(8, 67, 1, 1, '2019-02-12 23:51:20', '2019-02-12 23:51:20', 8, 'l', 1, 'c', 'e'),
-(9, 89, 2, 1, '2019-02-12 23:51:20', '2019-02-12 23:51:20', 8, 'l', 1, 'c', 'e'),
-(10, 90, NULL, 1, '2019-02-12 23:51:27', '2019-02-12 23:51:27', 8, 'l', 3, 'p', 'e'),
-(11, 65, 3, 1, '2019-02-12 23:51:27', '2019-02-12 23:51:27', 8, 'l', 3, 'c', 'e'),
-(12, 89, 4, 1, '2019-02-12 23:51:27', '2019-02-12 23:51:27', 8, 'l', 3, 'c', 'e'),
-(13, 24, NULL, 1, '2019-02-13 20:36:11', '2019-02-13 20:36:11', 3, 'l', 1, 'p', 'c'),
-(14, 98, 5, 1, '2019-02-13 20:36:11', '2019-02-13 20:36:11', 3, 'l', 1, 'c', 'c'),
-(15, 78, 6, 1, '2019-02-13 20:36:11', '2019-02-13 20:36:11', 3, 'l', 1, 'c', 'c'),
-(16, 78, NULL, 1, '2019-02-13 20:36:17', '2019-02-13 20:36:17', 3, 'l', 3, 'p', 'c'),
-(17, 66, 7, 1, '2019-02-13 20:36:17', '2019-02-13 20:36:17', 3, 'l', 3, 'c', 'c'),
-(18, 90, 8, 1, '2019-02-13 20:36:17', '2019-02-13 20:36:17', 3, 'l', 3, 'c', 'c'),
-(19, 56, NULL, 1, '2019-02-13 20:54:23', '2019-02-13 20:54:23', 3, 'l', 3, 'p', 'd'),
-(20, 78, 11, 1, '2019-02-13 20:54:23', '2019-02-13 20:54:23', 3, 'l', 3, 'c', 'd'),
-(21, 98, 12, 1, '2019-02-13 20:54:23', '2019-02-13 20:54:23', 3, 'l', 3, 'c', 'd'),
-(22, 76, NULL, 1, '2019-02-13 20:54:24', '2019-02-13 20:54:24', 3, 'l', 1, 'p', 'd'),
-(23, 89, 9, 1, '2019-02-13 20:54:24', '2019-02-13 20:54:24', 3, 'l', 1, 'c', 'd'),
-(24, 98, 10, 1, '2019-02-13 20:54:24', '2019-02-13 20:54:24', 3, 'l', 1, 'c', 'd'),
-(25, 89, NULL, 1, '2019-02-13 20:55:40', '2019-02-13 20:55:40', 8, 'l', 1, 'p', 'd'),
-(26, 67, 9, 1, '2019-02-13 20:55:40', '2019-02-13 20:55:40', 8, 'l', 1, 'c', 'd'),
-(27, 66, 10, 1, '2019-02-13 20:55:40', '2019-02-13 20:55:40', 8, 'l', 1, 'c', 'd'),
-(28, 77, NULL, 1, '2019-02-13 20:55:49', '2019-02-13 20:55:49', 8, 'l', 3, 'p', 'd'),
-(29, 67, 11, 1, '2019-02-13 20:55:49', '2019-02-13 20:55:49', 8, 'l', 3, 'c', 'd'),
-(30, 89, 12, 1, '2019-02-13 20:55:49', '2019-02-13 20:55:49', 8, 'l', 3, 'c', 'd'),
-(31, 87, NULL, 1, '2019-02-13 20:56:16', '2019-02-13 20:56:16', 8, 'l', 1, 'p', 'c'),
-(32, 67, 5, 1, '2019-02-13 20:56:16', '2019-02-13 20:56:16', 8, 'l', 1, 'c', 'c'),
-(33, 90, 6, 1, '2019-02-13 20:56:16', '2019-02-13 20:56:16', 8, 'l', 1, 'c', 'c'),
-(34, 99, NULL, 1, '2019-02-13 20:56:22', '2019-02-13 20:56:22', 8, 'l', 3, 'p', 'c'),
-(35, 56, 7, 1, '2019-02-13 20:56:22', '2019-02-13 20:56:22', 8, 'l', 3, 'c', 'c'),
-(36, 90, 8, 1, '2019-02-13 20:56:22', '2019-02-13 20:56:22', 8, 'l', 3, 'c', 'c'),
-(37, 24, NULL, 1, '2019-02-13 21:24:29', '2019-02-13 21:24:29', 3, 'l', 1, 'p', 'b'),
-(38, 89, 13, 1, '2019-02-13 21:24:29', '2019-02-13 21:24:29', 3, 'l', 1, 'c', 'b'),
-(39, 77, 14, 1, '2019-02-13 21:24:29', '2019-02-13 21:24:29', 3, 'l', 1, 'c', 'b'),
-(40, 88, NULL, 1, '2019-02-13 21:24:35', '2019-02-13 21:24:35', 3, 'l', 3, 'p', 'b'),
-(41, 67, 15, 1, '2019-02-13 21:24:35', '2019-02-13 21:24:35', 3, 'l', 3, 'c', 'b'),
-(42, 43, 16, 1, '2019-02-13 21:24:35', '2019-02-13 21:24:35', 3, 'l', 3, 'c', 'b'),
-(43, 76, NULL, 1, '2019-02-13 21:36:14', '2019-02-13 21:36:14', 8, 'l', 1, 'p', 'b'),
-(44, 55, 13, 1, '2019-02-13 21:36:14', '2019-02-13 21:36:14', 8, 'l', 1, 'c', 'b'),
-(45, 66, 14, 1, '2019-02-13 21:36:14', '2019-02-13 21:36:14', 8, 'l', 1, 'c', 'b'),
-(46, 89, NULL, 1, '2019-02-13 21:36:16', '2019-02-13 21:36:16', 8, 'l', 3, 'p', 'b'),
-(47, 87, 15, 1, '2019-02-13 21:36:16', '2019-02-13 21:36:16', 8, 'l', 3, 'c', 'b'),
-(48, 66, 16, 1, '2019-02-13 21:36:16', '2019-02-13 21:36:16', 8, 'l', 3, 'c', 'b'),
-(49, 80, NULL, 1, '2019-02-13 21:46:33', '2019-02-13 21:46:33', 3, 'l', 1, 'p', 'a'),
-(50, 98, 18, 1, '2019-02-13 21:46:33', '2019-02-13 21:46:33', 3, 'l', 1, 'c', 'a'),
-(51, 78, NULL, 1, '2019-02-13 21:46:38', '2019-02-13 21:46:38', 3, 'l', 3, 'p', 'a'),
-(52, 66, 17, 1, '2019-02-13 21:46:38', '2019-02-13 21:46:38', 3, 'l', 3, 'c', 'a'),
-(53, 76, NULL, 1, '2019-02-13 21:47:03', '2019-02-13 21:47:03', 8, 'l', 1, 'p', 'a'),
-(54, 78, 18, 1, '2019-02-13 21:47:03', '2019-02-13 21:47:03', 8, 'l', 1, 'c', 'a'),
-(55, 76, NULL, 1, '2019-02-13 21:47:07', '2019-02-13 21:47:07', 8, 'l', 3, 'p', 'a'),
-(56, 77, 17, 1, '2019-02-13 21:47:07', '2019-02-13 21:47:07', 8, 'l', 3, 'c', 'a');
-
 -- --------------------------------------------------------
 
 --
@@ -1202,17 +1118,6 @@ CREATE TABLE `tps` (
   `id_prov` int(2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `tps`
---
-
-INSERT INTO `tps` (`id`, `tps`, `id_kel`, `id_kec`, `id_kab`, `id_prov`) VALUES
-(3, 'TPS 1', 1, 1, 1, 1),
-(5, 'TPS 1', 70, 5, 1, 1),
-(6, 'TPS 2', 2, 1, 1, 1),
-(7, 'TPS 2', 2, 1, 1, 1),
-(8, 'TPS 1', 20, 2, 1, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -1224,18 +1129,9 @@ CREATE TABLE `users` (
   `username` varchar(25) DEFAULT NULL,
   `pass` varchar(255) DEFAULT NULL,
   `id_saksi` int(2) DEFAULT NULL,
-  `status` char(1) NOT NULL DEFAULT 'l' COMMENT '''l'' untuk data masih digunakan, ''d'' untuk data sudah dihapus'
+  `status` char(1) NOT NULL DEFAULT 'l' COMMENT '''l'' untuk data masih digunakan, ''d'' untuk data sudah dihapus',
+  `role_id` int(1) DEFAULT '123'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id`, `username`, `pass`, `id_saksi`, `status`) VALUES
-(3, '3302210111900006', '$2y$10$IzgNMJr.Q7N7cgKSnYQb8.8.X5cUA1NraXsXZ9FjUqbeEJgZXrCjS', 3, 'l'),
-(4, '3302210111900007', '$2y$10$7xeIwQhWx22WVMHpxkv80ud505hjxkCN2UgufNYzBTi76PAY0URJC', 4, 'l'),
-(17, '3322423974879076', '$2y$10$keUziG9woEsNA67xabmrpOC/Bt6YGRmWZnZfnzpNzFTMWwwRu/mBu', 17, 'l'),
-(18, '3322423974879066', '$2y$10$4zT8mRNwqHOCN80aqSGkhujnvs6eGUI/0XN2ofa/UqYHbDBNnpwta', 18, 'l');
 
 --
 -- Indexes for dumped tables
@@ -1246,7 +1142,8 @@ INSERT INTO `users` (`id`, `username`, `pass`, `id_saksi`, `status`) VALUES
 --
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `username` (`username`);
+  ADD UNIQUE KEY `username` (`username`),
+  ADD KEY `role_id` (`role_id`);
 
 --
 -- Indexes for table `dapil`
@@ -1310,6 +1207,12 @@ ALTER TABLE `prov`
   ADD KEY `id` (`id`);
 
 --
+-- Indexes for table `roles`
+--
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `r_suara`
 --
 ALTER TABLE `r_suara`
@@ -1354,7 +1257,8 @@ ALTER TABLE `tps`
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `id_saksi` (`id_saksi`),
-  ADD UNIQUE KEY `username` (`username`);
+  ADD UNIQUE KEY `username` (`username`),
+  ADD KEY `role_id` (`role_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -1389,12 +1293,12 @@ ALTER TABLE `kel`
 -- AUTO_INCREMENT for table `partai`
 --
 ALTER TABLE `partai`
-  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `pil`
 --
 ALTER TABLE `pil`
-  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `proof`
 --
@@ -1414,25 +1318,31 @@ ALTER TABLE `r_suara`
 -- AUTO_INCREMENT for table `saksi`
 --
 ALTER TABLE `saksi`
-  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `suara`
 --
 ALTER TABLE `suara`
-  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `tps`
 --
 ALTER TABLE `tps`
-  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT;
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `admin`
+--
+ALTER TABLE `admin`
+  ADD CONSTRAINT `admin_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `kab`
@@ -1495,6 +1405,12 @@ ALTER TABLE `tps`
   ADD CONSTRAINT `tps_ibfk_3` FOREIGN KEY (`id_kec`) REFERENCES `kec` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `tps_ibfk_4` FOREIGN KEY (`id_kab`) REFERENCES `kab` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `tps_ibfk_5` FOREIGN KEY (`id_prov`) REFERENCES `prov` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
+-- Constraints for table `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

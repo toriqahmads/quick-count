@@ -1,5 +1,37 @@
 @extends('saksi.basedashboard')
 @section('content')
+@if(\Session::has('alert'))
+    <script type="text/javascript">
+        $(document).ready(function(){
+            showNotification('top', 'right', '{!! Session::get('alert') !!}', 'danger');
+        });
+    </script>
+@endif
+
+@if(\Session::has('alert-success'))
+    <script type="text/javascript">
+        $(document).ready(function(){
+            showNotification('top', 'right', '{!! Session::get('alert-success') !!}', 'success');
+        });
+    </script>
+@endif
+
+@if ($errors->any())
+    <?php $err = '<ul>';
+        foreach ($errors->all() as $error)
+        {
+            $err .= '<li>'. $error .'</li>';
+        }
+        
+        $err .= '</ul>';
+    ?>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            showNotification('top', 'right', '<?php echo $err; ?>', 'danger');
+        });
+    </script>
+@endif
 <div class="content">
   <div class="row">
     <div class="col-md-12">
@@ -23,15 +55,6 @@
           <p class="description">
             {{ $data->alamat }}, {{ $data->kel }}, {{ $data->kec }}, {{ $data->kab }}, {{ $data->prov }}
           </p>
-          <!--<p class="description">
-              ID Dapil Kecamatan : {{ $data->dapil_kec }}
-          </p>
-          <p class="description">
-              ID Dapil Kabupaten : {{ $data->dapil_kab }}
-          </p>
-          <p class="description">
-              ID Dapil Provinsi : {{ $data->dapil_prov }}
-          </p>-->
           <p class="description">
               TPS : {{ $data->tps }}
           </p>

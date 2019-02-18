@@ -1,82 +1,7 @@
 @extends('saksi.basedashboard')
 @section('content')
-<script type="text/javascript">
-    $(document).ready(function()
-    {
-        $("#kec").change(function()
-        {
-            var kec_id = $("#kec").val();
-            if(kec_id === '0' || kec_id === null || kec_id === undefined)
-            {
-                showNotification('top', 'right','Harap pilih kecamatan!', 'danger');
-            }
-            else
-            {
-                $.ajax({
-                  url: window.location.origin+"/data/kel/" + kec_id,
-                  type: "GET",
-                  success: function(html){
-                    var res = "<option value='0'>Kelurahan</option>";
-                    $.each(html, function(key, val)
-                    {
-                        res = res + "<option value='" + val.id_kel +"'>" + val.kel + "</option>";
-                        $('#dapil').val(val.id_dapil);
-                    });
-                    $('#kel').html(res);
-                    $('#tps').empty().append('<option selected value="0">TPS</option>');
-                  },
-                  error: function(xhr, Status, err) {
-                     showNotification('top', 'right','Terjadi error : '+ Status, 'danger');
-                   } 
-                });
-            }
-            return false;
-        });
-
-        $("#kel").change(function()
-        {
-            var kel_id = $("#kel").val();
-            
-            if(kel_id === '0' || kel_id === null || kel_id === undefined)
-            {
-                showNotification('top', 'right','Harap pilih kelurahan!', 'danger');
-            }
-            else
-            {
-                $.ajax({
-                  url: window.location.origin+"/data/tps/" + kel_id,
-                  type: "GET",
-                  success: function(html){
-
-                    var res = "<option value'0'>TPS</option>";
-                    $.each(html, function(key, val)
-                    {
-                        res = res + "<option value='" + val.id_tps +"'>" + val.tps + "</option>";
-                    });
-                    $("#tps").html(res);
-                  },
-                  error: function(xhr, Status, err) {
-                     showNotification('top', 'right','Terjadi error : '+ Status, 'danger');
-                   } 
-                });
-            }
-            return false;
-        });
-
-        $("#gender").change(function()
-        {
-            var gender = $("#gender").val();
-            if(gender === '0' || gender === null || gender === undefined)
-            {
-                showNotification('top', 'right','Harap pilih jenis kelamin!', 'danger');
-            }
-            else
-            {
-                return false;
-            }
-        });
-    });
-</script>
+<script src="{{ asset('js/upload.js') }}"></script>
+<script src="{{ asset('js/getreg.js') }}"></script>
 
 <script type="text/javascript">
             function showNotification(from, align, msg, color){
@@ -172,25 +97,23 @@
                   <select name="gender" class="form-control" id="jenkel">
                     <option value="0">Pilih jenis kelamin</option>
                     @if($data->gender == "l")
-                      {
                         <option value="{{ $data->gender }}" selected>Laki-laki</option>
                         <option value="p">Perempuan</option>
-                      }
                       @else
-                      {
                        	<option value="{{ $data->gender }}" selected>Perempuan</option>
                         <option value="l">Laki-laki</option>
-                      }
                       @endif
                   </select>
                 </div>
               </div>
-              
               <div class="col-md-4 pr-1">
                 <div class="form-group">
                   <label for="exampleFormControlSelect1">Provinsi</label>
                   <select name="prov" class="form-control" id="prov">
-                    <option value="{{ $data->id_prov }}">{{ $data->prov }}</option>
+                    <option value="0">Pilih Provinsi</option>
+                    @foreach($prov as $p)
+                      <option value="{{ $p->id }}" <?php echo $data->id_prov == $p->id ? 'selected' : ''; ?>>{{ $p->prov }}</option>
+                    @endforeach
                   </select>
                 </div>
               </div>
@@ -200,7 +123,10 @@
                 <div class="form-group">
                   <label for="exampleFormControlSelect1">Kabupaten</label>
                   <select name="kab" class="form-control" id="kab">
-                    <option value="{{ $data->id_kab }}">{{ $data->kab }}</option>
+                    <option value="0">Pilih Kabupaten</option>
+                   @foreach($kab as $kab)
+                      <option value="{{ $kab->id }}" <?php echo $data->id_kab == $kab->id ? 'selected' : ''; ?>>{{ $kab->kab }}</option>
+                    @endforeach
                   </select>
                 </div>
               </div>
@@ -209,18 +135,8 @@
                   <label for="exampleFormControlSelect1">Kecamatan</label>
                   <select name="kec" class="form-control" id="kec">
                     <option value="0">Kecamatan</option>
-                    @foreach($kecs as $kec)
-                    {
-                      @if($kec->kec != $data->kec)
-                      {
-                        <option value="{{ $kec->id_kec }}">{{ $kec->kec }}</option>
-                      }
-                      @else
-                      {
-                        <option value="{{ $kec->id_kec }}" selected>{{ $kec->kec }}</option>
-                      }
-                      @endif
-                    }
+                    @foreach($kec as $kec)
+                      <option value="{{ $kec->id_kec }}" <?php echo $data->id_kec == $kec->id_kec ? 'selected' : ''; ?>>{{ $kec->kec }}</option>
                     @endforeach
                   </select>
                 </div>
@@ -230,52 +146,26 @@
                   <label for="exampleFormControlSelect1">Kelurahan</label>
                   <select name="kel" class="form-control" id="kel">
                     <option value="0">Kelurahan</option>
-                    @foreach($kels as $kel)
-                    {
-                      @if($kel->kel != $data->kel)
-                      {
-                        <option value="{{ $kel->id_kel }}">{{ $kel->kel }}</option>
-                      }
-                      @else
-                      {
-                        <option value="{{ $kel->id_kel }}" selected>{{ $kel->kel }}</option>
-                      }
-                      @endif
-                    }
+                    @foreach($kel as $kel)
+                      <option value="{{ $kel->id_kel }}" <?php echo $data->id_kel == $kel->id_kel ? 'selected' : ''; ?>>{{ $kel->kel }}</option>
                     @endforeach
                   </select>
                 </div>
               </div>
             </div>
             <div class="row">
-              <div class="col-md-4 pl-1">
+              <div class="col-md-4 px-1">
                 <div class="form-group">
                   <label for="exampleFormControlSelect1">TPS</label>
                   <select name="tps" class="form-control" id="tps">
                     <option value="0">TPS</option>
-                    @foreach($tps as $tpss)
-                    {
-                      @if($tpss->tps != $data->tps)
-                      {
-                        <option value="{{ $tpss->id_tps }}">{{ $tpss->tps }}</option>
-                      }
-                      @else
-                      {
-                        <option value="{{ $tpss->id_tps }}" selected>{{ $tpss->tps }}</option>
-                      }
-                      @endif
-                    }
+                    @foreach($tps as $tps)
+                      <option value="{{ $tps->id_tps }}" <?php echo $data->id_tps == $tps->id_tps ? 'selected' : ''; ?>>{{ $tps->tps }}</option>
                     @endforeach
                   </select>
                 </div>
               </div>
               <div class="col-md-4 px-1">
-                <div class="form-group">
-                  <label>Dapil</label>
-                  <input id="dapil" name="dapil" type="text" class="form-control" placeholder="Dapil" value="{{ $data->id_dapil }}">
-                </div>
-              </div>
-              <div class="col-md-4 pr-1">
                 <div class="form-group">
                   <label>No. HP</label>
                   <input type="text" name="telp" class="form-control" placeholder="No. HP" value="{{ $data->telp }}">
@@ -331,9 +221,6 @@
           </div>
           <p class="description">
             {{ $data->alamat }}, {{ $data->kel }}, {{ $data->kec }}, {{ $data->kab }}, {{ $data->prov }}
-          </p>
-          <p class="description">
-              Dapil : {{ $data->id_dapil }}
           </p>
           <p class="description">
               TPS : {{ $data->tps }}

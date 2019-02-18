@@ -76,7 +76,7 @@ $(document).ready(function()
       {
         tingkat = $("#tingkat").val();
         $.ajax({
-          url: window.location.origin+"/tabulasi/partai/kel/"+kec_id+"/"+tingkat,
+          url: window.location.origin+"/tabulasi/partai/kec/"+kec_id+"/"+tingkat,
           type: "GET",
           success: function(datas){
             var id_partai = [];

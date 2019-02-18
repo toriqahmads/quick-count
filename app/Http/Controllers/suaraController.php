@@ -18,196 +18,84 @@ class suaraController extends Controller
 {
     function registerSuara()
     {
-    	if(!Session::get('login'))
-	    {
-	    	return redirect('/')->with('alert', 'Maaf Anda harus login terlebih dahulu!');
-	    }
-	    elseif(Session::get('role') != 'admin' && Session::get('role') != 'saksi')
-	    {
-	    	return redirect('/')->with('alert', 'Forbidden!');
-	    }
-	    else
-	    {
-	    	if(Session::get('role') == 'admin')
-	    	{
-	    		return view('admin.suara.register');
-	    	}
-	    	else
-	    	{
-	    		return view('saksi.suara.register');
-	    	}
-	    }
+   		return view(Session::get('role').'.suara.register');
     }
 
     function registerDprKab()
     {
-    	if(!Session::get('login'))
-	    {
-	    	return redirect('/')->with('alert', 'Maaf Anda harus login terlebih dahulu!');
-	    }
-	    elseif(Session::get('role') != 'admin' && Session::get('role') != 'saksi')
-	    {
-	    	return redirect('/')->with('alert', 'Forbidden!');
-	    }
-	    else
-	    {
-	    	$data = new dataModel();
-	    	$prov = $data->getProv();
-	    	$partai = $data->getPartai();
-	    	if(Session::get('role') == 'admin')
-	    	{
-	    		return view('admin.suara.dprkab', compact('prov', 'partai'));
-	    	}
-	    	else
-	    	{
-	    		return view('saksi.suara.dprkab', compact('prov', 'partai'));
-	    	}
-	    }
+    	$data = new dataModel();
+    	$prov = $data->getProv();
+    	$partai = $data->getPartai();
+    	return view(Session::get('role').'.suara.dprkab', compact('prov', 'partai'));
     }
 
     function registerDprProv()
     {
-    	if(!Session::get('login'))
-	    {
-	    	return redirect('/')->with('alert', 'Maaf Anda harus login terlebih dahulu!');
-	    }
-	    elseif(Session::get('role') != 'admin' && Session::get('role') != 'saksi')
-	    {
-	    	return redirect('/')->with('alert', 'Forbidden!');
-	    }
-	    else
-	    {
-	    	$data = new dataModel();
-	    	$prov = $data->getProv();
-	    	$partai = $data->getPartai();
-	    	if(Session::get('role') == 'admin')
-	    	{
-	    		return view('admin.suara.dprprov', compact('prov', 'partai'));
-	    	}
-	    	else
-	    	{
-	    		return view('saksi.suara.dprprov', compact('prov', 'partai'));
-	    	}
-	    }
+    	$data = new dataModel();
+    	$prov = $data->getProv();
+    	$partai = $data->getPartai();
+    	return view(Session::get('role').'.suara.dprprov', compact('prov', 'partai'));
     }
 
     function registerDprRi()
     {
-    	if(!Session::get('login'))
-	    {
-	    	return redirect('/')->with('alert', 'Maaf Anda harus login terlebih dahulu!');
-	    }
-	    elseif(Session::get('role') != 'admin' && Session::get('role') != 'saksi')
-	    {
-	    	return redirect('/')->with('alert', 'Forbidden!');
-	    }
-	    else
-	    {
-	    	$data = new dataModel();
-	    	$prov = $data->getProv();
-	    	$partai = $data->getPartai();
-	    	if(Session::get('role') == 'admin')
-	    	{
-	    		return view('admin.suara.dprri', compact('prov', 'partai'));
-	    	}
-	    	else
-	    	{
-	    		return view('saksi.suara.dprri', compact('prov', 'partai'));
-	    	}
-	    }
+    	$data = new dataModel();
+    	$prov = $data->getProv();
+    	$partai = $data->getPartai();
+    	if(Session::get('role') == 'admin')
+    	{
+    		return view('admin.suara.dprri', compact('prov', 'partai'));
+    	}
+    	else
+    	{
+    		return view('saksi.suara.dprri', compact('prov', 'partai'));
+    	}
     }
 
     function registerDpd()
     {
-    	if(!Session::get('login'))
-	    {
-	    	return redirect('/')->with('alert', 'Maaf Anda harus login terlebih dahulu!');
-	    }
-	    elseif(Session::get('role') != 'admin' && Session::get('role') != 'saksi')
-	    {
-	    	return redirect('/')->with('alert', 'Forbidden!');
-	    }
-	    else
-	    {
-	    	$data = new dataModel();
-	    	$prov = $data->getProv();
-	    	$partai = $data->getPartai();
-	    	if(Session::get('role') == 'admin')
-	    	{
-	    		return view('admin.suara.dpd', compact('prov', 'partai'));
-	    	}
-	    	else
-	    	{
-	    		return view('saksi.suara.dpd', compact('prov', 'partai'));
-	    	}
-	    }
+    	$data = new dataModel();
+    	$prov = $data->getProv();
+    	$partai = $data->getPartai();
+    	return view(Session::get('role').'.suara.dpd', compact('prov', 'partai'));
     }
 
     function registerPres()
     {
-    	if(!Session::get('login'))
-	    {
-	    	return redirect('/')->with('alert', 'Maaf Anda harus login terlebih dahulu!');
-	    }
-	    elseif(Session::get('role') != 'admin' && Session::get('role') != 'saksi')
-	    {
-	    	return redirect('/')->with('alert', 'Forbidden!');
-	    }
-	    else
-	    {
-	    	$data = new dataModel();
-	    	$prov = $data->getProv();
-	    	$partai = $data->getPartai();
-	    	if(Session::get('role') == 'admin')
-	    	{
-	    		return view('admin.suara.pres', compact('prov', 'partai'));
-	    	}
-	    	else
-	    	{
-	    		return view('saksi.suara.pres', compact('prov', 'partai'));
-	    	}
-	    }
+    	$data = new dataModel();
+    	$prov = $data->getProv();
+    	$partai = $data->getPartai();
+    	return view(Session::get('role').'.suara.pres', compact('prov', 'partai'));
     }
 
     function registerForm(Request $request)
     {
-    	if(!Session::get('login'))
-	    {
-	    	return redirect('/')->with('alert', 'Maaf Anda harus login terlebih dahulu!');
-	    }
-	    elseif(Session::get('role') != 'admin' && Session::get('role') != 'saksi')
-	    {
-	    	return redirect('/')->with('alert', 'Forbidden!');
-	    }
-	    else
-	    {
-	    	$jenis = $request->jenis;
-	    	$data = new dataModel();
-	    	$partai = $data->getPartai();
-	    	$form = '';
-	  		if($jenis == 'a')
-	  		{
-	  			$form = 'presiden';
-	  		}
-	  		elseif($jenis == 'b')
-	  		{
-	  			$form = 'dpd';
-	  		}
-	  		elseif($jenis == 'c')
-	  		{
-	  			$form = 'dprri';
-	  		}
-	  		elseif($jenis == 'd')
-	  		{
-	  			$form = 'dprprov';
-	  		}
-	  		elseif($jenis == 'e')
-	  		{
-	  			$form = 'dprkab';
-	  		}
+    	$jenis = $request->jenis;
+    	$data = new dataModel();
+    	$partai = $data->getPartai();
+    	$form = '';
+  		if($jenis == 'a')
+  		{
+  			$form = 'presiden';
+  		}
+  		elseif($jenis == 'b')
+  		{
+  			$form = 'dpd';
+  		}
+  		elseif($jenis == 'c')
+  		{
+  			$form = 'dprri';
+  		}
+  		elseif($jenis == 'd')
+  		{
+  			$form = 'dprprov';
+  		}
+  		elseif($jenis == 'e')
+  		{
+  			$form = 'dprkab';
+  		}
 
-  			return redirect()->route('register.'.$form);
-	    }
+		return redirect()->route('register.'.$form);
     }
 
 	function registerPostSuara(Request $request)
@@ -277,116 +165,50 @@ class suaraController extends Controller
 
     function getAllSuaraPartai($id_partai, $id_tps, $tingkat)
     {
-    	if(!Session::get('login'))
-	    {
-	    	return redirect('/')->with('alert', 'Maaf Anda harus login terlebih dahulu!');
-	    }
-	    elseif(Session::get('role') != 'admin' && Session::get('role') != 'saksi')
-	    {
-	    	return redirect('/')->with('alert', 'Forbidden!');
-	    }
-	    else
-	    {
-	    	$req = new suaraModel();
-    		$req = $req->getAllSuaraPartai($id_partai, $id_tps, $tingkat);
+    	$req = new suaraModel();
+		$req = $req->getAllSuaraPartai($id_partai, $id_tps, $tingkat);
 
-    		return $req;
-	    }
+		return $req;
     }
 
     function getAllSuaraPartaiBySaksi($id_partai, $id_tps, $id_saksi, $tingkat)
     {
-    	if(!Session::get('login'))
-	    {
-	    	return redirect('/')->with('alert', 'Maaf Anda harus login terlebih dahulu!');
-	    }
-	    elseif(Session::get('role') != 'admin' && Session::get('role') != 'saksi')
-	    {
-	    	return redirect('/')->with('alert', 'Forbidden!');
-	    }
-	    else
-	    {
-	    	$req = new suaraModel();
-    		$req = $req->getAllSuaraPartaiBySaksi($id_partai, $id_tps, $id_saksi, $tingkat);
+    	$req = new suaraModel();
+		$req = $req->getAllSuaraPartaiBySaksi($id_partai, $id_tps, $id_saksi, $tingkat);
 
-    		return $req;
-	    }
+		return $req;
     }
 
     function getAllSuaraPartaiByDapil($id_partai, $id_tps, $id_saksi, $tingkat)
     {
-    	if(!Session::get('login'))
-	    {
-	    	return redirect('/')->with('alert', 'Maaf Anda harus login terlebih dahulu!');
-	    }
-	    elseif(Session::get('role') != 'admin' && Session::get('role') != 'saksi')
-	    {
-	    	return redirect('/')->with('alert', 'Forbidden!');
-	    }
-	    else
-	    {
-	    	$req = new suaraModel();
-    		$req = $req->getAllSuaraPartaiByDapil($id_dapil, $id_partai);
+    	$req = new suaraModel();
+		$req = $req->getAllSuaraPartaiByDapil($id_dapil, $id_partai);
 
-    		return $req;
-	    }
+		return $req;
     }
 
     function getAllSuaraCaleg($id_partai, $id_tps, $tingkat)
     {
-    	if(!Session::get('login'))
-	    {
-	    	return redirect('/')->with('alert', 'Maaf Anda harus login terlebih dahulu!');
-	    }
-	    elseif(Session::get('role') != 'admin' && Session::get('role') != 'saksi')
-	    {
-	    	return redirect('/')->with('alert', 'Forbidden!');
-	    }
-	    else
-	    {
-	    	$req = new suaraModel();
-    		$req = $req->getAllSuaraCaleg($id_partai, $id_tps, $tingkat);
+    	$req = new suaraModel();
+		$req = $req->getAllSuaraCaleg($id_partai, $id_tps, $tingkat);
 
-    		return $req;
-	    }
+		return $req;
     }
 
     function getAllSuaraCalegBySaksi($id_partai, $id_tps, $id_saksi, $tingkat)
     {
-    	if(!Session::get('login'))
-	    {
-	    	return redirect('/')->with('alert', 'Maaf Anda harus login terlebih dahulu!');
-	    }
-	    elseif(Session::get('role') != 'admin' && Session::get('role') != 'saksi')
-	    {
-	    	return redirect('/')->with('alert', 'Forbidden!');
-	    }
-	    else
-	    {
-	    	$req = new suaraModel();
-    		$req = $req->getAllSuaraCalegBySaksi($id_partai, $id_tps, $id_saksi, $tingkat);
+    	$req = new suaraModel();
+		$req = $req->getAllSuaraCalegBySaksi($id_partai, $id_tps, $id_saksi, $tingkat);
 
-    		return $req;
-	    }
+		return $req;
     }
 
     function getAllSuaraCalegByDapil($id_dapil, $id_partai)
     {
-    	if(!Session::get('login'))
-	    {
-	    	return redirect('/')->with('alert', 'Maaf Anda harus login terlebih dahulu!');
-	    }
-	    elseif(Session::get('role') != 'admin' && Session::get('role') != 'saksi')
-	    {
-	    	return redirect('/')->with('alert', 'Forbidden!');
-	    }
-	    else
-	    {
-	    	$req = new suaraModel();
-    		$req = $req->getAllSuaraCalegByDapil($id_dapil, $id_partai);
+    	$req = new suaraModel();
+		$req = $req->getAllSuaraCalegByDapil($id_dapil, $id_partai);
 
-    		return $req;
-	    }
+		return $req;
     }
 
     function updateSuara(Request $request)
@@ -464,263 +286,133 @@ class suaraController extends Controller
 
     function viewSuara()
     {
-    	if(!Session::get('login'))
-	    {
-	    	return redirect('/')->with('alert', 'Maaf Anda harus login terlebih dahulu!');
-	    }
-	    elseif(Session::get('role') != 'admin' && Session::get('role') != 'saksi')
-	    {
-	    	return redirect('/')->with('alert', 'Forbidden!');
-	    }
-	    else
-	    {
-	    	if(Session::get('role') == 'admin')
-	    	{
-	    		return view('admin.suara.view');
-	    	}
-	    	else
-	    	{
-	    		return view('saksi.suara.view');
-	    	}
-	    }
+    	return view(Session::get('role').'.suara.view');
     }
 
     function viewForm(Request $request)
     {
-    	if(!Session::get('login'))
-	    {
-	    	return redirect('/')->with('alert', 'Maaf Anda harus login terlebih dahulu!');
-	    }
-	    elseif(Session::get('role') != 'admin' && Session::get('role') != 'saksi')
-	    {
-	    	return redirect('/')->with('alert', 'Forbidden!');
-	    }
-	    else
-	    {
-	    	$jenis = $request->jenis;
-	    	$data = new dataModel();
-	    	$partai = $data->getPartai();
-	    	$form = '';
-	  		if($jenis == 'a')
-	  		{
-	  			$form = 'presiden';
-	  		}
-	  		elseif($jenis == 'b')
-	  		{
-	  			$form = 'dpd';
-	  		}
-	  		elseif($jenis == 'c')
-	  		{
-	  			$form = 'dprri';
-	  		}
-	  		elseif($jenis == 'd')
-	  		{
-	  			$form = 'dprprov';
-	  		}
-	  		elseif($jenis == 'e')
-	  		{
-	  			$form = 'dprkab';
-	  		}
+    	$jenis = $request->jenis;
+    	$data = new dataModel();
+    	$partai = $data->getPartai();
+    	$form = '';
+  		if($jenis == 'a')
+  		{
+  			$form = 'presiden';
+  		}
+  		elseif($jenis == 'b')
+  		{
+  			$form = 'dpd';
+  		}
+  		elseif($jenis == 'c')
+  		{
+  			$form = 'dprri';
+  		}
+  		elseif($jenis == 'd')
+  		{
+  			$form = 'dprprov';
+  		}
+  		elseif($jenis == 'e')
+  		{
+  			$form = 'dprkab';
+  		}
 
-  			return redirect()->route('view.'.$form);
-	    }
+		return redirect()->route('view.'.$form);
     }
 
     function viewDprKab()
     {
-    	if(!Session::get('login'))
-	    {
-	    	return redirect('/')->with('alert', 'Maaf Anda harus login terlebih dahulu!');
-	    }
-	    elseif(Session::get('role') != 'admin' && Session::get('role') != 'saksi')
-	    {
-	    	return redirect('/')->with('alert', 'Forbidden!');
-	    }
-	    else
-	    {
-	    	$data = new dataModel();
-	    	$prov = $data->getProv();
-	    	$partai = $data->getPartai();
-	    	if(Session::get('role') == 'admin')
-	    	{
-	    		return view('admin.suara.vdprkab', compact('prov', 'partai'));
-	    	}
-	    	else
-	    	{
-	    		return view('saksi.suara.vdprkab', compact('prov', 'partai'));
-	    	}
-	    }
+    	$data = new dataModel();
+    	$prov = $data->getProv();
+    	$partai = $data->getPartai();
+    	return view(Session::get('role').'.suara.vdprkab', compact('prov', 'partai'));
     }
 
     function viewDprProv()
     {
-    	if(!Session::get('login'))
-	    {
-	    	return redirect('/')->with('alert', 'Maaf Anda harus login terlebih dahulu!');
-	    }
-	    elseif(Session::get('role') != 'admin' && Session::get('role') != 'saksi')
-	    {
-	    	return redirect('/')->with('alert', 'Forbidden!');
-	    }
-	    else
-	    {
-	    	$data = new dataModel();
-	    	$prov = $data->getProv();
-	    	$partai = $data->getPartai();
-	    	if(Session::get('role') == 'admin')
-	    	{
-	    		return view('admin.suara.vdprprov', compact('prov', 'partai'));
-	    	}
-	    	else
-	    	{
-	    		return view('saksi.suara.vdprprov', compact('prov', 'partai'));
-	    	}
-	    }
+    	$data = new dataModel();
+    	$prov = $data->getProv();
+    	$partai = $data->getPartai();
+    	return view(Session::get('role').'.suara.vdprprov', compact('prov', 'partai'));
     }
 
     function viewDprRi()
     {
-    	if(!Session::get('login'))
-	    {
-	    	return redirect('/')->with('alert', 'Maaf Anda harus login terlebih dahulu!');
-	    }
-	    elseif(Session::get('role') != 'admin' && Session::get('role') != 'saksi')
-	    {
-	    	return redirect('/')->with('alert', 'Forbidden!');
-	    }
-	    else
-	    {
-	    	$data = new dataModel();
-	    	$prov = $data->getProv();
-	    	$partai = $data->getPartai();
-	    	if(Session::get('role') == 'admin')
-	    	{
-	    		return view('admin.suara.vdprri', compact('prov', 'partai'));
-	    	}
-	    	else
-	    	{
-	    		return view('saksi.suara.vdprri', compact('prov', 'partai'));
-	    	}
-	    }
+    	$data = new dataModel();
+    	$prov = $data->getProv();
+    	$partai = $data->getPartai();
+    	return view(Session::get('role').'.suara.vdprri', compact('prov', 'partai'));
     }
 
     function viewDpd()
     {
-    	if(!Session::get('login'))
-	    {
-	    	return redirect('/')->with('alert', 'Maaf Anda harus login terlebih dahulu!');
-	    }
-	    elseif(Session::get('role') != 'admin' && Session::get('role') != 'saksi')
-	    {
-	    	return redirect('/')->with('alert', 'Forbidden!');
-	    }
-	    else
-	    {
-	    	$data = new dataModel();
-	    	$prov = $data->getProv();
-	    	$partai = $data->getPartai();
-	    	if(Session::get('role') == 'admin')
-	    	{
-	    		return view('admin.suara.vdpd', compact('prov', 'partai'));
-	    	}
-	    	else
-	    	{
-	    		return view('saksi.suara.vdpd', compact('prov', 'partai'));
-	    	}
-	    }
+    	$data = new dataModel();
+    	$prov = $data->getProv();
+    	$partai = $data->getPartai();
+    	return view(Session::get('role').'.suara.vdpd', compact('prov', 'partai'));
     }
 
     function viewPres()
     {
-    	if(!Session::get('login'))
-	    {
-	    	return redirect('/')->with('alert', 'Maaf Anda harus login terlebih dahulu!');
-	    }
-	    elseif(Session::get('role') != 'admin' && Session::get('role') != 'saksi')
-	    {
-	    	return redirect('/')->with('alert', 'Forbidden!');
-	    }
-	    else
-	    {
-	    	$data = new dataModel();
-	    	$prov = $data->getProv();
-	    	$partai = $data->getPartai();
-	    	if(Session::get('role') == 'admin')
-	    	{
-	    		return view('admin.suara.vpres', compact('prov', 'partai'));
-	    	}
-	    	else
-	    	{
-	    		return view('saksi.suara.vpres', compact('prov', 'partai'));
-	    	}
-	    }
+    	$data = new dataModel();
+    	$prov = $data->getProv();
+    	$partai = $data->getPartai();
+    	return view(Session::get('role').'.suara.vpres', compact('prov', 'partai'));
     }
 
     function deleteSuara(Request $request)
     {
-    	if(!Session::get('login'))
-	    {
-	    	return redirect('/')->with('alert', 'Maaf Anda harus login terlebih dahulu!');
-	    }
-	    elseif(Session::get('role') != 'admin' && Session::get('role') != 'saksi')
-	    {
-	    	return redirect('/')->with('alert', 'Forbidden!');
-	    }
-	    else
-	    {
-	    	$validate = $this->validate($request, [
-            'suarapartai' => 'required|array',
-            'suarapartai.*.*' => 'integer',
-            'suara' => 'required|array',
-            'suara.*.*.*' => 'integer'
-	        ],[ 'suarapartai.required' => 'Suara partai harus diisi!',
-	            'suara.' => 'Suara caleg harus diisi!',
-	        ]);
+    	$validate = $this->validate($request, [
+        'suarapartai' => 'required|array',
+        'suarapartai.*.*' => 'integer',
+        'suara' => 'required|array',
+        'suara.*.*.*' => 'integer'
+        ],[ 'suarapartai.required' => 'Suara partai harus diisi!',
+            'suara.' => 'Suara caleg harus diisi!',
+        ]);
 
-	        $input = $request->all();
-	        $proses = new suaraModel();
+        $input = $request->all();
+        $proses = new suaraModel();
 
-	        $data = array();
-	        $req = array();
+        $data = array();
+        $req = array();
 
-	        foreach ($input['suarapartai'] as $id_partai => $value) 
-	        {
-	        	foreach ($value as $id => $values) 
-	        	{
-	        		$data['id'] = $id;
+        foreach ($input['suarapartai'] as $id_partai => $value) 
+        {
+        	foreach ($value as $id => $values) 
+        	{
+        		$data['id'] = $id;
+
+	        	$proses->deleteSuara($data);
+	        	$req['suara_partai'] = "success";
+	        	unset($data);
+        	}
+        }
+
+        foreach ($input['suara'] as $id_partai => $suara) 
+        {
+        	foreach ($suara as $id_caleg => $value) 
+        	{
+        		foreach ($value as $id => $values) 
+        		{
+        			$data = array();
+        			$data['id'] = $id;
 
 		        	$proses->deleteSuara($data);
-		        	$req['suara_partai'] = "success";
+
 		        	unset($data);
-	        	}
-	        }
+        		}
+        	}
 
-	        foreach ($input['suara'] as $id_partai => $suara) 
-	        {
-	        	foreach ($suara as $id_caleg => $value) 
-	        	{
-	        		foreach ($value as $id => $values) 
-	        		{
-	        			$data = array();
-	        			$data['id'] = $id;
+        	$req['suara_caleg'] = "success";
+        }
 
-			        	$proses->deleteSuara($data);
-
-			        	unset($data);
-	        		}
-	        	}
-
-	        	$req['suara_caleg'] = "success";
-	        }
-
-	        if($req['suara_partai'] == "success" && $req['suara_caleg'] == "success")
-	        {
-	            return $req;//'Sukses kirim suara!';
-	        }
-	        else
-	        {
-	            return 'Gagal kirim suara!';
-	        }
-    	}
+        if($req['suara_partai'] == "success" && $req['suara_caleg'] == "success")
+        {
+            return $req;//'Sukses kirim suara!';
+        }
+        else
+        {
+            return 'Gagal kirim suara!';
+        }
 	}
 }

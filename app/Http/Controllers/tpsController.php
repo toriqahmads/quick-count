@@ -18,31 +18,20 @@ class tpsController extends Controller
 {
     function registerTps()
     {
-    	if(!Session::get('login'))
-	    {
-	    	return redirect('admin/login')->with('alert', 'Maaf Anda harus login terlebih dahulu!');
-	    }
-	    elseif(Session::get('role') != 'admin')
-	    {
-	    	return redirect('admin/login')->with('alert', 'Forbidden!');
-	    }
-	    else
-	    {
-	    	$data = new dataModel();
-	    	$data = $data->getProv();
-	    	
-	    	return view('admin.tps.register', compact('data'));
-	    }
+    	$data = new dataModel();
+    	$data = $data->getProv();
+    	
+    	return view('admin.tps.register', compact('data'));
     }
 
     function registerPostTps(Request $request)
     {
         $this->validate($request, [
             'tps' => 'required|min:4|max:10',
-            'kec' => 'required|min:1|max:3',
-            'kel' => 'required|min:1|max:3',
-            'prov' => 'required|min:1|max:2',
-            'kab' => 'required|min:1|max:3',
+            'kec' => 'required|min:1',
+            'kel' => 'required|min:1',
+            'prov' => 'required|min:1',
+            'kab' => 'required|min:1',
         ],[
             'tps.required'=>'Nama depan tidak boleh kosong!',
             'tps.min'=>'Maaf Nama depan minimal 4 karakter!',
@@ -74,55 +63,33 @@ class tpsController extends Controller
 
     function getAllTps()
     {
-    	if(!Session::get('login'))
-	    {
-	    	return redirect('admin/login')->with('Anda harus login terlebih dahulu');
-	    }
-	    elseif(Session::get('role') != 'admin')
-	    {
-	    	return redirect('admin/login')->with('Forbidden');
-	    }
-	    else
-	    {
-	    	$req = new tpsModel();
-    		$req = $req->getAllTps();
+    	$req = new tpsModel();
+		$req = $req->getAllTps();
 
-    		return view('admin.tps.userlist', compact('req'));
-	    }
+		return view('admin.tps.userlist', compact('req'));
     }
 
     function editTps($id_tps)
     {
-	    if(!Session::get('login'))
-	    {
-	    	return redirect('admin/login')->with('Anda harus login terlebih dahulu');
-	    }
-	    elseif(Session::get('role') != 'admin')
-	    {
-	    	return redirect('admin/login')->with('alert', 'Forbidden!');
-	    }
-	    else
-	    {
-	    	$data = new tpsModel();
-	    	$data = $data->getProfile($id_tps);
-	    	$reg = new dataModel();
-	    	$prov = $reg->getProv();
-            $kab = $reg->getKab($data->id_prov);
-            $kec = $reg->getKec($data->id_kab);
-            $kel = $reg->getKel($data->id_kec);
-	    	return view('admin.tps.edit', compact('data', 'prov', 'kab', 'kec', 'kel'));
-	    }
+    	$data = new tpsModel();
+    	$data = $data->getProfile($id_tps);
+    	$reg = new dataModel();
+    	$prov = $reg->getProv();
+        $kab = $reg->getKab($data->id_prov);
+        $kec = $reg->getKec($data->id_kab);
+        $kel = $reg->getKel($data->id_kec);
+    	return view('admin.tps.edit', compact('data', 'prov', 'kab', 'kec', 'kel'));
     }
 
     function updateTps(Request $request)
     {
         $this->validate($request, [
-        	'id' => 'required|min:1|max:4',
+        	'id' => 'required|min:1',
             'tps' => 'required|min:4|max:10',
-            'kec' => 'required|min:1|max:3',
-            'kel' => 'required|min:1|max:3',
-            'prov' => 'required|min:1|max:2',
-            'kab' => 'required|min:1|max:3',
+            'kec' => 'required|min:1',
+            'kel' => 'required|min:1',
+            'prov' => 'required|min:1',
+            'kab' => 'required|min:1',
         ],[
             'tps.required'=>'Nama depan tidak boleh kosong!',
             'tps.min'=>'Maaf Nama depan minimal 4 karakter!',
@@ -155,41 +122,18 @@ class tpsController extends Controller
 
     function viewTps($id_tps)
     {
-	    if(!Session::get('login'))
-	    {
-	    	return redirect('admin/login')->with('Anda harus login terlebih dahulu');
-	    }
-	    elseif(Session::get('role') != 'admin')
-	    {
-	    	return redirect('admin/login')->with('alert', 'Forbidden!');
-	    }
-	    else
-	    {
-	    	$data = new tpsModel();
-	    	$data = $data->getProfile($id_tps);
-	    	$kecamatan = new dataModel();
-	    	$kecs = $kecamatan->getKec(1);
-	    	$kels = $kecamatan->getKel($data->id_kec);
-	    	return view('admin.tps.view', compact('data', 'kecs', 'kels'));
-	    }
+    	$data = new tpsModel();
+    	$data = $data->getProfile($id_tps);
+    	$kecamatan = new dataModel();
+    	$kecs = $kecamatan->getKec(1);
+    	$kels = $kecamatan->getKel($data->id_kec);
+    	return view('admin.tps.view', compact('data', 'kecs', 'kels'));
     }
 
     function deleteTps($id_tps)
     {
-    	if(!Session::get('login'))
-	    {
-	    	return redirect('admin/login')->with('Anda harus login terlebih dahulu');
-	    }
-	    elseif(Session::get('role') != 'admin')
-	    {
-	    	return redirect('admin/login')->with('alert', 'Forbidden!');
-	    }
-	    else
-	    {
-	    	$data = new tpsModel();
-	    	$req = $data->deleteTps($id_tps);
-	    	#$req->delete();
-        	return $req;
-    	}
+    	$data = new tpsModel();
+    	$req = $data->deleteTps($id_tps);
+    	return $req;
 	}
 }

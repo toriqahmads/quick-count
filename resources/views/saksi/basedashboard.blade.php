@@ -23,10 +23,9 @@
   <script src="{{ asset('js/jquery-confirm.min.js') }}" type="text/javascript"></script>
   
 </head>
-
 <body class="">
   <div class="wrapper ">
-    <div class="sidebar" data-color="blue">
+    <div class="sidebar" data-color="demokrat">
       <!--
         Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
     -->

@@ -97,15 +97,11 @@
                   <select name="gender" class="form-control" id="jenkel">
                     <option value="0">Pilih jenis kelamin</option>
                     @if($data->gender == "l")
-                      {
                         <option value="{{ $data->gender }}" selected>Laki-laki</option>
                         <option value="p">Perempuan</option>
-                      }
                       @else
-                      {
                        	<option value="{{ $data->gender }}" selected>Perempuan</option>
                         <option value="l">Laki-laki</option>
-                      }
                       @endif
                   </select>
                 </div>

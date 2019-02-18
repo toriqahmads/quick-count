@@ -17,33 +17,21 @@ class partaiController extends Controller
 {
     function registerPartai()
     {
-    	if(!Session::get('login'))
-	    {
-	    	return redirect('admin/login')->with('alert', 'Maaf Anda harus login terlebih dahulu!');
-	    }
-	    elseif(Session::get('role') != 'admin')
-	    {
-	    	return redirect('admin/login')->with('alert', 'Forbidden!');
-	    }
-	    else
-	    {
-	    	return view('admin.partai.register');
-	    }
+	    return view('admin.partai.register');
     }
 
 	function registerPostPartai(Request $request)
     {
         $this->validate($request, [
-            'partai' => 'required|min:5|max:25',
+            'partai' => 'required|min:3|max:25',
             'foto' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'no_urut' => 'required|int|min:1|max:3'
+            'no_urut' => 'required|int|min:1'
         ],[ 'partai.required' => 'Partai harus diisi!',
             'partai.max' => 'Partai maximal 25 karakter!',
-            'partai.min' => 'Partai minimal 5 karakter!',
+            'partai.min' => 'Partai minimal 3 karakter!',
             'no_urut.required' => 'Nomor urut harus diisi!',
             'no_urut.int' => 'Nomor urut harus bilangan!',
             'no_urut.min' => 'Nomor urut minimal 1 bilangan!',
-            'no_urut.max' => 'Nomor urut maksimal 3 bilangan!'
         ]);
         if($request->hasFile('foto'))
         {
@@ -75,89 +63,51 @@ class partaiController extends Controller
 
     function getAllPartai()
     {
-    	if(!Session::get('login'))
-	    {
-	    	return redirect('admin/login')->with('Anda harus login terlebih dahulu');
-	    }
-	    elseif(Session::get('role') != 'admin')
-	    {
-	    	return redirect('admin/login')->with('Forbidden');
-	    }
-	    else
-	    {
-	    	$req = new partaiModel();
-    		$req = $req->getAllPartai();
+    	$req = new partaiModel();
+		$req = $req->getAllPartai();
 
-    		return view('admin.partai.userlist', compact('req'));
-	    }
+		return view('admin.partai.userlist', compact('req'));
     }
 
     function editPartai($id_partai)
     {
-	    if(!Session::get('login'))
-	    {
-	    	return redirect('admin/login')->with('Anda harus login terlebih dahulu');
-	    }
-	    elseif(Session::get('role') != 'admin')
-	    {
-	    	return redirect('admin/login')->with('alert', 'Forbidden!');
-	    }
-	    else
-	    {
-	    	$data = new partaiModel();
-	    	$data = $data->getProfile($id_partai);
-	    	return view('admin.partai.edit', compact('data'));
-	    }
+    	$data = new partaiModel();
+    	$data = $data->getProfile($id_partai);
+    	return view('admin.partai.edit', compact('data'));
     }
 
     function updatePartai(Request $request)
     {
-    	$data = [];
-    	if($request->hasFile('fotos'))
-    	{
-    		$this->validate($request, [
-            'partai' => 'required|min:5|max:25',
-            'fotos' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'no_urut' => 'required|int|min:1|max:3'
-	        ],[ 'partai.required' => 'Partai harus diisi!',
-	            'partai.max' => 'Partai maximal 25 karakter!',
-	            'partai.min' => 'Partai minimal 5 karakter!',
-	        ]);
-	        if($request->hasFile('fotos'))
-	        {
-	        	$image = $request->file('fotos');
-		        $foto = time().'.'.$image->getClientOriginalExtension();
-		        $image->move(public_path('img/partai'), $foto);
-	        }
-	        else
-	        {
-	        	$foto = "default_avatar.jpg";
-	        }
-	        $data = ['id' => $request->id,
-	        		'partai' => $request->partai,
-	            	'foto' => $foto
-	            	];
-    	}
-    	else
-    	{
-    		$this->validate($request, [
-            'partai' => 'required|min:5|max:25',
-            'foto' => 'required'
-	        ],[ 'partai.required' => 'Partai harus diisi!',
-	            'partai.max' => 'Partai maximal 25 karakter!',
-	            'partai.min' => 'Partai minimal 5 karakter!',
-	            'no_urut.required' => 'Nomor urut harus diisi!',
-	            'no_urut.int' => 'Nomor urut harus bilangan!',
-	            'no_urut.min' => 'Nomor urut minimal 1 bilangan!',
-	            'no_urut.max' => 'Nomor urut maksimal 3 bilangan!'
-	        ]);
-	        $data = ['id' => $request->id,
-	        		'partai' => $request->partai,
-	            	'foto' => $request->foto,
-	            	'no_urut' => $request->no_urut
-	            	];
-    	}
-        
+		$this->validate($request, [
+        'id' => 'required|min:1',
+        'partai' => 'required|min:3|max:25',
+        'foto' => 'required'
+        ],[ 'id.required' => 'ID Partai harus diisi!',
+            'id.min' => 'ID Partai minimal 1 karakter!',
+            'partai.required' => 'Partai harus diisi!',
+            'partai.max' => 'Partai maximal 25 karakter!',
+            'partai.min' => 'Partai minimal 3 karakter!',
+            'no_urut.required' => 'Nomor urut harus diisi!',
+            'no_urut.int' => 'Nomor urut harus bilangan!',
+            'no_urut.min' => 'Nomor urut minimal 1 bilangan!',
+        ]);
+
+        if($request->hasFile('fotos'))
+        {
+        	$image = $request->file('fotos');
+	        $foto = time().'.'.$image->getClientOriginalExtension();
+	        $image->move(public_path('img/partai'), $foto);
+        }
+        else
+        {
+        	$foto = "default_avatar.jpg";
+        }
+
+        $data = ['id' => $request->id,
+        		'partai' => $request->partai,
+            	'foto' => $foto,
+            	'no_urut' => $request->no_urut
+            	];        
 
         $req = new partaiModel();
         $req = $req->updateProfile($data);
@@ -173,38 +123,15 @@ class partaiController extends Controller
 
     function viewPartai($id_partai)
     {
-	    if(!Session::get('login'))
-	    {
-	    	return redirect('admin/login')->with('Anda harus login terlebih dahulu');
-	    }
-	    elseif(Session::get('role') != 'admin')
-	    {
-	    	return redirect('admin/login')->with('alert', 'Forbidden!');
-	    }
-	    else
-	    {
-	    	$data = new partaiModel();
-	    	$data = $data->getProfile($id_partai);
-	    	return view('admin.partai.view', compact('data'));
-	    }
+    	$data = new partaiModel();
+    	$data = $data->getProfile($id_partai);
+    	return view('admin.partai.view', compact('data'));
     }
 
     function deletePartai($id_partai)
     {
-    	if(!Session::get('login'))
-	    {
-	    	return redirect('admin/login')->with('Anda harus login terlebih dahulu');
-	    }
-	    elseif(Session::get('role') != 'admin')
-	    {
-	    	return redirect('admin/login')->with('alert', 'Forbidden!');
-	    }
-	    else
-	    {
-	    	$data = new partaiModel();
-	    	$req = $data->deletePartai($id_partai);
-	    	#$req->delete();
-        	return $req;
-    	}
+    	$data = new partaiModel();
+    	$req = $data->deletePartai($id_partai);
+    	return $req;
 	}
 }

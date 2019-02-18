@@ -26,7 +26,7 @@
 
 <body class="">
   <div class="wrapper ">
-    <div class="sidebar" data-color="blue">
+    <div class="sidebar" data-color="demokrat">
       <!--
         Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
     -->
@@ -52,66 +52,111 @@
               <p>Tabulasi</p>
             </a>
           </li>
+
           <li id='listcaleg'>
-            <a href="{{ url('/caleg/listcaleg') }}" class="sidemenu">
-              <i class="now-ui-icons design_bullet-list-67"></i>
-              <p>Data Caleg</p>
+            <a data-toggle="collapse" href="#caleg" role="button" aria-expanded="false" aria-controls="caleg" class="sidemenu">
+                <i class="now-ui-icons design_bullet-list-67"></i>
+                <p>Caleg</p>
             </a>
           </li>
-          <li id='inputcaleg'>
-            <a href="{{ url('/caleg/register') }}" class="sidemenu">
-              <i class="now-ui-icons users_single-02"></i>
-              <p>Input Data Caleg</p>
-            </a>
-          </li>
+          <div class="collapse" id="caleg">
+            <li>
+              <a href="{{ url('/caleg/listcaleg') }}" class="sidemenu">
+                <i class="now-ui-icons design_bullet-list-67"></i>
+                <p>Data Caleg</p>
+              </a>
+            </li>
+            <li id='inputcaleg'>
+              <a href="{{ url('/caleg/register') }}" class="sidemenu">
+                <i class="now-ui-icons users_single-02"></i>
+                <p>Input Data Caleg</p>
+              </a>
+            </li>
+          </div>
+
           <li id='listsaksi'>
-            <a href="{{ url('/saksi/listsaksi') }}" class="sidemenu">
+            <a data-toggle="collapse" href="#saksi" role="button" aria-expanded="false" aria-controls="saksi" class="sidemenu">
               <i class="now-ui-icons design_bullet-list-67"></i>
-              <p>Data Saksi</p>
+              <p>Saksi</p>
             </a>
           </li>
-          <li id='inputsaksi'>
-            <a href="{{ url('/saksi/register') }}" class="sidemenu">
-              <i class="now-ui-icons business_badge"></i>
-              <p>Input Data Saksi</p>
-            </a>
-          </li>
+          <div class="collapse" id="saksi">
+            <li>
+              <a href="{{ url('/saksi/listsaksi') }}" class="sidemenu">
+                <i class="now-ui-icons design_bullet-list-67"></i>
+                <p>Data Saksi</p>
+              </a>
+            </li>
+            <li id='inputsaksi'>
+              <a href="{{ url('/saksi/register') }}" class="sidemenu">
+                <i class="now-ui-icons business_badge"></i>
+                <p>Input Data Saksi</p>
+              </a>
+            </li>
+          </div>
+
           <li id='listpartai'>
-            <a href="{{ url('/partai/listpartai') }}" class="sidemenu">
+            <a data-toggle="collapse" href="#partai" role="button" aria-expanded="false" aria-controls="partai" class="sidemenu">
               <i class="now-ui-icons business_bank"></i>
-              <p>Data Partai</p>
+              <p>Partai</p>
             </a>
           </li>
-          <li id='inputpartai'>
-            <a href="{{ url('/partai/register') }}" class="sidemenu">
-              <i class="now-ui-icons design-2_ruler-pencil"></i>
-              <p>Input Partai</p>
-            </a>
-          </li>
+          <div class="collapse" id="partai">
+            <li>
+              <a href="{{ url('/partai/listpartai') }}" class="sidemenu">
+                <i class="now-ui-icons business_bank"></i>
+                <p>Data Partai</p>
+              </a>
+            </li>
+            <li id='inputpartai'>
+              <a href="{{ url('/partai/register') }}" class="sidemenu">
+                <i class="now-ui-icons design-2_ruler-pencil"></i>
+                <p>Input Partai</p>
+              </a>
+            </li>
+          </div>
+
           <li id='listtps'>
-            <a href="{{ url('/tps/listtps') }}" class="sidemenu">
+            <a data-toggle="collapse" href="#tps" role="button" aria-expanded="false" aria-controls="tps" class="sidemenu">
               <i class="now-ui-icons design_app"></i>
-              <p>Data TPS</p>
+              <p>TPS</p>
             </a>
           </li>
-          <li id='inputtps'>
-            <a href="{{ url('/tps/register') }}" class="sidemenu">
-              <i class="now-ui-icons design-2_ruler-pencil"></i>
-              <p>Input Data TPS</p>
-            </a>
-          </li>
+          <div class="collapse" id="tps">
+            <li>
+              <a href="{{ url('/tps/listtps') }}" class="sidemenu">
+                <i class="now-ui-icons design_app"></i>
+                <p>Data TPS</p>
+              </a>
+            </li>
+            <li id='inputtps'>
+              <a href="{{ url('/tps/register') }}" class="sidemenu">
+                <i class="now-ui-icons design-2_ruler-pencil"></i>
+                <p>Input Data TPS</p>
+              </a>
+            </li>
+          </div>
+
           <li id='datasuara'>
-            <a href="{{ url('/suara/view') }}" class="sidemenu">
+            <a data-toggle="collapse" href="#suara" role="button" aria-expanded="false" aria-controls="suara" class="sidemenu">
               <i class="now-ui-icons files_paper"></i>
-              <p>Data Suara</p>
+              <p>Suara</p>
             </a>
           </li>
-          <li id='inputsuara'>
-            <a href="{{ url('/suara/register') }}" class="sidemenu">
-              <i class="now-ui-icons ui-1_check"></i>
-              <p>Input Suara</p>
-            </a>
-          </li>
+          <div class="collapse" id="suara">
+            <li>
+              <a href="{{ url('/suara/view') }}" class="sidemenu">
+                <i class="now-ui-icons files_paper"></i>
+                <p>Data Suara</p>
+              </a>
+            </li>
+            <li id='inputsuara'>
+              <a href="{{ url('/suara/register') }}" class="sidemenu">
+                <i class="now-ui-icons ui-1_check"></i>
+                <p>Input Suara</p>
+              </a>
+            </li>
+          </div>
         </ul>
       </div>
     </div>
@@ -211,53 +256,31 @@
       });
   </script>-->
   <script type="text/javascript">
-      var pathname = window.location.pathname;
-      //alert(pathname);
-      if(pathname == '/admin')
+      if(window.location.href.indexOf('admin') > -1)
       {
         $("#dashboard").addClass('active');
       }
-      else if(pathname == '/saksi/listsaksi')
+      else if(window.location.href.indexOf('saksi') > -1)
       {
         $("#listsaksi").addClass('active');
       }
-      else if(pathname == '/caleg/listcaleg')
+      else if(window.location.href.indexOf('caleg') > -1)
       {
         $("#listcaleg").addClass('active');
       }
-      else if(pathname == '/saksi/register')
-      {
-        $("#inputsaksi").addClass('active');
-      }
-      else if(pathname == '/caleg/register')
-      {
-        $("#inputcaleg").addClass('active');
-      }
-      else if(pathname == '/tps/register')
-      {
-        $("#inputtps").addClass('active');
-      }
-      else if(pathname == '/tps/listtps')
+      else if(window.location.href.indexOf('tps') > -1 )
       {
         $("#listtps").addClass('active');
       }
-      else if(pathname == '/suara/view')
+      else if(window.location.href.indexOf('suara') > -1 )
       {
         $("#datasuara").addClass('active');
       }
-      else if(pathname == '/suara/register')
-      {
-        $("#inputsuara").addClass('active');
-      }
-      else if(pathname == '/partai/register')
-      {
-        $("#inputpartai").addClass('active');
-      }
-      else if(pathname == '/partai/listpartai')
+      else if(window.location.href.indexOf('partai') > -1 )
       {
         $("#listpartai").addClass('active');
       }
-      else if(pathname == '/tabulasi/view')
+      else if(window.location.href.indexOf('tabulasi') > -1 )
       {
         $("#tabulasi").addClass('active');
       }
