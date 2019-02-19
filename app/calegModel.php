@@ -56,14 +56,20 @@ class calegModel extends Model
         return $req;
     }
 
-    function getAllCaleg()
+    function getAllCaleg($tingkat = '0')
     {
         $data = DB::table('pil')
                 ->join('partai', 'partai.id', '=', 'pil.id_partai')
                 ->where('pil.status', '=', 'l')
-                ->select('pil.*', 'partai.id as id_partai', 'partai.partai')
-                ->paginate('10');
-        return $data;
+                ->select('pil.*', 'partai.id as id_partai', 'partai.partai');
+
+        if($tingkat != '0')
+        {
+            $data->where('tingkat', '=', $tingkat);
+        }
+
+        $result = $data->paginate('15');
+        return $result;
     }
 
     function deleteCaleg($id_caleg)

@@ -92,7 +92,7 @@ Route::group(['prefix' => 'caleg'], function()
 	Route::group(['middleware' => ['auth:admin', 'role:admin']], function()
 	{
 		Route::get('/register', 'calegController@registerCaleg')->name('register.caleg');
-		Route::get('/listcaleg', 'calegController@getAllCaleg')->name('list.caleg');
+		Route::get('/listcaleg/{tingkat?}', 'calegController@getAllCaleg')->name('list.caleg');
 		Route::get('/edit/{id}', 'calegController@editCaleg')->name('edit.caleg');
 		Route::get('/view/{id}', 'calegController@viewCaleg')->name('view.caleg');
 		Route::delete('/delete/{id}', 'calegController@deleteCaleg')->name('delete.caleg');

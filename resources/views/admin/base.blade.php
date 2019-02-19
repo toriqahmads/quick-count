@@ -37,8 +37,8 @@
 </head>
 <body class="login-page sidebar-collapse">
     <!-- Navbar -->
-    <div class="page-header" filter-color="orange">
-    
+    <div class="page-header" filter-color="purple">
+    <div class="page-header-image" style="background-image:url({{ asset('img/login1.jpg') }})"></div>
     <div id="container" class="container">
 	@yield('content')
     <footer id="footer" class="footer">

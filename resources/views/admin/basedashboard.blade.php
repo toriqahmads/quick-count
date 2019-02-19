@@ -24,7 +24,7 @@
   
 </head>
 
-<body class="">
+<body id="content">
   <div class="wrapper ">
     <div class="sidebar" data-color="demokrat">
       <!--

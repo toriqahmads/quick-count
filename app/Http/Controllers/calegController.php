@@ -117,11 +117,11 @@ class calegController extends Controller
         }
     }
 
-    function getAllCaleg()
+    function getAllCaleg($tingkat = '0')
     {
     	$req = new calegModel();
     	$dataModel = new dataModel();
-		$req = $req->getAllCaleg();
+		$req = $req->getAllCaleg($tingkat);
 		$dapil = $dataModel->getAllDapil();
 
 		return view('admin.caleg.userlist', compact('req', 'dapil'));

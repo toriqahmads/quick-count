@@ -629,7 +629,7 @@ fieldset[disabled] .navbar .navbar-nav>a.btn.active {
 .show>.btn-primary.dropdown-toggle,
 .show>.btn-primary.dropdown-toggle:focus,
 .show>.btn-primary.dropdown-toggle:hover {
-  background-color: #fa7a50;
+  background-color: #016fba;
   color: #FFFFFF;
   box-shadow: none;
 }
@@ -675,8 +675,8 @@ fieldset[disabled] .btn-primary.active {
 .btn-primary.btn-simple:focus,
 .btn-primary.btn-simple:active {
   background-color: transparent;
-  color: #fa7a50;
-  border-color: #fa7a50;
+  color: #016fba;
+  border-color: #016fba;
   box-shadow: none;
 }
 
@@ -688,7 +688,7 @@ fieldset[disabled] .btn-primary.active {
 .btn-primary.btn-link:focus,
 .btn-primary.btn-link:active {
   background-color: transparent;
-  color: #fa7a50;
+  color: #016fba;
   text-decoration: none;
   box-shadow: none;
 }
@@ -1131,13 +1131,13 @@ fieldset[disabled] .btn-neutral.active {
 .show>.btn-neutral.dropdown-toggle:focus,
 .show>.btn-neutral.dropdown-toggle:hover {
   background-color: #FFFFFF;
-  color: #fa7a50;
+  color: #016fba;
   box-shadow: none;
 }
 
 .btn-neutral:hover,
 .btn-neutral:focus {
-  color: #fa7a50;
+  color: #016fba;
 }
 
 .btn-neutral:hover:not(.nav-link),

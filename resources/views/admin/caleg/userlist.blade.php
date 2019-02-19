@@ -6,6 +6,19 @@
       <div class="card">
         <div class="card-header">
           <h4 class="card-title">Table Daftar Caleg</h4>
+          <div class="col-md-3 px-1">
+              <div class="form-group">
+                <label>Tingkatan Caleg</label>
+                <select name="tingkat" id="tingkat" class="form-control">
+                    <option value="0" <?php echo Request::segment(3) == '0' ? 'selected' : ''; ?>>Pilih Tingkatan</option>
+                    <option value="a" <?php echo Request::segment(3) == 'a' ? 'selected' : ''; ?>>Presiden</option>
+                    <option value="b" <?php echo Request::segment(3) == 'b' ? 'selected' : ''; ?>>DPD</option>
+                    <option value="c" <?php echo Request::segment(3) == 'c' ? 'selected' : ''; ?>>DPR RI</option>
+                    <option value="d" <?php echo Request::segment(3) == 'd' ? 'selected' : ''; ?>>DPR Provinsi</option>
+                    <option value="e" <?php echo Request::segment(3) == 'e' ? 'selected' : ''; ?>>DPR Kabupaten</option>
+                </select>
+              </div>
+          </div>
           <div class="input-group">
             <input type="text" placeholder="Cari..." class="form-control form-control-success" id="myInput"/>
             <div class="input-group-append">
@@ -82,11 +95,12 @@
               </tbody>
             </table>
           </div>
-          {{ $req->links() }}
+          {{ $req->appends(['tingkat' => Request::segment(3)])->links() }}
         </div>
       </div>
     </div>
   </div>
 </div>
   <script src="{{ asset('js/delete-caleg.js')}}"></script>
+  <script src="{{ asset('js/listcaleg.js')}}"></script>
 @endsection
