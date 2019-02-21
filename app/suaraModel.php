@@ -26,14 +26,13 @@ class suaraModel extends Model
         $data = DB::table('suara')
                 ->join('partai', 'partai.id', '=', 'suara.id_partai')
                 ->join('tps', 'tps.id', '=', 'suara.id_tps')
-                ->join('saksi', 'saksi.id', '=', 'suara.id_saksi')
                 ->where('suara.id_tps', '=', $id_tps)
                 ->where('suara.id_partai', '=', $id_partai)
                 ->where('suara.status', '=', 'l')
                 ->where('suara.jenis_suara', '=', 'p')
                 ->where('suara.tingkat_suara', '=', $tingkat)
                 ->orderBy('partai.no_urut', 'asc')
-                ->select('suara.id', 'partai.no_urut', 'suara.suara as jumlah_suara', 'suara.id_saksi', 'saksi.nama_depan as nama_depan_saksi', 'saksi.nama_belakang as nama_belakang_saksi', 'partai.id as id_partai', 'partai.partai', 'tps.id as id_tps', 'tps.tps', 'suara.jenis_suara', 'suara.tingkat_suara')
+                ->select('suara.id', 'partai.no_urut', 'suara.suara as jumlah_suara', 'partai.id as id_partai', 'partai.partai', 'tps.id as id_tps', 'tps.tps', 'suara.jenis_suara', 'suara.tingkat_suara')
                 ->get();
 
         return $data;
@@ -64,14 +63,13 @@ class suaraModel extends Model
                 ->join('partai', 'partai.id', '=', 'suara.id_partai')
                 ->join('tps', 'tps.id', '=', 'suara.id_tps')
                 ->join('pil', 'pil.id', '=', 'suara.id_caleg')
-                ->join('saksi', 'saksi.id', '=', 'suara.id_saksi')
                 ->where('suara.id_partai', '=', $id_partai)
                 ->where('suara.status', '=', 'l')
                 ->where('suara.jenis_suara', '=', 'c')
                 ->where('suara.tingkat_suara', '=', $tingkat)
                 ->where('suara.id_tps', '=', $id_tps)
                 ->orderBy('pil.no_urut', 'asc')
-                ->select('suara.id', 'pil.no_urut', 'suara.suara as jumlah_suara', 'suara.id_saksi', 'saksi.nama_depan as nama_depan_saksi', 'saksi.nama_belakang as nama_belakang_saksi', 'partai.id as id_partai', 'partai.partai', 'pil.id as id_caleg', 'pil.nama_depan as nama_depan_caleg', 'pil.nama_belakang as nama_belakang_caleg', 'tps.id as id_tps', 'tps.tps', 'suara.jenis_suara', 'suara.tingkat_suara')
+                ->select('suara.id', 'pil.no_urut', 'suara.suara as jumlah_suara', 'partai.id as id_partai', 'partai.partai', 'pil.id as id_caleg', 'pil.nama_depan as nama_depan_caleg', 'pil.nama_belakang as nama_belakang_caleg', 'tps.id as id_tps', 'tps.tps', 'suara.jenis_suara', 'suara.tingkat_suara')
                 ->get();
 
         return $data;

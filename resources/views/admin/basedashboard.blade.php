@@ -75,12 +75,12 @@
           </div>
 
           <li id='listsaksi'>
-            <a data-toggle="collapse" href="#saksi" role="button" aria-expanded="false" aria-controls="saksi" class="sidemenu">
+            <a data-toggle="collapse" href="#saksimenu" role="button" aria-expanded="false" aria-controls="saksimenu" class="sidemenu">
               <i class="now-ui-icons design_bullet-list-67"></i>
               <p>Saksi</p>
             </a>
           </li>
-          <div class="collapse" id="saksi">
+          <div class="collapse" id="saksimenu">
             <li>
               <a href="{{ url('/saksi/listsaksi') }}" class="sidemenu">
                 <i class="now-ui-icons design_bullet-list-67"></i>
@@ -117,12 +117,12 @@
           </div>
 
           <li id='listtps'>
-            <a data-toggle="collapse" href="#tps" role="button" aria-expanded="false" aria-controls="tps" class="sidemenu">
+            <a data-toggle="collapse" href="#tpsmenu" role="button" aria-expanded="false" aria-controls="tpsmenu" class="sidemenu">
               <i class="now-ui-icons design_app"></i>
               <p>TPS</p>
             </a>
           </li>
-          <div class="collapse" id="tps">
+          <div class="collapse" id="tpsmenu">
             <li>
               <a href="{{ url('/tps/listtps') }}" class="sidemenu">
                 <i class="now-ui-icons design_app"></i>

@@ -26,7 +26,7 @@ class tabulasiModel extends Model
     function tabulasiCalegByTps($id_partai, $id_tps, $tingkat)
     {
         $data = DB::table('suara')
-                ->select('suara.id', 'partai.id as id_partai', 'partai.partai', DB::raw('SUM(suara.suara) as total_suara'), 'tps.id as id_tps', 'suara.jenis_suara', 'pil.nama_depan as nama_depan_caleg', 'pil.nama_belakang as nama_belakang_caleg')
+                ->select('suara.id', 'partai.id as id_partai', 'partai.partai', DB::raw('SUM(suara.suara) as total_suara'), 'tps.id as id_tps', 'suara.jenis_suara', 'pil.nama_depan as nama_depan_caleg', 'pil.nama_belakang as nama_belakang_caleg', 'pil.no_urut')
                 ->join('pil', 'pil.id', '=', 'suara.id_caleg')
                 ->join('partai', 'partai.id', '=', 'suara.id_partai')
                 ->join('tps', 'tps.id', '=', 'suara.id_tps')
@@ -36,6 +36,7 @@ class tabulasiModel extends Model
                 ->whereIn('suara.id_partai', $id_partai)
                 ->where('tps.id', '=', $id_tps)
                 ->groupBy('suara.id_caleg', 'tps.id')
+                ->orderBy('pil.no_urut', 'asc')
                 ->get();
 
         return $data;
@@ -61,7 +62,7 @@ class tabulasiModel extends Model
     function tabulasiCalegByKel($id_partai, $id_kel, $tingkat)
     {
         $data = DB::table('suara')
-                ->select('suara.id', 'partai.id as id_partai', 'partai.partai', DB::raw('SUM(suara.suara) as total_suara'), 'tps.id as id_tps', 'suara.jenis_suara', 'pil.nama_depan as nama_depan_caleg', 'pil.nama_belakang as nama_belakang_caleg')
+                ->select('suara.id', 'partai.id as id_partai', 'partai.partai', DB::raw('SUM(suara.suara) as total_suara'), 'tps.id as id_tps', 'suara.jenis_suara', 'pil.nama_depan as nama_depan_caleg', 'pil.nama_belakang as nama_belakang_caleg', 'pil.no_urut')
                 ->join('pil', 'pil.id', '=', 'suara.id_caleg')
                 ->join('partai', 'partai.id', '=', 'suara.id_partai')
                 ->join('tps', 'tps.id', '=', 'suara.id_tps')
@@ -72,6 +73,7 @@ class tabulasiModel extends Model
                 ->whereIn('suara.id_partai', $id_partai)
                 ->where('kel.id', '=', $id_kel)
                 ->groupBy('suara.id_caleg', 'kel.id')
+                ->orderBy('pil.no_urut', 'asc')
                 ->get();
 
         return $data;
@@ -97,7 +99,7 @@ class tabulasiModel extends Model
     function tabulasiCalegByKec($id_partai, $id_kec, $tingkat)
     {
         $data = DB::table('suara')
-                ->select('suara.id', 'partai.id as id_partai', 'partai.partai', DB::raw('SUM(suara.suara) as total_suara'), 'tps.id as id_tps', 'suara.jenis_suara', 'pil.nama_depan as nama_depan_caleg', 'pil.nama_belakang as nama_belakang_caleg')
+                ->select('suara.id', 'partai.id as id_partai', 'partai.partai', DB::raw('SUM(suara.suara) as total_suara'), 'tps.id as id_tps', 'suara.jenis_suara', 'pil.nama_depan as nama_depan_caleg', 'pil.nama_belakang as nama_belakang_caleg', 'pil.no_urut')
                 ->join('pil', 'pil.id', '=', 'suara.id_caleg')
                 ->join('partai', 'partai.id', '=', 'suara.id_partai')
                 ->join('tps', 'tps.id', '=', 'suara.id_tps')
@@ -108,6 +110,7 @@ class tabulasiModel extends Model
                 ->whereIn('suara.id_partai', $id_partai)
                 ->where('kec.id', '=', $id_kec)
                 ->groupBy('suara.id_caleg', 'kec.id')
+                ->orderBy('pil.no_urut', 'asc')
                 ->get();
 
         return $data;
@@ -133,7 +136,7 @@ class tabulasiModel extends Model
     function tabulasiCalegByKab($id_partai, $id_kab, $tingkat)
     {
         $data = DB::table('suara')
-                ->select('suara.id', 'partai.id as id_partai', 'partai.partai', DB::raw('SUM(suara.suara) as total_suara'), 'tps.id as id_tps', 'suara.jenis_suara', 'pil.nama_depan as nama_depan_caleg', 'pil.nama_belakang as nama_belakang_caleg')
+                ->select('suara.id', 'partai.id as id_partai', 'partai.partai', DB::raw('SUM(suara.suara) as total_suara'), 'tps.id as id_tps', 'suara.jenis_suara', 'pil.nama_depan as nama_depan_caleg', 'pil.nama_belakang as nama_belakang_caleg', 'pil.no_urut')
                 ->join('pil', 'pil.id', '=', 'suara.id_caleg')
                 ->join('partai', 'partai.id', '=', 'suara.id_partai')
                 ->join('tps', 'tps.id', '=', 'suara.id_tps')
@@ -144,6 +147,7 @@ class tabulasiModel extends Model
                 ->whereIn('suara.id_partai', $id_partai)
                 ->where('kab.id', '=', $id_kab)
                 ->groupBy('suara.id_caleg', 'kab.id')
+                ->orderBy('pil.no_urut', 'asc')
                 ->get();
 
         return $data;
@@ -169,7 +173,7 @@ class tabulasiModel extends Model
     function tabulasiCalegByProv($id_partai, $id_prov, $tingkat)
     {
         $data = DB::table('suara')
-                ->select('suara.id', 'partai.id as id_partai', 'partai.partai', DB::raw('SUM(suara.suara) as total_suara'), 'tps.id as id_tps', 'suara.jenis_suara', 'pil.nama_depan as nama_depan_caleg', 'pil.nama_belakang as nama_belakang_caleg')
+                ->select('suara.id', 'partai.id as id_partai', 'partai.partai', DB::raw('SUM(suara.suara) as total_suara'), 'tps.id as id_tps', 'suara.jenis_suara', 'pil.nama_depan as nama_depan_caleg', 'pil.nama_belakang as nama_belakang_caleg', 'pil.no_urut')
                 ->join('pil', 'pil.id', '=', 'suara.id_caleg')
                 ->join('partai', 'partai.id', '=', 'suara.id_partai')
                 ->join('tps', 'tps.id', '=', 'suara.id_tps')
@@ -180,6 +184,7 @@ class tabulasiModel extends Model
                 ->whereIn('suara.id_partai', $id_partai)
                 ->where('prov.id', '=', $id_prov)
                 ->groupBy('suara.id_caleg', 'prov.id')
+                ->orderBy('pil.no_urut', 'asc')
                 ->get();
 
         return $data;
@@ -206,7 +211,7 @@ class tabulasiModel extends Model
     function tabulasiCalegByDapil($id_partai, $id_dapil, $tingkat)
     {
         $data = DB::table('suara')
-                ->select('suara.id', 'partai.id as id_partai', 'partai.partai', DB::raw('SUM(suara.suara) as total_suara'), 'tps.id as id_tps', 'suara.jenis_suara', 'pil.nama_depan as nama_depan_caleg', 'pil.nama_belakang as nama_belakang_caleg')
+                ->select('suara.id', 'partai.id as id_partai', 'partai.partai', DB::raw('SUM(suara.suara) as total_suara'), 'tps.id as id_tps', 'suara.jenis_suara', 'pil.nama_depan as nama_depan_caleg', 'pil.nama_belakang as nama_belakang_caleg', 'pil.no_urut')
                 ->join('pil', 'pil.id', '=', 'suara.id_caleg')
                 ->join('partai', 'partai.id', '=', 'suara.id_partai')
                 ->join('tps', 'tps.id', '=', 'suara.id_tps')
@@ -218,6 +223,7 @@ class tabulasiModel extends Model
                 ->whereIn('suara.id_partai', $id_partai)
                 ->where('dapil.id', '=', $id_dapil)
                 ->groupBy('suara.id_caleg', 'dapil.id')
+                ->orderBy('pil.no_urut', 'asc')
                 ->get();
 
         return $data;
@@ -244,7 +250,7 @@ class tabulasiModel extends Model
     function tabulasiCalegByDapilKab($id_partai, $id_dapil, $tingkat)
     {
         $data = DB::table('suara')
-                ->select('suara.id', 'partai.id as id_partai', 'partai.partai', DB::raw('SUM(suara.suara) as total_suara'), 'tps.id as id_tps', 'suara.jenis_suara', 'pil.nama_depan as nama_depan_caleg', 'pil.nama_belakang as nama_belakang_caleg')
+                ->select('suara.id', 'partai.id as id_partai', 'partai.partai', DB::raw('SUM(suara.suara) as total_suara'), 'tps.id as id_tps', 'suara.jenis_suara', 'pil.nama_depan as nama_depan_caleg', 'pil.nama_belakang as nama_belakang_caleg', 'pil.no_urut')
                 ->join('pil', 'pil.id', '=', 'suara.id_caleg')
                 ->join('partai', 'partai.id', '=', 'suara.id_partai')
                 ->join('tps', 'tps.id', '=', 'suara.id_tps')
@@ -256,6 +262,7 @@ class tabulasiModel extends Model
                 ->whereIn('suara.id_partai', $id_partai)
                 ->where('dapil.id', '=', $id_dapil)
                 ->groupBy('suara.id_caleg', 'dapil.id')
+                ->orderBy('pil.no_urut', 'asc')
                 ->get();
 
         return $data;

@@ -80,7 +80,7 @@
    <div class="col-md-3">
       <div class="card">
         <div class="card-header">
-          <h5 class="title">{{$part->partai}}</h5>
+          <h5 class="title">{{$part->no_urut}}. {{$part->partai}}</h5>
         </div>
         <div class="card-body">
           <form id="suara{{$part->id}}" class="form" method="post" action="{{ url('/suara/registerPostSuara') }}" enctype="multipart/form-data">

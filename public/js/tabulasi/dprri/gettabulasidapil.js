@@ -53,6 +53,7 @@ $(document).ready(function()
                   url: window.location.origin+"/tabulasi/caleg/dapil/"+id_partais+"/"+dapil+"/"+tingkat,
                   type: "GET",
                   success: function(data){
+                    var datachart = [];
                       $.each(datas, function(keys, val)
                       {
                         var res = '';
@@ -61,7 +62,7 @@ $(document).ready(function()
                         {
                           if(val.id_partai == val2.id_partai)
                           {
-                            res = res + '<div class="col-md-12 px-1"><div class="form-group"><label>'+val2.nama_depan_caleg+' '+val2.nama_belakang_caleg+'</label><input type="number" name="suara['+val2.id_partai+']['+val2.id_caleg+']['+val2.id+']" class="form-control" value="'+val2.total_suara+'" placeholder="'+val2.nama_depan_caleg+' '+val2.nama_belakang_caleg+'" disabled></div></div>';
+                            res = res + '<div class="col-md-12 px-1"><div class="form-group"><label>'+val2.no_urut+'. '+val2.nama_depan_caleg+' '+val2.nama_belakang_caleg+'</label><input type="number" name="suara['+val2.id_partai+']['+val2.id_caleg+']['+val2.id+']" class="form-control" value="'+val2.total_suara+'" placeholder="" disabled></div></div>';
                           }
                         });
                         $("#"+val.id_partai).html(res);
@@ -72,14 +73,15 @@ $(document).ready(function()
                         res = res + '<div class="input-group form-group-no input-lg"><div class="col-md-12 px-1"><input type="text" class="btn-info btn btn-round btn-block" value="'+total+'" name="total" disabled="true"></div>';
                         $("#"+val.id_partai).html(res);
                         delete res;
+                        datachart.push({partai: val.partai, total_suara: total});
                       });
+                      chart("Jumlah Suara Partai DPR RI By Dapil", datachart);
+                      $("#chartdiv").prop("hidden", false);
                   },
                   error: function(xhr, Status, err) {
                      showNotification('top', 'right','Terjadi error : '+ Status, 'danger');
                    }
                 });
-                chart("Jumlah Suara Partai DPR RI By Dapil", datas);
-                $("#chartdiv").prop("hidden", false);
             },
             error: function(xhr, Status, err) {
                showNotification('top', 'right','Terjadi error : '+ Status, 'danger');

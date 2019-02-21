@@ -22,10 +22,10 @@ $(document).ready(function()
               
               success: function(data){
                   var res = "";
-                  res = '<div class="col-md-12 pl-1"><div class="form-group"><label>'+data[0]['partai']+'</label><input type="text" name="suarapartai['+data[0]['id_partai']+']" class="form-control" placeholder="Suara Partai"></div></div>';
+                  res = '<div class="col-md-12 pl-1"><div class="form-group"><label>'+data[0]['partai']+'</label><input type="number" name="suarapartai['+data[0]['id_partai']+']" class="form-control" placeholder="Suara Partai"></div></div>';
                   $.each(data, function(key, val2)
                   {
-                      res = res + '<div class="col-md-12 pl-1"><div class="form-group"><label>'+val2.nama_depan+' ' +val2.nama_belakang+ '</label><input type="text" name="suara['+val.id+']['+val2.id+']" class="form-control" placeholder="'+val2.nama_depan+ ' ' +val2.nama_belakang + '" ></div></div>';
+                      res = res + '<div class="col-md-12 pl-1"><div class="form-group"><label>'+val2.no_urut+'. '+val2.nama_depan+' ' +val2.nama_belakang+ '</label><input type="number" name="suara['+val.id+']['+val2.id+']" class="form-control" placeholder="" ></div></div>';
                   });
                   $("#"+val.id).html(res);
               },

@@ -49,10 +49,10 @@ function chart(title, data)
   })
   chart.cursor = new am4charts.XYCursor();
   chart.exporting.menu = new am4core.ExportMenu();
-  var label = chart.createChild(am4core.Label);
+  /*var label = chart.createChild(am4core.Label);
   label.text = title;
   label.fontSize = 20;
   label.isMeasured = false;
   label.x = 100;
-  label.y = -15;
+  label.y = -15;*/
 }

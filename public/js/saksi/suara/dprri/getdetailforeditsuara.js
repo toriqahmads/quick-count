@@ -31,7 +31,7 @@ $(document).ready(function()
                       success: function(data){                    
                           $.each(data, function(key, val3)
                           {
-                              res = res + '<div class="col-md-12 px-1"><div class="form-group"><label>'+val3.nama_depan_caleg+' '+val3.nama_belakang_caleg+'</label><input type="number" name="suara['+val3.id_partai+']['+val3.id_caleg+']['+val3.id+']" class="form-control" value="'+val3.jumlah_suara+'" placeholder="'+val3.nama_depan_caleg+' '+val3.nama_belakang_caleg+'" disabled></div></div>';
+                              res = res + '<div class="col-md-12 px-1"><div class="form-group"><label>'+val3.no_urut+'. '+val3.nama_depan_caleg+' '+val3.nama_belakang_caleg+'</label><input type="number" name="suara['+val3.id_partai+']['+val3.id_caleg+']['+val3.id+']" class="form-control" value="'+val3.jumlah_suara+'" placeholder="" disabled></div></div>';
                           });
 
                           res = res + '<div class="input-group form-group-no input-lg"><div class="col-md-6 px-1"><input type="submit" class="edit btn-info btn btn-round btn-block" value="Edit" name="edit"></div><div class="col-md-6 px-1"><input type="submit" class="hapus btn-danger btn btn-round btn-block" value="Hapus" name="hapus"></div></div>';

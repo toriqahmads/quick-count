@@ -109,7 +109,7 @@
               </select>
           </div>
         </div>
-        <input type="hidden" id="saksi" name="saksi" value="{{Session::get('id')}}">
+        <input type="hidden" id="saksi" name="saksi" value="0">
         <input type="hidden" id="tingkat" name="tingkat" value="e">
         <input type="hidden" id="dapil" name="dapil" value="">
       </div>
@@ -121,7 +121,7 @@
    <div class="col-md-3">
       <div class="card">
         <div class="card-header">
-          <h5 class="title">{{$part->partai}}</h5>
+          <h5 class="title">{{$part->no_urut}}. {{$part->partai}}</h5>
         </div>
         <div class="card-body">
           <form id="suara{{$part->id}}" class="form" method="post" action="{{ url('/suara/updateSuara') }}" enctype="multipart/form-data">

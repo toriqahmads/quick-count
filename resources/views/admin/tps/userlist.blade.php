@@ -59,7 +59,7 @@
                               <i class="now-ui-icons design-2_ruler-pencil"></i>
                           </button>
                         </form>
-                          <form id="hapustps{{$data->id}}" method="POST" action="{{ route('delete.tps', [$data->id]) }}" class="hapus btn btn-danger btn-sm btn-icon">
+                          <form id="hapustps{{$data->id}}" method="POST" action="{{ route('delete.tps', [$data->id]) }}" class="btn btn-danger btn-sm btn-icon">
                               {{ csrf_field() }}
                               {{ method_field('DELETE') }}
                               <button type="submit" rel="tooltip" title="Hapus" class="hapus btn btn-danger btn-sm btn-icon">
