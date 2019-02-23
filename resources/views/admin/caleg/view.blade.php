@@ -26,7 +26,7 @@
           @endif
           @if(isset($data->id_kec))
           <p class="description">
-              Kecamatan : @foreach($kec as $kec) @if($data->id_kec == $kec->id_kec){{$kec->id_kec}}@endif @endforeach
+              Kecamatan : @foreach($kec as $kec) @if($data->id_kec == $kec->id_kec){{$kec->kec}}@endif @endforeach
           </p>
           @endif
           @if(isset($data->id_dapil))
