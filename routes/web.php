@@ -187,3 +187,11 @@ Route::group(['prefix' => 'tabulasi'], function()
 		Route::get('/caleg/dapil/{partai}/{dapil}/{tingkat}', 'tabulasiController@tabulasiCalegByDapil')->name('caleg.dapil');
 	});
 });
+
+Route::group(['prefix' => 'kursi', 'middleware' => ['auth:admin', 'role:admin']], function()
+{
+	Route::get('/{tingkat}', 'kursiController@view')->name('view.kursi');
+	Route::get('/{id_partai}/{tingkat}', 'kursiController@getTable')->name('table.kursi');
+	Route::get('/hitung/{id_partai}/{tingkat}', 'kursiController@hitungKursi')->name('hitung.kursi');
+	Route::post('/winner', 'kursiController@getWinner')->name('winner.kursi');
+});
