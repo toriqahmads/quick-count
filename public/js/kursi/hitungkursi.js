@@ -2,6 +2,7 @@ $(document).ready(function()
 {
     $("#prov").change(function()
       {
+          var tingkat = $("#tingkat").val();
           var prov = $("#prov").val();
           if(prov === '0' || prov === null || prov === undefined || prov == '' || prov == 0)
           {
@@ -9,27 +10,46 @@ $(document).ready(function()
           }
           else
           {
-              $('#kab').empty().append('<option selected value="0">Pilih kabupaten</option>');
-              $('#kec').empty().append('<option selected value="0">Pilih kecamatan</option>');
-              $('#kel').empty().append('<option selected value="0">Pilih kelurahan</option>');
-              $('#tps').empty().append('<option selected value="0">Pilih TPS</option>');
-              $('#dapil').empty().append('<option selected value="0">Pilih Dapil</option>');
+            if(tingkat == 'd' || tingkat == 'c')
+            {
               $.ajax({
-                url: window.location.origin+"/data/kab/" + prov,
+                url: window.location.origin+"/data/dapilprov/" + prov + "/b",
                 type: "GET",
                 success: function(html){
-                  var res = "<option value='0' selected>Pilih Kabupaten</option>";
+                  var res = '<option value="0" selected>Pilih Dapil</option>';
                   $.each(html, function(key, val)
                   {
-                      res = res + "<option value='" + val.id +"'>" + val.kab + "</option>";
+                    res = res + "<option value='" + val.id +"'>" + val.dapil + "</option>";
                   });
-                  $('#kab').html(res);
+                  $("#dapil").html(res);
+                  $('#kab').hide();
                 },
                 error: function(xhr, Status, err) {
                    showNotification('top', 'right','Terjadi error : '+ err, 'danger');
                  } 
               });
           }
+          else if(tingkat == 'e')
+          {
+            $('#kab').empty().append('<option selected value="0">Pilih kabupaten</option>');
+            $('#dapil').empty().append('<option selected value="0">Pilih Dapil</option>');
+            $.ajax({
+              url: window.location.origin+"/data/kab/" + prov,
+              type: "GET",
+              success: function(html){
+                var res = "<option value='0' selected>Pilih Kabupaten</option>";
+                $.each(html, function(key, val)
+                {
+                    res = res + "<option value='" + val.id +"'>" + val.kab + "</option>";
+                });
+                $('#kab').html(res);
+              },
+              error: function(xhr, Status, err) {
+                 showNotification('top', 'right','Terjadi error : '+ err, 'danger');
+               } 
+            });
+          }
+        }
           return false;
       });
 

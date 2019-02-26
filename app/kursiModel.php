@@ -64,7 +64,7 @@ class kursiModel extends Model
                 ->where('dapil.id', '=', $id_dapil)
                 ->where('partai.id', '=', $id_partai)
                 ->groupBy('suara.id_caleg', 'dapil.id')
-                ->orderBy('total_suara', 'asc')
+                ->orderBy('total_suara', 'dsc')
                 ->limit($limit)
                 ->get();
 

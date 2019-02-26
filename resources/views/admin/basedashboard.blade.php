@@ -52,6 +52,33 @@
               <p>Tabulasi</p>
             </a>
           </li>
+          
+          <li id='seat'>
+            <a data-toggle="collapse" href="#hitungkursi" role="button" aria-expanded="false" aria-controls="hitungkursi" class="sidemenu">
+                <i class="now-ui-icons design_bullet-list-67"></i>
+                <p>Hitung Kursi</p>
+            </a>
+          </li>
+          <div class="collapse" id="hitungkursi">
+            <li>
+              <a href="{{ url('/kursi/e') }}" class="sidemenu">
+                <i class="now-ui-icons education_hat"></i>
+                <p>DPR Kab.</p>
+              </a>
+            </li>
+            <li>
+              <a href="{{ url('/kursi/d') }}" class="sidemenu">
+                <i class="now-ui-icons education_hat"></i>
+                <p>DPR Prov.</p>
+              </a>
+            </li>
+            <li>
+              <a href="{{ url('/kursi/c') }}" class="sidemenu">
+                <i class="now-ui-icons education_hat"></i>
+                <p>DPR RI</p>
+              </a>
+            </li>
+          </div>
 
           <li id='listcaleg'>
             <a data-toggle="collapse" href="#caleg" role="button" aria-expanded="false" aria-controls="caleg" class="sidemenu">
@@ -283,6 +310,10 @@
       else if(window.location.href.indexOf('tabulasi') > -1 )
       {
         $("#tabulasi").addClass('active');
+      }
+      else if(window.location.href.indexOf('kursi') > -1 )
+      {
+        $("#seat").addClass('active');
       }
       else
       {

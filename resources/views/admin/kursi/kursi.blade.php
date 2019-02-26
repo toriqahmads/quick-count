@@ -58,7 +58,7 @@
       <div class="card">
         <div class="card-body">
         <div class="row">
-          <h3>Hitung Kursi DPR Kabupaten</h3>
+          <h3>Hitung Kursi DPR <?php if($tingkat == 'e') echo "Kabupaten"; if($tingkat == 'd') echo "Provinsi"; if($tingkat == 'c') echo "RI"; ?></h3>
         </div>
       <div class="row">
         <div class="col-md-4 px-1 prov">
@@ -72,6 +72,7 @@
               </select>
           </div>
         </div>
+        @if($tingkat == 'e')
         <div class="col-md-4 px-1 kab">
           <div class="form-group">
               <label for="exampleFormControlSelect1">Kabupaten</label>
@@ -80,6 +81,7 @@
               </select>
           </div>
         </div>
+        @endif
         <div class="col-md-4 px-1 dapil">
           <div class="form-group">
               <label for="exampleFormControlSelect1">Dapil</label>
