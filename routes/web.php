@@ -64,6 +64,8 @@ Route::group(['prefix' => 'saksi'], function()
 {
 	Route::post('/loginPost', 'Auth\SaksiLoginController@loginPost')->name('login.post.saksi');
 	Route::get('/login', 'Auth\SaksiLoginController@login')->name('login.saksi');
+	Route::get('/reg', 'Auth\SaksiLoginController@reg')->name('reg.saksi');
+	Route::post('/registPost', 'Auth\SaksiLoginController@registerSaksiPost')->name('regist.saksi');
 	Route::group(['middleware' => ['auth:saksi', 'role:saksi']], function()
 	{
 		Route::get('/', 'saksiController@index')->name('index.saksi');

@@ -23,7 +23,6 @@ class adminController extends Controller
 
     function index()
     {
-        $data = Session::get('username');
-    	return view('admin.home.index', compact('data'));
+    	return view('admin.home.index');
     }
 }

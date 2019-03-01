@@ -34,12 +34,12 @@
                                 <input type="submit" class="btn-primary btn btn-round btn-block" value="Login" />
                             </div>
 
-                            <!--<div class="pull-left">
+                            <div class="pull-left">
                             <h6>
-                                <a href="{{ url('/saksi/register') }}" class="link">Buat Akun</a>
+                                <a href="{{ url('/saksi/reg') }}" class="link">Registrasi</a>
                             </h6>
                             </div>
-                            <div class="pull-right">
+                            <!--<div class="pull-right">
                                 <h6>
                                     <a href="{{ url('/saksi/forgot') }}" class="link">Lupa password?</a>
                                 </h6>

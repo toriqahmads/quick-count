@@ -80,7 +80,7 @@
               <div class="col-md-4 px-1">
                 <div class="form-group">
                   <label>NIK</label>
-                  <input type="text" name="nik" class="form-control" placeholder="Nomor NIK" value="{{ old('nik') }}">
+                  <input type="number" name="nik" class="form-control" placeholder="Nomor NIK" value="{{ old('nik') }}">
                 </div>
               </div>
               <div class="col-md-4 px-1">

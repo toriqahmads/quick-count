@@ -10,9 +10,10 @@
         <div class="card-body">
           <div class="author">
             <a href="#">
-              <img class="avatar border-gray" src="{{ asset('img/') }}/" alt="...">
-              <h5 class="title"></h5>
+              <img class="avatar border-gray" src="{{ asset('img/saksi/default_avatar.jpg') }}" alt="...">
+              <h5 class="title">{{ Session::get('nama_depan') }} {{ Session::get('nama_belakang') }}</h5>
             </a>
+            <p>{{Session::get('hp') }}</p>
         </div>
       </div>
     </div>

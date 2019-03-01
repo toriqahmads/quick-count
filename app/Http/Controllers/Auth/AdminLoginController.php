@@ -67,6 +67,9 @@ class AdminLoginController extends Controller
             Session::put('id', $data->id);
             Session::put('login', true);
             Session::put('role', 'admin');
+            Session::put('nama_depan', $data->nama_depan);
+            Session::put('nama_belakang', $data->nama_belakang);
+            Session::put('hp', $data->hp);
             return redirect()->route('index.admin');
         }
         return redirect()->back()->with('alert','Maaf username dan password Anda salah!');

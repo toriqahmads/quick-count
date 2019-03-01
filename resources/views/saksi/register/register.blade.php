@@ -1,83 +1,21 @@
 @extends('saksi.base')
 @section('content')
-<script type="text/javascript">
-    $(document).ready(function()
-    {
-        $("#kec").change(function()
-        {
-            var kec_id = $("#kec").val();
-            if(kec_id === '0' || kec_id === null || kec_id === undefined)
-            {
-                showNotification('top', 'right','Harap pilih kecamatan!', 'danger');
-            }
-            else
-            {
-                $.ajax({
-                  url: window.location.origin+"/data/kel/" + kec_id,
-                  type: "GET",
-                  success: function(html){
-                    var res = "<option value='0'>Kelurahan</option>";
-                    $.each(html, function(key, val)
-                    {
-                        res = res + "<option value='" + val.id_kel +"'>" + val.kel + "</option>";
-                        $("#dapil").val(val.id_dapil);
-                    });
-                    $('#kel').html(res);
-                  },
-                  error: function(xhr, Status, err) {
-                     showNotification('top', 'right','Terjadi error : '+ Status, 'danger');
-                   } 
-                });
-            }
-            return false;
+<script src="{{ asset('js/getreg.js') }}"></script>
+@if(\Session::has('alert'))
+    <script type="text/javascript">
+        $(document).ready(function(){
+            showNotification('top', 'right', '{!! Session::get('alert') !!}', 'danger');
         });
+    </script>
+@endif
 
-        $("#kel").change(function()
-        {
-            var kel_id = $("#kel").val();
-            
-            if(kel_id === '0' || kel_id === null || kel_id === undefined)
-            {
-                showNotification('top', 'right','Harap pilih kelurahan!', 'danger');
-            }
-            else
-            {
-                $.ajax({
-                  url: window.location.origin+"/data/tps/" + kel_id,
-                  type: "GET",
-                  success: function(html){
-
-                    var res = "<option value='0'>TPS</option>";
-                    $.each(html, function(key, val)
-                    {
-                        res = res + "<option value='" + val.id_tps +"'>" + val.tps + "</option>";
-                        $("#prov").val(val.id_prov);
-                        $("#kab").val(val.id_kab);
-                    });
-                    $("#tps").html(res);
-                  },
-                  error: function(xhr, Status, err) {
-                     showNotification('top', 'right','Terjadi error : '+ Status, 'danger');
-                   } 
-                });
-            }
-            return false;
+@if(\Session::has('alert-success'))
+    <script type="text/javascript">
+        $(document).ready(function(){
+            showNotification('top', 'right', '{!! Session::get('alert-success') !!}', 'success');
         });
-
-        $("#gender").change(function()
-        {
-            var gender = $("#gender").val();
-            if(gender === '0' || gender === null || gender === undefined)
-            {
-                showNotification('top', 'right','Harap pilih jenis kelamin!', 'danger');
-            }
-            else
-            {
-                return false;
-            }
-        });
-    });
-</script>
+    </script>
+@endif
 @if ($errors->any())
     <?php $err = '<ul>';
         foreach ($errors->all() as $error)
@@ -96,7 +34,7 @@
 @endif
 <div class="col-md-12 content-center">
     <div class="card card-login card-plain">
-        <form class="form" method="post" action="{{ url('/admin/registerPost') }}">
+        <form class="form" method="post" action="{{ url('/saksi/registPost') }}">
             <div class="header header-primary text-center">
                 <h4>Register</h4>
             </div>
@@ -113,11 +51,15 @@
 
                 <div class="form-row">
                     <div class="form-group col-sm-6">
-                        <input type="text" name="nik" class="form-control" placeholder="Nomor NIK" value="{{ old('nik') }}">
+                        <input type="number" name="nik" class="form-control" placeholder="Nomor NIK" value="{{ old('nik') }}">
                     </div>
                     <div class="form-group col-sm-6">
                         <input type="text" name="telp" placeholder="Nomor HP" class="form-control" value="{{ old('telp') }}"/>
                     </div>
+                </div>
+
+                <div class="form-group">
+                  <input type="text" name="alamat" placeholder="Alamat" class="form-control" value="{{ old('alamat') }}">
                 </div>
 
                 <div class="form-group">
@@ -127,32 +69,43 @@
                     <option value="p">Perempuan</option>
                   </select>
                 </div>
-                
-                <div class="form-group col-sm-14">
-                    <input type="text" name="alamat" class="form-control" id="inputAddress" placeholder="Alamat" value="{{ old('alamat') }}">
+                <div class="form-row">
+                    <div class="form-group col-sm-6">
+                      <select name="prov" id="prov" class="form-control">
+                        <option value="0" selected>Provinsi</option>
+                        @foreach($prov as $p)
+                        {
+                            <option value="{{ $p->id }}">{{ $p->prov }}</option>
+                        }
+                        @endforeach
+                      </select>
+                    </div>
+
+                    <div class="form-group col-sm-6">
+                      <select name="kab" id="kab" class="form-control">
+                        <option value="0" selected>Kabupaten</option>
+                      </select>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                  <select name="kec" id="kec" class="form-control">
-                    <option value="0" selected>Kecamatan</option>
-                    @foreach($data as $kec)
-                    {
-                        <option value="{{ $kec->id_kec }}">{{ $kec->kec }}</option>
-                    }
-                    @endforeach
-                  </select>
-                </div>
-                <div class="form-group">
-                  <select name="kel" id="kel" class="form-control">
-                    <option value="0" selected>Kelurahan</option>
-                  </select>
+                <div class="form-row">
+                    <div class="form-group col-sm-6">
+                      <select name="kec" id="kec" class="form-control">
+                        <option value="0" selected>Kecamatan</option>
+                      </select>
+                    </div>
+                    <div class="form-group col-sm-6">
+                      <select name="kel" id="kel" class="form-control">
+                        <option value="0" selected>Kelurahan</option>
+                      </select>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                  <select name="tps" id="tps" class="form-control">
-                    <option value="0" selected>TPS</option>
-                  </select>
-                </div>
+                    <div class="form-group">
+                      <select name="tps" id="tps" class="form-control">
+                        <option value="0" selected>TPS</option>
+                      </select>
+                    </div>
 
                 <div class="form-row">
                     <div class="form-group col-sm-6">
@@ -162,23 +115,14 @@
                         <input type="password" name="confirmation" placeholder="Confirm Password" class="form-control" />
                     </div>
                 </div>
-
-                <input type="hidden" id="prov" name="prov" value="">
-                <input type="hidden" id="kab" name="kab" value="">
-                <input type="hidden" id="dapil" name="dapil" value="">
                 <div class="input-group form-group-no-border input-lg">
                     <input type="submit" class="btn-primary btn btn-round btn-block" value="Register" />
                 </div>
 
                 <div class="pull-left">
                 <h6>
-                    <a href="{{ url('/admin/login') }}" class="link">Login</a>
+                    <a href="{{ url('/saksi/login') }}" class="link">Login</a>
                 </h6>
-                </div>
-                <div class="pull-right">
-                    <h6>
-                        <a href="{{ url('/admin/forgot') }}" class="link">Lupa password?</a>
-                    </h6>
                 </div>
             </div>
             
