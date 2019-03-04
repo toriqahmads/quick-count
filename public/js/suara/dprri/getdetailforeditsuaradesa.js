@@ -12,7 +12,6 @@
               $('#kab').empty().append('<option selected value="0">Pilih kabupaten</option>');
               $('#kec').empty().append('<option selected value="0">Pilih kecamatan</option>');
               $('#kel').empty().append('<option selected value="0">Pilih kelurahan</option>');
-              $('#tps').empty().append('<option selected value="0">Pilih TPS</option>');
               $('#dapil').empty().append('<option selected value="0">Pilih Dapil</option>');
               $.ajax({
                 url: window.location.origin+"/data/kab/" + prov,
@@ -44,7 +43,6 @@
           {
               $('#kec').empty().append('<option selected value="0">Pilih kecamatan</option>');
               $('#kel').empty().append('<option selected value="0">Pilih kelurahan</option>');
-              $('#tps').empty().append('<option selected value="0">Pilih TPS</option>');
               $('#dapil').empty().append('<option selected value="0">Pilih Dapil</option>');
               $.ajax({
                 url: window.location.origin+"/data/kec/" + kab,
@@ -108,37 +106,7 @@
       }
       else
       {
-          $.ajax({
-            url: window.location.origin+"/data/tps/" + kel_id,
-            type: "GET",
-            success: function(html){
-
-              var res = "<option value'0'>TPS</option>";
-              $.each(html, function(key, val)
-              {
-                  res = res + "<option value='" + val.id_tps +"'>" + val.tps + "</option>";
-              });
-              $("#tps").html(res);
-            },
-            error: function(xhr, Status, err) {
-               showNotification('top', 'right','Terjadi error : '+ Status, 'danger');
-             } 
-          });
-      }
-      return false;
-  });
-
-  $("#tps").change(function()
-  {
-      var tps_id = $("#tps").val();
-      
-      if(tps_id === '0' || tps_id === null || tps_id === undefined)
-      {
-          showNotification('top', 'right','Harap pilih TPS!', 'danger');
-      }
-      else
-      {
-        var tingkat = $("#tingkat").val();
+          var tingkat = $("#tingkat").val();
         $.ajax({
           url: window.location.origin+"/data/partai/",
           type: "GET",
@@ -147,7 +115,7 @@
             $.each(html, function(key, val)
             {
                 $.ajax({
-                    url: window.location.origin+"/suara/suarapartai/"+val.id+"/"+tps_id+"/"+tingkat,
+                    url: window.location.origin+"/suara/desa/suarapartai/"+val.id+"/"+kel_id+"/"+tingkat,
                     type: "GET",
                     
                     success: function(data){
@@ -155,17 +123,17 @@
       
                         $.each(data, function(key, val2)
                         {
-                            res = res + '<div class="col-md-12 px-1"><div class="form-group"><label>'+val2.partai+'</label><input type="number" id="spartai'+data[0]['id']+'" name="suarapartai['+val2.id_partai+']['+val2.id+']" class="form-control" value="0" placeholder="'+val2.partai+'" disabled><b>Suara partai harus diisi 0!</b></div></div>';
+                            res = res + '<div class="col-md-12 px-1"><div class="form-group"><label>'+val2.partai+'</label><input type="number" name="suarapartai['+val2.id_partai+']['+val2.id+']" class="form-control" value="'+val2.jumlah_suara+'" placeholder="'+val2.partai+'" disabled></div></div>';
                         });
                         
                         $.ajax({
-                            url: window.location.origin+"/suara/suaracaleg/"+val.id+"/"+tps_id+"/"+tingkat,
+                            url: window.location.origin+"/suara/desa/suaracaleg/"+val.id+"/"+kel_id+"/"+tingkat,
                             type: "GET",
                             
                             success: function(data){                    
                                 $.each(data, function(key, val3)
                                 {
-                                    res = res + '<div class="col-md-12 px-1"><div class="form-group"><label>'+val2.no_urut+'. '+val3.nama_depan_caleg+' '+val3.nama_belakang_caleg+'</label><input type="number" name="suara['+val3.id_partai+']['+val3.id_caleg+']['+val3.id+']" class="form-control" value="'+val3.jumlah_suara+'" placeholder="" disabled></div></div>';
+                                    res = res + '<div class="col-md-12 px-1"><div class="form-group"><label>'+val3.no_urut+'. '+val3.nama_depan_caleg+' '+val3.nama_belakang_caleg+'</label><input type="number" name="suara['+val3.id_partai+']['+val3.id_caleg+']['+val3.id+']" class="form-control" value="'+val3.jumlah_suara+'" placeholder="" disabled></div></div>';
                                 });
 
                                 res = res + '<div class="input-group form-group-no input-lg"><div class="col-md-6 px-1"><input type="submit" class="edit btn-info btn btn-round btn-block" value="Edit" name="edit"></div><div class="col-md-6 px-1"><input type="submit" class="hapus btn-danger btn btn-round btn-block" value="Hapus" name="hapus"></div></div>';

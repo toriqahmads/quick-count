@@ -1,10 +1,10 @@
 @extends('admin.basedashboard')
 @section('content')
 <script src="{{ asset('js/upload.js') }}"></script>
-<script src="{{ asset('js/suara/presiden/getdetailforeditsuara.js')}}" type="text/javascript"></script>
-<script src="{{ asset('js/suara/presiden/edit-suara.js')}}" type="text/javascript"></script>
-<script src="{{ asset('js/suara/presiden/kirim-edit-suara.js')}}" type="text/javascript"></script>
-<script src="{{ asset('js/suara/presiden/delete-suara.js')}}" type="text/javascript"></script>
+<script src="{{ asset('js/suara/'.$pil.'/getdetailforeditsuaradesa.js')}}" type="text/javascript"></script>
+<script src="{{ asset('js/suara/'.$pil.'/edit-suara-desa.js')}}" type="text/javascript"></script>
+<script src="{{ asset('js/suara/'.$pil.'/kirim-edit-suara-desa.js')}}" type="text/javascript"></script>
+<script src="{{ asset('js/suara/'.$pil.'/delete-suara-desa.js')}}" type="text/javascript"></script>
 <script type="text/javascript">
             function showNotification(from, align, msg, color){
     color = color
@@ -63,7 +63,7 @@
       <div class="card">
         <div class="card-body">
         <div class="row">
-          <h3>View Suara DPD</h3>
+          <h3>View Suara DPR {{ $pil }}</h3>
         </div>
       <div class="row">
         <div class="col-md-3 px-1 prov">
@@ -101,16 +101,8 @@
               </select>
           </div>
         </div>
-        <div class="col-md-3 px-1 tps">
-          <div class="form-group">
-            <label>TPS</label>
-              <select name="tps" id="tps" class="form-control">
-                <option value="0" selected>TPS</option>
-              </select>
-          </div>
-        </div>
         <input type="hidden" id="saksi" name="saksi" value="0">
-        <input type="hidden" id="tingkat" name="tingkat" value="a">
+        <input type="hidden" id="tingkat" name="tingkat" value="{{ $tingkat }}">
         <input type="hidden" id="dapil" name="dapil" value="">
       </div>
       </div>
@@ -124,7 +116,7 @@
           <h5 class="title">{{$part->no_urut}}. {{$part->partai}}</h5>
         </div>
         <div class="card-body">
-          <form id="suara{{$part->id}}" class="form" method="post" action="{{ url('/suara/updateSuara') }}" enctype="multipart/form-data">
+          <form id="suara{{$part->id}}" class="form" method="post" action="{{ url('/suara/desa/updateSuara') }}" enctype="multipart/form-data">
             {{ csrf_field() }}
             <div class="row" id="{{$part->id}}">
             </div>

@@ -158,11 +158,29 @@ Route::group(['prefix' => 'suara'], function()
 		Route::post('/registerPostSuara', 'suaraController@registerPostSuara')->name('register.post.suara');
 	});
 
+	Route::group(['middleware' => ['auth:admin,saksi', 'role:admin,saksi'], 'prefix' => 'desa'], function()
+	{
+		Route::get('/register/{tingkat}', 'suaraDesaController@registerSuara')->name('register.suara.desa');
+		Route::get('/view/{tingkat}', 'suaraDesaController@viewSuara')->name('view.suara.desa');
+		Route::get('/suarapartaibysaksi/{id_partai}/{id_kel}/{id_saksi}/{tingkat}', 'suaraDesaController@getAllSuaraPartaiBySaksi')->name('suarapartaisaksidesa');
+		Route::get('/suaracalegbysaksi/{id_partai}/{id_kel}/{id_saksi}/{tingkat}', 'suaraDesaController@getAllSuaraCalegBySaksi')->name('suaracalegsaksidesa');
+		Route::delete('/delete', 'suaraDesaController@deleteSuara')->name('delete.suara.desa');
+		Route::post('/updateSuara', 'suaraDesaController@updateSuara')->name('update.suara.desa');
+		Route::post('/registerPostSuara', 'suaraDesaController@registerPostSuara')->name('register.post.suara.desa');
+	});
+
 	Route::group(['middleware' => ['auth:admin', 'role:admin']], function()
 	{
 		Route::get('/suarapartai/{id_partai}/{id_tps}/{tingkat}', 'suaraController@getAllSuaraPartai')->name('suarapartai');
 
 		Route::get('/suaracaleg/{id_partai}/{id_tps}/{tingkat}', 'suaraController@getAllSuaraCaleg')->name('suarapartai');
+
+		Route::group(['prefix' => 'desa'], function()
+		{
+			Route::get('/suarapartai/{id_partai}/{id_kel}/{tingkat}', 'suaraDesaController@getAllSuaraPartai')->name('suarapartai.desa');
+
+			Route::get('/suaracaleg/{id_partai}/{id_kel}/{tingkat}', 'suaraDesaController@getAllSuaraCaleg')->name('suarapartai.desa');
+		});
 	});
 });
 

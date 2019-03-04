@@ -10,92 +10,39 @@ use App\adminModel;
 use App\dataModel;
 use App\saksiModel;
 use App\calegModel;
-use App\tpsModel;
+use App\kelModel;
 use App\partaiModel;
-use App\suaraModel;
+use App\suaraDesaModel;
 
-class suaraController extends Controller
+class suaraDesaController extends Controller
 {
-    function registerSuara()
+    function registerSuara($tingkat)
     {
-   		return view(Session::get('role').'.suara.register');
-    }
-
-    function registerDprKab()
-    {
-    	$data = new dataModel();
-    	$prov = $data->getProv();
-    	$partai = $data->getPartai();
-    	return view(Session::get('role').'.suara.dprkab', compact('prov', 'partai'));
-    }
-
-    function registerDprProv()
-    {
-    	$data = new dataModel();
-    	$prov = $data->getProv();
-    	$partai = $data->getPartai();
-    	return view(Session::get('role').'.suara.dprprov', compact('prov', 'partai'));
-    }
-
-    function registerDprRi()
-    {
-    	$data = new dataModel();
-    	$prov = $data->getProv();
-    	$partai = $data->getPartai();
-    	if(Session::get('role') == 'admin')
-    	{
-    		return view('admin.suara.dprri', compact('prov', 'partai'));
-    	}
-    	else
-    	{
-    		return view('saksi.suara.dprri', compact('prov', 'partai'));
-    	}
-    }
-
-    function registerDpd()
-    {
-    	$data = new dataModel();
-    	$prov = $data->getProv();
-    	$partai = $data->getPartai();
-    	return view(Session::get('role').'.suara.dpd', compact('prov', 'partai'));
-    }
-
-    function registerPres()
-    {
-    	$data = new dataModel();
-    	$prov = $data->getProv();
-    	$partai = $data->getPartai();
-    	return view(Session::get('role').'.suara.pres', compact('prov', 'partai'));
-    }
-
-    function registerForm(Request $request)
-    {
-    	$jenis = $request->jenis;
-    	$data = new dataModel();
-    	$partai = $data->getPartai();
-    	$form = '';
-  		if($jenis == 'a')
-  		{
-  			$form = 'presiden';
-  		}
-  		elseif($jenis == 'b')
-  		{
-  			$form = 'dpd';
-  		}
-  		elseif($jenis == 'c')
-  		{
-  			$form = 'dprri';
-  		}
-  		elseif($jenis == 'd')
-  		{
-  			$form = 'dprprov';
-  		}
-  		elseif($jenis == 'e')
-  		{
-  			$form = 'dprkab';
-  		}
-
-		return redirect()->route('register.'.$form);
+        $data = new dataModel();
+        $prov = $data->getProv();
+        $partai = $data->getPartai();
+        $pil = '';
+        if($tingkat == 'a')
+        {
+            $pil = 'presiden';
+        }
+        elseif($tingkat == 'b')
+        {
+            $pil = 'dpd';
+        }
+        elseif($tingkat == 'c')
+        {
+            $pil = 'dprri';
+        }
+        elseif($tingkat == 'd')
+        {
+            $pil = 'dprprov';
+        }
+        elseif($tingkat == 'e')
+        {
+            $pil = 'dprkab';
+        }
+   		return view(Session::get('role').'.suaradesa.register', compact('prov', 'partai', 'tingkat', 'pil'));
     }
 
 	function registerPostSuara(Request $request)
@@ -103,16 +50,15 @@ class suaraController extends Controller
         $validate = $this->validate($request, [
             'suarapartai' => 'required|array',
             'suarapartai.*' => 'integer',
-            'suara' => 'required|array',
+            'suara' => 'array',
             'suara.*.*' => 'integer',
             'tingkat' => 'required'
         ],[ 'suarapartai.required' => 'Suara partai harus diisi!',
-            'suara.' => 'Suara caleg harus diisi!',
             'tingkat.required' => 'Tingkat harus diisi!',
         ]);
 
         $input = $request->all();
-        $proses = new suaraModel();
+        $proses = new suaraDesaModel();
 
         $data = array();
         $req = array();
@@ -123,9 +69,9 @@ class suaraController extends Controller
         	$data['caleg'] = null;
         	$data['partai'] = $id_partai;
         	$data['jenis'] = 'p';
-        	$data['tps'] = $input['tps'];
 	        $data['saksi'] = $input['saksi'];
 	        $data['tingkat'] = $input['tingkat'];
+            $data['kel'] = $input['kel'];
 
         	$proses->registerPost($data);
         	$req['suara_partai'] = "success";
@@ -139,12 +85,12 @@ class suaraController extends Controller
                 foreach ($suara as $id_caleg => $value) 
                 {
                     $data = array();
-                    $data['tps'] = $input['tps'];
                     $data['saksi'] = $input['saksi'];
                     $data['tingkat'] = $input['tingkat'];
                     $data['suara'] = $value;
                     $data['caleg'] = $id_caleg;
                     $data['partai'] = $id_partai;
+                    $data['kel'] = $input['kel'];
                     $data['jenis'] = 'c';
 
                     $proses->registerPost($data);
@@ -166,49 +112,49 @@ class suaraController extends Controller
         }
     }
 
-    function getAllSuaraPartai($id_partai, $id_tps, $tingkat)
+    function getAllSuaraPartai($id_partai, $id_kel, $tingkat)
     {
-    	$req = new suaraModel();
-		$req = $req->getAllSuaraPartai($id_partai, $id_tps, $tingkat);
+    	$req = new suaraDesaModel();
+		$req = $req->getAllSuaraPartai($id_partai, $id_kel, $tingkat);
 
 		return $req;
     }
 
-    function getAllSuaraPartaiBySaksi($id_partai, $id_tps, $id_saksi, $tingkat)
+    function getAllSuaraPartaiBySaksi($id_partai, $id_kel, $id_saksi, $tingkat)
     {
-    	$req = new suaraModel();
-		$req = $req->getAllSuaraPartaiBySaksi($id_partai, $id_tps, $id_saksi, $tingkat);
+    	$req = new suaraDesaModel();
+		$req = $req->getAllSuaraPartaiBySaksi($id_partai, $id_kel, $id_saksi, $tingkat);
 
 		return $req;
     }
 
-    function getAllSuaraPartaiByDapil($id_partai, $id_tps, $id_saksi, $tingkat)
+    function getAllSuaraPartaiByDapil($id_partai, $id_kel, $id_saksi, $tingkat)
     {
-    	$req = new suaraModel();
+    	$req = new suaraDesaModel();
 		$req = $req->getAllSuaraPartaiByDapil($id_dapil, $id_partai);
 
 		return $req;
     }
 
-    function getAllSuaraCaleg($id_partai, $id_tps, $tingkat)
+    function getAllSuaraCaleg($id_partai, $id_kel, $tingkat)
     {
-    	$req = new suaraModel();
-		$req = $req->getAllSuaraCaleg($id_partai, $id_tps, $tingkat);
+    	$req = new suaraDesaModel();
+		$req = $req->getAllSuaraCaleg($id_partai, $id_kel, $tingkat);
 
 		return $req;
     }
 
-    function getAllSuaraCalegBySaksi($id_partai, $id_tps, $id_saksi, $tingkat)
+    function getAllSuaraCalegBySaksi($id_partai, $id_kel, $id_saksi, $tingkat)
     {
-    	$req = new suaraModel();
-		$req = $req->getAllSuaraCalegBySaksi($id_partai, $id_tps, $id_saksi, $tingkat);
+    	$req = new suaraDesaModel();
+		$req = $req->getAllSuaraCalegBySaksi($id_partai, $id_kel, $id_saksi, $tingkat);
 
 		return $req;
     }
 
     function getAllSuaraCalegByDapil($id_dapil, $id_partai)
     {
-    	$req = new suaraModel();
+    	$req = new suaraDesaModel();
 		$req = $req->getAllSuaraCalegByDapil($id_dapil, $id_partai);
 
 		return $req;
@@ -219,16 +165,15 @@ class suaraController extends Controller
     	$validate = $this->validate($request, [
             'suarapartai' => 'required|array',
             'suarapartai.*.*' => 'integer',
-            'suara' => 'required|array',
+            'suara' => 'array',
             'suara.*.*.*' => 'integer',
             'tingkat' => 'required'
         ],[ 'suarapartai.required' => 'Suara partai harus diisi!',
-            'suara.' => 'Suara caleg harus diisi!',
             'tingkat.required' => 'Tingkat harus diisi!',
         ]);
 
         $input = $request->all();
-        $proses = new suaraModel();
+        $proses = new suaraDesaModel();
 
         $data = array();
         $req = array();
@@ -237,13 +182,13 @@ class suaraController extends Controller
         {
         	foreach ($value as $id => $values) 
         	{
-        		$data['tps'] = $input['tps'];
 		        $data['saksi'] = $input['saksi'];
 		        $data['tingkat'] = $input['tingkat'];
         		$data['id'] = $id;
         		$data['suara'] = $values;
 	        	$data['caleg'] = null;
 	        	$data['partai'] = $id_partai;
+                $data['kel'] = $input['kel'];
 	        	$data['jenis'] = 'p';
 
 	        	$proses->updateSuara($data);
@@ -262,11 +207,11 @@ class suaraController extends Controller
                     {
                         $data = array();
                         $data['id'] = $id;
-                        $data['tps'] = $input['tps'];
                         $data['saksi'] = $input['saksi'];
                         $data['suara'] = $values;
                         $data['caleg'] = $id_caleg;
                         $data['partai'] = $id_partai;
+                        $data['kel'] = $input['kel'];
                         $data['jenis'] = 'c';
                         $data['tingkat'] = $input['tingkat'];
 
@@ -290,79 +235,33 @@ class suaraController extends Controller
         }
     }
 
-    function viewSuara()
+    function viewSuara($tingkat)
     {
-    	return view(Session::get('role').'.suara.view');
-    }
-
-    function viewForm(Request $request)
-    {
-    	$jenis = $request->jenis;
-    	$data = new dataModel();
-    	$partai = $data->getPartai();
-    	$form = '';
-  		if($jenis == 'a')
-  		{
-  			$form = 'presiden';
-  		}
-  		elseif($jenis == 'b')
-  		{
-  			$form = 'dpd';
-  		}
-  		elseif($jenis == 'c')
-  		{
-  			$form = 'dprri';
-  		}
-  		elseif($jenis == 'd')
-  		{
-  			$form = 'dprprov';
-  		}
-  		elseif($jenis == 'e')
-  		{
-  			$form = 'dprkab';
-  		}
-
-		return redirect()->route('view.'.$form);
-    }
-
-    function viewDprKab()
-    {
-    	$data = new dataModel();
-    	$prov = $data->getProv();
-    	$partai = $data->getPartai();
-    	return view(Session::get('role').'.suara.vdprkab', compact('prov', 'partai'));
-    }
-
-    function viewDprProv()
-    {
-    	$data = new dataModel();
-    	$prov = $data->getProv();
-    	$partai = $data->getPartai();
-    	return view(Session::get('role').'.suara.vdprprov', compact('prov', 'partai'));
-    }
-
-    function viewDprRi()
-    {
-    	$data = new dataModel();
-    	$prov = $data->getProv();
-    	$partai = $data->getPartai();
-    	return view(Session::get('role').'.suara.vdprri', compact('prov', 'partai'));
-    }
-
-    function viewDpd()
-    {
-    	$data = new dataModel();
-    	$prov = $data->getProv();
-    	$partai = $data->getPartai();
-    	return view(Session::get('role').'.suara.vdpd', compact('prov', 'partai'));
-    }
-
-    function viewPres()
-    {
-    	$data = new dataModel();
-    	$prov = $data->getProv();
-    	$partai = $data->getPartai();
-    	return view(Session::get('role').'.suara.vpres', compact('prov', 'partai'));
+        $data = new dataModel();
+        $prov = $data->getProv();
+        $partai = $data->getPartai();
+        $pil = '';
+        if($tingkat == 'a')
+        {
+            $pil = 'presiden';
+        }
+        elseif($tingkat == 'b')
+        {
+            $pil = 'dpd';
+        }
+        elseif($tingkat == 'c')
+        {
+            $pil = 'dprri';
+        }
+        elseif($tingkat == 'd')
+        {
+            $pil = 'dprprov';
+        }
+        elseif($tingkat == 'e')
+        {
+            $pil = 'dprkab';
+        }
+    	return view(Session::get('role').'.suaradesa.view', compact('prov', 'partai', 'tingkat', 'pil'));
     }
 
     function deleteSuara(Request $request)
@@ -370,14 +269,14 @@ class suaraController extends Controller
     	$validate = $this->validate($request, [
         'suarapartai' => 'required|array',
         'suarapartai.*.*' => 'integer',
-        'suara' => 'required|array',
+        'suara' => 'array',
         'suara.*.*.*' => 'integer'
         ],[ 'suarapartai.required' => 'Suara partai harus diisi!',
             'suara.' => 'Suara caleg harus diisi!',
         ]);
 
         $input = $request->all();
-        $proses = new suaraModel();
+        $proses = new suaraDesaModel();
 
         $data = array();
         $req = array();
@@ -413,7 +312,7 @@ class suaraController extends Controller
 
                 $req['suara_caleg'] = "success";
             }
-        }
+        }   
 
         if($req['suara_partai'] == "success" || $req['suara_caleg'] == "success")
         {

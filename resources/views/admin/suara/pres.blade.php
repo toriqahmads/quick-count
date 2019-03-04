@@ -1,7 +1,7 @@
 @extends('admin.basedashboard')
 @section('content')
 <script src="{{ asset('js/upload.js') }}"></script>
-<script src="{{ asset('js/suara/pres/getdetail.js')}}" type="text/javascript"></script>
+<script src="{{ asset('js/suara/presiden/getdetail.js')}}" type="text/javascript"></script>
 <script type="text/javascript">
             function showNotification(from, align, msg, color){
     color = color
