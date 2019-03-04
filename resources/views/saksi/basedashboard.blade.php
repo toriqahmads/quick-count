@@ -45,6 +45,91 @@
               <p>Home</p>
             </a>
           </li>
+          <li id='suaraperdesa'>
+            <a data-toggle="collapse" href="#suaradesa" role="button" aria-expanded="false" aria-controls="suaradesa" class="sidemenu">
+              <i class="now-ui-icons files_paper"></i>
+              <p>Suara Desa</p>
+            </a>
+          </li>
+          <div class="collapse" id="suaradesa">
+            <li>
+              <a data-toggle="collapse" href="#datasuaradesa" role="button" aria-expanded="false" aria-controls="datasuaradesa" class="sidemenu">
+                <i class="now-ui-icons files_paper"></i>
+                <p>Data Suara Desa</p>
+              </a>
+            </li>
+            <div class="collapse" id="datasuaradesa">
+              <li>
+                <a href="{{ url('/suara/desa/view/a') }}" class="sidemenu">
+                  <i class="now-ui-icons files_paper"></i>
+                  <p>Data Suara Presiden</p>
+                </a>
+              </li>
+              <li>
+                <a href="{{ url('/suara/desa/view/b') }}" class="sidemenu">
+                  <i class="now-ui-icons files_paper"></i>
+                  <p>Data Suara DPD</p>
+                </a>
+              </li>
+              <li>
+                <a href="{{ url('/suara/desa/view/c') }}" class="sidemenu">
+                  <i class="now-ui-icons files_paper"></i>
+                  <p>Data Suara DPR RI</p>
+                </a>
+              </li>
+              <li>
+                <a href="{{ url('/suara/desa/view/d') }}" class="sidemenu">
+                  <i class="now-ui-icons files_paper"></i>
+                  <p>Data Suara DPR Prov.</p>
+                </a>
+              </li>
+              <li>
+                <a href="{{ url('/suara/desa/view/e') }}" class="sidemenu">
+                  <i class="now-ui-icons files_paper"></i>
+                  <p>Data Suara DPR Kab.</p>
+                </a>
+              </li>
+            </div>
+
+            <li>
+              <a data-toggle="collapse" href="#inputsuaradesa" role="button" aria-expanded="false" aria-controls="inputsuaradesa" class="sidemenu">
+                <i class="now-ui-icons ui-1_check"></i>
+                <p>Input Suara Desa</p>
+              </a>
+            </li>
+            <div class="collapse" id="inputsuaradesa">
+              <li>
+                <a href="{{ url('/suara/desa/register/a') }}" class="sidemenu">
+                  <i class="now-ui-icons ui-1_check"></i>
+                  <p>Input Suara Presiden</p>
+                </a>
+              </li>
+              <li>
+                <a href="{{ url('/suara/desa/register/b') }}" class="sidemenu">
+                  <i class="now-ui-icons ui-1_check"></i>
+                  <p>Input Suara DRD</p>
+                </a>
+              </li>
+              <li>
+                <a href="{{ url('/suara/desa/register/c') }}" class="sidemenu">
+                  <i class="now-ui-icons ui-1_check"></i>
+                  <p>Input Suara DRP RI</p>
+                </a>
+              </li>
+              <li>
+                <a href="{{ url('/suara/desa/register/d') }}" class="sidemenu">
+                  <i class="now-ui-icons ui-1_check"></i>
+                  <p>Input Suara DRP Prov.</p>
+                </a>
+              </li>
+              <li>
+                <a href="{{ url('/suara/desa/register/e') }}" class="sidemenu">
+                  <i class="now-ui-icons ui-1_check"></i>
+                  <p>Input Suara DRP Kab.</p>
+                </a>
+              </li>
+            </div>
+          </div>
           <li id='datasuara'>
             <a href="{{ url('/suara/view') }}" class="sidemenu">
               <i class="now-ui-icons files_paper"></i>
@@ -169,6 +254,10 @@
       else if(pathname == '/suara/register')
       {
         $("#inputsuara").addClass('active');
+      }
+      else if(window.location.href.indexOf('desa') > -1 )
+      {
+        $("#suaraperdesa").addClass('active');
       }
       else
       {

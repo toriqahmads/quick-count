@@ -25,24 +25,29 @@ class suaraDesaController extends Controller
         if($tingkat == 'a')
         {
             $pil = 'presiden';
+            $pil_desc = 'Presiden';
         }
         elseif($tingkat == 'b')
         {
             $pil = 'dpd';
+            $pil_desc = 'DPD';
         }
         elseif($tingkat == 'c')
         {
             $pil = 'dprri';
+            $pil_desc = 'DPR RI';
         }
         elseif($tingkat == 'd')
         {
             $pil = 'dprprov';
+            $pil_desc = 'DPR Provinsi';
         }
         elseif($tingkat == 'e')
         {
             $pil = 'dprkab';
+            $pil_desc = 'DPR Kabupaten';
         }
-   		return view(Session::get('role').'.suaradesa.register', compact('prov', 'partai', 'tingkat', 'pil'));
+   		return view(Session::get('role').'.suaradesa.register', compact('prov', 'partai', 'tingkat', 'pil', 'pil_desc'));
     }
 
 	function registerPostSuara(Request $request)
@@ -244,24 +249,29 @@ class suaraDesaController extends Controller
         if($tingkat == 'a')
         {
             $pil = 'presiden';
+            $pil_desc = 'Presiden';
         }
         elseif($tingkat == 'b')
         {
             $pil = 'dpd';
+            $pil_desc = 'DPD';
         }
         elseif($tingkat == 'c')
         {
             $pil = 'dprri';
+            $pil_desc = 'DPR RI';
         }
         elseif($tingkat == 'd')
         {
             $pil = 'dprprov';
+            $pil_desc = 'DPR Provinsi';
         }
         elseif($tingkat == 'e')
         {
             $pil = 'dprkab';
+            $pil_desc = 'DPR Kabupaten';
         }
-    	return view(Session::get('role').'.suaradesa.view', compact('prov', 'partai', 'tingkat', 'pil'));
+    	return view(Session::get('role').'.suaradesa.view', compact('prov', 'partai', 'tingkat', 'pil', 'pil_desc'));
     }
 
     function deleteSuara(Request $request)

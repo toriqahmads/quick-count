@@ -1,10 +1,10 @@
-@extends('admin.basedashboard')
+@extends('saksi.basedashboard')
 @section('content')
 <script src="{{ asset('js/upload.js') }}"></script>
-<script src="{{ asset('js/suara/'.$pil.'/getdetailforeditsuaradesa.js')}}" type="text/javascript"></script>
-<script src="{{ asset('js/suara/'.$pil.'/edit-suara-desa.js')}}" type="text/javascript"></script>
-<script src="{{ asset('js/suara/'.$pil.'/kirim-edit-suara-desa.js')}}" type="text/javascript"></script>
-<script src="{{ asset('js/suara/'.$pil.'/delete-suara-desa.js')}}" type="text/javascript"></script>
+<script src="{{ asset('js/saksi/suara/'.$pil.'/getdetailforeditsuaradesa.js')}}" type="text/javascript"></script>
+<script src="{{ asset('js/saksi/suara/'.$pil.'/edit-suara-desa.js')}}" type="text/javascript"></script>
+<script src="{{ asset('js/saksi/suara/'.$pil.'/kirim-edit-suara-desa.js')}}" type="text/javascript"></script>
+<script src="{{ asset('js/saksi/suara/'.$pil.'/delete-suara-desa.js')}}" type="text/javascript"></script>
 <script type="text/javascript">
             function showNotification(from, align, msg, color){
     color = color
@@ -66,44 +66,13 @@
           <h3>View Suara {{ $pil_desc }}</h3>
         </div>
       <div class="row">
-        <div class="col-md-3 px-1 prov">
-          <div class="form-group">
-              <label for="exampleFormControlSelect1">Provinsi</label>
-              <select name="prov" id="prov" class="form-control">
-                <option value="0" selected>Provinsi</option>
-                @foreach($prov as $prov)
-                  <option value="{{ $prov->id }}">{{$prov->prov}}</option>
-                @endforeach
-              </select>
-          </div>
-        </div>
-        <div class="col-md-3 px-1 kab">
-          <div class="form-group">
-              <label for="exampleFormControlSelect1">Kabupaten</label>
-              <select name="kab" id="kab" class="form-control">
-                <option value="0" selected>Kabupaten</option>
-              </select>
-          </div>
-        </div>
-        <div class="col-md-3 px-1 kec">
-          <div class="form-group">
-              <label for="exampleFormControlSelect1">Kecamatan</label>
-              <select name="kec" id="kec" class="form-control">
-                <option value="0" selected>Kecamatan</option>
-              </select>
-          </div>
-        </div>
-        <div class="col-md-3 px-1 kel">
-          <div class="form-group">
-              <label for="exampleFormControlSelect1">Kelurahan</label>
-              <select name="kel" id="kel" class="form-control">
-                <option value="0" selected>Kelurahan</option>
-              </select>
-          </div>
-        </div>
-        <input type="hidden" id="saksi" name="saksi" value="0">
+        <input type="hidden" id="prov" name="prov" value="{{Session::get('id_prov')}}">
+        <input type="hidden" id="kab" name="kab" value="{{Session::get('id_kab')}}">
+        <input type="hidden" id="kec" name="kec" value="{{Session::get('id_kec')}}"> 
+        <input type="hidden" id="kel" name="kel" value="{{Session::get('id_kel')}}">
+        <input type="hidden" id="dapil" name="dapil" value="{{Session::get('dapil_kec')}}">
+        <input type="hidden" id="saksi" name="saksi" value="{{Session::get('id')}}">
         <input type="hidden" id="tingkat" name="tingkat" value="{{ $tingkat }}">
-        <input type="hidden" id="dapil" name="dapil" value="">
       </div>
       </div>
     </div>
