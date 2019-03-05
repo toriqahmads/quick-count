@@ -47,11 +47,25 @@
             </a>
           </li>
           <li id='tabulasi'>
-            <a href="{{ url('/tabulasi/view') }}" class="sidemenu">
-              <i class="now-ui-icons business_chart-bar-32"></i>
-              <p>Tabulasi</p>
+            <a data-toggle="collapse" href="#piltabulasi" role="button" aria-expanded="false" aria-controls="piltabulasi" class="sidemenu">
+                <i class="now-ui-icons design_bullet-list-67"></i>
+                <p>Tabulasi</p>
             </a>
           </li>
+          <div class="collapse" id="piltabulasi">
+            <li>
+              <a href="{{ url('/tabulasi/view') }}" class="sidemenu">
+                <i class="now-ui-icons business_chart-bar-32"></i>
+                <p>Tabulasi</p>
+              </a>
+            </li>
+            <li>
+              <a href="{{ url('/tabulasi/desa/view') }}" class="sidemenu">
+                <i class="now-ui-icons business_chart-bar-32"></i>
+                <p>Tabulasi Desa</p>
+              </a>
+            </li>
+          </div>
           
           <li id='seat'>
             <a data-toggle="collapse" href="#hitungkursi" role="button" aria-expanded="false" aria-controls="hitungkursi" class="sidemenu">

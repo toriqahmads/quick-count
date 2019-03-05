@@ -206,6 +206,26 @@ Route::group(['prefix' => 'tabulasi'], function()
 		Route::get('/caleg/prov/{partai}/{prov}/{tingkat}', 'tabulasiController@tabulasiCalegByProv')->name('caleg.prov');
 		Route::get('/caleg/dapil/{partai}/{dapil}/{tingkat}', 'tabulasiController@tabulasiCalegByDapil')->name('caleg.dapil');
 	});
+
+	Route::group(['middleware' => ['auth:admin', 'role:admin'], 'prefix' => 'desa'], function()
+	{
+		Route::get('/view', 'tabulasiDesaController@tabulasi')->name('tabulasi');
+		Route::get('/tabulasi/{tingkat}/{jenis}', 'tabulasiDesaController@viewTabulasi')->name('view.tabulasi.desa');
+		Route::post('/viewForm', 'tabulasiDesaController@viewForm')->name('tabulasi.form');
+
+		Route::get('/partai/kel/{kel}/{tingkat}', 'tabulasiDesaController@tabulasiPartaiByKel')->name('partai.kel.desa');
+		Route::get('/partai/kec/{kec}/{tingkat}', 'tabulasiDesaController@tabulasiPartaiByKec')->name('partai.kec.desa');
+		Route::get('/partai/kab/{kab}/{tingkat}', 'tabulasiDesaController@tabulasiPartaiByKab')->name('partai.kab.desa');
+		Route::get('/partai/prov/{prov}/{tingkat}', 'tabulasiDesaController@tabulasiPartaiByProv')->name('partai.prov.desa');
+		Route::get('/partai/dapil/{dapil}/{tingkat}', 'tabulasiDesaController@tabulasiPartaiByDapil')->name('partai.dapil.desa');
+
+
+		Route::get('/caleg/kel/{partai}/{kel}/{tingkat}', 'tabulasiDesaController@tabulasiCalegByKel')->name('caleg.kel.desa');
+		Route::get('/caleg/kec/{partai}/{kec}/{tingkat}', 'tabulasiDesaController@tabulasiCalegByKec')->name('caleg.kec.desa');
+		Route::get('/caleg/kab/{partai}/{kab}/{tingkat}', 'tabulasiDesaController@tabulasiCalegByKab')->name('caleg.kab.desa');
+		Route::get('/caleg/prov/{partai}/{prov}/{tingkat}', 'tabulasiDesaController@tabulasiCalegByProv')->name('caleg.prov.desa');
+		Route::get('/caleg/dapil/{partai}/{dapil}/{tingkat}', 'tabulasiDesaController@tabulasiCalegByDapil')->name('caleg.dapil.desa');
+	});
 });
 
 Route::group(['prefix' => 'kursi', 'middleware' => ['auth:admin', 'role:admin']], function()
