@@ -94,6 +94,33 @@
             </li>
           </div>
 
+          <li id='seat2'>
+            <a data-toggle="collapse" href="#hitungkursi2" role="button" aria-expanded="false" aria-controls="hitungkursi2" class="sidemenu">
+                <i class="now-ui-icons design_bullet-list-67"></i>
+                <p>Hitung Kursi - 2</p>
+            </a>
+          </li>
+          <div class="collapse" id="hitungkursi2">
+            <li>
+              <a href="{{ url('/kursi2/e') }}" class="sidemenu">
+                <i class="now-ui-icons education_hat"></i>
+                <p>DPR Kab.</p>
+              </a>
+            </li>
+            <li>
+              <a href="{{ url('/kursi2/d') }}" class="sidemenu">
+                <i class="now-ui-icons education_hat"></i>
+                <p>DPR Prov.</p>
+              </a>
+            </li>
+            <li>
+              <a href="{{ url('/kursi2/c') }}" class="sidemenu">
+                <i class="now-ui-icons education_hat"></i>
+                <p>DPR RI</p>
+              </a>
+            </li>
+          </div>
+
           <li id='listcaleg'>
             <a data-toggle="collapse" href="#caleg" role="button" aria-expanded="false" aria-controls="caleg" class="sidemenu">
                 <i class="now-ui-icons design_bullet-list-67"></i>
@@ -414,6 +441,10 @@
       else if(window.location.href.indexOf('desa') > -1 )
       {
         $("#suaraperdesa").addClass('active');
+      }
+      else if(window.location.href.indexOf('kursi2') > -1 )
+      {
+        $("#seat2").addClass('active');
       }
       else if(window.location.href.indexOf('kursi') > -1 )
       {

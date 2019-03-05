@@ -235,3 +235,11 @@ Route::group(['prefix' => 'kursi', 'middleware' => ['auth:admin', 'role:admin']]
 	Route::get('/hitung/{id_partai}/{tingkat}', 'kursiController@hitungKursi')->name('hitung.kursi');
 	Route::post('/winner', 'kursiController@getWinner')->name('winner.kursi');
 });
+
+Route::group(['prefix' => 'kursi2', 'middleware' => ['auth:admin', 'role:admin']], function()
+{
+	Route::get('/{tingkat}', 'kursiDesaController@view')->name('view.kursi.desa');
+	Route::get('/{id_partai}/{tingkat}', 'kursiDesaController@getTable')->name('table.kursi.desa');
+	Route::get('/hitung/{id_partai}/{tingkat}', 'kursiDesaController@hitungKursi')->name('hitung.kursi.desa');
+	Route::post('/winner', 'kursiDesaController@getWinner')->name('winner.kursi.desa');
+});
