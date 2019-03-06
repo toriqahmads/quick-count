@@ -198,16 +198,23 @@ class tabulasiDesaModel extends Model
                 ->select('suara.id', 'partai.id as id_partai', 'partai.partai', DB::raw('SUM(suara.suara) as total_suara'), 'kel.id as id_kel', 'suara.jenis_suara')
                 ->join('partai', 'partai.id', '=', 'suara.id_partai')
                 ->join('kel', 'kel.id', '=', 'suara.id_kel')
-                ->join('kab', 'kab.id', '=', 'kel.id_kab')
-                ->join('dapil', 'dapil.id', '=', 'kab.id_dapil')
-                ->where('suara.status', '=', 'l')
+                ->join('kab', 'kab.id', '=', 'kel.id_kab');
+                if($tingkat == 'c')
+                {
+                    $data->join('dapil', 'dapil.id', '=', 'kab.dapil_dprri');
+                }
+                if($tingkat == 'd')
+                {
+                    $data->join('dapil', 'dapil.id', '=', 'kab.dapil_dprprov');
+                }               
+         $res = $data->where('suara.status', '=', 'l')
                 ->where('suara.jenis_suara', '=', 'p')
                 ->where('suara.tingkat_suara', '=', $tingkat)
                 ->where('dapil.id', '=', $id_dapil)
                 ->groupBy('suara.id_partai', 'dapil.id')
                 ->get();
 
-        return $data;
+        return $res;
     }
 
     function tabulasiCalegByDapilKab($id_partai, $id_dapil, $tingkat)
@@ -217,9 +224,16 @@ class tabulasiDesaModel extends Model
                 ->join('pil', 'pil.id', '=', 'suara.id_caleg')
                 ->join('partai', 'partai.id', '=', 'suara.id_partai')
                 ->join('kel', 'kel.id', '=', 'suara.id_kel')
-                ->join('kab', 'kab.id', '=', 'kel.id_kab')
-                ->join('dapil', 'dapil.id', '=', 'kab.id_dapil')
-                ->where('suara.status', '=', 'l')
+                ->join('kab', 'kab.id', '=', 'kel.id_kab');
+                if($tingkat == 'c')
+                {
+                    $data->join('dapil', 'dapil.id', '=', 'kab.dapil_dprri');
+                }
+                if($tingkat == 'd')
+                {
+                    $data->join('dapil', 'dapil.id', '=', 'kab.dapil_dprprov');
+                }
+        $res = $data->where('suara.status', '=', 'l')
                 ->where('suara.jenis_suara', '=', 'c')
                 ->where('suara.tingkat_suara', '=', $tingkat)
                 ->whereIn('suara.id_partai', $id_partai)
@@ -228,6 +242,6 @@ class tabulasiDesaModel extends Model
                 ->orderBy('pil.no_urut', 'asc')
                 ->get();
 
-        return $data;
+        return $res;
     }
 }

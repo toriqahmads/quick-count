@@ -55,7 +55,7 @@ $(document).ready(function()
                 url: window.location.origin+"/data/kabid/" + kab,
                 type: "GET",
                 success: function(html){
-                  $('#dapil').val(html[0]['id_dapil']);
+                  $('#dapil').val(html[0]['dapil_dprprov']);
                   $.ajax({
                     url: window.location.origin+"/data/partai/",
                     type: "GET",
@@ -63,18 +63,20 @@ $(document).ready(function()
                       var dap_id = $("#dapil").val();
                       $.each(html, function(key, val)
                       {
+                        var res = "";
+                        res = '<div class="col-md-12 pl-1"><div class="form-group"><label>'+val.partai+'</label><input type="number" name="suarapartai['+val.id+']" class="form-control" placeholder="Suara Partai"></div></div>';
+                        $("#"+val.id).html(res);
                           $.ajax({
                               url: window.location.origin+"/data/caleg/"+dap_id+"/"+val.id+"/d",
                               type: "GET",
                               
                               success: function(data){
                                   var res = "";
-                                  res = '<div class="col-md-12 pl-1"><div class="form-group"><label>'+data[0]['partai']+'</label><input type="number" name="suarapartai['+data[0]['id_partai']+']" class="form-control" placeholder="Suara Partai"></div></div>';
                                   $.each(data, function(key, val2)
                                   {
                                       res = res + '<div class="col-md-12 pl-1"><div class="form-group"><label>'+val2.no_urut+'. '+val2.nama_depan+' ' +val2.nama_belakang+ '</label><input type="number" name="suara['+val.id+']['+val2.id+']" class="form-control" placeholder="" ></div></div>';
                                   });
-                                  $("#"+val.id).html(res);
+                                  $("#"+val.id).append(res);
                               },
                               error: function(xhr, Status, err) {
                                  showNotification('top', 'right','Terjadi error : '+ Status, 'danger');

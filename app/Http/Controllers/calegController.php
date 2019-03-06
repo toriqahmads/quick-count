@@ -144,15 +144,21 @@ class calegController extends Controller
         	$dapil = $reg->getDapilByProv($data->id_prov, 'a');
         	return view('admin.caleg.view')->with(compact('data', 'partais', 'provinsi', 'dapil'));
         }
-        elseif($data->tingkat == 'c' || $data->tingkat == 'd')
+        elseif($data->tingkat == 'c')
         {
         	$dapil = $reg->getDapilByProv($data->id_prov, 'b');
         	$kab = $reg->getKab($data->id_prov);
         	return view('admin.caleg.view')->with(compact('data', 'partais', 'provinsi', 'kab', 'dapil'));
         }
+        elseif($data->tingkat == 'd')
+        {
+            $dapil = $reg->getDapilByProv($data->id_prov, 'c');
+            $kab = $reg->getKab($data->id_prov);
+            return view('admin.caleg.view')->with(compact('data', 'partais', 'provinsi', 'kab', 'dapil'));
+        }
         elseif($data->tingkat == 'e')
         {
-        	$dapil = $reg->getDapilByKab($data->id_prov, $data->id_kab, 'c');
+        	$dapil = $reg->getDapilByKab($data->id_prov, $data->id_kab, 'd');
         	$kab = $reg->getKab($data->id_prov);
         	$kec = $reg->getKec($data->id_kab);
         	return view('admin.caleg.view')->with(compact('data', 'partais', 'provinsi', 'kab', 'kec', 'dapil'));
@@ -194,15 +200,21 @@ class calegController extends Controller
         	$dapil = $reg->getDapilByProv($data->id_prov, 'a');
         	return view('admin.caleg.edit')->with(compact('data', 'partais', 'provinsi', 'dapil'));
         }
-        elseif($data->tingkat == 'c' || $data->tingkat == 'd')
+        elseif($data->tingkat == 'c' )
         {
         	$dapil = $reg->getDapilByProv($data->id_prov, 'b');
         	$kab = $reg->getKab($data->id_prov);
         	return view('admin.caleg.edit')->with(compact('data', 'partais', 'provinsi', 'kab', 'dapil'));
         }
+        elseif($data->tingkat == 'd')
+        {
+            $dapil = $reg->getDapilByProv($data->id_prov, 'c');
+            $kab = $reg->getKab($data->id_prov);
+            return view('admin.caleg.edit')->with(compact('data', 'partais', 'provinsi', 'kab', 'dapil'));
+        }
         elseif($data->tingkat == 'e')
         {
-        	$dapil = $reg->getDapilByKab($data->id_prov, $data->id_kab, 'c');
+        	$dapil = $reg->getDapilByKab($data->id_prov, $data->id_kab, 'd');
         	$kab = $reg->getKab($data->id_prov);
         	$kec = $reg->getKec($data->id_kab);
         	return view('admin.caleg.edit')->with(compact('data', 'partais', 'provinsi', 'kab', 'kec', 'dapil'));

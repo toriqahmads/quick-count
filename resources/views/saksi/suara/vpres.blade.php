@@ -1,10 +1,10 @@
 @extends('saksi.basedashboard')
 @section('content')
 <script src="{{ asset('js/upload.js') }}"></script>
-<script src="{{ asset('js/saksi/suara/pres/getdetailforeditsuara.js')}}" type="text/javascript"></script>
-<script src="{{ asset('js/saksi/suara/pres/edit-suara.js')}}" type="text/javascript"></script>
-<script src="{{ asset('js/saksi/suara/pres/kirim-edit-suara.js')}}" type="text/javascript"></script>
-<script src="{{ asset('js/saksi/suara/pres/delete-suara.js')}}" type="text/javascript"></script>
+<script src="{{ asset('js/saksi/suara/presiden/getdetailforeditsuara.js')}}" type="text/javascript"></script>
+<script src="{{ asset('js/saksi/suara/presiden/edit-suara.js')}}" type="text/javascript"></script>
+<script src="{{ asset('js/saksi/suara/presiden/kirim-edit-suara.js')}}" type="text/javascript"></script>
+<script src="{{ asset('js/saksi/suara/presiden/delete-suara.js')}}" type="text/javascript"></script>
 <script type="text/javascript">
             function showNotification(from, align, msg, color){
     color = color

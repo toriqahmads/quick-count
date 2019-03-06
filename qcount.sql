@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.6deb5
+-- version 4.8.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Mar 04, 2019 at 09:35 PM
--- Server version: 5.7.22-0ubuntu18.04.1
--- PHP Version: 7.2.7-0ubuntu0.18.04.2
+-- Host: 127.0.0.1
+-- Generation Time: Mar 06, 2019 at 09:38 AM
+-- Server version: 10.1.33-MariaDB
+-- PHP Version: 7.1.18
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -722,7 +724,7 @@ CREATE TABLE `dapil` (
   `id_kab` int(3) DEFAULT NULL,
   `kursi` int(2) DEFAULT NULL,
   `DPT` int(6) DEFAULT NULL,
-  `jenis` enum('a','b','c') NOT NULL COMMENT 'a = dpd. b = dpr ri dan dpr prov. c = dpr kab'
+  `jenis` enum('a','b','c','d') NOT NULL COMMENT 'a = dpd. b = dpr ri. c = dpr prov. d = dpr kab'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -730,13 +732,14 @@ CREATE TABLE `dapil` (
 --
 
 INSERT INTO `dapil` (`id`, `dapil`, `id_prov`, `id_kab`, `kursi`, `DPT`, `jenis`) VALUES
-(1, 1, 1, 1, 12, 278333, 'c'),
-(2, 2, 1, 1, 8, 183939, 'c'),
-(3, 3, 1, 1, 8, 176297, 'c'),
-(4, 4, 1, 1, 11, 236374, 'c'),
-(5, 5, 1, 1, 11, 241400, 'c'),
+(1, 1, 1, 1, 12, 278333, 'd'),
+(2, 2, 1, 1, 8, 183939, 'd'),
+(3, 3, 1, 1, 8, 176297, 'd'),
+(4, 4, 1, 1, 11, 236374, 'd'),
+(5, 5, 1, 1, 11, 241400, 'd'),
 (6, 1, 1, NULL, 112, NULL, 'a'),
-(7, 3, 1, NULL, 1245, NULL, 'b');
+(7, 2, 1, NULL, 7, NULL, 'b'),
+(8, 3, 1, NULL, 10, NULL, 'c');
 
 -- --------------------------------------------------------
 
@@ -748,17 +751,18 @@ CREATE TABLE `kab` (
   `id` int(2) NOT NULL,
   `kab` varchar(25) DEFAULT NULL,
   `id_prov` int(2) DEFAULT NULL,
-  `id_dapil` int(3) NOT NULL
+  `dapil_dprri` int(2) DEFAULT NULL,
+  `dapil_dprprov` int(2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `kab`
 --
 
-INSERT INTO `kab` (`id`, `kab`, `id_prov`, `id_dapil`) VALUES
-(1, 'Demak', 1, 7),
-(2, 'Jepara', 1, 7),
-(3, 'Kudus', 1, 7);
+INSERT INTO `kab` (`id`, `kab`, `id_prov`, `dapil_dprri`, `dapil_dprprov`) VALUES
+(1, 'Demak', 1, 7, 8),
+(2, 'Jepara', 1, 7, 8),
+(3, 'Kudus', 1, 7, 8);
 
 -- --------------------------------------------------------
 
@@ -1077,15 +1081,6 @@ CREATE TABLE `partai` (
   `foto` varchar(255) NOT NULL DEFAULT 'default_avatar.jpg'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `partai`
---
-
-INSERT INTO `partai` (`id`, `partai`, `no_urut`, `foto`) VALUES
-(1, 'PKB', 1, 'default_avatar.jpg'),
-(2, 'GERINDRA', 2, 'default_avatar.jpg'),
-(3, 'DEMOKRAT', 14, 'default_avatar.jpg');
-
 -- --------------------------------------------------------
 
 --
@@ -1107,23 +1102,6 @@ CREATE TABLE `pil` (
   `no_urut` int(3) NOT NULL,
   `status` char(1) NOT NULL DEFAULT 'l' COMMENT '''l'' untuk data masih digunakan, ''d'' untuk data sudah dihapus'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `pil`
---
-
-INSERT INTO `pil` (`id`, `nama_depan`, `nama_belakang`, `gender`, `foto`, `tingkat`, `id_prov`, `id_kab`, `id_kec`, `id_partai`, `id_dapil`, `no_urut`, `status`) VALUES
-(1, 'Andi', 'Asegaf', 'l', 'default_avatar.jpg', 'e', 1, 1, 1, 1, 1, 1, 'l'),
-(2, 'Joko', 'Mulyono', 'l', 'default_avatar.jpg', 'e', 1, 1, 1, 1, 1, 2, 'l'),
-(3, 'Firdaus', 'Kamali', 'l', 'default_avatar.jpg', 'e', 1, 1, 1, 2, 1, 1, 'l'),
-(4, 'Bulma', 'Majid', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 1, 7, 1, 'l'),
-(5, 'Aninda', 'Widodo', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 2, 7, 1, 'l'),
-(6, 'Irham', 'Cahyo', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 1, 7, 1, 'l'),
-(7, 'Joko', 'Majid', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 3, 7, 1, 'l'),
-(8, 'Amirul', 'Widodo', 'l', 'default_avatar.jpg', 'b', 1, NULL, NULL, 1, NULL, 1, 'l'),
-(9, 'Ahmad', 'Maulana', 'l', 'default_avatar.jpg', 'b', 1, NULL, NULL, 3, NULL, 1, 'l'),
-(10, 'Joko', 'Widodo', 'l', 'default_avatar.jpg', 'a', NULL, NULL, NULL, 1, NULL, 1, 'l'),
-(11, 'Prabowo', 'Subianto', 'l', 'default_avatar.jpg', 'a', NULL, NULL, NULL, 2, NULL, 1, 'l');
 
 -- --------------------------------------------------------
 
@@ -1275,37 +1253,6 @@ CREATE TABLE `suara_desa` (
   `jenis_suara` enum('p','c') NOT NULL COMMENT 'p = suara partai, c = suara caleg',
   `tingkat_suara` enum('a','b','c','d','e') NOT NULL COMMENT 'a=pres. b = dpd. c = dprri. d = dpr prov. e = dpr kab'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `suara_desa`
---
-
-INSERT INTO `suara_desa` (`id`, `suara`, `id_caleg`, `id_saksi`, `tanggal`, `updated`, `id_kel`, `status`, `id_partai`, `jenis_suara`, `tingkat_suara`) VALUES
-(1, 102, NULL, 0, '2019-03-04 20:20:28', '2019-03-04 20:33:26', 1, 'd', 1, 'p', 'e'),
-(2, 123, 1, 0, '2019-03-04 20:20:28', '2019-03-04 20:33:26', 1, 'd', 1, 'c', 'e'),
-(3, 117, 2, 0, '2019-03-04 20:20:28', '2019-03-04 20:33:26', 1, 'd', 1, 'c', 'e'),
-(4, 33, NULL, 0, '2019-03-04 20:20:34', '2019-03-04 20:20:34', 1, 'l', 2, 'p', 'e'),
-(5, 35, 3, 0, '2019-03-04 20:20:34', '2019-03-04 20:20:34', 1, 'l', 2, 'c', 'e'),
-(6, 321, NULL, 0, '2019-03-04 20:20:37', '2019-03-04 20:33:36', 1, 'l', 3, 'p', 'e'),
-(7, 14, NULL, 0, '2019-03-04 20:44:20', '2019-03-04 20:45:29', 1, 'd', 1, 'p', 'd'),
-(8, 50, 4, 0, '2019-03-04 20:44:20', '2019-03-04 20:45:29', 1, 'd', 1, 'c', 'd'),
-(9, 45, NULL, 0, '2019-03-04 20:44:24', '2019-03-04 20:44:24', 1, 'l', 2, 'p', 'd'),
-(10, 23, 5, 0, '2019-03-04 20:44:24', '2019-03-04 20:44:24', 1, 'l', 2, 'c', 'd'),
-(11, 459, NULL, 0, '2019-03-04 20:44:26', '2019-03-04 20:45:44', 1, 'l', 3, 'p', 'd'),
-(12, 50, NULL, 0, '2019-03-04 20:52:49', '2019-03-04 20:53:44', 1, 'd', 1, 'p', 'c'),
-(13, 32, 6, 0, '2019-03-04 20:52:50', '2019-03-04 20:53:44', 1, 'd', 1, 'c', 'c'),
-(14, 89, NULL, 0, '2019-03-04 20:52:53', '2019-03-04 20:53:58', 1, 'l', 2, 'p', 'c'),
-(15, 11, NULL, 0, '2019-03-04 20:52:57', '2019-03-04 20:52:57', 1, 'l', 3, 'p', 'c'),
-(16, 45, 7, 0, '2019-03-04 20:52:57', '2019-03-04 20:52:57', 1, 'l', 3, 'c', 'c'),
-(17, 45, NULL, 0, '2019-03-04 21:01:06', '2019-03-04 21:01:48', 1, 'd', 1, 'p', 'b'),
-(18, 47, 8, 0, '2019-03-04 21:01:06', '2019-03-04 21:01:48', 1, 'd', 1, 'c', 'b'),
-(19, 67, NULL, 0, '2019-03-04 21:01:09', '2019-03-04 21:02:01', 1, 'd', 2, 'p', 'b'),
-(20, 34, NULL, 0, '2019-03-04 21:01:14', '2019-03-04 21:01:14', 1, 'l', 3, 'p', 'b'),
-(21, 23, 9, 0, '2019-03-04 21:01:14', '2019-03-04 21:01:14', 1, 'l', 3, 'c', 'b'),
-(22, 0, NULL, 0, '2019-03-04 21:09:59', '2019-03-04 21:12:09', 1, 'l', 1, 'p', 'a'),
-(23, 78, 10, 0, '2019-03-04 21:09:59', '2019-03-04 21:12:09', 1, 'l', 1, 'c', 'a'),
-(24, 0, NULL, 0, '2019-03-04 21:10:03', '2019-03-04 21:12:19', 1, 'd', 2, 'p', 'a'),
-(25, 65, 11, 0, '2019-03-04 21:10:04', '2019-03-04 21:12:19', 1, 'd', 2, 'c', 'a');
 
 -- --------------------------------------------------------
 
@@ -5118,81 +5065,97 @@ ALTER TABLE `users`
 --
 ALTER TABLE `admin`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT for table `admin_details`
 --
 ALTER TABLE `admin_details`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT for table `dapil`
 --
 ALTER TABLE `dapil`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
 --
 -- AUTO_INCREMENT for table `kab`
 --
 ALTER TABLE `kab`
   MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 --
 -- AUTO_INCREMENT for table `kec`
 --
 ALTER TABLE `kec`
   MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
 --
 -- AUTO_INCREMENT for table `kel`
 --
 ALTER TABLE `kel`
   MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=250;
+
 --
 -- AUTO_INCREMENT for table `partai`
 --
 ALTER TABLE `partai`
-  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `pil`
 --
 ALTER TABLE `pil`
-  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `proof`
 --
 ALTER TABLE `proof`
   MODIFY `id` int(2) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `prov`
 --
 ALTER TABLE `prov`
   MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT for table `r_suara`
 --
 ALTER TABLE `r_suara`
   MODIFY `id` int(3) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `saksi`
 --
 ALTER TABLE `saksi`
   MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT for table `suara`
 --
 ALTER TABLE `suara`
   MODIFY `id` int(2) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `suara_desa`
 --
 ALTER TABLE `suara_desa`
-  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `tps`
 --
 ALTER TABLE `tps`
   MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3616;
+
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- Constraints for dumped tables
 --
@@ -5277,6 +5240,7 @@ ALTER TABLE `tps`
 --
 ALTER TABLE `users`
   ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

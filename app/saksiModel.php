@@ -9,7 +9,7 @@ class saksiModel extends Model
     function cekLogin($username)
     {
         $data = DB::table('users')
-                ->select('users.username', 'users.pass', 'saksi.*', 'kec.id_dapil as dapil_kec', 'kab.id_dapil as dapil_kab', 'prov.id_dapil as dapil_prov')
+                ->select('users.username', 'users.pass', 'saksi.*', 'kec.id_dapil as dapil_kec', 'kab.dapil_dprri as dapil_dprri', 'kab.dapil_dprprov as dapil_dprprov', 'prov.id_dapil as dapil_prov')
                 ->join('saksi', 'saksi.id', '=', 'users.id_saksi')
                 ->join('kel', 'kel.id', '=', 'saksi.id_kel')
                 ->join('kec', 'kec.id', 'saksi.id_kec')
@@ -53,7 +53,7 @@ class saksiModel extends Model
                 ->join('kab', 'kab.id', '=', 'saksi.id_kab')
                 ->join('prov', 'prov.id', '=', 'saksi.id_prov')
                 ->join('tps', 'tps.id', '=', 'saksi.id_tps')
-                ->select('saksi.*', 'kel.id as id_kel', 'kel.kel', 'kec.id as id_kec', 'kec.kec', 'kab.id as id_kab', 'kab.kab', 'prov.id as id_prov', 'prov.prov', 'tps.id as id_tps', 'tps.tps', 'kec.id_dapil as dapil_kec', 'kab.id_dapil as dapil_kab', 'prov.id_dapil as dapil_prov')
+                ->select('saksi.*', 'kel.id as id_kel', 'kel.kel', 'kec.id as id_kec', 'kec.kec', 'kab.id as id_kab', 'kab.kab', 'prov.id as id_prov', 'prov.prov', 'tps.id as id_tps', 'tps.tps', 'kec.id_dapil as dapil_kec', 'kab.dapil_dprri as dapil_dprri', 'kab.dapil_dprprov as dapil_dprprov', 'prov.id_dapil as dapil_prov')
                 ->where('users.username', $nik)
                 ->where('users.status', 'l')
                 ->where('saksi.nik', $nik)

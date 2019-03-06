@@ -17,9 +17,13 @@ class kursiModel extends Model
                 {
                 	$data->join('kec', 'kec.id', '=', 'tps.id_kec')->join('dapil', 'dapil.id', '=', 'kec.id_dapil');
                 }
-                if($tingkat == 'd' || $tingkat == 'c')
+                if($tingkat == 'd')
                 {
-                	$data->join('kab', 'kab.id', '=', 'tps.id_kab')->join('dapil', 'dapil.id', '=', 'kab.id_dapil');
+                    $data->join('kab', 'kab.id', '=', 'tps.id_kab')->join('dapil', 'dapil.id', '=', 'kab.dapil_dprprov');
+                }
+                if($tingkat == 'c')
+                {
+                    $data->join('kab', 'kab.id', '=', 'tps.id_kab')->join('dapil', 'dapil.id', '=', 'kab.dapil_dprri');
                 }
                 
         $res = $data->where('suara.status', '=', 'l')
@@ -53,9 +57,13 @@ class kursiModel extends Model
                 {
                     $data->join('kec', 'kec.id', '=', 'tps.id_kec')->join('dapil', 'dapil.id', '=', 'kec.id_dapil');
                 }
-                if($tingkat == 'd' || $tingkat == 'c')
+                if($tingkat == 'd')
                 {
-                    $data->join('kab', 'kab.id', '=', 'tps.id_kab')->join('dapil', 'dapil.id', '=', 'kab.id_dapil');
+                    $data->join('kab', 'kab.id', '=', 'tps.id_kab')->join('dapil', 'dapil.id', '=', 'kab.dapil_dprprov');
+                }
+                if($tingkat == 'c')
+                {
+                    $data->join('kab', 'kab.id', '=', 'tps.id_kab')->join('dapil', 'dapil.id', '=', 'kab.dapil_dprri');
                 }
                 
         $res = $data->where('suara.status', '=', 'l')

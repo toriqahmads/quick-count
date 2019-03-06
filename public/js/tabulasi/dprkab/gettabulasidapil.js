@@ -45,7 +45,7 @@ $(document).ready(function()
         else
         {
           $.ajax({
-            url: window.location.origin+"/data/dapilkab/" + prov + "/" + kab + "/c",
+            url: window.location.origin+"/data/dapilkab/" + prov + "/" + kab + "/d",
             type: "GET",
             success: function(html){
               var res = "<option value='0' selected>Dapil</option>";

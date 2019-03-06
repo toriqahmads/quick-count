@@ -157,7 +157,8 @@ class SaksiLoginController extends Controller
             Session::put('id_kel', $data->id_kel);
             Session::put('id_tps', $data->id_tps);
             Session::put('dapil_kec', $data->dapil_kec);
-            Session::put('dapil_kab', $data->dapil_kab);
+            Session::put('dapil_dprri', $data->dapil_dprri);
+            Session::put('dapil_dprprov', $data->dapil_dprprov);
             Session::put('dapil_prov', $data->dapil_prov);
             Session::put('login', true);
             Session::put('role', 'saksi');

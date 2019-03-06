@@ -1,7 +1,7 @@
 @extends('saksi.basedashboard')
 @section('content')
 <script src="{{ asset('js/upload.js') }}"></script>
-<script src="{{ asset('js/saksi/suara/pres/getdetail.js')}}" type="text/javascript"></script>
+<script src="{{ asset('js/saksi/suara/presiden/getdetail.js')}}" type="text/javascript"></script>
 <script type="text/javascript">
             function showNotification(from, align, msg, color){
     color = color
@@ -67,7 +67,10 @@
         <input type="hidden" id="kab" name="kab" value="{{Session::get('id_kab')}}">
         <input type="hidden" id="kec" name="kec" value="{{Session::get('id_kec')}}"> 
         <input type="hidden" id="kel" name="kel" value="{{Session::get('id_kel')}}">
-        <input type="hidden" id="dapil" name="dapil" value="{{Session::get('dapil_kab')}}">
+        <input type="hidden" id="dapil" name="dapil" value="{{Session::get('dapil_kec')}}">
+        <input type="hidden" id="dapil_dprprov" name="dapil_dprprov" value="{{Session::get('dapil_dprprov')}}">
+        <input type="hidden" id="dapil_dprri" name="dapil_dprri" value="{{Session::get('dapil_dprri')}}">
+        <input type="hidden" id="dapil_prov" name="dapil_prov" value="{{Session::get('dapil_prov')}}">
         <input type="hidden" id="tps" name="tps" value="{{Session::get('id_tps')}}">
         <input type="hidden" id="saksi" name="saksi" value="{{Session::get('id')}}">
         <input type="hidden" id="tingkat" name="tingkat" value="a">

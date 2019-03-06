@@ -103,11 +103,10 @@ class suaraController extends Controller
         $validate = $this->validate($request, [
             'suarapartai' => 'required|array',
             'suarapartai.*' => 'integer',
-            'suara' => 'required|array',
+            'suara' => 'array',
             'suara.*.*' => 'integer',
             'tingkat' => 'required'
         ],[ 'suarapartai.required' => 'Suara partai harus diisi!',
-            'suara.' => 'Suara caleg harus diisi!',
             'tingkat.required' => 'Tingkat harus diisi!',
         ]);
 
@@ -219,11 +218,10 @@ class suaraController extends Controller
     	$validate = $this->validate($request, [
             'suarapartai' => 'required|array',
             'suarapartai.*.*' => 'integer',
-            'suara' => 'required|array',
+            'suara' => 'array',
             'suara.*.*.*' => 'integer',
             'tingkat' => 'required'
         ],[ 'suarapartai.required' => 'Suara partai harus diisi!',
-            'suara.' => 'Suara caleg harus diisi!',
             'tingkat.required' => 'Tingkat harus diisi!',
         ]);
 
@@ -370,10 +368,9 @@ class suaraController extends Controller
     	$validate = $this->validate($request, [
         'suarapartai' => 'required|array',
         'suarapartai.*.*' => 'integer',
-        'suara' => 'required|array',
+        'suara' => 'array',
         'suara.*.*.*' => 'integer'
         ],[ 'suarapartai.required' => 'Suara partai harus diisi!',
-            'suara.' => 'Suara caleg harus diisi!',
         ]);
 
         $input = $request->all();

@@ -6,7 +6,7 @@ $(document).ready(function()
   var id_kec = $("#kec").val();
   var id_kel = $("#kel").val();
   var saksi = $("#saksi").val();
-  var dap_id = $("#dapil_kab").val();
+  var dap_id = $("#dapil_dprprov").val();
   
   $.ajax({
     url: window.location.origin+"/data/partai/",

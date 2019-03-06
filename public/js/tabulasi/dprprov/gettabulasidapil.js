@@ -11,7 +11,7 @@ $(document).ready(function()
       {
           $('#dapil').empty().append('<option selected value="0">Pilih Dapil</option>');
           $.ajax({
-            url: window.location.origin+"/data/dapilprov/" + prov + "/b",
+            url: window.location.origin+"/data/dapilprov/" + prov + "/c",
             type: "GET",
             success: function(html){
               var res = "<option value='0' selected>Dapil</option>";

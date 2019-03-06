@@ -185,7 +185,7 @@
               </div>
             </div>
             @endif
-            @if(isset($data->id_dapil))
+            @if(isset($data->id_dapil) || isset($data->dapil_dprri) || isset($data->dapil_dprprov))
             <div class="col-md-3 px-1 dapil">
                   <div class="form-group">
                     <label for="exampleFormControlSelect1">Pilih Dapil</label>

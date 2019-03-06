@@ -53,7 +53,7 @@ $(document).ready(function()
                 url: window.location.origin+"/data/kabid/" + kab,
                 type: "GET",
                 success: function(html){
-                  $('#dapil').val(html[0]['id_dapil']);
+                  $('#dapil').val(html[0]['dapil_dprri']);
                   $.ajax({
                     url: window.location.origin+"/data/partai/",
                     type: "GET",

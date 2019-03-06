@@ -136,8 +136,9 @@
             {
                 if(tingkat == 'd' || tingkat == 'c')
                 {
+                  var jenis_dapil = tingkat == 'c' ? 'b' : 'c';
                     $.ajax({
-                      url: window.location.origin+"/data/dapilprov/" + prov + "/b",
+                      url: window.location.origin+"/data/dapilprov/" + prov + "/" + jenis_dapil,
                       type: "GET",
                       success: function(html){
                         $.ajax({
@@ -147,7 +148,8 @@
                             var res = '<option value="0" selected>Pilih dapil</option>';
                             $.each(html, function(key, val)
                             {
-                                if(data[0]['id_dapil'] == val.id)
+                              var dapilnya = tingkat == 'c' ? 'dapil_dprri' : 'dapil_dprprov';
+                                if(data[0][dapilnya] == val.id)
                                 {
                                     res = res + "<option value='" + val.id +"' selected>" + val.dapil + "</option>";
                                 }
@@ -213,7 +215,7 @@
                 if(tingkat == 'e')
                 {
                     $.ajax({
-                      url: window.location.origin+"/data/dapilkab/" + prov + "/" + kab + "/c",
+                      url: window.location.origin+"/data/dapilkab/" + prov + "/" + kab + "/d",
                       type: "GET",
                       success: function(html){
                         $.ajax({
