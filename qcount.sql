@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.1
+-- version 4.6.6deb5
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Mar 06, 2019 at 09:38 AM
--- Server version: 10.1.33-MariaDB
--- PHP Version: 7.1.18
+-- Host: localhost:3306
+-- Generation Time: Mar 07, 2019 at 11:17 PM
+-- Server version: 5.7.22-0ubuntu18.04.1
+-- PHP Version: 7.2.7-0ubuntu0.18.04.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -1081,6 +1079,28 @@ CREATE TABLE `partai` (
   `foto` varchar(255) NOT NULL DEFAULT 'default_avatar.jpg'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `partai`
+--
+
+INSERT INTO `partai` (`id`, `partai`, `no_urut`, `foto`) VALUES
+(1, 'PKB', 1, 'default_avatar.jpg'),
+(2, 'GERINDRA', 2, 'default_avatar.jpg'),
+(3, 'PDIP', 3, 'default_avatar.jpg'),
+(4, 'GOLKAR', 4, 'default_avatar.jpg'),
+(5, 'NASDEM', 5, 'default_avatar.jpg'),
+(6, 'BERKARYA', 7, 'default_avatar.jpg'),
+(7, 'PKS', 8, 'default_avatar.jpg'),
+(8, 'PERINDO', 9, 'default_avatar.jpg'),
+(9, 'PPP', 10, 'default_avatar.jpg'),
+(10, 'PSI', 11, 'default_avatar.jpg'),
+(11, 'PAN', 12, 'default_avatar.jpg'),
+(12, 'HANURA', 13, 'default_avatar.jpg'),
+(13, 'DEMOKRAT', 14, 'default_avatar.jpg'),
+(14, 'PBB', 19, 'default_avatar.jpg'),
+(15, 'PKPI', 20, 'default_avatar.jpg'),
+(16, 'GARUDA', 6, 'default_avatar.jpg');
+
 -- --------------------------------------------------------
 
 --
@@ -1089,8 +1109,8 @@ CREATE TABLE `partai` (
 
 CREATE TABLE `pil` (
   `id` int(2) NOT NULL,
-  `nama_depan` varchar(15) DEFAULT NULL,
-  `nama_belakang` varchar(15) DEFAULT NULL,
+  `nama_depan` varchar(30) DEFAULT NULL,
+  `nama_belakang` varchar(30) DEFAULT NULL,
   `gender` char(1) NOT NULL,
   `foto` varchar(255) NOT NULL DEFAULT 'default_avatar.jpg',
   `tingkat` enum('a','b','c','d','e') NOT NULL COMMENT 'a = presiden. b = dpd. c = dppri. d = dpr prov. e = dpr kab',
@@ -1102,6 +1122,212 @@ CREATE TABLE `pil` (
   `no_urut` int(3) NOT NULL,
   `status` char(1) NOT NULL DEFAULT 'l' COMMENT '''l'' untuk data masih digunakan, ''d'' untuk data sudah dihapus'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `pil`
+--
+
+INSERT INTO `pil` (`id`, `nama_depan`, `nama_belakang`, `gender`, `foto`, `tingkat`, `id_prov`, `id_kab`, `id_kec`, `id_partai`, `id_dapil`, `no_urut`, `status`) VALUES
+(1, 'Drs. FATHAN', 'NULL', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 1, 7, 1, 'l'),
+(2, 'HINDUN', 'ANISAH, S.Ag', 'p', 'default_avatar.jpg', 'c', 1, 1, NULL, 1, 7, 2, 'l'),
+(3, 'MUHAMMAD', 'MUNJAZIM', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 1, 7, 3, 'l'),
+(4, 'MOCH', 'BASUNI, ST', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 1, 7, 4, 'l'),
+(5, 'H. HASAN', 'FATONI, SH', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 1, 7, 5, 'l'),
+(6, 'SRI', 'NURYATI, S.AQ', 'p', 'default_avatar.jpg', 'c', 1, 1, NULL, 1, 7, 6, 'l'),
+(7, 'MUâ€™ASYAROH, SH.I', 'NULL', 'p', 'default_avatar.jpg', 'c', 1, 1, NULL, 1, 7, 7, 'l'),
+(8, 'ABDUL', 'WACHID', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 2, 7, 1, 'l'),
+(9, 'AHMAD', 'YANUAR RIKZA', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 2, 7, 2, 'l'),
+(10, 'IQLIMA', 'ROIHANI', 'p', 'default_avatar.jpg', 'c', 1, 1, NULL, 2, 7, 3, 'l'),
+(11, 'SYARONI, SEI', 'NULL', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 2, 7, 4, 'l'),
+(12, 'MUAYANAH, S.Ag', 'NULL', 'p', 'default_avatar.jpg', 'c', 1, 1, NULL, 2, 7, 5, 'l'),
+(13, 'SARI', 'RIFYANJANI, S.Kom', 'p', 'default_avatar.jpg', 'c', 1, 1, NULL, 2, 7, 6, 'l'),
+(14, 'H. GHUFRONI', 'NULL', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 2, 7, 7, 'l'),
+(15, 'DARYATMO', 'MARDIYAN', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 3, 7, 1, 'l'),
+(16, 'GILANG', 'DHIELAFARAR', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 3, 7, 2, 'l'),
+(17, 'Ir. HERU ', 'MULYATI', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 3, 7, 3, 'l'),
+(18, 'DR. H. MUSTHOFA, SE', 'NULL', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 3, 7, 4, 'l'),
+(19, 'TAMARA', 'TAMBUNAN', 'p', 'default_avatar.jpg', 'c', 1, 1, NULL, 3, 7, 5, 'l'),
+(20, 'R. YANNE ', 'YOLANDARI ', 'p', 'default_avatar.jpg', 'c', 1, 1, NULL, 3, 7, 6, 'l'),
+(21, 'INDRA ', 'AULIA NUGRAHA', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 3, 7, 7, 'l'),
+(22, 'DANY', 'SOEDARSONO', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 4, 7, 1, 'l'),
+(23, 'H. BOWO ', 'SIDIK PANG', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 4, 7, 2, 'l'),
+(24, 'NUR ', 'YAHMAN, SH', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 4, 7, 3, 'l'),
+(25, 'BUDIANTO ', 'TARIGAN', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 4, 7, 4, 'l'),
+(26, 'RATIH ', 'DEWANTI', 'p', 'default_avatar.jpg', 'c', 1, 1, NULL, 4, 7, 5, 'l'),
+(27, 'HERLINAWATI', 'NULL', 'p', 'default_avatar.jpg', 'c', 1, 1, NULL, 4, 7, 6, 'l'),
+(28, 'NUSRON ', 'WAHID', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 4, 7, 7, 'l'),
+(29, 'LESTARI', 'MOERDIJAT', 'p', 'default_avatar.jpg', 'c', 1, 1, NULL, 5, 7, 1, 'l'),
+(30, 'Ir. ALI ', 'MAHIR, MM', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 5, 7, 2, 'l'),
+(31, 'ENDANG ', 'SUSILOWATI', 'p', 'default_avatar.jpg', 'c', 1, 1, NULL, 5, 7, 3, 'l'),
+(32, 'H.SOLIKHIN, ST, MT', 'NULL', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 5, 7, 4, 'l'),
+(33, 'H. IDHAM ', 'KHOLID, SH, MH', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 5, 7, 5, 'l'),
+(34, 'SRI ', 'HARTINI', 'p', 'default_avatar.jpg', 'c', 1, 1, NULL, 5, 7, 6, 'l'),
+(35, 'GANTYO ', 'KOESPRADONO', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 5, 7, 7, 'l'),
+(36, 'NELY ', 'RAHMAWATI ', 'p', 'default_avatar.jpg', 'c', 1, 1, NULL, 16, 7, 1, 'l'),
+(37, 'TEGUH ', 'SETIAWAN', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 16, 7, 2, 'l'),
+(38, 'ILHAM ', 'SETIAWAN', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 16, 7, 3, 'l'),
+(39, 'PANDUWINATA ', 'FN', 'p', 'default_avatar.jpg', 'c', 1, 1, NULL, 6, 7, 1, 'l'),
+(40, 'ROCHMIYATI', 'NULL', 'p', 'default_avatar.jpg', 'c', 1, 1, NULL, 6, 7, 2, 'l'),
+(41, 'RENI ', 'HARDITA ', 'p', 'default_avatar.jpg', 'c', 1, 1, NULL, 6, 7, 3, 'l'),
+(42, 'KRT. ', 'CHRISNA ', 'p', 'default_avatar.jpg', 'c', 1, 1, NULL, 6, 7, 4, 'l'),
+(43, 'Ir. ERDI ', 'NURKITO, MT', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 6, 7, 5, 'l'),
+(44, 'H. MUHSININ ', 'FAUZI', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 7, 7, 1, 'l'),
+(45, 'H. AHMADI, A.Md', 'NULL', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 7, 7, 2, 'l'),
+(46, 'AMANATUL ', 'HUSNA, S.Pi', 'p', 'default_avatar.jpg', 'c', 1, 1, NULL, 7, 7, 3, 'l'),
+(47, 'ADY ', 'SUPRATIKTO', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 7, 7, 4, 'l'),
+(48, 'SURTINI', 'NULL', 'p', 'default_avatar.jpg', 'c', 1, 1, NULL, 7, 7, 5, 'l'),
+(49, 'SISWADI ', 'SELODIPOERO', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 8, 7, 1, 'l'),
+(50, 'DWI ', 'PUTRA BUDIYANTO, SH', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 8, 7, 2, 'l'),
+(51, 'RITA ', 'ZAENAF, SH, S.Pd, M.Pd', 'p', 'default_avatar.jpg', 'c', 1, 1, NULL, 8, 7, 3, 'l'),
+(52, 'SUTRISNO, ', 'S.IP, M.Si', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 8, 7, 4, 'l'),
+(53, 'LINA ', 'ROHMA', 'p', 'default_avatar.jpg', 'c', 1, 1, NULL, 8, 7, 5, 'l'),
+(54, 'NINIK ', 'SETIYANI', 'p', 'default_avatar.jpg', 'c', 1, 1, NULL, 8, 7, 6, 'l'),
+(55, 'RICKY ', 'HARISMA HASANUD', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 8, 7, 7, 'l'),
+(56, 'ROJIH', 'NULL', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 9, 7, 1, 'l'),
+(57, 'Dr. FAHRUDDIN', 'NULL', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 9, 7, 2, 'l'),
+(58, 'ALFI', 'BAROKAH', 'p', 'default_avatar.jpg', 'c', 1, 1, NULL, 9, 7, 3, 'l'),
+(59, 'ISTAJIB', 'AS', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 9, 7, 4, 'l'),
+(60, 'FARIDAH, ', 'SHI', 'p', 'default_avatar.jpg', 'c', 1, 1, NULL, 9, 7, 5, 'l'),
+(61, 'SLAMET ', 'BADRUDDIN', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 9, 7, 6, 'l'),
+(62, 'FARAH ', 'MAHARANI', 'p', 'default_avatar.jpg', 'c', 1, 1, NULL, 9, 7, 7, 'l'),
+(63, 'HARIJANTO ', 'ARBI', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 10, 7, 1, 'l'),
+(64, 'FUAD ', 'SULAIMY, ST, MM', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 10, 7, 2, 'l'),
+(65, 'INGE ', 'YASMINE', 'p', 'default_avatar.jpg', 'c', 1, 1, NULL, 10, 7, 3, 'l'),
+(66, 'RIA ', 'DWI ASTUTI', 'p', 'default_avatar.jpg', 'c', 1, 1, NULL, 10, 7, 4, 'l'),
+(67, 'NATAYA ', 'APRIALISA', 'p', 'default_avatar.jpg', 'c', 1, 1, NULL, 10, 7, 5, 'l'),
+(68, 'APRILIA', 'NULL', 'p', 'default_avatar.jpg', 'c', 1, 1, NULL, 10, 7, 6, 'l'),
+(69, 'JONATHAN', 'NULL', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 10, 7, 7, 'l'),
+(70, 'WIDA ', 'FADLIKA, SE, M.Si', 'p', 'default_avatar.jpg', 'c', 1, 1, NULL, 11, 7, 1, 'l'),
+(71, 'DEDDY ', 'RIZALDI', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 11, 7, 2, 'l'),
+(72, 'Hj. HARDINI ', 'PUSPASAARI', 'p', 'default_avatar.jpg', 'c', 1, 1, NULL, 11, 7, 3, 'l'),
+(73, 'M. KISRA ', 'HADIAN', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 11, 7, 4, 'l'),
+(74, 'Drs. ASEP ', 'SUTISNA, MM', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 11, 7, 5, 'l'),
+(75, 'Hj. YENI ', 'ANJANI JUWITA', 'p', 'default_avatar.jpg', 'c', 1, 1, NULL, 11, 7, 6, 'l'),
+(76, 'LUSIATI, ', 'SE, M.Si', 'p', 'default_avatar.jpg', 'c', 1, 1, NULL, 11, 7, 7, 'l'),
+(77, 'DINA ', 'LORENZA AUDRIA', 'p', 'default_avatar.jpg', 'c', 1, 1, NULL, 13, 7, 1, 'l'),
+(78, 'H. GUNARI ', 'A LATIEF, M.Si', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 13, 7, 2, 'l'),
+(79, 'Drs. HENDRO ', 'MARTOJO', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 13, 7, 3, 'l'),
+(80, 'NURUL ', 'HUDA, SH, MH', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 13, 7, 4, 'l'),
+(81, 'REKHA ', 'MAHENDRASWARI', 'p', 'default_avatar.jpg', 'c', 1, 1, NULL, 13, 7, 5, 'l'),
+(82, 'KARREN ', 'ZUSRINA', 'p', 'default_avatar.jpg', 'c', 1, 1, NULL, 13, 7, 6, 'l'),
+(83, 'AHDI ', 'MUQSITH', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 13, 7, 7, 'l'),
+(84, 'DR. H. MUHANTO', 'NULL', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 14, 7, 1, 'l'),
+(85, 'AMIN', 'NULL', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 14, 7, 2, 'l'),
+(86, 'HANA ', 'PUJI ASTUTI', 'p', 'default_avatar.jpg', 'c', 1, 1, NULL, 14, 7, 3, 'l'),
+(87, 'AHMAD ', 'FAIDONI HARIRI', 'l', 'default_avatar.jpg', 'c', 1, 1, NULL, 14, 7, 4, 'l'),
+(88, 'IIS', 'ROSMERIA', 'p', 'default_avatar.jpg', 'c', 1, 1, NULL, 14, 7, 5, 'l'),
+(128, 'Hj. Nur', 'Saadah, S.Pd.I, MH', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 1, 8, 1, 'l'),
+(129, 'H. Ahmad ', 'Zaki, S.Hi', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 1, 8, 2, 'l'),
+(130, 'HM. Nur ', 'Khabsyin, S.Pd', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 1, 8, 3, 'l'),
+(131, 'Mohamad ', 'Ali Chabib', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 1, 8, 4, 'l'),
+(132, 'Sri', 'Solichatul Umami', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 1, 8, 5, 'l'),
+(133, 'Khamdun', 'Khiyarudin Misbah', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 1, 8, 6, 'l'),
+(134, 'Nuril', 'Khasanatun Nisak, S.Pd.I', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 1, 8, 7, 'l'),
+(135, 'Alex ', 'Yusron Al Mufti', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 1, 8, 8, 'l'),
+(136, 'Mutiara', 'Choirunnisa, SE', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 1, 8, 9, 'l'),
+(137, 'A. Bahrul', 'Amiq', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 1, 8, 10, 'l'),
+(138, 'Hj. Sri ', 'Hartini, ST', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 2, 8, 1, 'l'),
+(139, 'H. Chumaimudin', '', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 2, 8, 2, 'l'),
+(140, 'M. Iqbal ', 'Faishol', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 2, 8, 3, 'l'),
+(141, 'Savista ', 'Mada Humans', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 2, 8, 4, 'l'),
+(142, 'Zainal ', 'Abidin', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 2, 8, 5, 'l'),
+(143, 'Anwar ', 'Said', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 2, 8, 6, 'l'),
+(144, 'Slamet ', 'Sukirno', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 2, 8, 7, 'l'),
+(145, 'Wahyu ', 'Setiawan Bagus P', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 2, 8, 8, 'l'),
+(146, 'Siti Nur ', 'Malikhah, S.H.I', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 2, 8, 9, 'l'),
+(147, 'Asri ', 'Budi Utomo', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 2, 8, 10, 'l'),
+(148, 'Denny ', 'Nurcahyanto, SE', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 3, 8, 1, 'l'),
+(149, 'Andang ', 'Wahyu Triyanto, SE', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 3, 8, 2, 'l'),
+(150, 'Julia ', 'Setyowati, S.Sos. MM', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 3, 8, 3, 'l'),
+(151, 'Dwi ', 'Setiawan', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 3, 8, 4, 'l'),
+(152, 'Adrian ', 'Ranakusuma', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 3, 8, 5, 'l'),
+(153, 'Ita ', 'Nurmasari', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 3, 8, 6, 'l'),
+(154, 'Ibra ', 'Hartawan', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 3, 8, 7, 'l'),
+(155, 'Eko ', 'Masidin', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 3, 8, 8, 'l'),
+(156, 'Emerentiana ', 'Yusi Utari', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 3, 8, 9, 'l'),
+(157, 'Wahyu ', 'Prasetyo Hadi, SE', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 3, 8, 10, 'l'),
+(158, 'Rifâ€™an', '', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 4, 8, 1, 'l'),
+(159, 'Tardjo ', 'Ragil, SE, M.Si', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 4, 8, 2, 'l'),
+(160, 'Hj. Farida ', 'Rahmah, S.A', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 4, 8, 3, 'l'),
+(161, 'Suyadi, ', 'S.Pd.I', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 4, 8, 4, 'l'),
+(162, 'Ray Sri ', 'Hendrarrini, BA', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 4, 8, 5, 'l'),
+(163, 'Dr. Slamet, ', 'S.Pd, M.Pd', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 4, 8, 6, 'l'),
+(164, 'Tri Esny ', 'Susilowati, S.Pd', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 4, 8, 7, 'l'),
+(165, 'Muhammad ', 'Muthoharul', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 4, 8, 8, 'l'),
+(166, 'Retno Iyut ', 'Ade Pamungkas', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 4, 8, 9, 'l'),
+(167, 'H. Mawahib', '', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 4, 8, 10, 'l'),
+(168, 'H. Akhwan, SH', '', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 5, 8, 1, 'l'),
+(169, 'dr. Sugeng ', 'Ibrahim', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 5, 8, 2, 'l'),
+(170, 'Dra. Hj. Tri ', 'Wahyu Hapsari, MM', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 5, 8, 3, 'l'),
+(171, 'Drs. H. ', 'Sukarno', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 5, 8, 4, 'l'),
+(172, 'Mochamad ', 'Senojati Haryo', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 5, 8, 5, 'l'),
+(173, 'Intan ', 'Heryati Indah, SE', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 5, 8, 6, 'l'),
+(174, 'Muchamad ', 'Sholechan', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 5, 8, 7, 'l'),
+(175, 'Aida Farichatul ', 'Laila, S.Sos', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 5, 8, 8, 'l'),
+(176, 'KH. A Soelaeman ', 'Efendi, SH,', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 5, 8, 9, 'l'),
+(177, 'Fedelis Titis ', 'Eka Taurina', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 5, 8, 10, 'l'),
+(178, 'Machasin ', 'Rochman, SH', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 6, 8, 1, 'l'),
+(179, 'Mujiah, ', 'SE, MPd', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 6, 8, 2, 'l'),
+(180, 'Sri ', 'Hartini', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 6, 8, 3, 'l'),
+(181, 'Agus ', 'Sanyoto', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 6, 8, 4, 'l'),
+(182, 'Jumanto, ', 'S.Pd', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 6, 8, 5, 'l'),
+(183, 'Amir ', 'Darmanto, SH', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 7, 8, 1, 'l'),
+(184, 'H. Setia ', 'Budi Wibowo, S.Ag', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 7, 8, 2, 'l'),
+(185, 'Amalia Fadhila ', 'Habibah Fitri', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 7, 8, 3, 'l'),
+(186, 'Hartoyo, SE', '', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 7, 8, 4, 'l'),
+(187, 'Tutut ', 'Wulandari, SS', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 7, 8, 5, 'l'),
+(188, 'Saifudin', '', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 7, 8, 6, 'l'),
+(189, 'Ahmad ', 'Mudhofar, SE', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 7, 8, 7, 'l'),
+(190, 'Hj. Dwi ', 'Ningrum Astuti', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 7, 8, 8, 'l'),
+(191, 'Drs. Iskandar, ', 'SH, MH, Cand', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 8, 8, 1, 'l'),
+(192, 'Dyah ', 'Karmindagri, SH', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 8, 8, 2, 'l'),
+(193, 'H. Abdul ', 'Fatiq, M.Kom', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 8, 8, 3, 'l'),
+(194, 'Ririk ', 'Novita Sari', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 8, 8, 4, 'l'),
+(195, 'Agus ', 'Widodo, ST', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 8, 8, 5, 'l'),
+(196, 'Nurul ', 'Furqon, SE', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 9, 8, 1, 'l'),
+(197, 'Djoko ', 'Nurhadi, SH', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 9, 8, 2, 'l'),
+(198, 'Irliza ', 'Rahma Diana, SH', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 9, 8, 3, 'l'),
+(199, 'Yogi ', 'Aditya', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 9, 8, 4, 'l'),
+(200, 'Rifai, ', 'S.Pd.I', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 9, 8, 5, 'l'),
+(201, 'Istiqomah', '', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 9, 8, 6, 'l'),
+(202, 'Alfaya ', 'Sayyidah', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 9, 8, 7, 'l'),
+(203, 'Muhammad ', 'Chowasul Arifin', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 9, 8, 8, 'l'),
+(204, 'Naili ', 'Hidayati', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 9, 8, 9, 'l'),
+(205, 'Ali ', 'Maskur', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 9, 8, 10, 'l'),
+(206, 'Bagus ', 'Ardeni', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 10, 8, 1, 'l'),
+(207, 'Yunika ', 'Erma Puspita', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 10, 8, 2, 'l'),
+(208, 'Drs. Jayus, MM', '', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 11, 8, 1, 'l'),
+(209, 'Hasan ', 'Sanubari, SE', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 11, 8, 2, 'l'),
+(210, 'Rosdiana Nur ', 'Pasha Lubis', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 11, 8, 3, 'l'),
+(211, 'Noor ', 'Djamaâ€™ah', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 11, 8, 4, 'l'),
+(212, 'Muhammad ', 'Shodiqin, SH', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 11, 8, 5, 'l'),
+(213, 'Sulistyawati', '', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 11, 8, 6, 'l'),
+(214, 'Ratna ', 'Setiasih', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 11, 8, 7, 'l'),
+(215, 'Endang ', 'Tri Widyastuti', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 11, 8, 8, 'l'),
+(216, 'Khotiah', '', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 11, 8, 9, 'l'),
+(217, 'Musarif', '', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 11, 8, 10, 'l'),
+(218, 'Merry Herlina ', 'Saragih, SE', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 12, 8, 1, 'l'),
+(219, 'Aklis ', 'Junaidi', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 12, 8, 2, 'l'),
+(220, 'Dedy Heru ', 'Pramono, SH', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 12, 8, 3, 'l'),
+(221, 'Nur ', 'Faisah', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 12, 8, 4, 'l'),
+(222, 'Ramadi, SH', '', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 12, 8, 5, 'l'),
+(223, 'Wahono', 'Sudhariyo', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 12, 8, 6, 'l'),
+(224, 'Nova ', 'Widjoyo', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 13, 8, 1, 'l'),
+(225, 'H. Helmy ', 'Turmudhi, SE', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 13, 8, 2, 'l'),
+(226, 'Istianah', '', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 13, 8, 3, 'l'),
+(227, 'Nurul ', 'Fatah, SH, MH', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 13, 8, 4, 'l'),
+(228, 'H. Aris ', 'Isnandar, ST', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 13, 8, 5, 'l'),
+(229, 'Diana ', 'Irawati', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 13, 8, 6, 'l'),
+(230, 'H. Heni ', 'Purwadi, SH', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 13, 8, 7, 'l'),
+(231, 'Hanifa ', 'Noviabida Wijayanti', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 13, 8, 8, 'l'),
+(232, 'Dwi ', 'Nuryono Winahyu', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 13, 8, 9, 'l'),
+(233, 'Zaenal ', 'Mubaroq, SH', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 13, 8, 10, 'l'),
+(234, 'Djoko ', 'Prayitno, S.Kom', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 14, 8, 1, 'l'),
+(235, 'Lisniâ€™matu ', 'Zahroh, S.Pd.I', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 14, 8, 2, 'l'),
+(236, 'Siti ', 'Firdausiyah', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 14, 8, 3, 'l'),
+(237, 'Nathalia ', 'Tau Ceti', 'p', 'default_avatar.jpg', 'd', 1, 1, NULL, 14, 8, 4, 'l'),
+(238, 'Sarojo', '', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 14, 8, 5, 'l'),
+(239, 'H. Hanafi ', 'Saleh', 'l', 'default_avatar.jpg', 'd', 1, 1, NULL, 14, 8, 6, 'l');
 
 -- --------------------------------------------------------
 
@@ -5065,97 +5291,81 @@ ALTER TABLE `users`
 --
 ALTER TABLE `admin`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
 --
 -- AUTO_INCREMENT for table `admin_details`
 --
 ALTER TABLE `admin_details`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
 --
 -- AUTO_INCREMENT for table `dapil`
 --
 ALTER TABLE `dapil`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
 --
 -- AUTO_INCREMENT for table `kab`
 --
 ALTER TABLE `kab`
   MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
 --
 -- AUTO_INCREMENT for table `kec`
 --
 ALTER TABLE `kec`
   MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
-
 --
 -- AUTO_INCREMENT for table `kel`
 --
 ALTER TABLE `kel`
   MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=250;
-
 --
 -- AUTO_INCREMENT for table `partai`
 --
 ALTER TABLE `partai`
-  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT;
-
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT for table `pil`
 --
 ALTER TABLE `pil`
-  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT;
-
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=255;
 --
 -- AUTO_INCREMENT for table `proof`
 --
 ALTER TABLE `proof`
   MODIFY `id` int(2) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `prov`
 --
 ALTER TABLE `prov`
   MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
 --
 -- AUTO_INCREMENT for table `r_suara`
 --
 ALTER TABLE `r_suara`
   MODIFY `id` int(3) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `saksi`
 --
 ALTER TABLE `saksi`
   MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
 --
 -- AUTO_INCREMENT for table `suara`
 --
 ALTER TABLE `suara`
   MODIFY `id` int(2) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `suara_desa`
 --
 ALTER TABLE `suara_desa`
   MODIFY `id` int(3) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `tps`
 --
 ALTER TABLE `tps`
   MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3616;
-
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
 --
 -- Constraints for dumped tables
 --
@@ -5240,7 +5450,6 @@ ALTER TABLE `tps`
 --
 ALTER TABLE `users`
   ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE;
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
