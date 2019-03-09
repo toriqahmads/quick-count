@@ -25,7 +25,7 @@ class Kursi
 		{
 			foreach ($this->data as $key => $value) 
 			{
-				$this->divided[$this->divisor[$i]][$key] = (int)$value/$this->divisor[$i];
+				$this->divided[$this->divisor[$i]][$key] = ceil((int)$value/$this->divisor[$i]);
 			}
 
 			$i++;

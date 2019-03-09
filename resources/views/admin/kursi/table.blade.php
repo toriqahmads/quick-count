@@ -21,7 +21,7 @@
               <tbody>
                 @foreach($data as $partai => $divisor)
                   <tr>
-                    <th>{{ $partai }} : </td>
+                    <th>{{ $partai }}</td>
                     @foreach($divisor as $div => $suara)
                       <td>{{ $suara }}</td>
                     @endforeach

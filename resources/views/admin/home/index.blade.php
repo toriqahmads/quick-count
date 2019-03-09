@@ -5,7 +5,7 @@
     <div class="col-md-12">
       <div class="card card-user">
         <div class="image">
-          <img src="{{ asset('img/bg5.jpg') }}" alt="...">
+          <img src="{{ asset('img/pemils.jpg') }}" alt="...">
         </div>
         <div class="card-body">
           <div class="author">
