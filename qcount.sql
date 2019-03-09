@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Mar 08, 2019 at 11:23 PM
+-- Generation Time: Mar 09, 2019 at 09:34 PM
 -- Server version: 5.7.22-0ubuntu18.04.1
 -- PHP Version: 7.2.7-0ubuntu0.18.04.2
 
@@ -227,6 +227,33 @@ ELSE
   SET msg = 'data not found';
 END IF;
 
+SELECT msg;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `input_admin` (IN `uname` VARCHAR(15), IN `passwd` VARCHAR(255), IN `fname` VARCHAR(30), IN `lname` VARCHAR(30), IN `hp` VARCHAR(15))  BEGIN
+
+DECLARE code CHAR(5) DEFAULT '00000';
+DECLARE msg TEXT;
+DECLARE rb BOOL DEFAULT 0;
+
+DECLARE CONTINUE HANDLER FOR SQLEXCEPTION, SQLWARNING, NOT FOUND
+BEGIN
+  GET DIAGNOSTICS CONDITION 1
+    code = RETURNED_SQLSTATE, msg = MESSAGE_TEXT;
+    SET rb = 1;
+END;
+
+START TRANSACTION;
+
+INSERT INTO admin(username, pass) VALUES (uname, passwd);
+INSERT INTO admin_details(username, nama_depan, nama_belakang, hp) VALUES (uname, fname, lname, hp);
+
+IF code != '00000' OR rb = 1 THEN
+  ROLLBACK;
+ELSE
+  COMMIT;
+    SET msg = 'success';
+END IF;
 SELECT msg;
 END$$
 
@@ -677,8 +704,8 @@ CREATE TABLE `admin` (
   `id` int(11) NOT NULL,
   `username` varchar(25) NOT NULL,
   `pass` varchar(255) NOT NULL,
-  `role_id` int(1) NOT NULL,
-  `id_details` int(11) NOT NULL
+  `role_id` int(1) NOT NULL DEFAULT '112',
+  `id_details` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -708,6 +735,14 @@ CREATE TABLE `admin_details` (
 
 INSERT INTO `admin_details` (`id`, `username`, `nama_depan`, `nama_belakang`, `hp`) VALUES
 (1, 'admin', 'Toriq', 'Ahmad', '08966826389');
+
+--
+-- Triggers `admin_details`
+--
+DELIMITER $$
+CREATE TRIGGER `admin_input` AFTER INSERT ON `admin_details` FOR EACH ROW UPDATE admin SET id_details = NEW.id WHERE username = NEW.username
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -5727,12 +5762,12 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `admin_details`
 --
 ALTER TABLE `admin_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `dapil`
 --
@@ -5762,7 +5797,7 @@ ALTER TABLE `partai`
 -- AUTO_INCREMENT for table `pil`
 --
 ALTER TABLE `pil`
-  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=766;
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=705;
 --
 -- AUTO_INCREMENT for table `proof`
 --

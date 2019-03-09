@@ -54,8 +54,8 @@ Route::group(['prefix' => 'admin'], function()
 	{
 		Route::get('/', 'adminController@index')->name('index.admin');
 		Route::post('/updateProfile', 'adminController@updateProfile')->name('update.profile');
-		Route::get('/register', 'adminController@register')->name('register.admin');
-		Route::post('/registerPost', 'adminController@registerPost')->name('register.post.admin');
+		Route::get('/register', 'adminController@registerAdmin')->name('register.admin');
+		Route::post('/registerAdminPost', 'adminController@registerAdminPost')->name('register.post.admin');
 		Route::get('/logout', 'Auth\AdminLoginController@logout')->name('logout.admin');
 	});
 });

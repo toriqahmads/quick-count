@@ -17,4 +17,17 @@ class adminModel extends Model
     				
     	return $data;
     }
+
+    function registerPost($data = array())
+    {
+        $fname = $data['fname'];
+        $lname = $data['lname'];
+        $pass = $data['password'];
+        $uname = $data['username'];
+        $telp = $data['telp'];
+
+        $req = DB::select('CALL input_admin(?, ?, ?, ?, ?)', array($uname, $pass, $fname, $lname, $telp));
+
+        return $req;
+    }
 }
